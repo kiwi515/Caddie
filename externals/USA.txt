@@ -1,0 +1,23 @@
+# SYSCONF/scapi
+SCGetLanguage=0x80054090
+
+# OS/OSFatal
+OSFatal=0x800493a0
+
+# OS/OSError
+OSPanic=0x80047150
+OSReport=0x80235cc8
+
+# STL/cstdio
+vprintf=0x8000ceec
+vsprintf=0x8000cff0
+sprintf=0x8000d168
+
+# EGG/core/eggController
+getNthController__Q23EGG17CoreControllerMgrFi=0x801c4ab8
+sInstance__Q23EGG17CoreControllerMgr=0x806f4a08
+
+# Sports2/Glf/Sp2GlfGameConfig
+getGlobalVar__Q23Glf10GameConfigFib=0x80269f4c
+setGlobalVar__Q23Glf10GameConfigFiib=0x80269f08
+sInstance__Q23Glf10GameConfig=0x806f4e98
