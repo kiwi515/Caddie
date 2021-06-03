@@ -7,18 +7,18 @@ extern "C" {
 
 u32 SCGetLanguage();
 
-enum SCLang_t
+enum SCLang
 {
-    LANG_JAPANESE = 0,
-    LANG_ENGLISH = 1,
-    LANG_GERMAN = 2,
-    LANG_FRENCH = 3,
-    LANG_SPANISH = 4,
-    LANG_ITALIAN = 5,
-    LANG_DUTCH = 6,
-    LANG_CHINESE_S = 7,
-    LANG_CHINESE_T = 8,
-    LANG_KOREAN = 9
+    SC_JAPANESE = 0,
+    SC_ENGLISH = 1,
+    SC_GERMAN = 2,
+    SC_FRENCH = 3,
+    SC_SPANISH = 4,
+    SC_ITALIAN = 5,
+    SC_DUTCH = 6,
+    SC_CHINESE_S = 7,
+    SC_CHINESE_T = 8,
+    SC_KOREAN = 9
 };
 
 #ifdef __cplusplus
