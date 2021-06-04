@@ -1,5 +1,5 @@
-#ifndef SP2_GLF_GLOBAL_ACCESSOR_H
-#define SP2_GLF_GLOBAL_ACCESSOR_H
+#ifndef SP2_GLF_GAME_CONFIG_H
+#define SP2_GLF_GAME_CONFIG_H
 #include <types.h>
 
 namespace Glf
