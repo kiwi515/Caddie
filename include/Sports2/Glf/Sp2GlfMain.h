@@ -8,7 +8,6 @@ namespace Glf
     {
     public:
         inline static GlfMain *getInstance() {return sInstance;}
-        static void createInstance();
         inline u32 getGamemode() {return mGamemode;}
         inline void setGamemode(u32 gm) {mGamemode = gm;}
         inline u32 getCurrentHole() {return mCurrentHole;}
