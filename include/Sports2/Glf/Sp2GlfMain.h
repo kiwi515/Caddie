@@ -7,11 +7,26 @@ namespace Glf
     class GlfMain
     {
     public:
-        inline static GlfMain *getInstance() {return sInstance;}
-        inline u32 getGamemode() {return mGamemode;}
-        inline void setGamemode(u32 gm) {mGamemode = gm;}
-        inline u32 getCurrentHole() {return mCurrentHole;}
-        inline void setCurrentHole(u32 i) {mCurrentHole = i;}
+        inline static GlfMain *getInstance() 
+        {
+            return sInstance;
+        }
+        inline u32 getGamemode() 
+        {
+            return mGamemode;
+        }
+        inline void setGamemode(u32 gm)
+        {
+            mGamemode = gm;
+        }
+        inline u32 getCurrentHole() 
+        {
+            return mCurrentHole;
+        }
+        inline void setCurrentHole(u32 i) 
+        {
+            mCurrentHole = i;
+        }
 
     private:
         GlfMain();
