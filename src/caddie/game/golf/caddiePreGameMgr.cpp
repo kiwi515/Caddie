@@ -2,11 +2,84 @@
 #include "caddieAssert.h"
 #include "eggController.h"
 #include <Glf/Sp2GlfGameConfig.h>
+#include <Glf/Sp2GlfMain.h>
 
 namespace caddie
 {
     using namespace Glf;
     using namespace EGG;
+
+    bool PreGameManager::canPlayNextHole()
+    {
+        GlfMain *pMain = GlfMain::getInstance();
+        CADDIE_ASSERT(pMain != NULL);
+        u32 hole = pMain->getCurrentHole();
+        u32 gm = pMain->getGamemode();
+        switch(gm)
+        {
+            case GM_RESORT_A:
+            case GM_RESORT_B:
+            case GM_RESORT_C:
+            case GM_CLASSIC_A:
+            case GM_CLASSIC_B:
+            case GM_CLASSIC_C:
+            case GM_SPECIAL:
+                return true;
+            
+            case GM_RESORT_NINE:
+                if (hole < 8) return true;
+
+            case GM_CLASSIC_NINE:
+            case GM_EIGHTEEN_HOLE:
+                if (hole < 17) return true;
+
+            default:
+                return false;
+        }
+    }
+    kmBranch(0x80406554, &PreGameManager::canPlayNextHole);
+
+    void PreGameManager::setNextHole()
+    {
+        // Backup regs + GameConfig instance (r29)
+        asm volatile
+        (
+            stwu r1, -0x80(r1)
+            stmw r3, 0x8(r1)
+        );
+
+        register GlfMain *pMain;
+    
+        // GlfMain instance (r29 -> r3)
+        asm
+        (
+            mr pMain, r29
+        );
+
+        CADDIE_ASSERT(pMain != NULL);
+        u32 currentHole = pMain->getCurrentHole();
+        u32 gm = pMain->getGamemode();
+
+        // Restore regs + GameConfig instance
+        asm volatile
+        (
+            lmw r3, 0x8(r1)
+            addi r1, r1, 0x80
+        );
+
+        // 3 hole games will always repeat the current hole
+        if (gm != GM_RESORT_NINE && gm != GM_CLASSIC_NINE && gm != GM_EIGHTEEN_HOLE)
+        {
+            GameConfig::getInstance()->setGlobalVar(VAR_NEXTHOLE, currentHole, false);
+        }
+        else
+        {
+            GameConfig::getInstance()->setGlobalVar(VAR_NEXTHOLE, currentHole + 1, false);
+        }
+
+    } 
+    kmCall(0x80406998, &PreGameManager::setNextHole);
+    kmCall(0x804069f0, &PreGameManager::setNextHole);
 
     void PreGameManager::setBlindFlag()
     {
@@ -18,8 +91,8 @@ namespace caddie
         {
             GameConfig::getInstance()->setGlobalVar(VAR_BLINDFLAG, true, false);
         }
-
-    } kmBranch(0x802287e4, &PreGameManager::setBlindFlag);
+    }
+    kmCall(0x802287e4, &PreGameManager::setBlindFlag);
 
     u32 PreGameManager::getGameStartHole(CourseSelBtn lytBtn)
     {
@@ -36,7 +109,9 @@ namespace caddie
             return base + 2;
         }
 
-    } kmCall(0x80406968, &PreGameManager::getGameStartHole);
+        return base;
+    }
+    kmCall(0x80406968, &PreGameManager::getGameStartHole);
 
     u32 PreGameManager::getGameStartHoleFromBtn(CourseSelBtn lytBtn)
     {

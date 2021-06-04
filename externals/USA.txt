@@ -21,3 +21,8 @@ sInstance__Q23EGG17CoreControllerMgr=0x806f4a08
 getGlobalVar__Q23Glf10GameConfigFib=0x80269f4c
 setGlobalVar__Q23Glf10GameConfigFiib=0x80269f08
 sInstance__Q23Glf10GameConfig=0x806f4e98
+
+# Sports2/Glf/Sp2GlfMain
+sInstance__Q23Glf7GlfMain=0x806f5498
+__ct__Q23Glf7GlfMainFv=0x80406c50
+__dt__Q23Glf7GlfMainFv=0x80406c10

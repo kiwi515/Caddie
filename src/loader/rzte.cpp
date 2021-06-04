@@ -77,6 +77,6 @@ loc_0x34:
 void loadMainCode()
 {
 	u32 lang = SCGetLanguage();
-	CADDIE_ASSERT_EX(lang == LANG_ENGLISH, "Only English is currently supported!");
+	CADDIE_ASSERT_EX(lang == SC_ENGLISH, "Only English is currently supported!");
 	loadKamekBinaryFromDisc(&functions_us.base, "/modules/Main.bin");
 } kmBranch(CADDIE_ENTRYPOINT, loadMainCode);
