@@ -41,7 +41,8 @@ namespace caddie
 
     void PreGameManager::setNextHole()
     {
-        // Backup regs + GameConfig instance (r29)
+        // GlfMain::sInstance is not set at this point so we need to use the instance in r29
+        // Backup regs + GameConfig instance (r3)
         asm volatile
         (
             stwu r1, -0x80(r1)
