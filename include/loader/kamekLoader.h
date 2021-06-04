@@ -5,9 +5,9 @@
 
 struct DVDHandle
 {
-	u32 _unk[12];
-	u32 address, length;
-	u32 _unk38;
+    u32 _unk[12];
+    u32 address, length;
+    u32 _unk38;
 };
 
 struct loaderFunctions;
@@ -24,15 +24,15 @@ typedef void (*KamekFree_t) (void *buffer, bool isForCode, const loaderFunctions
 
 
 struct loaderFunctions {
-	OSReport_t OSReport;
-	OSFatal_t OSFatal;
-	DVDConvertPathToEntrynum_t DVDConvertPathToEntrynum;
-	DVDFastOpen_t DVDFastOpen;
-	DVDReadPrio_t DVDReadPrio;
-	DVDClose_t DVDClose;
-	sprintf_t sprintf;
-	KamekAlloc_t kamekAlloc;
-	KamekFree_t kamekFree;
+    OSReport_t OSReport;
+    OSFatal_t OSFatal;
+    DVDConvertPathToEntrynum_t DVDConvertPathToEntrynum;
+    DVDFastOpen_t DVDFastOpen;
+    DVDReadPrio_t DVDReadPrio;
+    DVDClose_t DVDClose;
+    sprintf_t sprintf;
+    KamekAlloc_t kamekAlloc;
+    KamekFree_t kamekFree;
 };
 
 void loadKamekBinaryFromDisc(const loaderFunctions *funcs, const char *path);
