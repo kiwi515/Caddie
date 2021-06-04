@@ -3,7 +3,6 @@
 #include <types_sp2.h>
 #include <Glf/Sp2GlfDefine.h>
 
-
 namespace caddie
 {
     class PreGameManager
