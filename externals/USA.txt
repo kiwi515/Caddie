@@ -25,8 +25,6 @@ _savefpr_28=0x800077c4
 _restfpr_28=0x80007810
 _savefpr_29=0x800077c8
 _restfpr_29=0x80007814
-__nw__FUl=0x801c1c48
-__dl__FPv=0x801c1c90
 __register_global_object=0x800072a4
 __destroy_arr=0x800075bc
 
@@ -36,6 +34,11 @@ List_GetNth__Q24nw4r2utFPCQ34nw4r2ut4ListUs=0x8010bc40
 List_Append__Q24nw4r2utFPQ34nw4r2ut4ListPv=0x8010ba00
 List_GetNext__Q24nw4r2utFPCQ34nw4r2ut4ListPCv=0x8010bc00
 
+# EGG/core/eggExpHeap
+create__Q23EGG7ExpHeapFUlPQ23EGG4HeapUs=0x801c0e58
+
+# EGG/core/eggException
+setUserCallback__Q23EGG9ExceptionFPUs=0x801cec48
 
 # EGG/core/eggController
 getNthController__Q23EGG17CoreControllerMgrFi=0x801c4ab8

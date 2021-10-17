@@ -8,13 +8,6 @@ namespace caddie
     class GolfMenu : public MenuBase
     {
     public:
-        enum GolfMenuOptions
-        {
-            GOLFMENU_HOLE,
-            GOLFMENU_SAVEEXIT,
-            GOLFMENU_MAX
-        };
-
         static GolfMenu * GetInstance()
         {
             static GolfMenu instance;
@@ -24,11 +17,16 @@ namespace caddie
         virtual void Calc();
         virtual void Build();
 
-        static bool Action_SaveAndExit();
+        static bool Action_ApplySettings();
+        static bool Action_QuitGame();
 
     private:
         GolfMenu() : MenuBase() { Build(); }
         virtual ~GolfMenu() {}
+
+        static const char *sWindDirections[];
+        static const char *sPinTypes[];
+        static const char *sSpecialPinTypes[];
     };
 }
 

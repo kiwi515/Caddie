@@ -17,7 +17,7 @@
     OSReport(msg, __VA_ARGS__);
 
 #define CADDIE_ASSERT(exp) \
-    if (!(exp)) caddie::caddie_fail_assert(__FILE__, __LINE__, #exp)
+    if (!(exp)) caddie::caddie_fail_assert(__FILE__, __LINE__, #exp "\n")
 
 #define CADDIE_ASSERT_EX(exp, msg) \
     if (!(exp)) caddie::caddie_fail_assert(__FILE__, __LINE__, msg)

@@ -2,6 +2,11 @@
 
 namespace EGG
 {
-    class CoreController;
-    class CoreControllerMgr;
+    struct Allocator;
+    struct CoreController;
+    struct CoreControllerMgr;
+    struct Disposer;
+    struct Exception;
+    struct ExpHeap;
+    struct Heap;
 }

@@ -1,5 +1,5 @@
-#ifndef CADDIE_UI_MENU_OPTION_H
-#define CADDIE_UI_MENU_OPTION_H
+#ifndef CADDIE_UI_MENU_INT_OPTION_H
+#define CADDIE_UI_MENU_INT_OPTION_H
 #include "types_caddie.h"
 #include "caddieMenuOptionBase.h"
 
@@ -18,8 +18,19 @@ namespace caddie
 
         virtual bool OnConfirm() const { return false; }
 
+        int GetMin() const { return mMin; }
+        void SetMin(int n)
+        {
+            mMin = n;
+            if (mValue < n) mValue = n;
+        }
+
         int GetMax() const { return mMax; }
-        void SetMax(int n) { mMax = n; }
+        void SetMax(int n)
+        {
+            mMax = n;
+            if (mValue > n) mValue = n;
+        }
 
         int GetValue() const { return mValue; }
         void SetValue(int i) { mValue = i; }

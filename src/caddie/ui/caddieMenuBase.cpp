@@ -40,8 +40,8 @@ namespace caddie
         DoTick();
         BuildHistory();
 
-        // Minus button is for opening, and closing without saving
-        if (Pressed(BTN_MINUS) && !PressedLastFrame(BTN_MINUS)) Toggle();
+        // Menus replace the in-game pause functionality
+        if (Pressed(BTN_PLUS) && !PressedLastFrame(BTN_PLUS)) Toggle();
 
         // Even though this is not the drawing routine,
         // we do not want to interact with a menu we cannot see
@@ -50,8 +50,10 @@ namespace caddie
         // Check for save & exit
         if (Pressed(BTN_A))
         {
-            MenuOptionBase& selection = *((MenuOptionBase *)ut::List_GetNth(&mOptions, mSelection));
-            if (selection.OnConfirm()) Toggle();
+            MenuOptionBase *pSelection = (MenuOptionBase *)ut::List_GetNth(&mOptions, mSelection);
+            CADDIE_ASSERT(pSelection != NULL);
+
+            if (pSelection->OnConfirm()) Hide();
         }
 
         // Option select cooldown
@@ -81,26 +83,31 @@ namespace caddie
         if (mSettingTimer <= 0
             || !PressedLastFrame(BTN_RIGHT) && !PressedLastFrame(BTN_LEFT))
         {
-            MenuOptionBase& selection = *((MenuOptionBase *)ut::List_GetNth(&mOptions, mSelection));
+            MenuOptionBase *pSelection = (MenuOptionBase *)ut::List_GetNth(&mOptions, mSelection);
+            CADDIE_ASSERT(pSelection != NULL);
 
-            if (selection.IsEnabled())
+            if (pSelection->IsEnabled())
             {
-                CADDIE_BREAKPOINT;
-
                 // Adjust settings
                 if (Pressed(BTN_RIGHT))
                 {
-                    selection++;
+                    (*pSelection)++;
                     mSettingTimer = SETTING_TIMER_FULL;
                 }
                 else if (Pressed(BTN_LEFT))
                 {
-                    selection--;
+                    (*pSelection)--;
                     mSettingTimer = SETTING_TIMER_FULL;
                 }
             }
         }
     }
+
+    void MenuBase::PauseCallback()
+    {
+        
+    }
+    kmBranch(0x802328d8, &MenuBase::PauseCallback);
 
     void MenuBase::Draw(f32 baseX, f32 baseY) const
     {
@@ -120,6 +127,20 @@ namespace caddie
         Sp2::PrintOutline("==>", COLOR_CURSOR, COLOR_SHADOW, false, baseX - 35.0f, baseY + SELECTION_OPTION_HEIGHT);
     }
 
+    void MenuBase::DumpAll(f32 baseX, f32 baseY) const
+    {
+        MenuOptionBase *node = NULL;
+        for (int i = 0; i < GetNumOptions(); i++)
+        {
+            node = (MenuOptionBase *)ut::List_GetNext(&mOptions, node);
+            if (node == NULL) return;
+
+            char buf[512];
+            sprintf(buf, "Slot %d: %s (0x%08X)\n", i, node->GetName(), node);
+            Sp2::PrintOutline(buf, COLOR_ENABLED, COLOR_SHADOW, false, baseX, baseY + THIS_OPTION_HEIGHT);
+        }
+    }
+
     void MenuBase::DoTick()
     {
         if (--mOptionTimer < 0) mOptionTimer = 0;
@@ -128,7 +149,10 @@ namespace caddie
 
     void MenuBase::BuildHistory()
     {
-        mInputHistory[mInputHistoryIdx] = CoreControllerMgr::getInstance()->getNthController(0)->getButtons();
+        CoreControllerMgr *mgr = CoreControllerMgr::getInstance();
+        CADDIE_ASSERT(mgr != NULL);
+
+        mInputHistory[mInputHistoryIdx] = mgr->getNthController(0)->getButtons();
         mInputHistoryIdx = (mInputHistoryIdx + 1) % INPUT_HISTORY_SIZE;
     }
 }

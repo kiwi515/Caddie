@@ -11,7 +11,6 @@ namespace Sp2
     public:
         inline static StaticMem *getInstance()
         { 
-            CADDIE_ASSERT(sInstance != NULL);
             return sInstance;
         }
 

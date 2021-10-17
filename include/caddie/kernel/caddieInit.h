@@ -13,7 +13,7 @@ namespace caddie
         extern StaticCtor __ctor_loc;
         extern StaticCtor __ctor_end;
 
-        void Init();
+        void InitCpp();
 
     #ifdef __cplusplus
     }

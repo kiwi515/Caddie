@@ -2,9 +2,10 @@
 #define CADDIE_UI_MENU_BASE_H
 #include "types_caddie.h"
 #include "caddieMenuOptionBase.h"
-#include "caddieAssert.h"
 
 #include "ut_list.h"
+
+#include <STL/string.h>
 
 #define INPUT_HISTORY_SIZE 2
 
@@ -22,11 +23,19 @@ namespace caddie
         virtual void Calc();
         virtual void Build() = 0;
 
+        static void PauseCallback();
+
         void Draw(f32 baseX, f32 baseY) const;
+        void DumpAll(f32 baseX, f32 baseY) const;
         virtual void DoTick();
         void BuildHistory();
 
-        void PushBack(MenuOptionBase *option) { nw4r::ut::List_Append(&mOptions, option); }
+        void PushBack(MenuOptionBase *option)
+        {
+            CADDIE_ASSERT(option != NULL);
+            nw4r::ut::List_Append(&mOptions, option);
+        }
+
         bool IsVisible() const { return mIsVisible; }
         void Show() { mIsVisible = true; }
         void Hide() { mIsVisible = false; }
@@ -44,7 +53,25 @@ namespace caddie
             return mInputHistory[mInputHistoryIdx] & mask;
         }
 
-        MenuOptionBase * GetOption(int i) const { return (MenuOptionBase *)nw4r::ut::List_GetNth(&mOptions, i); }
+        MenuOptionBase * GetOption(int i) const
+        {
+            CADDIE_ASSERT(i < mOptions.mSize);
+            return (MenuOptionBase *)nw4r::ut::List_GetNth(&mOptions, i);
+        }
+
+        MenuOptionBase * GetOption(const char *name) const
+        {
+            CADDIE_ASSERT(name != NULL);
+            MenuOptionBase *node = NULL;
+            while (node = (MenuOptionBase *)nw4r::ut::List_GetNext(&mOptions, node))
+            {
+                if (strcmp(name, node->GetName()) == 0) return node;
+            }
+
+            CADDIE_ASSERT(false);
+            return NULL;
+        }
+
         int GetNumOptions() const { return mOptions.mSize; }
 
     private:

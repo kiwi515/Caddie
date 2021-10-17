@@ -6,6 +6,21 @@ namespace Sp2
     namespace Glf
     {
         static const u32 HOLE_MAX = 21;
+        static const u32 WIND_MAX = 15;
+        static const u32 PIN_MAX = 1;
+
+        enum WindDir
+        {
+            SOUTH,
+            SOUTHEAST,
+            EAST,
+            NORTHEAST,
+            NORTH,
+            NORTHWEST,
+            WEST,
+            SOUTHWEST,
+            MAX_WIND_DIV
+        };
 
         enum GameMode
         {
@@ -48,9 +63,23 @@ namespace Sp2
 
         struct PackedWind
         {
-            int mDirection : 3;
-            int mSpeed : 4;
+            inline u8 value() const { return (mSpeed << 3) | mDirection; }
+
+            u8 mSpeed : 4;
+            u8 mDirection : 3;
         };
+
+        inline u8 PackWind(int direction, int speed)
+        {
+            PackedWind wind;
+
+            CADDIE_BREAKPOINT;
+
+            wind.mDirection = direction;
+            wind.mSpeed = speed;
+
+            return wind.value();
+        }
     }
 }
 

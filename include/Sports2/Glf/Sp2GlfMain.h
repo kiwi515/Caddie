@@ -11,7 +11,6 @@ namespace Glf
     public:
         inline static GlfMain *getInstance()
         {
-            CADDIE_ASSERT(sInstance != NULL);
             return sInstance;
         }
 

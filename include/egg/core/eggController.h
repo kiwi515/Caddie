@@ -6,6 +6,7 @@ namespace EGG
 {
     enum eButtonType
     {
+        BTN_NONE  = 0x0000,
         BTN_LEFT  = 0x0001,
         BTN_RIGHT = 0x0002,
         BTN_DOWN  = 0x0004,
@@ -46,6 +47,6 @@ namespace EGG
     private:
         static CoreControllerMgr *sInstance;
     };
-};
+}
 
 #endif

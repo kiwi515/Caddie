@@ -10,7 +10,6 @@ class RPSysSceneCreator
 public:
     inline static RPSysSceneCreator * getInstance()
     {
-        CADDIE_ASSERT(sInstance != NULL);
         return sInstance;
     }
 
