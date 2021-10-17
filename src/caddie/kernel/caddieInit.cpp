@@ -18,8 +18,6 @@ namespace caddie
 
     void InitCpp()
     {
-        if (__ctor_loc == __ctor_end) return;
-
         CADDIE_ASSERT(__ctor_loc != NULL);
         CADDIE_LOG_EX("__ctor_loc=%08X\n", __ctor_loc);
         
