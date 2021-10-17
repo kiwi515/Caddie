@@ -4,8 +4,10 @@ from shutil import rmtree
 from argparse import ArgumentParser
 from subprocess import run, PIPE
 
+AS = "tools\\powerpc-eabi-as.exe"
+ASFLAGS = "-mgekko -I include"
 CC = "tools\\mwcceppc.exe"
-CFLAGS = "-i . -I- -i include -ir include/loader -ir include/Caddie -ir include/RevoSDK -ir include/STL -ir include/Sports2 -ir include/egg -Cpp_exceptions off -enum int -O4,s -use_lmw_stmw on -fp hard -rostr -sdata 0 -sdata2 0 -msgstyle gcc"
+CFLAGS = "-i . -I- -i include -ir include/loader -ir include/Caddie -ir include/RevoSDK -ir include/STL -ir include/Sports2 -ir include/RP -ir include/egg -ir include/nw4r -Cpp_exceptions off -enum int -O4,s -use_lmw_stmw on -fp hard -rostr -sdata 0 -sdata2 0"
 SRC_DIR = "src/"
 BUILD_DIR = "build/"
 EXTERNALS_DIR = "externals/"
@@ -52,6 +54,27 @@ def compile(path : str) -> None:
         print(result.returncode, result.stdout, result.stderr)
         exit()
 
+def assemble(path : str) -> None:
+    # Manipulate filepaths
+    buildPath = path
+    if (buildPath.endswith(".s")): buildPath = buildPath[0 : len(buildPath) - 2]
+    buildPath = buildPath.replace("src/", "build/")
+    buildPath = ''.join([buildPath, ".o"])
+    buildPath = buildPath.replace("/", "\\")
+    path = path.replace("/", "\\")
+
+    # Make any required build directories
+    try:
+        makedirs(buildPath[0 : buildPath.rfind("\\")])
+    except FileExistsError: pass
+
+    # Compile
+    cmd = f"{AS} {ASFLAGS} -o {getLocalPath(buildPath, BUILD_DIR)} {getLocalPath(path, SRC_DIR)}"
+    result = run(cmd, shell=True, stdout=PIPE, stderr=PIPE, universal_newlines=True)
+    if (result.returncode != 0):
+        print(result.returncode, result.stdout, result.stderr)
+        exit()
+
 if __name__ == "__main__":
     # Support "make clean"
     if (len(argv) == 2 and argv[1].lower() == "clean"):
@@ -76,6 +99,8 @@ if __name__ == "__main__":
         for file in files:
             if (file.endswith(".cpp") or file.endswith(".c")):
                 compile(path.join(_path, file))
+            if (file.endswith(".s")):
+                assemble(path.join(_path, file))
 
     # Link Kamek loader (DOL patch)
     kamek_o_files = []

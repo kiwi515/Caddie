@@ -13,16 +13,47 @@ vprintf=0x8000ceec
 vsprintf=0x8000cff0
 sprintf=0x8000d168
 
+# STL/string
+strcmp=0x8000e8b0
+
+# TRK/runtime
+_savefpr_25=0x800077b8
+_restfpr_25=0x80007804
+_savefpr_26=0x800077bc
+_restfpr_26=0x80007808
+_savefpr_28=0x800077c4
+_restfpr_28=0x80007810
+_savefpr_29=0x800077c8
+_restfpr_29=0x80007814
+__nw__FUl=0x801c1c48
+__dl__FPv=0x801c1c90
+__register_global_object=0x800072a4
+__destroy_arr=0x800075bc
+
+# nw4r/ut/ut_list
+List_Init__Q24nw4r2utFPQ34nw4r2ut4ListUs=0x8010b9e0
+List_GetNth__Q24nw4r2utFPCQ34nw4r2ut4ListUs=0x8010bc40
+List_Append__Q24nw4r2utFPQ34nw4r2ut4ListPv=0x8010ba00
+List_GetNext__Q24nw4r2utFPCQ34nw4r2ut4ListPCv=0x8010bc00
+
+
 # EGG/core/eggController
 getNthController__Q23EGG17CoreControllerMgrFi=0x801c4ab8
 sInstance__Q23EGG17CoreControllerMgr=0x806f4a08
 
-# Sports2/Glf/Sp2GlfGameConfig
-getGlobalVar__Q23Glf10GameConfigFib=0x80269f4c
-setGlobalVar__Q23Glf10GameConfigFiib=0x80269f08
-sInstance__Q23Glf10GameConfig=0x806f4e98
+# RP/RPSystem/RPSysSceneCreator
+changeSceneAfterFade__17RPSysSceneCreatorFiPQ34nw4r2ut5Color=0x8022edfc
+sInstance__17RPSysSceneCreator=0x806f4c88
+
+# Sports2/Sp2StaticMem
+getStaticVar__Q23Sp29StaticMemFib=0x80269f4c
+setStaticVar__Q23Sp29StaticMemFiib=0x80269f08
+sInstance__Q23Sp29StaticMem=0x806f4e98
 
 # Sports2/Glf/Sp2GlfMain
 sInstance__Q23Glf7GlfMain=0x806f5498
 __ct__Q23Glf7GlfMainFv=0x80406c50
 __dt__Q23Glf7GlfMainFv=0x80406c10
+
+# Sports2/Sp2Util
+Print__3Sp2FPCcUlbfff=0x80373098

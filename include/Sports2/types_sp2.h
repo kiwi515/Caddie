@@ -2,10 +2,14 @@
 #define SP2_TYPES_H
 #include <types.h>
 
-namespace Glf
+namespace Sp2
 {
-    class GameConfig;
-    class GlfMain;
+    class StaticMem;
+    
+    namespace Glf
+    {
+        class GlfMain;
+    }
 }
 
 #endif
