@@ -68,7 +68,7 @@ namespace caddie
         StaticMem *sMem = StaticMem::getInstance();
         CADDIE_ASSERT(sMem != NULL);
 
-        sMem->setStaticVar(Glf::GLF_VAR_NEXTHOLE, holeOpt->GetValue() - 1, false);
+        sMem->setStaticVar(Glf::VAR_NEXTHOLE, holeOpt->GetValue() - 1, false);
     }
     kmBranch(0x80406a5c, &RepeatHoleIL);
 

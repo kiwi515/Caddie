@@ -9,8 +9,23 @@
 
 namespace caddie
 {
-    struct MenuOption;
-    struct MenuManager;
+    struct MenuOptionBase;
+    struct MenuIntOption;
+    struct MenuEnumOption;
+    struct MenuActionOption;
+    struct MenuBoolOption;
+
+    struct MenuBase;
+    struct GolfMenu;
+
+    struct MemManager;
+
+    struct SceneHook;
+    struct GolfSceneHook;
+
+    struct Timer;
+    struct IGTTimer;
+    struct RTATimer;
 }
 
 #endif

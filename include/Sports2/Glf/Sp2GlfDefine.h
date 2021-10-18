@@ -53,12 +53,12 @@ namespace Sp2
         // For use with StaticMem during the Glf scene
         enum GlfStaticMem
         {
-            GLF_VAR_GAMEMODE,
-            GLF_VAR_NEXTHOLE,
+            VAR_GAMEMODE,
+            VAR_NEXTHOLE,
             
-            GLF_VAR_BLINDFLAG = 3,
+            VAR_BLINDFLAG = 3,
 
-            GLF_VAR_PACKEDWIND = 7,
+            VAR_PACKEDWIND = 7,
         };
 
         struct PackedWind

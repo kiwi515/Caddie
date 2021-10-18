@@ -46,7 +46,7 @@ namespace caddie
 
         // Hole (zero-indexed)
         MenuIntOption *holeOption = (MenuIntOption *)menu->GetOption("Hole");
-        sMem->setStaticVar(Glf::GLF_VAR_NEXTHOLE, holeOption->GetValue() - 1, false);
+        sMem->setStaticVar(Glf::VAR_NEXTHOLE, holeOption->GetValue() - 1, false);
 
         // Pin type
         MenuEnumOption *pinOpt = (MenuEnumOption *)menu->GetOption("Pin Type");
@@ -54,7 +54,7 @@ namespace caddie
         // Wind (Speed + direction)
         MenuIntOption *windSpeedOpt = (MenuIntOption *)menu->GetOption("Wind Speed (m/s)");
         MenuEnumOption *windDirOpt = (MenuEnumOption *)menu->GetOption("Wind Direction");
-        sMem->setStaticVar(Glf::GLF_VAR_PACKEDWIND + (holeOption->GetValue() - 1), Glf::PackWind(windDirOpt->GetValue(), windSpeedOpt->GetValue()), false);
+        sMem->setStaticVar(Glf::VAR_PACKEDWIND + (holeOption->GetValue() - 1), Glf::PackWind(windDirOpt->GetValue(), windSpeedOpt->GetValue()), false);
 
         // Reload scene
         RPSysSceneCreator *creator = RPSysSceneCreator::getInstance();
