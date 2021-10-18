@@ -2,10 +2,12 @@
 #include "caddieMenuIntOption.h"
 #include "caddieMenuEnumOption.h"
 #include "caddieMenuActionOption.h"
+#include "caddieMenuBoolOption.h"
 #include "caddieAssert.h"
 
 #include <RPSysSceneCreator.h>
 
+#include <Sp2GlfMain.h>
 #include <Sp2Scene.h>
 #include <Sp2GlfDefine.h>
 #include <Sp2StaticMem.h>
@@ -60,7 +62,6 @@ namespace caddie
         ut::Color fade(0, 0, 0, 255);
         creator->changeSceneAfterFade(-1, &fade);
 
-        // Toggle menu
         return true;
     }
 
@@ -71,6 +72,8 @@ namespace caddie
         CADDIE_ASSERT(creator != NULL);
         ut::Color fade(0, 0, 0, 255);
         creator->changeSceneAfterFade(Sp2::SP2_MAINMENU, &fade);
+
+        return true;
     }
 
     void GolfMenu::Build()
@@ -78,12 +81,33 @@ namespace caddie
         CADDIE_ASSERT(GetNumOptions() == 0);
 
         PushBack(new MenuIntOption("Hole", 1, Sp2::Glf::HOLE_MAX));
+        
+        MenuBoolOption *repeatOpt = new MenuBoolOption("Repeat Hole");
+        repeatOpt->SetValue(1);
+        PushBack(repeatOpt);
+
         PushBack(new MenuEnumOption("Pin Type", 0, 6, sPinTypes));
         PushBack(new MenuEnumOption("Wind Direction", 0, Sp2::Glf::SOUTHWEST, sWindDirections));
         PushBack(new MenuIntOption("Wind Speed (m/s)", 0, Sp2::Glf::WIND_MAX));
         PushBack(new MenuActionOption("Apply Settings", &Action_ApplySettings));
         PushBack(new MenuActionOption("Quit Game", &Action_QuitGame));
     }
+
+    void GolfMenu::OnSetPin()
+    {
+        Glf::GlfMain *pMain = Glf::GlfMain::getInstance();
+        CADDIE_ASSERT(pMain != NULL);
+
+        GolfMenu *menu = GolfMenu::GetInstance();
+        CADDIE_ASSERT(menu != NULL);
+
+        int pin = ((MenuIntOption *)menu->GetOption("Pin Type"))->GetValue();
+        // Random
+        if (pin == 0) return;        
+
+        pMain->setPin(pin);
+    }
+    kmBranch(0x8040680c, &GolfMenu::OnSetPin);
 
     const char *GolfMenu::sWindDirections[] =
     {

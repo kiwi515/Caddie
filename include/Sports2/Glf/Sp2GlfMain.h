@@ -4,33 +4,41 @@
 
 #include "caddieAssert.h"
 
-namespace Glf
+namespace Sp2
 {
-    class GlfMain
+    namespace Glf
     {
-    public:
-        inline static GlfMain *getInstance()
+        class GlfMain
         {
-            return sInstance;
-        }
+        public:
+            inline static GlfMain *getInstance()
+            {
+                return sInstance;
+            }
 
-        inline u32 getGamemode() { return mGamemode; }
-        inline void setGamemode(u32 gm) { mGamemode = gm; }
+            u32 getGamemode() const { return mGamemode; }
+            void setGamemode(u32 gm) { mGamemode = gm; }
 
-        inline u32 getCurrentHole() { return mCurrentHole; }
-        inline void setCurrentHole(u32 i) { mCurrentHole = i; }
+            u32 getCurrentHole() const { return mCurrentHole; }
+            void setCurrentHole(u32 i) { mCurrentHole = i; }
 
-    private:
-        GlfMain();
-        virtual ~GlfMain();
+            u32 getPin() const { return mPin; }
+            void setPin(u32 i) { mPin = i; }
 
-        u32 mGamemode; // at 0x4
-        UNKWORD WORD_0x8;
-        u32 mCurrentHole; // at 0xC
-        char UNK_0x10[0x1D70];
+        private:
+            GlfMain();
+            virtual ~GlfMain();
 
-        static GlfMain *sInstance;
-    };
+            u32 mGamemode; // at 0x4
+            UNKWORD WORD_0x8;
+            u32 mCurrentHole; // at 0xC
+            char UNK_0xC[0x38 - 0xC];
+            u32 mPin;
+            char UNK_0x10[0x1D70];
+
+            static GlfMain *sInstance;
+        };
+    }
 }
 
 #endif

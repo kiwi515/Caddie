@@ -3,5 +3,8 @@
 #include <types.h>
 
 struct RPSysSceneCreator;
+struct RPSysScene;
+struct RPSysSceneMgr;
+struct RPSysSysWinMgr;
 
 #endif

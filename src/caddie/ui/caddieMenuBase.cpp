@@ -103,12 +103,6 @@ namespace caddie
         }
     }
 
-    void MenuBase::PauseCallback()
-    {
-        
-    }
-    kmBranch(0x802328d8, &MenuBase::PauseCallback);
-
     void MenuBase::Draw(f32 baseX, f32 baseY) const
     {
         if (!IsVisible()) return;

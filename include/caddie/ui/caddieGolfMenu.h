@@ -17,6 +17,7 @@ namespace caddie
         virtual void Calc();
         virtual void Build();
 
+        static void OnSetPin();
         static bool Action_ApplySettings();
         static bool Action_QuitGame();
 

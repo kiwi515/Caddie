@@ -9,4 +9,8 @@ namespace EGG
     struct Exception;
     struct ExpHeap;
     struct Heap;
+    struct Scene;
+    struct SceneCreator;
+    struct SceneManager;
+    struct Fader;
 }

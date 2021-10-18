@@ -44,6 +44,13 @@ setUserCallback__Q23EGG9ExceptionFPUs=0x801cec48
 getNthController__Q23EGG17CoreControllerMgrFi=0x801c4ab8
 sInstance__Q23EGG17CoreControllerMgr=0x806f4a08
 
+# RP/RPSystem/RPSysSceneMgr
+sInstance__13RPSysSceneMgr=0x806f4c98
+
+# RP/RPSystem/RPSysSysWinMgr
+CheckInput__14RPSysSysWinMgrFv=0x802352d4
+sInstance__14RPSysSysWinMgr=0x806f4ce0
+
 # RP/RPSystem/RPSysSceneCreator
 changeSceneAfterFade__17RPSysSceneCreatorFiPQ34nw4r2ut5Color=0x8022edfc
 sInstance__17RPSysSceneCreator=0x806f4c88
@@ -54,9 +61,9 @@ setStaticVar__Q23Sp29StaticMemFiib=0x80269f08
 sInstance__Q23Sp29StaticMem=0x806f4e98
 
 # Sports2/Glf/Sp2GlfMain
-sInstance__Q23Glf7GlfMain=0x806f5498
-__ct__Q23Glf7GlfMainFv=0x80406c50
-__dt__Q23Glf7GlfMainFv=0x80406c10
+sInstance__Q33Sp23Glf7GlfMain=0x806f5498
+__ct__Q33Sp23Glf7GlfMainFv=0x80406c50
+__dt__Q33Sp23Glf7GlfMainFv=0x80406c10
 
 # Sports2/Sp2Util
 Print__3Sp2FPCcUlbfff=0x80373098

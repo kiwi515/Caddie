@@ -1,5 +1,5 @@
-#ifndef RP_SYSTEM_SCENE_MGR_H
-#define RP_SYSTEM_SCENE_MGR_H
+#ifndef RP_SYSTEM_SCENE_CREATOR_H
+#define RP_SYSTEM_SCENE_CREATOR_H
 #include "types_rp.h"
 #include "types_nw4r.h"
 

@@ -23,8 +23,6 @@ namespace caddie
         virtual void Calc();
         virtual void Build() = 0;
 
-        static void PauseCallback();
-
         void Draw(f32 baseX, f32 baseY) const;
         void DumpAll(f32 baseX, f32 baseY) const;
         virtual void DoTick();
