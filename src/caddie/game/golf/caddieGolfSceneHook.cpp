@@ -18,7 +18,7 @@ namespace caddie
 {
     void GolfSceneHook::OnInit()
     {
-        
+
     }
 
     void GolfSceneHook::OnFrame()
@@ -29,6 +29,4 @@ namespace caddie
         menu->Calc();
         menu->Draw(GOLF_MENU_X, GOLF_MENU_Y);
     }
-
-    IGTTimer GolfSceneHook::sHoleOutIGT;
 }

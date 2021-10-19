@@ -14,7 +14,6 @@ namespace caddie
         static void OnFrame();
 
     private:
-        static IGTTimer sHoleOutIGT;
     };
 }
 
