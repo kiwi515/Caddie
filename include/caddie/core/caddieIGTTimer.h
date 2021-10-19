@@ -28,6 +28,19 @@ namespace caddie
         virtual u32 Elapsed() const { return mElapsed; }
         void SetElapsed(s32 time) { mElapsed = time; }
 
+        virtual void ToString(char *buf) const
+        {
+            u32 frames = Elapsed();
+
+            u32 seconds = frames / 60;
+            frames %= 60;
+
+            u32 minutes = seconds / 60;
+            seconds %= 60;
+
+            sprintf(buf, "%0.2d:%0.2d:%0.2d\n", minutes, seconds, frames);
+        }
+
     private:
         s32 mElapsed;
     };

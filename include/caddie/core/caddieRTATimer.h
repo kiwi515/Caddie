@@ -28,7 +28,14 @@ namespace caddie
             mEndTick = OSGetTick();
         }
 
+        // TODO: ticks->seconds
         virtual u32 Elapsed() const { return mEndTick - mStartTick; }
+
+        // TODO
+        virtual void ToString(char *buf) const
+        {
+
+        }
 
     private:
         u32 mStartTick;
