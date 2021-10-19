@@ -18,11 +18,7 @@ namespace caddie
 {
     void GolfSceneHook::OnInit()
     {
-        sHoleOutIGT.Start();
-        // The scene fader takes 2 frames to start fading in
-        // Since timing begins on the first visible fade in frame,
-        // we offset the timer by -2 frames
-        sHoleOutIGT.SetElapsed(-2);
+        
     }
 
     void GolfSceneHook::OnFrame()
