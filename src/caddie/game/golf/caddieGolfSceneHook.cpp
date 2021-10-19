@@ -6,23 +6,29 @@
 #define COLOR_TIMER_OUTLINE 0xFF000000
 
 #define GOLF_TIMER_X 650.0f
-#define GOLF_TIMER_Y 30.0f
+#define GOLF_TIMER_Y 20.0f
 
-#define GOLF_TIMER_SCALE 1.5f
+#define GOLF_TIMER_SCALE 1.0f
 
 namespace caddie
 {
-    UNKTYPE * GolfSceneHook::OnInit(UNKTYPE *obj)
+    void GolfSceneHook::OnInit()
     {
-        sIGTTimer.Start();
-
-        return obj;
+        sHoleOutIGT.Start();
+        // The scene fader takes 2 frames to start fading in
+        // Since timing begins on the first visible fade in frame,
+        // we offset the timer by -2 frames
+        sHoleOutIGT.SetElapsed(-2);
     }
 
-    UNKTYPE * GolfSceneHook::OnFrame(UNKTYPE *obj)
+    void GolfSceneHook::OnFrame()
     {
-        sIGTTimer.Update();
-        u32 frames = sIGTTimer.Elapsed();
+        if (!*((bool *)0x80CFBAED))
+        {
+            sHoleOutIGT.Update();
+        }
+
+        u32 frames = sHoleOutIGT.Elapsed();
 
         u32 seconds = frames / 60;
         frames %= 60;
@@ -31,11 +37,9 @@ namespace caddie
         seconds %= 60;
 
         char buf[512];
-        sprintf(buf, "IGT: %0.2d:%0.2d:%0.2d\n", minutes, seconds, frames);
+        sprintf(buf, "Hole Out (IGT): %0.2d:%0.2d:%0.2d\n", minutes, seconds, frames);
         Sp2::PrintOutline(buf, COLOR_TIMER_TEXT, COLOR_TIMER_OUTLINE, false, GOLF_TIMER_X, GOLF_TIMER_Y, GOLF_TIMER_SCALE);
-
-        return obj;
     }
 
-    IGTTimer GolfSceneHook::sIGTTimer;
+    IGTTimer GolfSceneHook::sHoleOutIGT;
 }

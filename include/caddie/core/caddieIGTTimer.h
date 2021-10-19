@@ -18,19 +18,18 @@ namespace caddie
             mElapsed = 0;
         }
 
-        virtual void Update() { mElapsed++; }
+        virtual void Update() { if (IsRunning()) mElapsed++; }
         
         virtual void Stop()
         {
             Timer::Stop();
         }
 
-    #ifdef CADDIE_REGION_USA
         virtual u32 Elapsed() const { return mElapsed; }
-    #endif
+        void SetElapsed(s32 time) { mElapsed = time; }
 
     private:
-        u32 mElapsed;
+        s32 mElapsed;
     };
 }
 

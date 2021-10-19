@@ -10,11 +10,11 @@ namespace caddie
     class GolfSceneHook
     {
     public:
-        static UNKTYPE * OnInit(UNKTYPE *);
-        static UNKTYPE * OnFrame(UNKTYPE *);
+        static void OnInit();
+        static void OnFrame();
 
     private:
-        static IGTTimer sIGTTimer;
+        static IGTTimer sHoleOutIGT;
     };
 }
 

@@ -15,6 +15,8 @@ namespace caddie
 
         virtual u32 Elapsed() const = 0;
 
+        bool IsRunning() const { return mIsRunning; }
+
     private:
         bool mIsRunning;
     };

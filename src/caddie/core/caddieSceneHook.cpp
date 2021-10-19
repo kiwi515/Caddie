@@ -17,7 +17,7 @@ namespace caddie
         switch(mgr->getCurrentSceneID())
         {
             case Sp2::SP2_GOLF:
-                GolfSceneHook::OnInit(obj);
+                GolfSceneHook::OnInit();
                 break;
         }
 
@@ -33,7 +33,7 @@ namespace caddie
         switch(mgr->getCurrentSceneID())
         {
             case Sp2::SP2_GOLF:
-                GolfSceneHook::OnFrame(obj);
+                GolfSceneHook::OnFrame();
                 break;
         }
 
