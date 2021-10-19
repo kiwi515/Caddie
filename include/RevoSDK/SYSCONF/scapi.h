@@ -7,7 +7,7 @@ extern "C" {
 
 u32 SCGetLanguage();
 
-enum SCLang
+typedef enum
 {
     SC_JAPANESE = 0,
     SC_ENGLISH = 1,
@@ -19,7 +19,7 @@ enum SCLang
     SC_CHINESE_S = 7,
     SC_CHINESE_T = 8,
     SC_KOREAN = 9
-};
+} SCLang;
 
 #ifdef __cplusplus
 }
