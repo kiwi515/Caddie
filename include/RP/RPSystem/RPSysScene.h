@@ -4,7 +4,7 @@
 
 #include "eggScene.h"
 
-class RPScene : public EGG::Scene
+class RPSysScene : public EGG::Scene
 {
 
 };
