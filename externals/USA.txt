@@ -61,6 +61,7 @@ setStaticVar__Q23Sp29StaticMemFiib=0x80269f08
 sInstance__Q23Sp29StaticMem=0x806f4e98
 
 # Sports2/Glf/Sp2GlfMain
+choosePin__Q33Sp23Glf7GlfMainFi=0x804066e0
 sInstance__Q33Sp23Glf7GlfMain=0x806f5498
 __ct__Q33Sp23Glf7GlfMainFv=0x80406c50
 __dt__Q33Sp23Glf7GlfMainFv=0x80406c10

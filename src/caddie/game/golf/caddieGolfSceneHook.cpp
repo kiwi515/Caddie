@@ -1,6 +1,8 @@
 #include "caddieGolfSceneHook.h"
 #include "caddieGolfMenu.h"
+#include "caddieMenuEnumOption.h"
 
+#include <Sp2GlfMain.h>
 #include <Sp2Util.h>
 
 // Timer defs
@@ -16,9 +18,11 @@
 
 namespace caddie
 {
+    using namespace Sp2;
+
     void GolfSceneHook::OnInit()
     {
-
+        
     }
 
     void GolfSceneHook::OnFrame()

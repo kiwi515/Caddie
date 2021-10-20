@@ -25,6 +25,8 @@ namespace Sp2
             u32 getPin() const { return mPin; }
             void setPin(u32 i) { mPin = i; }
 
+            void choosePin(UNKWORD);
+
         private:
             GlfMain();
             virtual ~GlfMain();
@@ -32,9 +34,9 @@ namespace Sp2
             u32 mGamemode; // at 0x4
             UNKWORD WORD_0x8;
             u32 mCurrentHole; // at 0xC
-            char UNK_0xC[0x38 - 0xC];
-            u32 mPin;
-            char UNK_0x10[0x1D70];
+            char UNK_0x10[0x38 - 0x10];
+            u32 mPin; // at 0x38
+            char UNK_0x3C[0x1D70 - 0x3C];
 
             static GlfMain *sInstance;
         };

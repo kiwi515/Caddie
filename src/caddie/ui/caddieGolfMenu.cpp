@@ -48,9 +48,6 @@ namespace caddie
         MenuIntOption *holeOption = (MenuIntOption *)menu->GetOption("Hole");
         sMem->setStaticVar(Glf::VAR_NEXTHOLE, holeOption->GetValue() - 1, false);
 
-        // Pin type
-        MenuEnumOption *pinOpt = (MenuEnumOption *)menu->GetOption("Pin Type");
-
         // Wind (Speed + direction)
         MenuIntOption *windSpeedOpt = (MenuIntOption *)menu->GetOption("Wind Speed (m/s)");
         MenuEnumOption *windDirOpt = (MenuEnumOption *)menu->GetOption("Wind Direction");
@@ -92,22 +89,6 @@ namespace caddie
         PushBack(new MenuActionOption("Apply Settings", &Action_ApplySettings));
         PushBack(new MenuActionOption("Quit Game", &Action_QuitGame));
     }
-
-    void GolfMenu::OnSetPin()
-    {
-        Glf::GlfMain *pMain = Glf::GlfMain::getInstance();
-        CADDIE_ASSERT(pMain != NULL);
-
-        GolfMenu *menu = GolfMenu::GetInstance();
-        CADDIE_ASSERT(menu != NULL);
-
-        int pin = ((MenuIntOption *)menu->GetOption("Pin Type"))->GetValue();
-        // Random
-        if (pin == 0) return;        
-
-        pMain->setPin(pin);
-    }
-    kmBranch(0x8040680c, &GolfMenu::OnSetPin);
 
     const char *GolfMenu::sWindDirections[] =
     {

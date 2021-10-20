@@ -8,6 +8,8 @@ namespace caddie
     bool CanPlayNextHole(const Sp2::Glf::GlfMain *);
     void RepeatHoleIL();
     void DisablePause();
+    bool HasDoneABCheck();
+    void SetPinPos();
 }
 
 #endif

@@ -2,6 +2,7 @@
 #include "caddieGolfMenu.h"
 #include "caddieMenuIntOption.h"
 #include "caddieMenuBoolOption.h"
+#include "caddieMenuEnumOption.h"
 
 #include <Sp2GlfMain.h>
 #include <Sp2GlfDefine.h>
@@ -23,7 +24,6 @@ namespace caddie
         MenuBoolOption *repeatOpt = (MenuBoolOption *)menu->GetOption("Repeat Hole");
         CADDIE_ASSERT(repeatOpt != NULL);
 
-        CADDIE_BREAKPOINT;
         if (repeatOpt->GetValue()) return true;
 
         int hole = pMain->getCurrentHole();
@@ -109,4 +109,29 @@ namespace caddie
         CADDIE_ASM_END
     }
     kmBranch(0x80232970, &DisablePause);
+
+    // Disable AB check sequence
+    bool HasDoneABCheck()
+    {
+        return true;
+    }
+    kmBranch(0x8026a298, &HasDoneABCheck);
+
+    void SetPinPos()
+    {
+        Glf::GlfMain *main = Glf::GlfMain::getInstance();
+        CADDIE_ASSERT(main != NULL);
+
+        GolfMenu *menu = GolfMenu::GetInstance();
+        CADDIE_ASSERT(menu != NULL);
+
+        MenuEnumOption *pinOpt = (MenuEnumOption *)menu->GetOption("Pin Type");
+        if (!pinOpt->IsEnabled()) return;
+
+        // Subtract 1 because of the "Random" index
+        int pin = pinOpt->GetValue() - 1;
+        // Random selected
+        if (pin != -1) main->setPin(pin);
+    }
+    kmBranch(0x8040680c, &SetPinPos);
 }

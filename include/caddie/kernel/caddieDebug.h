@@ -11,7 +11,7 @@ typedef void (* Func)();
 // Set a Dolphin breakpoint for this address
 #ifndef NDEBUG
 #define CADDIE_BREAKPOINT do { \
-    CADDIE_LOG("BREAKPOINT! " __FILE__ ", in" GETSTR(__func__) " (" GETSTR(__LINE__) ")\n"); \
+    CADDIE_LOG_EX("BREAKPOINT! %s, in %s (line %d)\n", __FILE__, __FUNCTION__, __LINE__); \
     (*((Func)0x80360ff0))(); \
 } while(0)
 #else

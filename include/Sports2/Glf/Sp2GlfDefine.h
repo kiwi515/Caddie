@@ -73,8 +73,6 @@ namespace Sp2
         {
             PackedWind wind;
 
-            CADDIE_BREAKPOINT;
-
             wind.mDirection = direction;
             wind.mSpeed = speed;
 
