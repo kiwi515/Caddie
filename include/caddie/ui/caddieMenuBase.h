@@ -20,8 +20,9 @@ namespace caddie
         }
 
         virtual ~MenuBase();
-        virtual void Calc();
+        
         virtual void Build() = 0;
+        virtual void Calc();
 
         void Draw(f32 baseX, f32 baseY) const;
         void DumpAll(f32 baseX, f32 baseY) const;
@@ -34,10 +35,35 @@ namespace caddie
             nw4r::ut::List_Append(&mOptions, option);
         }
 
+        void SaveChanges()
+        {
+            UT_LIST_FOREACH(&mOptions, MenuOptionBase, o)
+            {
+                o->SaveChanges();
+            }
+        }
+
+        void DeleteChanges()
+        {
+            UT_LIST_FOREACH(&mOptions, MenuOptionBase, o)
+            {
+                o->DeleteChanges();
+            }
+        }
+
         bool IsVisible() const { return mIsVisible; }
         void Show() { mIsVisible = true; }
-        void Hide() { mIsVisible = false; }
-        void Toggle() { mIsVisible = !mIsVisible; }
+        void Hide()
+        {
+            mIsVisible = false;
+            // Revert unsaved changes to the options when closing the menu
+            DeleteChanges();
+        }
+        void Toggle() 
+        {
+            if (mIsVisible) Hide();
+            else Show();
+        }
 
         bool Pressed(u16 mask) const
         {
@@ -70,6 +96,8 @@ namespace caddie
             return NULL;
         }
 
+        const nw4r::ut::List * GetOptions() const { return &mOptions; }
+        nw4r::ut::List * GetOptions() { return &mOptions; }
         int GetNumOptions() const { return mOptions.mSize; }
 
     private:

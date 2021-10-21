@@ -8,7 +8,7 @@ namespace caddie
         Sp2::PrintOutline(GetName(), color, shadow, false, x, y);
 
         // Option value
-        const char *value = (GetValue() ? "Yes" : "No");
+        const char *value = (GetUnsavedValue() ? "Yes" : "No");
         Sp2::PrintOutline((IsEnabled() ? value : "DISABLED"), (IsEnabled() ? color : COLOR_DISABLED), shadow, false, x + gapX, y);
     }
 }

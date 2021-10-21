@@ -8,18 +8,20 @@ namespace caddie
     class MenuActionOption : public MenuOptionBase
     {
     public:
-        // True return = toggle menu visibility after action
-        typedef bool (* Action)();
+        typedef MenuCommand (* Action)();
 
         MenuActionOption(const char *name, Action action) : MenuOptionBase(name), mAction(action) {}
         virtual ~MenuActionOption() {}
 
-        virtual void Draw(f32 x, f32 y, f32 gapX, u32 color, u32 shadow = 0xFF000000) const;
-
-        virtual bool OnConfirm() const { return (*mAction)(); }
-
         virtual MenuOptionBase& operator++(int) { return *this; }
         virtual MenuOptionBase& operator--(int) { return *this; }
+
+        virtual void SaveChanges() {}
+        virtual void DeleteChanges() {}
+
+        virtual void Draw(f32 x, f32 y, f32 gapX, u32 color, u32 shadow = 0xFF000000) const;
+
+        virtual MenuCommand OnConfirm() const { return (*mAction)(); }
 
     private:
         Action mAction;

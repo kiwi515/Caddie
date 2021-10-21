@@ -14,8 +14,10 @@ namespace caddie
     public:
         MenuEnumOption(const char *name, int min, int max, const char **table) : MenuIntOption(name, min, max), mTable(table) {}
         virtual ~MenuEnumOption() {}
+
         virtual void Draw(f32 x, f32 y, f32 gapX, u32 color, u32 shadow = 0xFF000000) const;
 
+        const char ** GetTable() const { return mTable; }
         void SetTable(const char **table) { mTable = table; }
 
     private:

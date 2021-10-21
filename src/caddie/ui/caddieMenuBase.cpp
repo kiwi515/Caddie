@@ -53,7 +53,15 @@ namespace caddie
             MenuOptionBase *pSelection = (MenuOptionBase *)ut::List_GetNth(&mOptions, mSelection);
             CADDIE_ASSERT(pSelection != NULL);
 
-            if (pSelection->OnConfirm()) Hide();
+            switch(pSelection->OnConfirm())
+            {
+                case MenuOptionBase::MENU_SHOW:
+                    Show();
+                    break;
+                case MenuOptionBase::MENU_HIDE:
+                    Hide();
+                    break;
+            }
         }
 
         // Option select cooldown

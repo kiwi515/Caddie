@@ -14,10 +14,8 @@ namespace caddie
     public:
         MenuBoolOption(const char *name) : MenuIntOption(name, 0, 1) {}
         virtual ~MenuBoolOption() {}
+
         virtual void Draw(f32 x, f32 y, f32 gapX, u32 color, u32 shadow = 0xFF000000) const;
-
-    private:
-
     };
 }
 

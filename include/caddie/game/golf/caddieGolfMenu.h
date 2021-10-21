@@ -2,6 +2,7 @@
 #define CADDIE_GAME_GOLF_MENU_H
 #include "types_caddie.h"
 #include "caddieMenuBase.h"
+#include "caddieMenuOptionBase.h"
 
 namespace caddie
 {
@@ -14,11 +15,16 @@ namespace caddie
             return &instance;
         }
 
-        virtual void Calc();
         virtual void Build();
+        virtual void Calc();
 
-        static bool Action_ApplySettings();
-        static bool Action_QuitGame();
+        static void ApplyHoleSettings();
+        static void ApplyWindSettings();
+        static void ApplyPinSettings();
+
+    private:
+        static MenuOptionBase::MenuCommand Action_SaveReload();
+        static MenuOptionBase::MenuCommand Action_QuitGame();
 
     private:
         GolfMenu() : MenuBase() { Build(); }

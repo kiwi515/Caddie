@@ -11,21 +11,31 @@ namespace caddie
     class MenuOptionBase
     {
     public:
+        enum MenuCommand
+        {
+            MENU_NO_OP,
+            MENU_SHOW,
+            MENU_HIDE
+        };
+
         MenuOptionBase(const char *name) : mName(name), mIsEnabled(true) {}
         virtual ~MenuOptionBase() {}
         
-        virtual void Draw(f32 x, f32 y, f32 gapX, u32 color, u32 shadow = 0xFF000000) const = 0;
+        const char * GetName() const { return mName; }
+        void SetName(const char *name) { mName = name; }
+
+        bool IsEnabled() const { return mIsEnabled; }
+        void SetEnabled(bool enable) { mIsEnabled = enable; }
+
         virtual MenuOptionBase& operator++(int) = 0;
         virtual MenuOptionBase& operator--(int) = 0;
 
-        virtual void SaveState() = 0;
-        virtual void LoadState() = 0;
+        virtual void SaveChanges() = 0;
+        virtual void DeleteChanges() = 0;
 
-        virtual bool OnConfirm() const = 0;
+        virtual void Draw(f32 x, f32 y, f32 gapX, u32 color, u32 shadow = 0xFF000000) const = 0;
 
-        const char * GetName() const { return mName; }
-        bool IsEnabled() const { return mIsEnabled; }
-        void SetEnabled(bool enable) { mIsEnabled = enable; }
+        virtual MenuCommand OnConfirm() const = 0;
 
     public:
         nw4r::ut::Node mNode;

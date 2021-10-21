@@ -1,6 +1,7 @@
 #include "caddieGolfSceneHook.h"
 #include "caddieGolfMenu.h"
 #include "caddieMenuEnumOption.h"
+#include "caddieGolfMisc.h"
 
 #include <Sp2GlfMain.h>
 #include <Sp2Util.h>
@@ -22,7 +23,7 @@ namespace caddie
 
     void GolfSceneHook::OnInit()
     {
-        
+
     }
 
     void GolfSceneHook::OnFrame()
@@ -33,4 +34,10 @@ namespace caddie
         menu->Calc();
         menu->Draw(GOLF_MENU_X, GOLF_MENU_Y);
     }
+
+    void GolfSceneHook::OnUpdateHole()
+    {
+        RepeatHoleIL();
+    }
+    kmBranch(0x80406a5c, &GolfSceneHook::OnUpdateHole);
 }

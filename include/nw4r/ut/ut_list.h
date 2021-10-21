@@ -2,6 +2,10 @@
 #define NW4R_UT_LIST
 #include "types_nw4r.h"
 
+#define UT_LIST_FOREACH(list, type, name) \
+	type *name = NULL; \
+	while (name = (type *)nw4r::ut::List_GetNext(list, name))
+
 namespace nw4r
 {
 	namespace ut

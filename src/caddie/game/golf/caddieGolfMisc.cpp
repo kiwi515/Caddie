@@ -24,7 +24,7 @@ namespace caddie
         MenuBoolOption *repeatOpt = (MenuBoolOption *)menu->GetOption("Repeat Hole");
         CADDIE_ASSERT(repeatOpt != NULL);
 
-        if (repeatOpt->GetValue()) return true;
+        if (repeatOpt->GetSavedValue()) return true;
 
         int hole = pMain->getCurrentHole();
         switch(pMain->getGamemode())
@@ -43,7 +43,6 @@ namespace caddie
             case Glf::GM_CLASSIC_B:
                 return (hole < 14);
             case Glf::GM_CLASSIC_C:
-                return (hole < 17);
             case Glf::GM_CLASSIC_NINE:
             case Glf::GM_EIGHTEEN_HOLE:
                 return (hole < 17);
@@ -58,19 +57,16 @@ namespace caddie
     {
         GolfMenu *menu = GolfMenu::GetInstance();
         CADDIE_ASSERT(menu != NULL);
-
-        MenuBoolOption *repeatOpt = (MenuBoolOption *)menu->GetOption("Repeat Hole");
-        if (!repeatOpt->GetValue()) return;
-
-        MenuIntOption *holeOpt = (MenuIntOption *)menu->GetOption("Hole");
-        CADDIE_ASSERT(holeOpt != NULL);
-
         StaticMem *sMem = StaticMem::getInstance();
         CADDIE_ASSERT(sMem != NULL);
 
-        sMem->setStaticVar(Glf::VAR_NEXTHOLE, holeOpt->GetValue() - 1, false);
+        MenuBoolOption *repeatOpt = (MenuBoolOption *)menu->GetOption("Repeat Hole");
+        if (!repeatOpt->GetSavedValue()) return;
+
+        // Hole option is one indexed
+        int hole = ((MenuIntOption *)menu->GetOption("Hole"))->GetSavedValue() - 1;
+        sMem->setStaticVar(Glf::VAR_NEXTHOLE, hole, false);
     }
-    kmBranch(0x80406a5c, &RepeatHoleIL);
 
     void DisablePause()
     {
@@ -116,22 +112,4 @@ namespace caddie
         return true;
     }
     kmBranch(0x8026a298, &HasDoneABCheck);
-
-    void SetPinPos()
-    {
-        Glf::GlfMain *main = Glf::GlfMain::getInstance();
-        CADDIE_ASSERT(main != NULL);
-
-        GolfMenu *menu = GolfMenu::GetInstance();
-        CADDIE_ASSERT(menu != NULL);
-
-        MenuEnumOption *pinOpt = (MenuEnumOption *)menu->GetOption("Pin Type");
-        if (!pinOpt->IsEnabled()) return;
-
-        // Subtract 1 because of the "Random" index
-        int pin = pinOpt->GetValue() - 1;
-        // Random selected
-        if (pin != -1) main->setPin(pin);
-    }
-    kmBranch(0x8040680c, &SetPinPos);
 }

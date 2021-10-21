@@ -9,7 +9,6 @@ namespace caddie
     void RepeatHoleIL();
     void DisablePause();
     bool HasDoneABCheck();
-    void SetPinPos();
 }
 
 #endif

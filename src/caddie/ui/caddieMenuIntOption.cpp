@@ -10,7 +10,7 @@ namespace caddie
 
         // Option value
         char buf[512];
-        sprintf(buf, "%d", mValue);
+        sprintf(buf, "%d", mUnsavedValue);
         Sp2::PrintOutline((IsEnabled() ? buf : "DISABLED"), (IsEnabled() ? color : COLOR_DISABLED), shadow, false, x + gapX, y);
     }
 }
