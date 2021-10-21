@@ -18,6 +18,9 @@ namespace caddie
         virtual MenuOptionBase& operator++(int) = 0;
         virtual MenuOptionBase& operator--(int) = 0;
 
+        virtual void SaveState() = 0;
+        virtual void LoadState() = 0;
+
         virtual bool OnConfirm() const = 0;
 
         const char * GetName() const { return mName; }

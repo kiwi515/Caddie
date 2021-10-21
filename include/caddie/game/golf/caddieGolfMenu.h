@@ -1,5 +1,5 @@
-#ifndef CADDIE_UI_GOLF_MENU_H
-#define CADDIE_UI_GOLF_MENU_H
+#ifndef CADDIE_GAME_GOLF_MENU_H
+#define CADDIE_GAME_GOLF_MENU_H
 #include "types_caddie.h"
 #include "caddieMenuBase.h"
 
