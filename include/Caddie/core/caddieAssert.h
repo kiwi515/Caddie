@@ -11,10 +11,10 @@
 
 #ifndef NDEBUG
 #define CADDIE_LOG(msg) \
-    OSReport(msg);
+    OSReport(msg)
 
 #define CADDIE_LOG_EX(msg, ...) \
-    OSReport(msg, __VA_ARGS__);
+    OSReport(msg, __VA_ARGS__)
 
 #define CADDIE_ASSERT(exp) \
     if (!(exp)) caddie::caddie_fail_assert(__FILE__, __LINE__, #exp "\n")
