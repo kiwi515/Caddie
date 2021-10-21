@@ -20,7 +20,6 @@ namespace caddie
         }
 
         virtual ~MenuBase();
-        
         virtual void Build() = 0;
         virtual void Calc();
 
@@ -86,8 +85,8 @@ namespace caddie
         MenuOptionBase * GetOption(const char *name) const
         {
             CADDIE_ASSERT(name != NULL);
-            MenuOptionBase *node = NULL;
-            while (node = (MenuOptionBase *)nw4r::ut::List_GetNext(&mOptions, node))
+
+            UT_LIST_FOREACH(&mOptions, MenuOptionBase, node)
             {
                 if (strcmp(name, node->GetName()) == 0) return node;
             }
