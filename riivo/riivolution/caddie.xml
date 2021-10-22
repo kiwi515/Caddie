@@ -1,0 +1,22 @@
+<wiidisc version="1" root="">
+	<id game="RZT"/>
+
+	<options>
+		<section name ="Caddie">
+			<option name="Custom Code" default="1">
+				<choice name="Enabled">
+					<patch id="CADDIE_CODE"/>
+				</choice>
+			</option>
+		</section>
+	</options>
+	
+	<patch id="CADDIE_CODE">
+        <!-- Module loader -->
+        <file disc="main.dol" external="/caddie/sys/main.dol"/>
+        <!-- Module files -->
+        <folder external="/caddie/files/modules"/>
+        <folder disc="/modules" external="/caddie/files/modules" create="true"/>
+	</patch>
+	
+</wiidisc>

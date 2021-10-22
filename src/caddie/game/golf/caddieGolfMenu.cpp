@@ -42,7 +42,7 @@ namespace caddie
 
         // Update pin setting
         MenuIntOption *holeOpt = (MenuIntOption *)GetOption("Hole");
-        int hole = holeOpt->GetSavedValue();
+        int hole = holeOpt->GetUnsavedValue();
 
         MenuEnumOption *pinOpt = (MenuEnumOption *)GetOption("Pin Type");
         // Hole 18 has one pin

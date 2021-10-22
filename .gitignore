@@ -4,6 +4,8 @@ modules/
 baserom/
 tools/*
 romfs/
+riivo/caddie/
+distro/
 
 *.dol
 *.bin
