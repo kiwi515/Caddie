@@ -63,6 +63,9 @@ namespace caddie
         TLinkList() : mHead(NULL), mTail(NULL), mSize(0) {}
         ~TLinkList() { Clear(); }
 
+        u32 Size() const { return mSize; }
+        bool IsEmpty() const { return (mSize == 0); }
+
         Iterator Begin() const
         {
             CADDIE_ASSERT(mHead != NULL);
@@ -91,9 +94,6 @@ namespace caddie
             while (n-- > 0) it++;
             return &*it;
         }
-
-        u32 Size() const { return mSize; }
-        bool IsEmpty() const { return (mSize == 0); }
         
         void Prepend(T *obj)
         {
