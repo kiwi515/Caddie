@@ -106,8 +106,6 @@ namespace caddie
     {
         if (!IsVisible()) return;
 
-        CADDIE_BREAKPOINT;
-
         int i = 0;
         for (MenuOptionList::Iterator it = mOptions.Begin(); it != mOptions.End(); it++, i++)
         {
@@ -115,8 +113,6 @@ namespace caddie
 
             // Disabled options are printed in gray for readability
             it->Draw(baseX, baseY + THIS_OPTION_HEIGHT, OPTION_GAP_X, (it->IsEnabled()) ? COLOR_ENABLED : COLOR_DISABLED);
-
-            CADDIE_BREAKPOINT;
         }
 
         // Print cursor

@@ -4,24 +4,25 @@
 
 namespace caddie
 {
+    struct TLinkListNode
+    {
+        TLinkListNode() : mNext(NULL), mPrev(NULL) {}
+        ~TLinkListNode() {}
+
+        TLinkListNode *mNext;
+        TLinkListNode *mPrev;
+    };
+
     template <typename T, int ofs>
     class TLinkList
     {
     public:
-        struct Node
-        {
-            Node() : mNext(NULL), mPrev(NULL) {}
-            ~Node() {}
-
-            inline T * GetElem() const { return (T *)((char *)this + ofs); }
-
-            Node *mNext;
-            Node *mPrev;
-        };
+        static inline TLinkListNode * GetNodeFromElem(T *elem) { return (TLinkListNode *)((char *)elem + ofs); }
+        static inline T * GetElemFromNode(TLinkListNode *node) { return (T *)((char *)node - ofs); }
 
         struct Iterator
         {
-            Iterator(Node *node) : mNode(node) {}
+            Iterator(TLinkListNode *node) : mNode(node) {}
             ~Iterator() {}
 
             Iterator operator++()
@@ -36,7 +37,6 @@ namespace caddie
             }
             Iterator operator++(int)
             {
-                CADDIE_BREAKPOINT;
                 Iterator curr = Iterator(mNode);
                 mNode = mNode->mNext;
                 return curr;
@@ -48,16 +48,16 @@ namespace caddie
                 return curr;                
             }
 
-            T * operator->() const { return mNode->GetElem(); }
-            T & operator*() const { return *mNode->GetElem(); }
+            T * operator->() const { return GetElemFromNode(mNode); }
+            T & operator*() const { return *GetElemFromNode(mNode); }
 
             bool operator==(Iterator rhs) const { return (mNode == rhs.mNode); }
             bool operator!=(Iterator rhs) const { return (mNode != rhs.mNode); }
 
             void operator=(Iterator rhs) { mNode = rhs.mNode; }
-            void operator=(Node *rhs) { mNode = rhs; }
+            void operator=(TLinkListNode *rhs) { mNode = rhs; }
 
-            Node *mNode;
+            TLinkListNode *mNode;
         };
 
         TLinkList() : mHead(NULL), mTail(NULL), mSize(0) {}
@@ -71,8 +71,8 @@ namespace caddie
 
         Iterator End() const
         {
-            CADDIE_ASSERT(mTail != NULL);
-            return Iterator(mTail);
+            // Iterator is only designed to go forward for now
+            return Iterator(NULL);
         }
 
         T * Front() const
@@ -98,7 +98,7 @@ namespace caddie
         void Prepend(T *obj)
         {
             CADDIE_ASSERT(obj != NULL);
-            Node *n = GetNodeFromElem(obj);
+            TLinkListNode *n = GetNodeFromElem(obj);
 
             if (mHead == NULL)
             {
@@ -118,7 +118,7 @@ namespace caddie
         void Append(T *obj)
         {
             CADDIE_ASSERT(obj != NULL);
-            Node *n = GetNodeFromElem(obj);
+            TLinkListNode *n = GetNodeFromElem(obj);
 
             if (mTail == NULL)
             {
@@ -170,8 +170,8 @@ namespace caddie
             }
             else
             {
-                Node *before = it.mNode->mPrev;
-                Node *after = it.mNode->mNext;
+                TLinkListNode *before = it.mNode->mPrev;
+                TLinkListNode *after = it.mNode->mNext;
 
                 before->mNext = after;
                 after->mPrev = before;
@@ -193,12 +193,25 @@ namespace caddie
         }
 
     private:
-        inline Node * GetNodeFromElem(T *elem) { return (Node *)((char *)elem - ofs); }
-        void Insert(Iterator it, Node *node);
+        void Insert(Iterator it, TLinkListNode *node)
+        {
+            CADDIE_ASSERT(node != NULL);
+            
+            TLinkListNode *after = it.mNode;
+            TLinkListNode *before = after->mPrev;
+            CADDIE_ASSERT_EX(before != NULL, "List is broken!!!\n");
+
+            before->mNext = node;
+            node->mPrev = before;
+            after->mPrev = node;
+            node->mNext = after;
+
+            mSize++;
+        }
 
     private:
-        Node *mHead;
-        Node *mTail;
+        TLinkListNode *mHead;
+        TLinkListNode *mTail;
         u32 mSize;
     };
 }

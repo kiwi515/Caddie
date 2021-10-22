@@ -14,6 +14,7 @@ namespace caddie
 
     // core
     template <typename T, int ofs> struct TLinkList;
+    struct TLinkListNode;
     struct Timer;
     struct IGTTimer;
     struct RTATimer;

@@ -1,8 +1,7 @@
 #ifndef CADDIE_UI_MENU_OPTION_BASE_H
 #define CADDIE_UI_MENU_OPTION_BASE_H
 #include "types_caddie.h"
-
-#include "ut_list.h"
+#include "caddieTLinkList.h"
 
 #define COLOR_DISABLED 0xFF8E8E8E
 
@@ -38,7 +37,7 @@ namespace caddie
         virtual MenuCommand OnConfirm() const = 0;
 
     public:
-        nw4r::ut::Node mNode;
+        TLinkListNode mNode;
     private:
         const char *mName;
         bool mIsEnabled;
