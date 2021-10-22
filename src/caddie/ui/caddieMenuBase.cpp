@@ -107,7 +107,7 @@ namespace caddie
         if (!IsVisible()) return;
 
         int i = 0;
-        for (MenuOptionList::Iterator it = mOptions.Begin(); it != mOptions.End(); it++, i++)
+        for (MenuOptionBaseList::Iterator it = mOptions.Begin(); it != mOptions.End(); it++, i++)
         {
             CADDIE_ASSERT(&*it != NULL);
 
@@ -122,7 +122,7 @@ namespace caddie
     void MenuBase::DumpAll(f32 baseX, f32 baseY) const
     {
         int i = 0;
-        for (MenuOptionList::Iterator it = mOptions.Begin(); it != mOptions.End(); it++, i++)
+        for (MenuOptionBaseList::Iterator it = mOptions.Begin(); it != mOptions.End(); it++, i++)
         {
             CADDIE_ASSERT(&*it != NULL);
 

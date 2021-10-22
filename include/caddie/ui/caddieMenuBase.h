@@ -13,7 +13,7 @@ namespace caddie
     class MenuBase
     {
     public:
-        typedef TLinkList<MenuOptionBase, offsetof(MenuOptionBase, mNode)> MenuOptionList;
+        typedef TLinkList<MenuOptionBase, offsetof(MenuOptionBase, mNode)> MenuOptionBaseList;
 
         MenuBase() : mOptions(), mIsVisible(false), mSelection(0), mOptionTimer(0), mSettingTimer(0), mInputHistoryIdx(0) {}
         virtual ~MenuBase() {}
@@ -34,7 +34,7 @@ namespace caddie
 
         void SaveChanges()
         {
-            for (MenuOptionList::Iterator it = mOptions.Begin(); it != mOptions.End(); it++)
+            for (MenuOptionBaseList::Iterator it = mOptions.Begin(); it != mOptions.End(); it++)
             {
                 it->SaveChanges();
             }
@@ -42,7 +42,7 @@ namespace caddie
 
         void DeleteChanges()
         {
-            for (MenuOptionList::Iterator it = mOptions.Begin(); it != mOptions.End(); it++)
+            for (MenuOptionBaseList::Iterator it = mOptions.Begin(); it != mOptions.End(); it++)
             {
                 it->DeleteChanges();
             }
@@ -78,7 +78,7 @@ namespace caddie
         {
             CADDIE_ASSERT(n < mOptions.Size());
 
-            MenuOptionList::Iterator it = mOptions.Begin();
+            MenuOptionBaseList::Iterator it = mOptions.Begin();
             for (int i = 0; i < n && it != mOptions.End(); i++, it++) {}
             return &*it;
         }
@@ -87,7 +87,7 @@ namespace caddie
         {
             CADDIE_ASSERT(name != NULL);
 
-            for (MenuOptionList::Iterator it = mOptions.Begin(); it != mOptions.End(); it++)
+            for (MenuOptionBaseList::Iterator it = mOptions.Begin(); it != mOptions.End(); it++)
             {
                 if (strcmp(name, it->GetName()) == 0) return &*it;
             }
@@ -96,13 +96,13 @@ namespace caddie
             return NULL;
         }
 
-        const MenuOptionList * GetOptions() const { return &mOptions; }
-        MenuOptionList * GetOptions() { return &mOptions; }
+        const MenuOptionBaseList * GetOptions() const { return &mOptions; }
+        MenuOptionBaseList * GetOptions() { return &mOptions; }
 
         int GetNumOptions() const { return mOptions.Size(); }
 
     private:
-        MenuOptionList mOptions;
+        MenuOptionBaseList mOptions;
         bool mIsVisible;
         int mSelection;
         int mOptionTimer;
