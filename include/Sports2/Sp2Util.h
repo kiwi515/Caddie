@@ -28,6 +28,10 @@ namespace Sp2
         // Text
         Print(msg, textColor, center, x, y, scale);
     }
+
+    u32 UserRand(u32 *seed);
+    u32 Rand();
+    u32 Srand();
 }
 
 #endif

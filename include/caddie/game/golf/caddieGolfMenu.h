@@ -9,6 +9,13 @@ namespace caddie
     class GolfMenu : public MenuBase
     {
     public:
+        enum PinOptions
+        {
+            PIN_FROMSCORE,
+            PIN_RANDOM,
+            PIN_MAX
+        };
+
         static GolfMenu * GetInstance()
         {
             static GolfMenu instance;

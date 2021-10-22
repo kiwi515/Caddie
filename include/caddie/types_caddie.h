@@ -2,6 +2,8 @@
 #define TYPES_CADDIE_H
 #include <types.h>
 
+#define ARRAY_COUNT(x) (sizeof((x)) / sizeof((x[0])))
+
 #include "caddieAssert.h"
 #include "caddieDebug.h"
 #include "caddieMemMgr.h"

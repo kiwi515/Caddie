@@ -14,6 +14,8 @@
 
 #include <ut/ut_Color.h>
 
+#include "caddieGolfMenu.inc.cpp"
+
 namespace caddie
 {
     using namespace nw4r;
@@ -29,8 +31,8 @@ namespace caddie
         repeatOpt->SetAllValue(true);
         PushBackOption(repeatOpt);
 
-        PushBackOption(new MenuEnumOption("Pin Type", 0, 6, sPinTypes));
-        PushBackOption(new MenuEnumOption("Wind Direction", 0, Sp2::Glf::SOUTHWEST, sWindDirections));
+        PushBackOption(new MenuEnumOption("Pin Type", 0, ARRAY_COUNT(sPinTypes) - 1, sPinTypes));
+        PushBackOption(new MenuEnumOption("Wind Direction", 0, ARRAY_COUNT(sWindDirections) - 1, sWindDirections));
         PushBackOption(new MenuIntOption("Wind Speed (m/s)", 0, Sp2::Glf::WIND_MAX));
         PushBackOption(new MenuActionOption("Apply and Restart", &Action_SaveReload));
         PushBackOption(new MenuActionOption("Quit Game", &Action_QuitGame));
@@ -48,7 +50,7 @@ namespace caddie
         // Hole 18 has one pin
         pinOpt->SetEnabled((hole == 18) ? false : true);
         // Hole 1 has three pins
-        pinOpt->SetMax((hole == 1) ? 3 : 6);
+        pinOpt->SetMax((hole == 1) ? 4 : ARRAY_COUNT(sPinTypes) - 1);
         // Holes 1/18 are not categorized as A/B
         pinOpt->SetTable((hole == 1 || (hole > 18 && hole < 22)) ? sSpecialPinTypes : sPinTypes);
     }
@@ -92,10 +94,32 @@ namespace caddie
         MenuEnumOption *pinOpt = (MenuEnumOption *)menu->GetOption("Pin Type");
         if (!pinOpt->IsEnabled()) return;
 
-        // Subtract 1 because of the "Random" index
-        int pin = pinOpt->GetSavedValue() - 1;
-        // Random not selected
-        if (pin != -1) main->setPin(pin);
+        int pin = pinOpt->GetSavedValue();
+        switch(pin)
+        {
+            case PIN_FROMSCORE:
+                break;
+            case PIN_RANDOM:
+                switch(main->getCurrentHole() + 1)
+                {
+                    // Hole 1 has 3 pins
+                    case 1:
+                        main->setPin(Sp2::Rand() % 3);
+                        break;
+                    // Hole 18 has 1 pin
+                    case 18:
+                        main->setPin(0);
+                        break;
+                    // All other holes have 6 pins
+                    default:
+                        main->setPin(Sp2::Rand() % 6);
+                        break;
+                }
+                break;
+            default:
+                main->setPin(pin - PIN_MAX);
+                break;
+        }
     }
     kmBranch(0x8040680c, &GolfMenu::ApplyPinSettings);
 
@@ -135,39 +159,4 @@ namespace caddie
 
         return MenuOptionBase::MENU_HIDE;
     }
-
-    const char *GolfMenu::sWindDirections[] =
-    {
-        "South",
-        "Southeast",
-        "East",
-        "Northeast",
-        "North",
-        "Northwest",
-        "West",
-        "Southwest"
-    };
-
-    const char *GolfMenu::sPinTypes[] =
-    {
-        "Random",
-        "Pin 1 (A)",
-        "Pin 2 (A)",
-        "Pin 3 (A)",
-        "Pin 4 (B)",
-        "Pin 5 (B)",
-        "Pin 6 (B)"
-    };
-
-    // Used for holes that do not have pin sets by score (Hole 1, Hole 18, Holes 19-21)
-    const char *GolfMenu::sSpecialPinTypes[] =
-    {
-        "Random",
-        "Pin 1",
-        "Pin 2",
-        "Pin 3",
-        "Pin 4",
-        "Pin 5",
-        "Pin 6"
-    };
 }

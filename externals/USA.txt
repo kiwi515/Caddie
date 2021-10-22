@@ -67,4 +67,5 @@ __ct__Q33Sp23Glf7GlfMainFv=0x80406c50
 __dt__Q33Sp23Glf7GlfMainFv=0x80406c10
 
 # Sports2/Sp2Util
+Rand__3Sp2Fv=0x8025c9b0
 Print__3Sp2FPCcUlbfff=0x80373098
