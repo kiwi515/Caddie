@@ -7,7 +7,7 @@ from subprocess import run, PIPE
 AS = "tools\\powerpc-eabi-as.exe"
 ASFLAGS = "-mgekko -I include"
 CC = "tools\\mwcceppc.exe"
-CFLAGS = "-i . -I- -i include -ir include/loader -ir include/Caddie -ir include/RevoSDK -ir include/STL -ir include/Sports2 -ir include/RP -ir include/egg -ir include/nw4r -Cpp_exceptions off -enum int -O4,s -use_lmw_stmw on -fp hard -rostr -sdata 0 -sdata2 0"
+CFLAGS = "-i . -I- -i include -ir include/loader -ir include/Caddie -ir include/RevoSDK -ir include/STL -ir include/Sports2 -ir include/RP -ir include/egg -ir include/nw4r -Cpp_exceptions off -enum int -O4,s -use_lmw_stmw on -fp hard -rostr -sdata 0 -sdata2 0 -msgstyle gcc"
 SRC_DIR = "src/"
 BUILD_DIR = "build/"
 EXTERNALS_DIR = "externals/"
@@ -85,6 +85,7 @@ if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--region", choices=["USA"], required=True, help="Region to build")
     parser.add_argument("--define", required=False, help="Optional user define. Usually NDEBUG")
+    parser.add_argument("--flags", required=False, help="Optional extra compiler flags")
     args = parser.parse_args(argv[1:])
 
     # Chosen region
@@ -92,6 +93,9 @@ if __name__ == "__main__":
 
     # User define
     if (args.define != None): CFLAGS = ''.join([CFLAGS, f" -D{args.define}"])
+
+    # User args
+    if (args.flags != None): CFLAGS = ''.join([CFLAGS, f" {args.flags}"])
 
     # Compile all C/C++ source
     print("Compiling source...")

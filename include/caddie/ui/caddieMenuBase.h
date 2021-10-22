@@ -2,8 +2,7 @@
 #define CADDIE_UI_MENU_BASE_H
 #include "types_caddie.h"
 #include "caddieMenuOptionBase.h"
-
-#include "ut_list.h"
+#include "caddieTLinkList.h"
 
 #include <STL/string.h>
 
@@ -14,12 +13,11 @@ namespace caddie
     class MenuBase
     {
     public:
-        MenuBase() : mIsVisible(false), mSelection(0), mOptionTimer(0), mSettingTimer(0), mInputHistoryIdx(0)
-        {
-            nw4r::ut::List_Init(&mOptions, offsetof(MenuOptionBase, mNode));
-        }
+        typedef TLinkList<MenuOptionBase, offsetof(MenuOptionBase, mNode)> MenuOptionList;
 
-        virtual ~MenuBase();
+        MenuBase() : mOptions(), mIsVisible(false), mSelection(0), mOptionTimer(0), mSettingTimer(0), mInputHistoryIdx(0) {}
+        virtual ~MenuBase() {}
+
         virtual void Build() = 0;
         virtual void Calc();
 
@@ -28,25 +26,25 @@ namespace caddie
         virtual void DoTick();
         void BuildHistory();
 
-        void PushBack(MenuOptionBase *option)
+        void PushBackOption(MenuOptionBase *option)
         {
             CADDIE_ASSERT(option != NULL);
-            nw4r::ut::List_Append(&mOptions, option);
+            mOptions.Append(option);
         }
 
         void SaveChanges()
         {
-            UT_LIST_FOREACH(&mOptions, MenuOptionBase, o)
+            for (MenuOptionList::Iterator it = mOptions.Begin(); it != mOptions.End(); it++)
             {
-                o->SaveChanges();
+                it->SaveChanges();
             }
         }
 
         void DeleteChanges()
         {
-            UT_LIST_FOREACH(&mOptions, MenuOptionBase, o)
+            for (MenuOptionList::Iterator it = mOptions.Begin(); it != mOptions.End(); it++)
             {
-                o->DeleteChanges();
+                it->DeleteChanges();
             }
         }
 
@@ -76,31 +74,35 @@ namespace caddie
             return mInputHistory[mInputHistoryIdx] & mask;
         }
 
-        MenuOptionBase * GetOption(int i) const
+        MenuOptionBase * GetOption(int n) const
         {
-            CADDIE_ASSERT(i < mOptions.mSize);
-            return (MenuOptionBase *)nw4r::ut::List_GetNth(&mOptions, i);
+            CADDIE_ASSERT(n < mOptions.Size());
+
+            MenuOptionList::Iterator it = mOptions.Begin();
+            for (int i = 0; i < n && it != mOptions.End(); i++, it++) {}
+            return &*it;
         }
 
         MenuOptionBase * GetOption(const char *name) const
         {
             CADDIE_ASSERT(name != NULL);
 
-            UT_LIST_FOREACH(&mOptions, MenuOptionBase, node)
+            for (MenuOptionList::Iterator it = mOptions.Begin(); it != mOptions.End(); it++)
             {
-                if (strcmp(name, node->GetName()) == 0) return node;
+                if (strcmp(name, it->GetName()) == 0) return &*it;
             }
 
             CADDIE_ASSERT(false);
             return NULL;
         }
 
-        const nw4r::ut::List * GetOptions() const { return &mOptions; }
-        nw4r::ut::List * GetOptions() { return &mOptions; }
-        int GetNumOptions() const { return mOptions.mSize; }
+        const MenuOptionList * GetOptions() const { return &mOptions; }
+        MenuOptionList * GetOptions() { return &mOptions; }
+
+        int GetNumOptions() const { return mOptions.Size(); }
 
     private:
-        nw4r::ut::List mOptions;
+        MenuOptionList mOptions;
         bool mIsVisible;
         int mSelection;
         int mOptionTimer;

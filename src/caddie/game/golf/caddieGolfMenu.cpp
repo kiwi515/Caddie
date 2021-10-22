@@ -23,17 +23,17 @@ namespace caddie
     {
         CADDIE_ASSERT(GetNumOptions() == 0);
 
-        PushBack(new MenuIntOption("Hole", 1, Sp2::Glf::HOLE_MAX));
+        PushBackOption(new MenuIntOption("Hole", 1, Sp2::Glf::HOLE_MAX));
         
         MenuBoolOption *repeatOpt = new MenuBoolOption("Repeat Hole");
         repeatOpt->SetAllValue(true);
-        PushBack(repeatOpt);
+        PushBackOption(repeatOpt);
 
-        PushBack(new MenuEnumOption("Pin Type", 0, 6, sPinTypes));
-        PushBack(new MenuEnumOption("Wind Direction", 0, Sp2::Glf::SOUTHWEST, sWindDirections));
-        PushBack(new MenuIntOption("Wind Speed (m/s)", 0, Sp2::Glf::WIND_MAX));
-        PushBack(new MenuActionOption("Apply and Restart", &Action_SaveReload));
-        PushBack(new MenuActionOption("Quit Game", &Action_QuitGame));
+        PushBackOption(new MenuEnumOption("Pin Type", 0, 6, sPinTypes));
+        PushBackOption(new MenuEnumOption("Wind Direction", 0, Sp2::Glf::SOUTHWEST, sWindDirections));
+        PushBackOption(new MenuIntOption("Wind Speed (m/s)", 0, Sp2::Glf::WIND_MAX));
+        PushBackOption(new MenuActionOption("Apply and Restart", &Action_SaveReload));
+        PushBackOption(new MenuActionOption("Quit Game", &Action_QuitGame));
     }
 
     void GolfMenu::Calc()

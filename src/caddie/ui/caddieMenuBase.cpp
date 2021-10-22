@@ -26,15 +26,6 @@ namespace caddie
     using namespace nw4r;
     using namespace EGG;
 
-    MenuBase::~MenuBase()
-    {
-        MenuOptionBase *node = NULL;
-        while (node = (MenuOptionBase *)ut::List_GetFirst(&mOptions))
-        {
-            delete node;
-        }
-    }
-
     void MenuBase::Calc()
     {
         DoTick();
@@ -50,7 +41,7 @@ namespace caddie
         // Check for save & exit
         if (Pressed(BTN_A))
         {
-            MenuOptionBase *pSelection = (MenuOptionBase *)ut::List_GetNth(&mOptions, mSelection);
+            MenuOptionBase *pSelection = (MenuOptionBase *)mOptions.At(mSelection);
             CADDIE_ASSERT(pSelection != NULL);
 
             switch(pSelection->OnConfirm())
@@ -91,7 +82,7 @@ namespace caddie
         if (mSettingTimer <= 0
             || !PressedLastFrame(BTN_RIGHT) && !PressedLastFrame(BTN_LEFT))
         {
-            MenuOptionBase *pSelection = (MenuOptionBase *)ut::List_GetNth(&mOptions, mSelection);
+            MenuOptionBase *pSelection = (MenuOptionBase *)mOptions.At(mSelection);
             CADDIE_ASSERT(pSelection != NULL);
 
             if (pSelection->IsEnabled())
@@ -115,14 +106,17 @@ namespace caddie
     {
         if (!IsVisible()) return;
 
-        MenuOptionBase *pOption = NULL;
-        for (int i = 0; i < GetNumOptions(); i++)
+        CADDIE_BREAKPOINT;
+
+        int i = 0;
+        for (MenuOptionList::Iterator it = mOptions.Begin(); it != mOptions.End(); it++, i++)
         {
-            pOption = (MenuOptionBase *)ut::List_GetNext(&mOptions, pOption);
-            CADDIE_ASSERT(pOption != NULL);
+            CADDIE_ASSERT(&*it != NULL);
 
             // Disabled options are printed in gray for readability
-            pOption->Draw(baseX, baseY + THIS_OPTION_HEIGHT, OPTION_GAP_X, (pOption->IsEnabled()) ? COLOR_ENABLED : COLOR_DISABLED);
+            it->Draw(baseX, baseY + THIS_OPTION_HEIGHT, OPTION_GAP_X, (it->IsEnabled()) ? COLOR_ENABLED : COLOR_DISABLED);
+
+            CADDIE_BREAKPOINT;
         }
 
         // Print cursor
@@ -131,15 +125,14 @@ namespace caddie
 
     void MenuBase::DumpAll(f32 baseX, f32 baseY) const
     {
-        MenuOptionBase *node = NULL;
-        for (int i = 0; i < GetNumOptions(); i++)
+        int i = 0;
+        for (MenuOptionList::Iterator it = mOptions.Begin(); it != mOptions.End(); it++, i++)
         {
-            node = (MenuOptionBase *)ut::List_GetNext(&mOptions, node);
-            if (node == NULL) return;
+            CADDIE_ASSERT(&*it != NULL);
 
             char buf[512];
-            sprintf(buf, "Slot %d: %s (0x%08X)\n", i, node->GetName(), node);
-            Sp2::PrintOutline(buf, COLOR_ENABLED, COLOR_SHADOW, false, baseX, baseY + THIS_OPTION_HEIGHT);
+            sprintf(buf, "Slot %d: %s (0x%08X)\n", i, it->GetName(), &*it);
+            Sp2::PrintOutline(buf, COLOR_ENABLED, COLOR_SHADOW, false, baseX, baseY + THIS_OPTION_HEIGHT); 
         }
     }
 

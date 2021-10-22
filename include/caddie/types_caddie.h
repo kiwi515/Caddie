@@ -9,23 +9,27 @@
 
 namespace caddie
 {
+    // kernel
+    struct MemManager;
+
+    // core
+    template <typename T, int ofs> struct TLinkList;
+    struct Timer;
+    struct IGTTimer;
+    struct RTATimer;
+    struct SceneHook;
+
+    // ui
     struct MenuOptionBase;
     struct MenuIntOption;
     struct MenuEnumOption;
     struct MenuActionOption;
     struct MenuBoolOption;
-
     struct MenuBase;
+
+    // game/golf
     struct GolfMenu;
-
-    struct MemManager;
-
-    struct SceneHook;
     struct GolfSceneHook;
-
-    struct Timer;
-    struct IGTTimer;
-    struct RTATimer;
 }
 
 #endif
