@@ -9,6 +9,35 @@ namespace caddie
     class GolfMenu : public MenuBase
     {
     public:
+        enum WindDirOptions
+        {
+            DIR_SOUTH,
+            DIR_SOUTHEAST,
+            DIR_EAST,
+            DIR_NORTHEAST,
+            DIR_NORTH,
+            DIR_NORTHWEST,
+            DIR_WEST,
+            DIR_SOUTHWEST,
+            DIR_RANDOM,
+            DIR_MAX
+        };
+
+        enum WindSpdOptions
+        {
+            SPD_RANDOM = 16,
+            SPD_MAX
+        };
+
+        enum WindSpdRangeOptions
+        {
+            RANGE_0_10,  // 18H
+            RANGE_0_5,   // A
+            RANGE_5_10,  // B
+            RANGE_10_15, // C
+            RANGE_0_15   // SP
+        };
+
         enum PinOptions
         {
             PIN_FROMSCORE,
@@ -38,6 +67,8 @@ namespace caddie
         virtual ~GolfMenu() {}
 
         static const char *sWindDirections[];
+        static const char *sWindSpeeds[];
+        static const char *sRandWindSpdRanges[];
         static const char *sPinTypes[];
         static const char *sSpecialPinTypes[];
     };

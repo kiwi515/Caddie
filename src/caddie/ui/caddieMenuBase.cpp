@@ -116,7 +116,7 @@ namespace caddie
         }
 
         // Print cursor
-        Sp2::PrintOutline("==>", COLOR_CURSOR, COLOR_SHADOW, false, baseX - 35.0f, baseY + SELECTION_OPTION_HEIGHT);
+        Sp2::PrintOutline("==>", COLOR_CURSOR, COLOR_SHADOW, false, baseX - 50.0f, baseY + SELECTION_OPTION_HEIGHT);
     }
 
     void MenuBase::DumpAll(f32 baseX, f32 baseY) const

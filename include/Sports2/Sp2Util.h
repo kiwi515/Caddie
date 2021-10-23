@@ -32,6 +32,9 @@ namespace Sp2
     u32 UserRand(u32 *seed);
     u32 Rand();
     u32 Srand();
+
+    inline u32 Rand(int max) { return Rand() % max; }
+    inline u32 Rand(int min, int max) { return Rand() % (max - min + 1) + min;}
 }
 
 #endif

@@ -33,7 +33,8 @@ namespace caddie
 
         PushBackOption(new MenuEnumOption("Pin Type", 0, ARRAY_COUNT(sPinTypes) - 1, sPinTypes));
         PushBackOption(new MenuEnumOption("Wind Direction", 0, ARRAY_COUNT(sWindDirections) - 1, sWindDirections));
-        PushBackOption(new MenuIntOption("Wind Speed (m/s)", 0, Sp2::Glf::WIND_MAX));
+        PushBackOption(new MenuEnumOption("Wind Speed (m/s)", 0, ARRAY_COUNT(sWindSpeeds) - 1, sWindSpeeds));
+        PushBackOption(new MenuEnumOption("Random Wind Speed", 0, ARRAY_COUNT(sRandWindSpdRanges) - 1, sRandWindSpdRanges));
         PushBackOption(new MenuActionOption("Apply and Restart", &Action_SaveReload));
         PushBackOption(new MenuActionOption("Quit Game", &Action_QuitGame));
     }
@@ -53,6 +54,11 @@ namespace caddie
         pinOpt->SetMax((hole == 1) ? 4 : ARRAY_COUNT(sPinTypes) - 1);
         // Holes 1/18 are not categorized as A/B
         pinOpt->SetTable((hole == 1 || (hole > 18 && hole < 22)) ? sSpecialPinTypes : sPinTypes);
+
+        // Toggle random spd range option
+        MenuEnumOption *spdOpt = (MenuEnumOption *)GetOption("Wind Speed (m/s)");
+        MenuEnumOption *spdRangeOpt = (MenuEnumOption *)GetOption("Random Wind Speed");
+        spdRangeOpt->SetEnabled(spdOpt->GetUnsavedValue() == SPD_RANDOM);
     }
 
     void GolfMenu::ApplyHoleSettings()
@@ -77,9 +83,40 @@ namespace caddie
         // Hole option is one indexed
         int hole = ((MenuIntOption *)menu->GetOption("Hole"))->GetSavedValue() - 1;
         
-        MenuIntOption *windSpeedOpt = (MenuIntOption *)menu->GetOption("Wind Speed (m/s)");
-        MenuEnumOption *windDirOpt = (MenuEnumOption *)menu->GetOption("Wind Direction");
-        u8 packedWind = Glf::PackWind(windDirOpt->GetSavedValue(), windSpeedOpt->GetSavedValue());
+        MenuEnumOption *windSpeedOpt = (MenuEnumOption *)menu->GetOption("Wind Speed (m/s)");
+        int spd = windSpeedOpt->GetSavedValue();
+        MenuEnumOption *windDirOpt = (MenuEnumOption *)menu->GetOption("Wind Direction");        
+        int dir = windDirOpt->GetSavedValue();
+
+        int minspd = 0;
+        int maxspd = Glf::WIND_MAX;
+        if (windSpeedOpt->GetSavedValue() == SPD_RANDOM)
+        {
+            MenuEnumOption *spdRangeOpt = (MenuEnumOption *)menu->GetOption("Random Wind Speed");
+            switch(spdRangeOpt->GetSavedValue())
+            {
+                case RANGE_0_10:
+                    minspd = 0; maxspd = 10;
+                    break;
+                case RANGE_0_5:
+                    minspd = 0; maxspd = 5;
+                    break;
+                case RANGE_5_10:
+                    minspd = 5; maxspd = 10;
+                    break;
+                case RANGE_10_15:
+                    minspd = 10; maxspd = 15;
+                    break;
+                case RANGE_0_15:
+                    minspd = 0; maxspd = 15;
+                    break;
+            }
+        }
+
+        spd = (spd == SPD_RANDOM) ? (Sp2::Rand(minspd, maxspd)) : spd;
+        dir = (dir == DIR_RANDOM) ? (Sp2::Rand() % Glf::MAX_WIND_DIV) : dir;
+
+        u8 packedWind = Glf::PackWind(dir, spd);
 
         sMem->setStaticVar(Glf::VAR_PACKEDWIND + hole, packedWind, false);
     }
