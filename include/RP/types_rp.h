@@ -6,5 +6,6 @@ struct RPSysSceneCreator;
 struct RPSysScene;
 struct RPSysSceneMgr;
 struct RPSysSysWinMgr;
+struct RPSysProjectLocal;
 
 #endif

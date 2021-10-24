@@ -6,8 +6,10 @@ namespace Sp2
 {
     enum SceneID
     {
-        SP2_MAINMENU = 2,
-        SP2_SELECT = 3,
+        SP2_STRAP,
+        SP2_INIT,
+        SP2_MAINMENU,
+        SP2_SELECT,
 
         SP2_GOLF = 14
     };

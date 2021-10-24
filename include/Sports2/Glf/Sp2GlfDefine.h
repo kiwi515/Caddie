@@ -8,6 +8,7 @@ namespace Sp2
         static const u32 HOLE_MAX = 21;
         static const u32 WIND_MAX = 15;
         static const u32 PIN_MAX = 1;
+        static const u32 PLAYER_MAX = 4;
 
         enum WindDir
         {

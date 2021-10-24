@@ -3,6 +3,8 @@
 #include <kamek.h>
 #include <stddef.h>
 
+#define ARRAY_COUNT(x) (sizeof((x)) / sizeof(((x)[0])))
+
 typedef unsigned long long u64;
 typedef signed long long s64;
 

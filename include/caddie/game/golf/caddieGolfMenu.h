@@ -65,12 +65,6 @@ namespace caddie
     private:
         GolfMenu() : MenuBase() { Build(); }
         virtual ~GolfMenu() {}
-
-        static const char *sWindDirections[];
-        static const char *sWindSpeeds[];
-        static const char *sRandWindSpdRanges[];
-        static const char *sPinTypes[];
-        static const char *sSpecialPinTypes[];
     };
 }
 

@@ -76,6 +76,5 @@ kmBranchDefAsm(0x80235cc8, NULL)
 
 void loadMainCode()
 {
-    CADDIE_ASSERT_EX(SCGetLanguage() == SC_ENGLISH, "Only English is currently supported!\n");
     loadKamekBinaryFromDisc(&functions_us.base, "/modules/Main.bin");
 } kmBranch(CADDIE_ENTRYPOINT, loadMainCode);

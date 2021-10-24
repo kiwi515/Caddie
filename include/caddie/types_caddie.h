@@ -2,8 +2,6 @@
 #define TYPES_CADDIE_H
 #include <types.h>
 
-#define ARRAY_COUNT(x) (sizeof((x)) / sizeof((x[0])))
-
 #include "caddieAssert.h"
 #include "caddieDebug.h"
 #include "caddieMemMgr.h"
@@ -26,6 +24,7 @@ namespace caddie
     struct MenuOptionBase;
     struct MenuIntOption;
     struct MenuEnumOption;
+    struct MenuLocalizedEnumOption;
     struct MenuActionOption;
     struct MenuBoolOption;
     struct MenuBase;

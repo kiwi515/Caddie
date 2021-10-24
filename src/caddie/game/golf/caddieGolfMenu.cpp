@@ -1,6 +1,7 @@
 #include "caddieGolfMenu.h"
 #include "caddieMenuIntOption.h"
 #include "caddieMenuEnumOption.h"
+#include "caddieMenuLocalizedEnumOption.h"
 #include "caddieMenuActionOption.h"
 #include "caddieMenuBoolOption.h"
 #include "caddieAssert.h"
@@ -31,10 +32,10 @@ namespace caddie
         repeatOpt->SetAllValue(true);
         PushBackOption(repeatOpt);
 
-        PushBackOption(new MenuEnumOption("Pin Type", 0, ARRAY_COUNT(sPinTypes) - 1, sPinTypes));
-        PushBackOption(new MenuEnumOption("Wind Direction", 0, ARRAY_COUNT(sWindDirections) - 1, sWindDirections));
-        PushBackOption(new MenuEnumOption("Wind Speed (m/s)", 0, ARRAY_COUNT(sWindSpeeds) - 1, sWindSpeeds));
-        PushBackOption(new MenuEnumOption("Random Wind Speed", 0, ARRAY_COUNT(sRandWindSpdRanges) - 1, sRandWindSpdRanges));
+        PushBackOption(new MenuEnumOption("Pin Type", 0, ARRAY_COUNT(sPinTypeEnum) - 1, sPinTypeEnum));
+        PushBackOption(new MenuEnumOption("Wind Direction", 0, ARRAY_COUNT(sWindDirectionEnum) - 1, sWindDirectionEnum));
+        PushBackOption(new MenuLocalizedEnumOption(sWindSpeedNames, 0, ARRAY_COUNT(sWindSpeedEnum_Mph) - 1, sWindSpeedLocale));
+        PushBackOption(new MenuLocalizedEnumOption(sWindSpdRangeNames, 0, ARRAY_COUNT(sWindSpdRangeEnum_Mph) - 1, sWindSpdRangeLocale));
         PushBackOption(new MenuActionOption("Apply and Restart", &Action_SaveReload));
         PushBackOption(new MenuActionOption("Quit Game", &Action_QuitGame));
     }
@@ -42,6 +43,9 @@ namespace caddie
     void GolfMenu::Calc()
     {
         MenuBase::Calc();
+
+        Localizer *local = Localizer::GetInstance();
+        CADDIE_ASSERT(local != NULL);
 
         // Update pin setting
         MenuIntOption *holeOpt = (MenuIntOption *)GetOption("Hole");
@@ -51,13 +55,13 @@ namespace caddie
         // Hole 18 has one pin
         pinOpt->SetEnabled((hole == 18) ? false : true);
         // Hole 1 has three pins
-        pinOpt->SetMax((hole == 1) ? 4 : ARRAY_COUNT(sPinTypes) - 1);
+        pinOpt->SetMax((hole == 1) ? 4 : ARRAY_COUNT(sPinTypeEnum) - 1);
         // Holes 1/18 are not categorized as A/B
-        pinOpt->SetTable((hole == 1 || (hole > 18 && hole < 22)) ? sSpecialPinTypes : sPinTypes);
+        pinOpt->SetTable((hole == 1 || (hole > 18 && hole < 22)) ? sPinTypeSpecialEnum : sPinTypeEnum);
 
         // Toggle random spd range option
-        MenuEnumOption *spdOpt = (MenuEnumOption *)GetOption("Wind Speed (m/s)");
-        MenuEnumOption *spdRangeOpt = (MenuEnumOption *)GetOption("Random Wind Speed");
+        MenuEnumOption *spdOpt = (MenuEnumOption *)GetOption(local->Localize(sWindSpeedNames));
+        MenuEnumOption *spdRangeOpt = (MenuEnumOption *)GetOption(local->Localize(sWindSpdRangeNames));
         spdRangeOpt->SetEnabled(spdOpt->GetUnsavedValue() == SPD_RANDOM);
     }
 
@@ -79,11 +83,13 @@ namespace caddie
         CADDIE_ASSERT(menu != NULL);
         StaticMem *sMem = StaticMem::getInstance();
         CADDIE_ASSERT(sMem != NULL);
+        Localizer *local = Localizer::GetInstance();
+        CADDIE_ASSERT(local != NULL);
 
         // Hole option is one indexed
         int hole = ((MenuIntOption *)menu->GetOption("Hole"))->GetSavedValue() - 1;
         
-        MenuEnumOption *windSpeedOpt = (MenuEnumOption *)menu->GetOption("Wind Speed (m/s)");
+        MenuEnumOption *windSpeedOpt = (MenuEnumOption *)menu->GetOption(local->Localize(sWindSpeedNames));
         int spd = windSpeedOpt->GetSavedValue();
         MenuEnumOption *windDirOpt = (MenuEnumOption *)menu->GetOption("Wind Direction");        
         int dir = windDirOpt->GetSavedValue();
@@ -92,7 +98,7 @@ namespace caddie
         int maxspd = Glf::WIND_MAX;
         if (windSpeedOpt->GetSavedValue() == SPD_RANDOM)
         {
-            MenuEnumOption *spdRangeOpt = (MenuEnumOption *)menu->GetOption("Random Wind Speed");
+            MenuEnumOption *spdRangeOpt = (MenuEnumOption *)menu->GetOption(local->Localize(sWindSpdRangeNames));
             switch(spdRangeOpt->GetSavedValue())
             {
                 case RANGE_0_10:

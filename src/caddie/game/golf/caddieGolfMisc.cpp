@@ -11,9 +11,13 @@
 
 #include <RPSysSysWinMgr.h>
 #include <RPSysSceneMgr.h>
+#include <RPSysSceneCreator.h>
+
+#include <ut/ut_Color.h>
 
 namespace caddie
 {
+    using namespace nw4r;
     using namespace Sp2;
 
     bool CanPlayNextHole(const Glf::GlfMain *pMain)
