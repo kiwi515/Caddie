@@ -6,6 +6,7 @@
 #include <loader/kamekLoader.h>
 #include <loader/rzte.h>
 #include <core/caddieAssert.h>
+#include <kernel/caddieDebug.h>
 #include <OS/OSError.h>
 #include <OS/OSFatal.h>
 #include <SYSCONF/scapi.h>
@@ -32,7 +33,8 @@ void freeAdapter(void *memBlock, bool isForCode, const loaderFunctions *funcs)
 
 // Patch stubbed OSReport
 // TO-DO: Make this work in C++
-kmBranchDefAsm(0x80235cc8, NULL)
+// Region free
+kmBranchDefAsm(0x80061470, NULL)
 {
     loc_0x0:
     stwu r1, -0x80(r1)
@@ -76,5 +78,25 @@ kmBranchDefAsm(0x80235cc8, NULL)
 
 void loadMainCode()
 {
-    loadKamekBinaryFromDisc(&functions_us.base, "/modules/Main.bin");
+    CADDIE_ASSERT_EX(OS_MAKER_CODE == '01', "Invalid disc game ID!\n");
+    switch(OS_GAME_CODE)
+    {
+        case 'RZTE':
+            loadKamekBinaryFromDisc(&cFunctionsNTSC_U.base, "/modules/main_NTSC_U.bin");
+            break;
+        case 'RZTP':
+            CADDIE_BREAKPOINT;
+            loadKamekBinaryFromDisc(&cFunctionsPAL.base, "/modules/main_PAL.bin");
+            break;
+        case 'RZTJ':
+            CADDIE_ASSERT_EX(false, "JP version is not supported yet!\n");
+            loadKamekBinaryFromDisc(&cFunctionsNTSC_U.base, "/modules/main_NTSC_J.bin");
+            break;
+        case 'RZTK':
+            CADDIE_ASSERT_EX(false, "KR version is not supported yet!\n");
+            loadKamekBinaryFromDisc(&cFunctionsNTSC_U.base, "/modules/main_KOR.bin");
+            break;
+        default:
+            CADDIE_ASSERT_EX(false, "Invalid game ID/game region!\n");
+    }
 } kmBranch(CADDIE_ENTRYPOINT, loadMainCode);

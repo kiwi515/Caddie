@@ -14,9 +14,11 @@ namespace Sp2
 
             u32 GetLifetime() const { return mLifetime; }
             void SetLifetime(u32 time) { mLifetime = time; }
+
+            void Stop(bool);
         private:
             char UNK_0x4[0x54 - 0x4];
-            u32 mLifetime;
+            u32 mLifetime; // at 0x54
         };
     }
 }

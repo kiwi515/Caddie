@@ -1,4 +1,5 @@
 #include <loader/kamekLoader.h>
+#include <kernel/caddieDebug.h>
 
 struct KBHeader {
     u32 magic1;

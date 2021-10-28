@@ -84,7 +84,7 @@ if __name__ == "__main__":
 
     # Parse args
     parser = ArgumentParser()
-    parser.add_argument("--region", choices=["USA"], required=True, help="Region to build")
+    parser.add_argument("--region", choices=["NTSC_U", "PAL"], required=True, help="Region to build")
     parser.add_argument("--define", required=False, help="Optional user define. Usually NDEBUG")
     parser.add_argument("--flags", required=False, help="Optional extra compiler flags")
     args = parser.parse_args(argv[1:])

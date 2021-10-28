@@ -5,7 +5,16 @@
 #include "types.h"
 #include <STL/stdarg.h>
 
-const u32 CADDIE_ENTRYPOINT = 0x80230f64;
+#ifdef CADDIE_REGION_NTSC_U
+    const u32 CADDIE_ENTRYPOINT = 0x80230f64;
+#elif CADDIE_REGION_PAL
+    const u32 CADDIE_ENTRYPOINT = 0x80231230;
+#else
+    const u32 CADDIE_ENTRYPOINT = 0x00000000;
+#endif
+
+extern u32 OS_GAME_CODE : 0x80000000;
+extern u16 OS_MAKER_CODE : 0x80000004;
 
 typedef void * (* eggAlloc_t) (u32 size, s32 align, void *heap);
 typedef void (* eggFree_t) (void *buffer, void *heap);
@@ -25,9 +34,9 @@ struct loaderFunctionsEx
     void **rootHeapMEM2;
 };
 
-const loaderFunctionsEx functions_us =
+const loaderFunctionsEx cFunctionsNTSC_U =
 {
-    {(OSReport_t)0x80235cc8,
+    {(OSReport_t)0x80061470,
     (OSFatal_t)0x800493a0,
     (DVDConvertPathToEntrynum_t)0x8009a620,
     (DVDFastOpen_t)0x8009a930,
@@ -42,6 +51,25 @@ const loaderFunctionsEx functions_us =
     (vprintf_t)0x8000ceec,
     (void **)0x807ceb78, // &RPSysSystem::sRootMem1
     (void **)0x807ceb7c, // &RPSysSystem::sRootMem2
+};
+
+const loaderFunctionsEx cFunctionsPAL =
+{
+    {(OSReport_t)0x80061470,
+    (OSFatal_t)0x800493a0,
+    (DVDConvertPathToEntrynum_t)0x8009a620,
+    (DVDFastOpen_t)0x8009a930,
+    (DVDReadPrio_t)0x8009af50,
+    (DVDClose_t)0x8009ac60,
+    (sprintf_t)0x8000d168,
+    allocAdapter,
+    freeAdapter},
+    
+    (eggAlloc_t)0x801c1654,
+    (eggFree_t)0x801c19c4,
+    (vprintf_t)0x8000ceec,
+    (void **)0x807cf278, // &RPSysSystem::sRootMem1
+    (void **)0x807cf27c, // &RPSysSystem::sRootMem2
 };
 
 #endif

@@ -12,6 +12,7 @@ namespace caddie
     public:
         static void OnInit();
         static void OnFrame();
+        static void OnExit();
 
         static void OnUpdateHole();
 

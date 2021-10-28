@@ -10,6 +10,7 @@ namespace caddie
     public:
         static UNKTYPE * OnInit(UNKTYPE *);
         static UNKTYPE * OnFrame(UNKTYPE *);
+        static bool OnExit(bool);
 
     private:
 

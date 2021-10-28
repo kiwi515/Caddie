@@ -6,7 +6,7 @@ OSFatal=0x800493a0
 
 # OS/OSError
 OSPanic=0x80047150
-OSReport=0x80235cc8
+OSReport=0x80061470
 
 # STL/cstdio
 vprintf=0x8000ceec
@@ -38,34 +38,44 @@ List_GetNext__Q24nw4r2utFPCQ34nw4r2ut4ListPCv=0x8010bc00
 create__Q23EGG7ExpHeapFUlPQ23EGG4HeapUs=0x801c0e58
 
 # EGG/core/eggException
-setUserCallback__Q23EGG9ExceptionFPUs=0x801cec48
+setUserCallback__Q23EGG9ExceptionFPUs=0x801cee38
 
 # EGG/core/eggController
 getNthController__Q23EGG17CoreControllerMgrFi=0x801c4ab8
-sInstance__Q23EGG17CoreControllerMgr=0x806f4a08
+sInstance__Q23EGG17CoreControllerMgr=0x806f50a8
 
 # RP/RPSystem/RPSysSceneMgr
-sInstance__13RPSysSceneMgr=0x806f4c98
+sInstance__13RPSysSceneMgr=0x806f5338
 
-# RP/RPSystem/RPSysSysWinMgr
-CheckInput__14RPSysSysWinMgrFv=0x802352d4
-sInstance__14RPSysSysWinMgr=0x806f4ce0
+# RP/RPSystem/RPSysSysMsgWinMgr
+CheckInput__17RPSysSysMsgWinMgrFv=0x802355f4
+sInstance__17RPSysSysMsgWinMgr=0x806f5380
 
 # RP/RPSystem/RPSysSceneCreator
-changeSceneAfterFade__17RPSysSceneCreatorFiPQ34nw4r2ut5Color=0x8022edfc
-sInstance__17RPSysSceneCreator=0x806f4c88
+changeSceneAfterFade__17RPSysSceneCreatorFiPQ34nw4r2ut5Color=0x8022f074
+sInstance__17RPSysSceneCreator=0x806f5328
 
 # Sports2/Sp2StaticMem
-getStaticVar__Q23Sp29StaticMemFib=0x80269f4c
-setStaticVar__Q23Sp29StaticMemFiib=0x80269f08
-sInstance__Q23Sp29StaticMem=0x806f4e98
+getStaticVar__Q23Sp29StaticMemFib=0x8026a26c
+setStaticVar__Q23Sp29StaticMemFiib=0x8026a228
+sInstance__Q23Sp29StaticMem=0x806f5538
 
 # Sports2/Glf/Sp2GlfMain
-choosePin__Q33Sp23Glf7GlfMainFi=0x804066e0
-sInstance__Q33Sp23Glf7GlfMain=0x806f5498
-__ct__Q33Sp23Glf7GlfMainFv=0x80406c50
-__dt__Q33Sp23Glf7GlfMainFv=0x80406c10
+choosePin__Q33Sp23Glf7GlfMainFi=0x80406a00
+sInstance__Q33Sp23Glf7GlfMain=0x806f5b38
+__ct__Q33Sp23Glf7GlfMainFv=0x80406f70
+__dt__Q33Sp23Glf7GlfMainFv=0x80406f30
 
 # Sports2/Sp2Util
-Rand__3Sp2Fv=0x8025c9b0
-Print__3Sp2FPCcUlbfff=0x80373098
+Rand__3Sp2Fv=0x8025ccd0
+Print__3Sp2FPCcUlbfff=0x803733b8
+
+# Sports2/Obj806f4cd0
+sInstance__Q26caddie11Obj806f4cd0=0x806f5370
+func_802352d4__Q26caddie11Obj806f4cd0Fv=0x802355f4
+
+# Sports2/Glf/Sp2GlfBall
+Stop__Q33Sp23Glf7GlfBallFb=0x80413e24
+
+# Sports2/Glf/Sp2GlfBallMgr
+sGlfBalls__Q33Sp23Glf10GlfBallMgr=0x806f5b88

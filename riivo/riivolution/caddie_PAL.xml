@@ -1,0 +1,25 @@
+<wiidisc version="1" root="">
+	<!-- PAL ("RZTP") -->
+	<id game="RZT">
+		<region type="P"/>
+	</id>
+
+	<options>
+		<section name ="Caddie (PAL)">
+			<option name="Custom Code" default="1">
+				<choice name="Enabled">
+					<patch id="CADDIE_CODE"/>
+				</choice>
+			</option>
+		</section>
+	</options>
+	
+	<patch id="CADDIE_CODE">
+        <!-- Module loader -->
+        <file disc="main.dol" external="/caddie/sys/main_PAL.dol"/>
+        <!-- Module files -->
+        <folder external="/caddie/files/modules"/>
+        <folder disc="/modules" external="/caddie/files/modules" create="true"/>
+	</patch>
+	
+</wiidisc>

@@ -1,8 +1,11 @@
 <wiidisc version="1" root="">
-	<id game="RZT"/>
+	<!-- NTSC_U ("RZTE") -->
+	<id game="RZT">
+		<region type="E"/>
+	</id>
 
 	<options>
-		<section name ="Caddie">
+		<section name ="Caddie (NTSC-U)">
 			<option name="Custom Code" default="1">
 				<choice name="Enabled">
 					<patch id="CADDIE_CODE"/>
@@ -13,7 +16,7 @@
 	
 	<patch id="CADDIE_CODE">
         <!-- Module loader -->
-        <file disc="main.dol" external="/caddie/sys/main.dol"/>
+        <file disc="main.dol" external="/caddie/sys/main_NTSC_U.dol"/>
         <!-- Module files -->
         <folder external="/caddie/files/modules"/>
         <folder disc="/modules" external="/caddie/files/modules" create="true"/>

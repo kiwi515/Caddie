@@ -6,6 +6,9 @@
 
 #include <STL/string.h>
 
+#define GET_OPTION(type, name) ((type *)GetOption(name))
+#define GET_OPTION_STATIC(__menu, type, name) ((type *)__menu->GetOption(name))
+
 #define INPUT_HISTORY_SIZE 2
 
 namespace caddie
@@ -19,6 +22,7 @@ namespace caddie
         virtual ~MenuBase() {}
 
         virtual void Build() = 0;
+        virtual void Reset() = 0;
         virtual void Calc();
 
         void Draw(f32 baseX, f32 baseY) const;

@@ -3,7 +3,9 @@
 
 namespace caddie
 {
+    /* ====================== */
     /* Wind Direction setting */
+    /* ====================== */
 
     static const char *sWindDirectionEnum[] =
     {
@@ -18,7 +20,9 @@ namespace caddie
         "Random"
     };
 
+    /* ================== */
     /* Wind Speed setting */
+    /* ================== */
 
     static const char *sWindSpeedNames[Localizer::REGION_MAX] = 
     {
@@ -48,7 +52,9 @@ namespace caddie
         sWindSpeedEnum_Meters
     };
 
+    /* =============================== */
     /* Random Wind Speed Range setting */
+    /* =============================== */
 
     static const char *sWindSpdRangeNames[Localizer::REGION_MAX] =
     {
@@ -69,11 +75,11 @@ namespace caddie
 
     static const char *sWindSpdRangeEnum_Meters[] =
     {
-        "0-20 m/s",
         "0-10 m/s",
-        "10-20 m/s",
-        "20-30 m/s",
-        "0-30 m/s"
+        "0-5 m/s",
+        "5-10 m/s",
+        "10-15 m/s",
+        "0-15 m/s"
     };
 
     static const char **sWindSpdRangeLocale[Localizer::REGION_MAX] =
@@ -84,30 +90,51 @@ namespace caddie
         sWindSpdRangeEnum_Meters
     };
 
+    /* ================ */
     /* Pin Type setting */
-    
+    /* ================ */
+
     static const char *sPinTypeEnum[] =
     {
-        "From Score",
-        "Random",
         "Pin 1 (B)",
         "Pin 2 (B)",
         "Pin 3 (B)",
         "Pin 4 (A)",
         "Pin 5 (A)",
-        "Pin 6 (A)"
+        "Pin 6 (A)",
+        "From Score",
+        "Random (All)",
+        "Random (A)",
+        "Random (B)",
     };
 
-    // Used for holes that do not have pin sets by score (Hole 1, Hole 18, Holes 19-21)
+    // Hole 1 only has 3 pins
+    static const char *sPinTypeHoleOneEnum[] =
+    {
+        "Pin 1",
+        "Pin 2",
+        "Pin 3",
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        "Random (All)",
+        NULL,
+        NULL,
+    };
+
+    // The Special course holes do not have pin sets by score
     static const char *sPinTypeSpecialEnum[] =
     {
-        "From Score",
-        "Random",
         "Pin 1",
         "Pin 2",
         "Pin 3",
         "Pin 4",
         "Pin 5",
-        "Pin 6"
+        "Pin 6",
+        NULL,
+        "Random (All)",
+        NULL,
+        NULL
     };
 }

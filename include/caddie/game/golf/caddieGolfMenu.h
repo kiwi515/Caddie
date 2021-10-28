@@ -40,8 +40,16 @@ namespace caddie
 
         enum PinOptions
         {
+            PIN_1,
+            PIN_2,
+            PIN_3,
+            PIN_4,
+            PIN_5,
+            PIN_6,
             PIN_FROMSCORE,
-            PIN_RANDOM,
+            PIN_RANDOM_ALL,
+            PIN_RANDOM_A,
+            PIN_RANDOM_B,
             PIN_MAX
         };
 
@@ -53,6 +61,9 @@ namespace caddie
 
         virtual void Build();
         virtual void Calc();
+        virtual void Reset();
+
+        void Validate();
 
         static void ApplyHoleSettings();
         static void ApplyWindSettings();
@@ -60,6 +71,7 @@ namespace caddie
 
     private:
         static MenuOptionBase::MenuCommand Action_SaveReload();
+        static MenuOptionBase::MenuCommand Action_ReloadNoSave();
         static MenuOptionBase::MenuCommand Action_QuitGame();
 
     private:

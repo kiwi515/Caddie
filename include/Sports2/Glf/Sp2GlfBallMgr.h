@@ -13,13 +13,13 @@ namespace Sp2
         class GlfBallMgr
         {
         public:
-            GlfBall * GetBall(int i)
+            static GlfBall * GetBall(int i)
             {
                 CADDIE_ASSERT(i < PLAYER_MAX);
-                return &sGlfBalls[i];
+                return sGlfBalls[i];
             }
         private:
-            GlfBall sGlfBalls[PLAYER_MAX];
+            static GlfBall *sGlfBalls[PLAYER_MAX];
         };
     }
 }

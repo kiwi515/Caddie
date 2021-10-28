@@ -5,7 +5,7 @@
 struct RPSysSceneCreator;
 struct RPSysScene;
 struct RPSysSceneMgr;
-struct RPSysSysWinMgr;
+struct RPSysSysMsgWinMgr;
 struct RPSysProjectLocal;
 
 #endif

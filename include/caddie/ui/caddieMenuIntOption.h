@@ -42,25 +42,28 @@ namespace caddie
         virtual MenuCommand OnConfirm() const { return MENU_NO_OP; }
 
         int GetMin() const { return mMin; }
-        void SetMin(int n)
+        MenuOptionBase& SetMin(int n)
         {
             mMin = n;
             SetSavedValue(mSavedValue);
             SetUnsavedValue(mUnsavedValue);
+            return *this;
         }
 
         int GetMax() const { return mMax; }
-        void SetMax(int n)
+        MenuOptionBase& SetMax(int n)
         {
             mMax = n;
             SetSavedValue(mSavedValue);
             SetUnsavedValue(mUnsavedValue);
+            return *this;
         }
 
-        void SetAllValue(int i)
+        MenuOptionBase& SetAllValue(int i)
         {
             SetSavedValue(i);
             SetUnsavedValue(i);
+            return *this;
         }
 
         int GetSavedValue() const { return mSavedValue; }
@@ -69,7 +72,7 @@ namespace caddie
         int GetUnsavedValue() const { return mUnsavedValue; }
         void SetUnsavedValue(int i) { mUnsavedValue = nw4r::ut::Clamp(mMin, mMax, i); }
 
-    private:
+    protected:
         int mMin;
         int mMax;
         int mSavedValue;

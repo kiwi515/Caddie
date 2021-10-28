@@ -5,10 +5,10 @@
 
 #include "caddieAssert.h"
 
-class RPSysSysWinMgr
+class RPSysSysMsgWinMgr
 {
 public:
-    inline static RPSysSysWinMgr * getInstance()
+    inline static RPSysSysMsgWinMgr * getInstance()
     {
         return sInstance;
     }
@@ -16,12 +16,12 @@ public:
     UNKWORD GetWord0x14() const { return WORD_0x14; }
 
 private:
-    virtual ~RPSysSysWinMgr();
+    virtual ~RPSysSysMsgWinMgr();
     
     char UNK_0x4[0x14 - 0x4];
     UNKWORD WORD_0x14;
 
-    static RPSysSysWinMgr *sInstance;
+    static RPSysSysMsgWinMgr *sInstance;
 };
 
 #endif

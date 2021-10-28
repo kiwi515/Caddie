@@ -5,7 +5,7 @@
 
 namespace caddie
 {
-    void Main()
+    void CaddieMain()
     {
         MemManager::Initialize();
         InitCpp();
@@ -14,7 +14,11 @@ namespace caddie
         SetExceptionCallback();
         #endif
     }
-    kmBranch(0x8022dc14, &Main);
+#ifdef CADDIE_REGION_NTSC_U
+    kmBranch(0x8022dc14, &CaddieMain);
+#elif CADDIE_REGION_PAL
+    kmBranch(0x8022de8c, &CaddieMain);
+#endif
 
     void InitCpp()
     {
