@@ -207,10 +207,10 @@ namespace caddie
                 main->setPin(Sp2::Rand(max));
                 break;
             case PIN_RANDOM_A:
-                main->setPin(Sp2::Rand(3));
+                main->setPin(Sp2::Rand(3, 6));
                 break;
             case PIN_RANDOM_B:
-                main->setPin(Sp2::Rand(3, 6));
+                main->setPin(Sp2::Rand(0, 3));
                 break;
             default:
                 main->setPin(pin);
