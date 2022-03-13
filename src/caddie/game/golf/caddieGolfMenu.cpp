@@ -100,20 +100,20 @@ namespace caddie
         switch(hole)
         {
             // Hole 1 has three pins
-            case 0:
+            case 1:
                 if (pin >= PIN_4 && pin <= PIN_6) pinOpt->SetAllValue(PIN_1);
                 else if (pin == PIN_RANDOM_A || pin == PIN_RANDOM_B) pinOpt->SetAllValue(PIN_RANDOM_ALL);
                 break;
 
             // Hole 18 has one pin
-            case 17:
+            case 18:
                 if (pin >= PIN_2 && pin < PIN_MAX) pinOpt->SetAllValue(PIN_1);
                 break;
 
             // Special holes have six pins, but are not sorted by difficulty
-            case 18:
             case 19:
             case 20:
+            case 21:
                 if (pin == PIN_RANDOM_A || pin == PIN_RANDOM_B) pinOpt->SetAllValue(PIN_RANDOM_ALL);
                 break;
         }
