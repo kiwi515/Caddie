@@ -18,7 +18,7 @@ namespace caddie
         void RemoveChild(Pane *child);
 
         Pane* GetParent() const { return mParent; }
-        void SetParent(Pane* p) { mParent - p; }
+        void SetParent(Pane* p) { mParent = p; }
 
         nw4r::math::VEC2 GetPosition() const { return mPos; }
         void SetPosition(const nw4r::math::VEC2& pos) { mPos = pos; }
