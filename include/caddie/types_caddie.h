@@ -23,13 +23,8 @@ namespace caddie
     // ui
     struct Pane;
     struct TextBox;
-    struct MenuOptionBase;
-    struct MenuIntOption;
-    struct MenuEnumOption;
-    struct MenuLocalizedEnumOption;
-    struct MenuActionOption;
-    struct MenuBoolOption;
-    struct MenuBase;
+    struct MenuPage;
+    struct MenuMgr;
 
     // game/golf
     struct GolfMenu;

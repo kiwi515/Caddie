@@ -32,7 +32,7 @@ namespace caddie
      * 
      * @param str New text
      */
-    void TextBox::SetText(const char *str)
+    void TextBox::SetText(const char* str)
     {
         if (mTextBuffer != NULL) {
             const size_t len = strlen(str);
@@ -64,7 +64,7 @@ namespace caddie
      * @param str Format string
      * @param ... Extra args
      */
-    void TextBox::SetTextFmt(const char *str, ...)
+    void TextBox::SetTextFmt(const char* str, ...)
     {
         char msg_buf[512];
         va_list list;

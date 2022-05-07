@@ -16,8 +16,8 @@ namespace caddie
         virtual ~TextBox();
         virtual void DrawSelf() const;
 
-        void SetText(const char *str);
-        void SetTextFmt(const char *str, ...);
+        void SetText(const char* str);
+        void SetTextFmt(const char* str, ...);
 
         void SetTextColor(const nw4r::ut::Color& color) { mColor = color; }
 
@@ -33,7 +33,7 @@ namespace caddie
 
     private:
         //! @brief String buffer (owned)
-        char *mTextBuffer;
+        char* mTextBuffer;
         //! @brief Text color
         nw4r::ut::Color mColor;
     };
