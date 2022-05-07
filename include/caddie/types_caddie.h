@@ -21,6 +21,7 @@ namespace caddie
     struct SceneHook;
 
     // ui
+    struct Pane;
     struct MenuOptionBase;
     struct MenuIntOption;
     struct MenuEnumOption;
