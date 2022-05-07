@@ -22,6 +22,7 @@ namespace caddie
 
     // ui
     struct Pane;
+    struct TextBox;
     struct MenuOptionBase;
     struct MenuIntOption;
     struct MenuEnumOption;
