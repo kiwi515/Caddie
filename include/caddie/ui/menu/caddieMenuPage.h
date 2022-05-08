@@ -16,6 +16,8 @@ namespace caddie
         MenuPage() {}
         virtual ~MenuPage() {}
 
+        virtual void Draw() const;
+
         void AppendOption(IMenuOption *opt)
         {
             CADDIE_ASSERT(opt != NULL);
