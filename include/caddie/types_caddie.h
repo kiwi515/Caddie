@@ -25,6 +25,7 @@ namespace caddie
     struct TextBox;
     struct MenuPage;
     struct MenuMgr;
+    struct IMenuOption;
 
     // game/golf
     struct GolfMenu;
