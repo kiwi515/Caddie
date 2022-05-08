@@ -43,17 +43,29 @@ namespace caddie
     private:
         MenuMgr() :
             mCursor(0),
-            mIsVisible(false)
+            mIsVisible(false),
+            mBtnHeld(BTN_NONE),
+            mBtnTrig(BTN_NONE),
+            mBtnReleased(BTN_NONE)
         {}
         virtual ~MenuMgr() {}
+
+        void CalcInput();
 
     private:
         //! @brief Menu page hierarchy
         Stack<MenuPage> mPageStack;
         //! @brief Cursor position
-        u32 mCursor;
+        int mCursor;
         //! @brief Visiblity flag
         bool mIsVisible;
+
+        //! @brief Buttons being held
+        u32 mBtnHeld;
+        //! @brief Buttons pressed this frame
+        u32 mBtnTrig;
+        //! @brief Buttons released
+        u32 mBtnReleased;
     };
 }
 

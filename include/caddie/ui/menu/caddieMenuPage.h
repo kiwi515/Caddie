@@ -34,6 +34,8 @@ namespace caddie
 
         IMenuOption* GetOption(const char *name) const;
 
+        u32 GetNumOptions() const { return mOptions.Size(); }
+
     public:
         //! @brief Node for intrusive list
         TLinkListNode mNode;

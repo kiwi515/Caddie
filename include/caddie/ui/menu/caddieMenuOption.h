@@ -107,16 +107,8 @@ namespace caddie
             mValue = mSavedValue;
         }
 
-        template <>
-        virtual void UpdateString<int>()
+        virtual void UpdateString()
         {
-            mValueText.SetTextFmt("%i", mValue);
-        }
-
-        template <>
-        virtual void UpdateString<bool>()
-        {
-            mValueText.SetText(mValue ? "Yes" : "No");
         }
 
         virtual void Draw() const
@@ -153,6 +145,18 @@ namespace caddie
     template<>
     virtual void MenuPrimOption<bool>::Validate()
     {
+    }
+
+    template <>
+    virtual void MenuPrimOption<int>::UpdateString()
+    {
+        mValueText.SetTextFmt("%i", mValue);
+    }
+
+    template <>
+    virtual void MenuPrimOption<bool>::UpdateString()
+    {
+        mValueText.SetText(mValue ? "Yes" : "No");
     }
 
     /**

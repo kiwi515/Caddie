@@ -4,6 +4,8 @@
 #include <stddef.h>
 
 #define ARRAY_COUNT(x) (sizeof((x)) / sizeof(((x)[0])))
+#define MIN(x, y) (((x) < (y)) ? (x) : (y))
+#define MAX(x, y) (((x) > (y)) ? (x) : (y))
 
 typedef unsigned long long u64;
 typedef signed long long s64;
