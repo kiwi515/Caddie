@@ -16,6 +16,7 @@ namespace caddie
         virtual ~TextBox();
         virtual void DrawSelf() const;
 
+        const char* GetText() const { return mTextBuffer; }
         void SetText(const char* str);
         void SetTextFmt(const char* str, ...);
 

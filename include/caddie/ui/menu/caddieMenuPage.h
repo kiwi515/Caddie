@@ -18,6 +18,9 @@ namespace caddie
 
         virtual void Draw() const;
 
+        f32 GetWidth() const { return mWidth; }
+        void SetWidth(f32 w) { mWidth = w; }
+
         void AppendOption(IMenuOption *opt)
         {
             CADDIE_ASSERT(opt != NULL);
@@ -29,17 +32,7 @@ namespace caddie
             return mOptions.At(i);
         }
 
-        IMenuOption* GetOption(const char *name) const
-        {
-            MenuOptionIterator it = mChildren.Begin();
-            for (; it != mChildren.End(); it++) {
-                if (strcmp(name, it->GetName()) == 0) {
-                    return &*it;
-                }
-            }
-
-            return NULL;
-        }
+        IMenuOption* GetOption(const char *name) const;
 
     public:
         //! @brief Node for intrusive list
@@ -48,6 +41,10 @@ namespace caddie
     private:
         //! @brief Page options
         MenuOptionList mOptions;
+        //! @brief Page leading
+        f32 mLeading;
+        //! @brief Page width
+        f32 mWidth;
     };
 
     typedef TLinkList<MenuPage, offsetof(MenuPage, mNode)> MenuPageList;

@@ -2,6 +2,7 @@
 #define CADDIE_UI_MENU_OPTION_H
 #include "types_caddie.h"
 #include "caddieLinkList.h"
+#include "caddieTextBox.h"
 
 namespace caddie
 {
@@ -14,12 +15,17 @@ namespace caddie
         IMenuOption(const char* name) :
             mIsEnabled(false)
         {
-            SetName(name);
+            mNameText.SetText(name);
         }
         virtual ~IMenuOption() {}
 
-        const char* GetName() const { return mName; }
-        void SetName(const char* name) { mName = name; }
+        virtual void Draw() const = 0;
+
+        const char* GetName() const { return mNameText.GetText(); }
+        void SetName(const char* name) { mNameText.SetText(name); }
+
+        void SetNamePosition(const nw4r::math::VEC2& pos) { mNameText.SetPosition(pos); }
+        void SetValuePosition(const nw4r::math::VEC2& pos) { mValueText.SetPosition(pos); }
 
         bool IsEnabled() const { return mIsEnabled; }
         void SetEnabled(bool enable) { mIsEnabled = enable; }
@@ -31,17 +37,17 @@ namespace caddie
         virtual void SaveChanges() = 0;
         virtual void DeleteChanges() = 0;
 
-        virtual void Draw() const = 0;
-        
         virtual void OnClick() = 0;
 
     public:
         //! @brief Node for intrusive list
         TLinkListNode mNode;
 
-    private:
+    protected:
         //! @brief Option name
-        const char* mName;
+        TextBox mNameText;
+        //! @brief Option value
+        TextBox mValueText;
         //! @brief Enable option
         bool mIsEnabled;
     };
@@ -101,8 +107,23 @@ namespace caddie
             mValue = mSavedValue;
         }
 
-        // TODO
-        virtual void Draw() const;
+        template <>
+        virtual void UpdateString<int>()
+        {
+            mValueText.SetTextFmt("%i", mValue);
+        }
+
+        template <>
+        virtual void UpdateString<bool>()
+        {
+            mValueText.SetText(mValue ? "Yes" : "No");
+        }
+
+        virtual void Draw() const
+        {
+            mNameText.Draw();
+            mValueText.Draw();
+        }
         
         virtual void OnClick() {}
 
@@ -144,7 +165,7 @@ namespace caddie
         // virtual ~MenuEnumOption()
 
         // TODO
-        virtual void Draw() const;
+        // virtual void Draw() const;
     };
 
     /**
@@ -158,8 +179,10 @@ namespace caddie
         // MenuActionOption(const char* name, Action act)
         // virtual ~MenuActionOption()
 
-        // TODO
-        virtual void Draw() const;
+        virtual void Draw() const
+        {
+            mNameText.Draw();
+        }
 
         void SetOnClick(Action act) { mOnClick = act; }
         
