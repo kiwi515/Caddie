@@ -15,6 +15,7 @@ namespace caddie
         virtual ~GlfMenu();
 
     private:
+        MenuPage mRootPage;
         MenuPrimOption<int> mHole;
         MenuPrimOption<bool> mRepeatHole;
         MenuEnumOption mPinType;
