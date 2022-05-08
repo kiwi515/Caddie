@@ -1,7 +1,8 @@
-#ifndef CADDIE_UI_MENU_H
-#define CADDIE_UI_MENU_H
+#ifndef CADDIE_UI_MENU_MGR_H
+#define CADDIE_UI_MENU_MGR_H
 #include "types_caddie.h"
 #include "caddieMenuPage.h"
+#include "caddieStack.h"
 
 namespace caddie
 {
@@ -18,12 +19,20 @@ namespace caddie
         }
 
         virtual void Calc();
+        virtual void Draw() const;
 
-        MenuPage* GetMenuPages() const { return mMenuPages; }
-        void SetMenuPages(MenuPage* pages) { mMenuPages = pages; }
+        void OpenPage(MenuPage* page)
+        {
+            CADDIE_ASSERT(page != NULL);
+            mPageStack.Push(page);
+            mCursor = 0;
+        }
 
-        int GetPage() const { return mPage; }
-        void SetPage(int page) { mPage = page; }
+        void ClosePage()
+        {
+            mPageStack.Pop();
+            mCursor = 0;
+        }
 
         int GetCursor() const { return mCursor; }
         void SetCursor(int cursor) { mCursor = cursor; }
@@ -31,28 +40,18 @@ namespace caddie
         bool GetVisible() const { return mIsVisible; }
         void SetVisible(bool vis) { mIsVisible = vis; }
 
-        void NextPage() { mPage = (mPage + 1) % mNumPages; }
-        void PrevPage() { mPage = (mPage == 0) ? mNumPages : (mPage - 1) % mNumPages; }
-
     private:
         MenuMgr() :
-            mMenuPages(NULL),
-            mNumPages(0),
-            mPage(0),
             mCursor(0),
             mIsVisible(false)
         {}
         virtual ~MenuMgr() {}
 
     private:
-        //! @brief Menu data
-        MenuPage* mMenuPages;
-        //! @brief Page count
-        int mNumPages;
-        //! @brief Current page
-        int mPage;
+        //! @brief Menu page hierarchy
+        Stack<MenuPage> mPageStack;
         //! @brief Cursor position
-        int mCursor;
+        u32 mCursor;
         //! @brief Visiblity flag
         bool mIsVisible;
     };

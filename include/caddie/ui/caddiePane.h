@@ -1,7 +1,7 @@
 #ifndef CADDIE_UI_PANE_H
 #define CADDIE_UI_PANE_H
 #include "types_caddie.h"
-#include "caddieTLinkList.h"
+#include "caddieLinkList.h"
 #include "caddieAssert.h"
 #include "math_types.h"
 #include <string.h>
@@ -37,8 +37,6 @@ namespace caddie
     public:
         //! @brief Node for intrusive list
         TLinkListNode mNode;
-        typedef TLinkList<Pane, offsetof(Pane, mNode)> PaneList;
-        typedef PaneList::Iterator PaneIterator;
 
     protected:
         //! @brief Pane name max length
@@ -57,6 +55,9 @@ namespace caddie
         //! @brief Pane name
         char mName[PANE_NAME_LEN + 1];
     };
+
+    typedef TLinkList<Pane, offsetof(Pane, mNode)> PaneList;
+    typedef PaneList::Iterator PaneIterator;
 }
 
 #endif

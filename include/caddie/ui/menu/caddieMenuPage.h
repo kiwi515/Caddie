@@ -8,10 +8,19 @@ namespace caddie
     /**
      * @brief Page of menu options
      */
-    class MenuPage : Pane
+    class MenuPage : public Pane
     {
+    public:
+        MenuPage() {}
+        virtual ~MenuPage() {}
 
+    public:
+        //! @brief Node for intrusive list
+        TLinkListNode mNode;
     };
+
+    typedef TLinkList<MenuPage, offsetof(MenuPage, mNode)> MenuPageList;
+    typedef MenuPageList::Iterator MenuPageIterator;
 }
 
 #endif

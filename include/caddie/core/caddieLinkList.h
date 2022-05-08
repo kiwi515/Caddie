@@ -1,5 +1,5 @@
-#ifndef CADDIE_CORE_T_LINKLIST_H
-#define CADDIE_CORE_T_LINKLIST_H
+#ifndef CADDIE_CORE_LINKLIST_H
+#define CADDIE_CORE_LINKLIST_H
 #include "types_caddie.h"
 
 namespace caddie
