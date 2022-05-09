@@ -5,8 +5,8 @@
 
 namespace caddie
 {
-    typedef void (* SceneCallback)(RPSysScene *);
-    typedef void (* PauseCallback)(RPSysScene *, bool isPause);
+    typedef void (* SceneCallback)(RPSysScene*);
+    typedef void (* PauseCallback)(RPSysScene*, bool isPause);
 
     struct SceneHook
     {

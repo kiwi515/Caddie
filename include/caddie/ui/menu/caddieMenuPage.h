@@ -32,7 +32,7 @@ namespace caddie
             return mOptions.At(i);
         }
 
-        IMenuOption* GetOption(const char *name) const;
+        IMenuOption* GetOption(const char* name) const;
 
         u32 GetNumOptions() const { return mOptions.Size(); }
 

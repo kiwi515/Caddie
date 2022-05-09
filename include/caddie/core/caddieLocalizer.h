@@ -20,7 +20,7 @@ namespace caddie
             REGION_MAX
         };
 
-        static Localizer * GetInstance()
+        static Localizer* GetInstance()
         {
             static Localizer instance;
             return &instance;
@@ -40,12 +40,12 @@ namespace caddie
             }
         }
 
-        const char * Localize(const char *locale[REGION_MAX]) { return locale[GetGameRegion()]; }
+        const char* Localize(const char* locale[REGION_MAX]) { return locale[GetGameRegion()]; }
 
-        RPSysProjectLocal * GetRPLocale() const { return mRPLocale; }
+        RPSysProjectLocal* GetRPLocale() const { return mRPLocale; }
 
     private:
-        RPSysProjectLocal *mRPLocale;
+        RPSysProjectLocal* mRPLocale;
     };
 }
 

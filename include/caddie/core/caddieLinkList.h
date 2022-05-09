@@ -9,20 +9,20 @@ namespace caddie
         TLinkListNode() : mNext(NULL), mPrev(NULL) {}
         ~TLinkListNode() {}
 
-        TLinkListNode *mNext;
-        TLinkListNode *mPrev;
+        TLinkListNode* mNext;
+        TLinkListNode* mPrev;
     };
 
     template <typename T, int ofs>
     class TLinkList
     {
     public:
-        static inline TLinkListNode * GetNodeFromElem(T *elem) { return (TLinkListNode *)((char *)elem + ofs); }
-        static inline T * GetElemFromNode(TLinkListNode *node) { return (T *)((char *)node - ofs); }
+        static inline TLinkListNode* GetNodeFromElem(T* elem) { return (TLinkListNode* )((char*)elem + ofs); }
+        static inline T* GetElemFromNode(TLinkListNode* node) { return (T*)((char*)node - ofs); }
 
         struct Iterator
         {
-            Iterator(TLinkListNode *node) : mNode(node) {}
+            Iterator(TLinkListNode* node) : mNode(node) {}
             ~Iterator() {}
 
             Iterator operator++()
@@ -48,16 +48,16 @@ namespace caddie
                 return curr;                
             }
 
-            T * operator->() const { return GetElemFromNode(mNode); }
+            T* operator->() const { return GetElemFromNode(mNode); }
             T & operator*() const { return *GetElemFromNode(mNode); }
 
             bool operator==(Iterator rhs) const { return (mNode == rhs.mNode); }
             bool operator!=(Iterator rhs) const { return (mNode != rhs.mNode); }
 
             void operator=(Iterator rhs) { mNode = rhs.mNode; }
-            void operator=(TLinkListNode *rhs) { mNode = rhs; }
+            void operator=(TLinkListNode* rhs) { mNode = rhs; }
 
-            TLinkListNode *mNode;
+            TLinkListNode* mNode;
         };
 
         TLinkList() : mHead(NULL), mTail(NULL), mSize(0) {}
@@ -78,27 +78,27 @@ namespace caddie
             return Iterator(NULL);
         }
 
-        T * Front() const
+        T* Front() const
         {
             return &*Begin();
         }
 
-        T * Back() const
+        T* Back() const
         {
             return &*End();
         }
 
-        T * At(int n) const
+        T* At(int n) const
         {
             Iterator it = Begin();
             while (n-- > 0) it++;
             return &*it;
         }
         
-        void Prepend(T *obj)
+        void Prepend(T* obj)
         {
             CADDIE_ASSERT(obj != NULL);
-            TLinkListNode *n = GetNodeFromElem(obj);
+            TLinkListNode* n = GetNodeFromElem(obj);
 
             if (mHead == NULL)
             {
@@ -115,10 +115,10 @@ namespace caddie
             mSize++;
         }
 
-        void Append(T *obj)
+        void Append(T* obj)
         {
             CADDIE_ASSERT(obj != NULL);
-            TLinkListNode *n = GetNodeFromElem(obj);
+            TLinkListNode* n = GetNodeFromElem(obj);
 
             if (mTail == NULL)
             {
@@ -135,7 +135,7 @@ namespace caddie
             mSize++;
         }     
 
-        void Insert(Iterator it, T *obj)
+        void Insert(Iterator it, T* obj)
         {
             CADDIE_ASSERT(it.mNode != NULL);
             CADDIE_ASSERT(obj != NULL);
@@ -170,8 +170,8 @@ namespace caddie
             }
             else
             {
-                TLinkListNode *before = it.mNode->mPrev;
-                TLinkListNode *after = it.mNode->mNext;
+                TLinkListNode* before = it.mNode->mPrev;
+                TLinkListNode* after = it.mNode->mNext;
 
                 before->mNext = after;
                 after->mPrev = before;
@@ -193,12 +193,12 @@ namespace caddie
         }
 
     private:
-        void Insert(Iterator it, TLinkListNode *node)
+        void Insert(Iterator it, TLinkListNode* node)
         {
             CADDIE_ASSERT(node != NULL);
             
-            TLinkListNode *after = it.mNode;
-            TLinkListNode *before = after->mPrev;
+            TLinkListNode* after = it.mNode;
+            TLinkListNode* before = after->mPrev;
             CADDIE_ASSERT_EX(before != NULL, "List is broken!!!\n");
 
             before->mNext = node;
@@ -210,8 +210,8 @@ namespace caddie
         }
 
     private:
-        TLinkListNode *mHead;
-        TLinkListNode *mTail;
+        TLinkListNode* mHead;
+        TLinkListNode* mTail;
         u32 mSize;
     };
 }

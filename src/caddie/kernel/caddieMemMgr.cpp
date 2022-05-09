@@ -14,5 +14,5 @@ namespace caddie
         CADDIE_LOG_EX("Game heap: @0x%08X -> 0x%08X\n", &sHeap, sHeap);
     }
 
-    EGG::ExpHeap *MemManager::sHeap;
+    EGG::ExpHeap* MemManager::sHeap;
 }

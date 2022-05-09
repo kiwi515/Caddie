@@ -14,9 +14,9 @@
 
 
 #ifdef NDEBUG
-    const char *CADDIE_BUILD = "Caddie (RELEASE, " CADDIE_REGION_STR "): " __DATE__ " " __TIME__;
+    const char* CADDIE_BUILD = "Caddie (RELEASE, " CADDIE_REGION_STR "): " __DATE__ " " __TIME__;
 #else
-    const char *CADDIE_BUILD = "Caddie (DEBUG, " CADDIE_REGION_STR "): " __DATE__ " " __TIME__;
+    const char* CADDIE_BUILD = "Caddie (DEBUG, " CADDIE_REGION_STR "): " __DATE__ " " __TIME__;
 #endif
 
 #define COLOR_SPLASH_TEXT 0xFFFF0000

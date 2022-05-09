@@ -30,7 +30,7 @@
 
 namespace caddie
 {
-    inline void caddie_fail_assert(const char *file, int line, const char *msg)
+    inline void caddie_fail_assert(const char* file, int line, const char* msg)
     {
         char buf[1024];
         sprintf(buf, "Assertion Failed: %s%s, line %d.", msg, file, line);

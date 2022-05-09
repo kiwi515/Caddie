@@ -79,7 +79,7 @@ namespace caddie
      * 
      * @param name New name
      */
-    void Pane::SetName(const char *name)
+    void Pane::SetName(const char* name)
     {
         // Warn if pane name will be truncated
         const size_t len = strlen(name);

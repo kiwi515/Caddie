@@ -113,6 +113,7 @@ namespace caddie
 
         virtual void Draw() const
         {
+            UpdateString();
             mNameText.Draw();
             mValueText.Draw();
         }
