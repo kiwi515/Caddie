@@ -1,6 +1,7 @@
 #ifndef CADDIE_SCENE_GLF_GLFMENU_H
 #define CADDIE_SCENE_GLF_GLFMENU_H
 #include "types_caddie.h"
+#include "caddieMenuPage.h"
 #include "caddieMenuOption.h"
 
 namespace caddie

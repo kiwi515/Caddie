@@ -7,7 +7,7 @@ namespace caddie
     /**
      * @brief Draw all options on page
      */
-    void MenuPage::Draw() const
+    void MenuPage::DrawSelf() const
     {
         VEC2 namePos = mPos;
 

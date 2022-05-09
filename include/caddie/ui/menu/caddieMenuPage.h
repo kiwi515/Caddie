@@ -16,7 +16,7 @@ namespace caddie
         MenuPage() {}
         virtual ~MenuPage() {}
 
-        virtual void Draw() const;
+        virtual void DrawSelf() const;
 
         f32 GetWidth() const { return mWidth; }
         void SetWidth(f32 w) { mWidth = w; }

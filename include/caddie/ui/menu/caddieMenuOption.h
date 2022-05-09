@@ -180,15 +180,22 @@ namespace caddie
     public:
         typedef void (*Action)();
 
-        // MenuActionOption(const char* name, Action act)
-        // virtual ~MenuActionOption()
+        MenuActionOption(const char* name, Action act) :
+            IMenuOption(name)
+        {}
+        virtual ~MenuActionOption() {}
 
         virtual void Draw() const
         {
             mNameText.Draw();
         }
 
-        void SetOnClick(Action act) { mOnClick = act; }
+        virtual void Increment() {};
+        virtual void Decrement() {};
+        virtual void Validate() {};
+
+        virtual void SaveChanges() {};
+        virtual void DeleteChanges() {};
         
         virtual void OnClick()
         {
@@ -196,6 +203,8 @@ namespace caddie
                 mOnClick();
             }
         }
+
+        void SetOnClick(Action act) { mOnClick = act; }
 
     private:
         Action mOnClick;
