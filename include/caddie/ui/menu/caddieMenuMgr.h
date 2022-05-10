@@ -44,9 +44,9 @@ namespace caddie
         MenuMgr() :
             mCursor(0),
             mIsVisible(false),
-            mBtnHeld(BTN_NONE),
-            mBtnTrig(BTN_NONE),
-            mBtnReleased(BTN_NONE)
+            mBtnHeld(0x0),
+            mBtnTrig(0x0),
+            mBtnReleased(0x0)
         {}
         virtual ~MenuMgr() {}
 
@@ -54,7 +54,7 @@ namespace caddie
 
     private:
         //! @brief Menu page hierarchy
-        Stack<MenuPage> mPageStack;
+        TStack<MenuPage> mPageStack;
         //! @brief Cursor position
         int mCursor;
         //! @brief Visiblity flag

@@ -63,6 +63,7 @@ namespace EGG
 		Scene * findParentScene(s32);
 		
 		inline s32 getCurrentSceneID() const { return mCurrentSceneID; }
+		inline Scene * getCurrentScene() const { return mCurrentScene; }
 		
 		static inline Heap * getHeapForCreateScene_Mem1() { return sHeapMem1_ForCreateScene; }
 		static inline Heap * getHeapForCreateScene_Mem2() { return sHeapMem2_ForCreateScene; }

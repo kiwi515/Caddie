@@ -7,11 +7,11 @@
 namespace caddie
 {
     template <typename T>
-    class Stack
+    class TStack
     {
     public:
-        Stack() {}
-        virtual ~Stack() {}
+        TStack() {}
+        virtual ~TStack() {}
 
         void Push(T* elem)
         {
@@ -43,7 +43,7 @@ namespace caddie
         }
 
     private:
-        TLinkList<T, offsetof(T, mNode)> mData;
+        TLinkList<T> mData;
     };
 }
 

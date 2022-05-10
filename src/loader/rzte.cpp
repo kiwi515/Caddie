@@ -31,50 +31,14 @@ void freeAdapter(void *memBlock, bool isForCode, const loaderFunctions *funcs)
     funcsEx->eggFree(memBlock, pHeap);
 }
 
-// Patch stubbed OSReport
-// TO-DO: Make this work in C++
-// Region free
-kmBranchDefAsm(0x80061470, NULL)
+void OSReport(const char *msg, ...)
 {
-    loc_0x0:
-    stwu r1, -0x80(r1)
-    mflr r0
-    stw r0, 0x84(r1)
-    stw r31, 0x7C(r1)
-    bne- cr1, loc_0x34
-    stfd f1, 0x28(r1)
-    stfd f2, 0x30(r1)
-    stfd f3, 0x38(r1)
-    stfd f4, 0x40(r1)
-    stfd f5, 0x48(r1)
-    stfd f6, 0x50(r1)
-    stfd f7, 0x58(r1)
-    stfd f8, 0x60(r1)
-
-    loc_0x34:
-    addi r11, r1, 0x88
-    addi r0, r1, 0x8
-    lis r12, 0x100
-    stw r3, 0x8(r1)
-    addi r31, r1, 0x68
-    stw r4, 0xC(r1)
-    mr r4, r31
-    stw r5, 0x10(r1)
-    stw r6, 0x14(r1)
-    stw r7, 0x18(r1)
-    stw r8, 0x1C(r1)
-    stw r9, 0x20(r1)
-    stw r10, 0x24(r1)
-    stw r12, 0x68(r1)
-    stw r11, 0x6C(r1)
-    stw r0, 0x70(r1)
-    bl vprintf
-    lwz r0, 0x84(r1)
-    lwz r31, 0x7C(r1)
-    mtlr r0
-    addi r1, r1, 0x80
-    blr     
+    va_list list;
+    va_start(msg, list);
+    vprintf(msg, list);
+    va_end(list);
 }
+kmBranch(0x80061470, OSReport);
 
 void loadMainCode()
 {
@@ -85,7 +49,6 @@ void loadMainCode()
             loadKamekBinaryFromDisc(&cFunctionsNTSC_U.base, "/modules/main_NTSC_U.bin");
             break;
         case 'RZTP':
-            CADDIE_BREAKPOINT;
             loadKamekBinaryFromDisc(&cFunctionsPAL.base, "/modules/main_PAL.bin");
             break;
         case 'RZTJ':

@@ -11,10 +11,13 @@ OSReport=0x80061470
 # STL/cstdio
 vprintf=0x8000ceec
 vsprintf=0x8000cff0
+vsnprintf=0x8000cf68
 sprintf=0x8000d168
 
 # STL/string
 strcmp=0x8000e8b0
+strlen=0x800071c0
+strncpy=0x8000e7f4
 
 # TRK/runtime
 _savefpr_25=0x800077b8
@@ -25,6 +28,12 @@ _savefpr_28=0x800077c4
 _restfpr_28=0x80007810
 _savefpr_29=0x800077c8
 _restfpr_29=0x80007814
+
+_savegpr_27=0x80007858
+_restgpr_27=0x800078a4
+_savegpr_29=0x80007860
+_restgpr_29=0x800078ac
+
 __register_global_object=0x800072a4
 __destroy_arr=0x800075bc
 

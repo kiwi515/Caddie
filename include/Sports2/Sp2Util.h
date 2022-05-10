@@ -18,7 +18,7 @@ namespace Sp2
         Print(msg_buf, color, center, x, y, scale);
     }
 
-    static inline void PrintOutline(const char *msg, u32 textColor, u32 outlineColor, bool center, f32 x, f32 y, f32 scale = sScaleDefault)
+    static inline void PrintOutline(const char *msg, u32 textColor, u32 outlineColor, bool center, f32 x, f32 y, f32 scale = 1.0f)
     {
         // Outline 
         Print(msg, outlineColor, center, x - 2.0f, y + 0.0f, scale);
@@ -41,7 +41,7 @@ namespace Sp2
         PrintOutline(msg_buf, textColor, outlineColor, center, x, y, scale);
     }
 
-    static inline void PrintShadow(const char *msg, u32 textColor, u32 shadowColor, bool center, f32 x, f32 y, f32 scale = sScaleDefault)
+    static inline void PrintShadow(const char *msg, u32 textColor, u32 shadowColor, bool center, f32 x, f32 y, f32 scale = 1.0f)
     {
         // Shadow (bottom right)
         Print(msg, shadowColor, center, x + 2.0f, y + 2.0f, scale);

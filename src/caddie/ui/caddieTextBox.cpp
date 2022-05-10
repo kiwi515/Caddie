@@ -2,8 +2,6 @@
 #include <Sports2/Sp2Util.h>
 #include <string.h>
 
-using namespace Sp2;
-
 namespace caddie
 {
     TextBox::TextBox() :
@@ -24,7 +22,7 @@ namespace caddie
      */
     void TextBox::DrawSelf() const
     {
-        Print(mTextBuffer, GetARGB(), false, mPos.mCoords.x, mPos.mCoords.y, mScale);
+        Sp2::Print(mTextBuffer, GetARGB(), false, mPos.mCoords.x, mPos.mCoords.y, mScale);
     }
 
     /**
@@ -69,8 +67,8 @@ namespace caddie
         char msg_buf[512];
         va_list list;
 
-        va_start(msg, list);
-        vsnprintf(msg_buf, sizeof(msg_buf), msg, list);
+        va_start(str, list);
+        vsnprintf(msg_buf, sizeof(msg_buf), str, list);
         va_end(list);
 
         SetText(msg_buf);

@@ -4,6 +4,20 @@ using namespace nw4r::math;
 
 namespace caddie
 {
+    MenuPage::MenuPage(const char* name)
+    {
+        SetName(name);    
+    }
+
+    MenuPage::~MenuPage()
+    {
+        MenuOptionIterator it = mOptions.Begin();
+        for(; it != mOptions.End(); it++)
+        {
+            delete &*it;
+        }
+    }
+
     /**
      * @brief Draw all options on page
      */

@@ -13,12 +13,12 @@ namespace caddie
         TLinkListNode* mPrev;
     };
 
-    template <typename T, int ofs>
+    template <typename T>
     class TLinkList
     {
     public:
-        static inline TLinkListNode* GetNodeFromElem(T* elem) { return (TLinkListNode* )((char*)elem + ofs); }
-        static inline T* GetElemFromNode(TLinkListNode* node) { return (T*)((char*)node - ofs); }
+        static inline TLinkListNode* GetNodeFromElem(T* elem) { return (TLinkListNode* )((char*)elem + T::GetNodeOffset()); }
+        static inline T* GetElemFromNode(TLinkListNode* node) { return (T*)((char*)node - T::GetNodeOffset()); }
 
         struct Iterator
         {

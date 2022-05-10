@@ -13,7 +13,7 @@ namespace caddie
     struct MemManager;
 
     // core
-    template <typename T, int ofs> struct TLinkList;
+    template <typename T> struct TLinkList;
     struct TLinkListNode;
     struct Timer;
     struct IGTTimer;
@@ -27,9 +27,9 @@ namespace caddie
     struct MenuMgr;
     struct IMenuOption;
 
-    // game/golf
-    struct GolfMenu;
-    struct GolfSceneHook;
+    // scene/glf
+    struct GlfMenu;
+    struct GlfSceneHook;
 }
 
 #endif

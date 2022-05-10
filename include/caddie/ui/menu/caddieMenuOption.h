@@ -12,6 +12,8 @@ namespace caddie
     class IMenuOption
     {
     public:
+        static u32 GetNodeOffset() { return offsetof(IMenuOption, mNode); }
+
         IMenuOption(const char* name) :
             mIsEnabled(false)
         {
@@ -19,7 +21,7 @@ namespace caddie
         }
         virtual ~IMenuOption() {}
 
-        virtual void Draw() const = 0;
+        virtual void Draw() = 0;
 
         const char* GetName() const { return mNameText.GetText(); }
         void SetName(const char* name) { mNameText.SetText(name); }
@@ -52,7 +54,7 @@ namespace caddie
         bool mIsEnabled;
     };
 
-    typedef TLinkList<IMenuOption, offsetof(IMenuOption, mNode)> MenuOptionList;
+    typedef TLinkList<IMenuOption> MenuOptionList;
     typedef MenuOptionList::Iterator MenuOptionIterator;
 
     /**
@@ -66,7 +68,7 @@ namespace caddie
             IMenuOption(name),
             mMin(min),
             mMax(max),
-            mValue(initial),
+            mValue(initial)
         {}
         virtual ~MenuPrimOption() {}
 
@@ -85,6 +87,12 @@ namespace caddie
                 mValue = mMax;
             }
         }
+
+        virtual T GetUnsavedValue() const { return mValue; }
+        virtual void SetUnsavedValue(T val) { mValue = val; }
+
+        virtual T GetSavedValue() const { return mSavedValue; }
+        virtual void SetSavedValue(T val) { mSavedValue = val; }
 
         virtual void Validate()
         {
@@ -111,7 +119,7 @@ namespace caddie
         {
         }
 
-        virtual void Draw() const
+        virtual void Draw()
         {
             UpdateString();
             mNameText.Draw();
@@ -170,7 +178,7 @@ namespace caddie
         // virtual ~MenuEnumOption()
 
         // TODO
-        // virtual void Draw() const;
+        // virtual void Draw();
     };
 
     /**
@@ -182,11 +190,12 @@ namespace caddie
         typedef void (*Action)();
 
         MenuActionOption(const char* name, Action act) :
-            IMenuOption(name)
+            IMenuOption(name),
+            mOnClick(NULL)
         {}
         virtual ~MenuActionOption() {}
 
-        virtual void Draw() const
+        virtual void Draw()
         {
             mNameText.Draw();
         }
@@ -209,7 +218,7 @@ namespace caddie
 
     private:
         Action mOnClick;
-    }
+    };
 }
 
 #endif

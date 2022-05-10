@@ -13,8 +13,10 @@ namespace caddie
     class MenuPage : public Pane
     {
     public:
-        MenuPage() {}
-        virtual ~MenuPage() {}
+        static u32 GetNodeOffset() { return offsetof(MenuPage, mNode); }
+
+        MenuPage(const char* name);
+        virtual ~MenuPage();
 
         virtual void DrawSelf() const;
 
@@ -42,14 +44,14 @@ namespace caddie
 
     private:
         //! @brief Page options
-        MenuOptionList mOptions;
+        TLinkList<IMenuOption> mOptions;
         //! @brief Page leading
         f32 mLeading;
         //! @brief Page width
         f32 mWidth;
     };
 
-    typedef TLinkList<MenuPage, offsetof(MenuPage, mNode)> MenuPageList;
+    typedef TLinkList<MenuPage> MenuPageList;
     typedef MenuPageList::Iterator MenuPageIterator;
 }
 

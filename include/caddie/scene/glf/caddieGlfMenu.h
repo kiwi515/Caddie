@@ -15,16 +15,18 @@ namespace caddie
         GlfMenu();
         virtual ~GlfMenu();
 
+        MenuPage* GetRootPage() { return &mRootPage; }
+
     private:
         MenuPage mRootPage;
         MenuPrimOption<int> mHole;
         MenuPrimOption<bool> mRepeatHole;
-        MenuEnumOption mPinType;
-        MenuEnumOption mWindDir;
-        MenuEnumOption mWindSpd;
-        MenuEnumOption mWindSpdRange;
-        MenuActionOption mApplyRestart;
-        MenuActionOption mQuitGame;
+        // MenuEnumOption mPinType;
+        // MenuEnumOption mWindDir;
+        // MenuEnumOption mWindSpd;
+        // MenuEnumOption mWindSpdRange;
+        // MenuActionOption mApplyRestart;
+        // MenuActionOption mQuitGame;
     };
 }
 

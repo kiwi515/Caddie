@@ -14,6 +14,8 @@ namespace caddie
     class Pane
     {
     public:
+        static u32 GetNodeOffset() { return offsetof(Pane, mNode); }
+
         Pane();
         virtual ~Pane();
         virtual void Draw() const;
@@ -32,7 +34,8 @@ namespace caddie
         f32 GetScale() const { return mScale; }
         void SetScale(f32 scale) { mScale = scale; }
 
-        void SetName(const char *str);
+        const char* GetName() const { return mName; }
+        void SetName(const char* str);
 
     public:
         //! @brief Node for intrusive list
@@ -45,7 +48,7 @@ namespace caddie
         //! @brief Parent pane
         Pane* mParent;
         //! @brief List of children
-        PaneList mChildren;
+        TLinkList<Pane> mChildren;
 
         //! @brief Screenspace position
         nw4r::math::VEC2 mPos;
@@ -56,7 +59,7 @@ namespace caddie
         char mName[PANE_NAME_LEN + 1];
     };
 
-    typedef TLinkList<Pane, offsetof(Pane, mNode)> PaneList;
+    typedef TLinkList<Pane> PaneList;
     typedef PaneList::Iterator PaneIterator;
 }
 
