@@ -20,7 +20,6 @@ namespace caddie
         static void Free(void* block)
         {
             CADDIE_ASSERT(sHeap != NULL);
-            CADDIE_ASSERT(block != NULL);
             sHeap->free(block);
         }
 
@@ -50,13 +49,11 @@ inline void* operator new[](size_t size)
 
 inline void operator delete(void* block)
 {
-    CADDIE_ASSERT(block != NULL);
     caddie::MemManager::Free(block);
 }
 
 inline void operator delete[](void* block)
 {
-    CADDIE_ASSERT(block != NULL);
     caddie::MemManager::Free(block);
 }
 

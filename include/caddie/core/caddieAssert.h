@@ -16,6 +16,12 @@
 #define CADDIE_LOG_EX(msg, ...) \
     OSReport(msg, __VA_ARGS__)
 
+#define CADDIE_WARN(exp, msg) \
+    if((exp)) CADDIE_LOG(msg)
+
+#define CADDIE_WARN_EX(exp, msg, ...) \
+    if((exp)) CADDIE_LOG(msg, __VA_ARGS__)
+
 #define CADDIE_ASSERT(exp) \
     if (!(exp)) caddie::caddie_fail_assert(__FILE__, __LINE__, #exp "\n")
 

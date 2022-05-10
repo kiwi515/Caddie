@@ -5,16 +5,20 @@
 namespace caddie
 {
     TextBox::TextBox() :
-        mTextBuffer(NULL)
+        mStroke(STROKE_NONE),
+        mTextBuffer(NULL),
+        mTextColor(255, 255, 255, 255),
+        mStrokeColor(0, 0, 0, 255)
     {
+        // Placeholder text
+        mTextBuffer = new char[sizeof("TextBox")];
+        strncpy(mTextBuffer, "TextBox", sizeof("TextBox"));
     }
 
     TextBox::~TextBox()
     {
-        if (mTextBuffer != NULL) {
-            delete mTextBuffer;
-            mTextBuffer = NULL;
-        }
+        delete mTextBuffer;
+        mTextBuffer = NULL;
     }
 
     /**
@@ -22,13 +26,25 @@ namespace caddie
      */
     void TextBox::DrawSelf() const
     {
-        CADDIE_LOG("TextBox::DrawSelf:\n");
-        CADDIE_LOG_EX("    Name: %s\n", mTextBuffer);
-        CADDIE_LOG_EX("    ARGB: %08X\n", GetARGB());
-        CADDIE_LOG_EX("    Pos: (%.2f, %.2f)\n", mPos.mCoords.x, mPos.mCoords.y);
-        CADDIE_LOG_EX("    Scale: %.2f\n", mScale);
+        CADDIE_ASSERT(mTextBuffer != NULL);
 
-        Sp2::Print(mTextBuffer, GetARGB(), false, mPos.mCoords.x, mPos.mCoords.y, mScale);
+        switch(mStroke)
+        {
+            case STROKE_NONE:
+                Sp2::Print(mTextBuffer, Nw4rToARGB(mTextColor), false,
+                    mPos.mCoords.x, mPos.mCoords.y);
+                break;
+            case STROKE_OUTLINE:
+                Sp2::PrintOutline(mTextBuffer, Nw4rToARGB(mTextColor),
+                    Nw4rToARGB(mStrokeColor), false,
+                    mPos.mCoords.x, mPos.mCoords.y);
+                break;
+            case STROKE_SHADOW:
+                Sp2::PrintShadow(mTextBuffer, Nw4rToARGB(mTextColor),
+                    Nw4rToARGB(mStrokeColor), false,
+                    mPos.mCoords.x, mPos.mCoords.y);
+                break;
+        }
     }
 
     /**
@@ -56,6 +72,7 @@ namespace caddie
         }
         else {
             // No existing buffer to use
+            delete mTextBuffer;
             mTextBuffer = new char[len + 1];
             strncpy(mTextBuffer, str, len);
         }

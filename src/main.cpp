@@ -1,5 +1,6 @@
 #include "caddieSceneHookMgr.h"
 #include "caddieGlfSceneHook.h"
+#include "ui_test.h"
 
 namespace caddie
 {
@@ -16,6 +17,15 @@ namespace caddie
                 GlfSceneHook::OnCalculate,
                 GlfSceneHook::OnUserDraw,
                 GlfSceneHook::OnExit
+            }
+        );
+
+        // Set up UI test
+        hookMgr.SetHook(RPSysSceneCreator::SCENE_TITLE, (SceneHook){
+                UiTest::Configure,
+                UiTest::Calculate,
+                UiTest::UserDraw,
+                UiTest::Exit,
             }
         );
     }

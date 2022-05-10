@@ -94,7 +94,7 @@ namespace caddie
         // Warn if pane name will be truncated
         const size_t len = strlen(name);
         if (len > PANE_NAME_LEN) {
-            CADDIE_LOG("Pane name too long! (%s)", name);
+            CADDIE_LOG_EX("Pane name too long! (%s)", name);
         }
 
         // Append null terminator

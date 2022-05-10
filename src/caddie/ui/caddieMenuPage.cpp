@@ -15,8 +15,7 @@ namespace caddie
     MenuPage::~MenuPage()
     {
         MenuOptionIterator it = mOptions.Begin();
-        for(; it != mOptions.End(); it++)
-        {
+        for(; it != mOptions.End(); it++) {
             delete &*it;
         }
     }
@@ -29,8 +28,7 @@ namespace caddie
         VEC2 namePos = mPos;
 
         MenuOptionIterator it = mOptions.Begin();
-        for(; it != mOptions.End(); it++)
-        {
+        for(; it != mOptions.End(); it++) {
             it->SetNamePosition(namePos);
             
             VEC2 valuePos = namePos;
