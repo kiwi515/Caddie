@@ -68,7 +68,6 @@ namespace caddie
 
         Iterator Begin() const
         {
-            CADDIE_ASSERT(mHead != NULL);
             return Iterator(mHead);
         }
 
@@ -85,7 +84,7 @@ namespace caddie
 
         T* Back() const
         {
-            return &*End();
+            return &*At(mSize - 1);
         }
 
         T* At(int n) const

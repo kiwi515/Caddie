@@ -4,9 +4,12 @@ using namespace nw4r::math;
 
 namespace caddie
 {
-    MenuPage::MenuPage(const char* name)
+    MenuPage::MenuPage(const char* name, f32 x, f32 y, f32 width, f32 leading) :
+        mWidth(width),
+        mLeading(leading)
     {
-        SetName(name);    
+        SetName(name);
+        SetPosition(VEC2(x, y));
     }
 
     MenuPage::~MenuPage()
@@ -22,7 +25,7 @@ namespace caddie
      * @brief Draw all options on page
      */
     void MenuPage::DrawSelf() const
-    {
+    {       
         VEC2 namePos = mPos;
 
         MenuOptionIterator it = mOptions.Begin();

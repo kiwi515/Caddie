@@ -22,17 +22,17 @@ namespace caddie
         virtual void DrawSelf() const = 0;
         virtual Pane* FindChild(const char* name) const;
 
-        void AppendChild(Pane& child);
+        void AppendChild(Pane* child);
         void RemoveChild(const Pane* child);
 
         Pane* GetParent() const { return mParent; }
         void SetParent(Pane* p) { mParent = p; }
 
-        nw4r::math::VEC2 GetPosition() const { return mPos; }
-        void SetPosition(const nw4r::math::VEC2& pos) { mPos = pos; }
+        bool IsVisible() const { return mIsVisible; }
+        void SetVisible(bool vis) { mIsVisible = vis; }
 
-        f32 GetScale() const { return mScale; }
-        void SetScale(f32 scale) { mScale = scale; }
+        nw4r::math::VEC2 GetPosition() const { return mPos; }
+        void SetPosition(nw4r::math::VEC2 pos) { mPos = pos; }
 
         const char* GetName() const { return mName; }
         void SetName(const char* str);
@@ -43,17 +43,17 @@ namespace caddie
 
     protected:
         //! @brief Pane name max length
-        static const int PANE_NAME_LEN = 16;
+        static const int PANE_NAME_LEN = 32;
 
         //! @brief Parent pane
         Pane* mParent;
         //! @brief List of children
         TLinkList<Pane> mChildren;
 
+        //! @brief Pane visibility
+        bool mIsVisible;
         //! @brief Screenspace position
         nw4r::math::VEC2 mPos;
-        //! @brief Scale
-        f32 mScale;
 
         //! @brief Pane name
         char mName[PANE_NAME_LEN + 1];

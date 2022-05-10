@@ -15,7 +15,7 @@ namespace caddie
     public:
         static u32 GetNodeOffset() { return offsetof(MenuPage, mNode); }
 
-        MenuPage(const char* name);
+        MenuPage(const char* name, f32 x, f32 y, f32 width = 10.0f, f32 leading = 5.0f);
         virtual ~MenuPage();
 
         virtual void DrawSelf() const;
@@ -29,9 +29,10 @@ namespace caddie
             mOptions.Append(opt);
         }
 
-        IMenuOption* GetOption(int i) const
+        IMenuOption& GetOption(int i) const
         {
-            return mOptions.At(i);
+            CADDIE_ASSERT(i < GetNumOptions());
+            return *mOptions.At(i);
         }
 
         IMenuOption* GetOption(const char* name) const;

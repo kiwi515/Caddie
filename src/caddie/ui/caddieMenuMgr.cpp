@@ -14,15 +14,17 @@ namespace caddie
         // Update player input
         CalcInput();
 
+        if (!IsVisible()) {
+            return;
+        }
+
         // Page currently in focus
         const MenuPage* currPage = mPageStack.Peek();
         CADDIE_ASSERT(currPage != NULL);
 
         // Select option
         if (mBtnTrig & BTN_A) {
-            IMenuOption *opt = currPage->GetOption(mCursor);
-            CADDIE_ASSERT(opt != NULL);
-            opt->OnClick();
+            currPage->GetOption(mCursor).OnClick();
         }
         // Close current page
         else if (mBtnTrig & BTN_B) {
@@ -43,7 +45,13 @@ namespace caddie
      */
     void MenuMgr::Draw() const
     {
-        mPageStack.Peek()->Draw();
+        if (!IsVisible()) {
+            return;
+        }
+
+        const MenuPage* page = mPageStack.Peek();
+        CADDIE_ASSERT(page != NULL);
+        page->Draw();
     }
 
     /**
@@ -66,5 +74,10 @@ namespace caddie
         mBtnTrig = mBtnHeld & ~heldLastFrame;
         // Buttons released
         mBtnReleased = heldLastFrame & ~mBtnHeld;
+
+        // Toggle visibility
+        if (mBtnTrig & BTN_PLUS) {
+            SetVisible(!mIsVisible);
+        }
     }
 }

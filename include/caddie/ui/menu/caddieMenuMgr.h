@@ -37,7 +37,7 @@ namespace caddie
         int GetCursor() const { return mCursor; }
         void SetCursor(int cursor) { mCursor = cursor; }
 
-        bool GetVisible() const { return mIsVisible; }
+        bool IsVisible() const { return mIsVisible; }
         void SetVisible(bool vis) { mIsVisible = vis; }
 
     private:

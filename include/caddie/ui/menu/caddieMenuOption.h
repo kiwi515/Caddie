@@ -21,13 +21,21 @@ namespace caddie
         }
         virtual ~IMenuOption() {}
 
-        virtual void Draw() = 0;
+        virtual void Draw() const = 0;
 
         const char* GetName() const { return mNameText.GetText(); }
         void SetName(const char* name) { mNameText.SetText(name); }
 
-        void SetNamePosition(const nw4r::math::VEC2& pos) { mNameText.SetPosition(pos); }
-        void SetValuePosition(const nw4r::math::VEC2& pos) { mValueText.SetPosition(pos); }
+        void SetNamePosition(const nw4r::math::VEC2& pos)
+        {
+            CADDIE_LOG_EX("SetNamePosition: %s -> (%.2f, %.2f)\n", mNameText.GetText(), pos.mCoords.x, pos.mCoords.y);
+            mNameText.SetPosition(pos);
+        }
+        void SetValuePosition(const nw4r::math::VEC2& pos)
+        {
+            CADDIE_LOG_EX("SetValuePosition: %s -> (%.2f, %.2f)\n", mValueText.GetText(), pos.mCoords.x, pos.mCoords.y);
+            mValueText.SetPosition(pos);
+        }
 
         bool IsEnabled() const { return mIsEnabled; }
         void SetEnabled(bool enable) { mIsEnabled = enable; }
@@ -69,7 +77,7 @@ namespace caddie
             mMin(min),
             mMax(max),
             mValue(initial)
-        {}
+        { UpdateString(); }
         virtual ~MenuPrimOption() {}
 
         virtual void Increment()
@@ -78,6 +86,7 @@ namespace caddie
             if (mValue >= mMax) {
                 mValue = mMin;
             }
+            UpdateString();
         }
 
         virtual void Decrement()
@@ -86,13 +95,22 @@ namespace caddie
             if (mValue <= mMin) {
                 mValue = mMax;
             }
+            UpdateString();
         }
 
         virtual T GetUnsavedValue() const { return mValue; }
-        virtual void SetUnsavedValue(T val) { mValue = val; }
+        virtual void SetUnsavedValue(T val)
+        {
+            mValue = val;
+            UpdateString();
+        }
 
         virtual T GetSavedValue() const { return mSavedValue; }
-        virtual void SetSavedValue(T val) { mSavedValue = val; }
+        virtual void SetSavedValue(T val)
+        {
+            mSavedValue = val;
+            UpdateString();
+        }
 
         virtual void Validate()
         {
@@ -102,6 +120,7 @@ namespace caddie
             else if (mValue <= mMin) {
                 mValue = mMin;
             }
+            UpdateString();
         }
 
         virtual void SaveChanges()
@@ -113,15 +132,15 @@ namespace caddie
         virtual void DeleteChanges()
         {
             mValue = mSavedValue;
+            UpdateString();
         }
 
         virtual void UpdateString()
         {
         }
 
-        virtual void Draw()
+        virtual void Draw() const
         {
-            UpdateString();
             mNameText.Draw();
             mValueText.Draw();
         }
@@ -195,7 +214,7 @@ namespace caddie
         {}
         virtual ~MenuActionOption() {}
 
-        virtual void Draw()
+        virtual void Draw() const
         {
             mNameText.Draw();
         }

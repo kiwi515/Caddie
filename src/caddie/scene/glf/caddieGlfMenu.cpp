@@ -1,13 +1,13 @@
 #include "caddieGlfMenu.h"
 
-#include <Sports2/Glf/Sp2GlfDefine.h>
+#include <Sports2/Scene/Glf/Sp2GlfDefine.h>
 
 using namespace Sp2;
 
 namespace caddie
 {
     GlfMenu::GlfMenu() :
-        mRootPage("Golf Menu"),
+        mRootPage("Golf Menu", 100.0f, 100.0f),
         mHole("Hole", 1, Glf::HOLE_MAX),
         mRepeatHole("Repeat Hole", 0, 1, true)
         // mPinType("Pin Type", 0, 0),
@@ -17,6 +17,8 @@ namespace caddie
         // mApplyRestart("Apply and Restart", Action_ApplyRestart),
         // mQuitGame("Quit Game", Action_QuitGame),
     {
+        mRootPage.AppendOption(&mHole);
+        mRootPage.AppendOption(&mRepeatHole);
     }
 
     GlfMenu::~GlfMenu()

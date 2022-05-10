@@ -17,7 +17,7 @@ typedef void (* Func)();
 // Uses some random stubbed-out function that is never called
 // Set a Dolphin breakpoint for this address
 #ifndef NDEBUG
-#define CADDIE_BREAKPOINT do { \
+#define CADDIE_BREAKPOINT() do { \
     CADDIE_LOG_EX("BREAKPOINT! %s, in %s (line %d)\n", __FILE__, __FUNCTION__, __LINE__); \
     (*BREAK)(); \
 } while(0)

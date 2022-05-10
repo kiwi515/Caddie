@@ -22,6 +22,12 @@ namespace caddie
      */
     void TextBox::DrawSelf() const
     {
+        CADDIE_LOG("TextBox::DrawSelf:\n");
+        CADDIE_LOG_EX("    Name: %s\n", mTextBuffer);
+        CADDIE_LOG_EX("    ARGB: %08X\n", GetARGB());
+        CADDIE_LOG_EX("    Pos: (%.2f, %.2f)\n", mPos.mCoords.x, mPos.mCoords.y);
+        CADDIE_LOG_EX("    Scale: %.2f\n", mScale);
+
         Sp2::Print(mTextBuffer, GetARGB(), false, mPos.mCoords.x, mPos.mCoords.y, mScale);
     }
 
@@ -32,28 +38,30 @@ namespace caddie
      */
     void TextBox::SetText(const char* str)
     {
+        const size_t len = strlen(str);
+
         if (mTextBuffer != NULL) {
-            const size_t len = strlen(str);
             const size_t myLen = strlen(mTextBuffer);
 
             // Use existing buffer if possible
             if (len <= myLen) {
                 strncpy(mTextBuffer, str, len);
-                mTextBuffer[len] = '\0';
             }
             else {
                 // Reallocate buffer
                 delete mTextBuffer;
-                mTextBuffer = new char[len];
+                mTextBuffer = new char[len + 1];
                 strncpy(mTextBuffer, str, len);
             }
         }
         else {
             // No existing buffer to use
-            const size_t len = strlen(str);
-            mTextBuffer = new char[len];
+            mTextBuffer = new char[len + 1];
             strncpy(mTextBuffer, str, len);
         }
+
+        // Terminate string
+        mTextBuffer[len] = '\0';
     }
 
     /**

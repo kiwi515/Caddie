@@ -11,6 +11,10 @@ namespace caddie
 
     Pane::~Pane()
     {
+        PaneIterator it = mChildren.Begin();
+        for (; it != mChildren.End(); it++) {
+            delete &*it;
+        }
     }
 
     /**
@@ -34,6 +38,8 @@ namespace caddie
      */
     Pane* Pane::FindChild(const char* name) const
     {
+        CADDIE_ASSERT(name != NULL);
+
         PaneIterator it = mChildren.Begin();
         for (; it != mChildren.End(); it++) {
             if (strcmp(name, it->mName) == 0) {
@@ -49,10 +55,12 @@ namespace caddie
      * 
      * @param child Child pane
      */
-    void Pane::AppendChild(Pane& child)
+    void Pane::AppendChild(Pane* child)
     {
-        mChildren.Append(&child);
-        child.SetParent(this);
+        CADDIE_ASSERT(child != NULL);
+
+        mChildren.Append(child);
+        child->SetParent(this);
     }
 
     /**
@@ -81,10 +89,12 @@ namespace caddie
      */
     void Pane::SetName(const char* name)
     {
+        CADDIE_ASSERT(name != NULL);
+
         // Warn if pane name will be truncated
         const size_t len = strlen(name);
         if (len > PANE_NAME_LEN) {
-            CADDIE_LOG("Pane name too long!");
+            CADDIE_LOG("Pane name too long! (%s)", name);
         }
 
         // Append null terminator
