@@ -3,8 +3,6 @@
 #include "types_rp.h"
 #include "types_nw4r.h"
 
-#include "caddieAssert.h"
-
 class RPSysSceneCreator
 {
 public:
@@ -25,7 +23,7 @@ public:
         SCENE_BWL,
         SCENE_CAN,
         SCENE_PNG,
-        SCENE_JSK,
+        SCENE_WKB,
         SCENE_PLN,
         SCENE_GLF,
         SCENE_DGL,

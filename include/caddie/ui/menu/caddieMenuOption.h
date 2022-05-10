@@ -132,30 +132,30 @@ namespace caddie
     };
 
     template<>
-    virtual void MenuPrimOption<bool>::Increment()
+    void MenuPrimOption<bool>::Increment()
     {
         mValue = !mValue;
     }
 
     template<>
-    virtual void MenuPrimOption<bool>::Decrement()
+    void MenuPrimOption<bool>::Decrement()
     {
         mValue = !mValue;
     }
 
     template<>
-    virtual void MenuPrimOption<bool>::Validate()
+    void MenuPrimOption<bool>::Validate()
     {
     }
 
     template <>
-    virtual void MenuPrimOption<int>::UpdateString()
+    void MenuPrimOption<int>::UpdateString()
     {
         mValueText.SetTextFmt("%i", mValue);
     }
 
     template <>
-    virtual void MenuPrimOption<bool>::UpdateString()
+    void MenuPrimOption<bool>::UpdateString()
     {
         mValueText.SetText(mValue ? "Yes" : "No");
     }
