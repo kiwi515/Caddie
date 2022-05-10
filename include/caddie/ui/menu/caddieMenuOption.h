@@ -9,36 +9,29 @@ namespace caddie
     /**
      * @brief Menu option interface
      */
-    class IMenuOption
+    class IMenuOption : public Pane
     {
     public:
         static u32 GetNodeOffset() { return offsetof(IMenuOption, mNode); }
 
         IMenuOption(const char* name) :
-            mIsEnabled(false)
+            mIsEnabled(true),
+            mNameWidth(0.0f)
         {
+            // Option name
             mNameText.SetText(name);
+
+            // Outline stroke
+            mNameText.SetStroke(TextBox::STROKE_OUTLINE);
+            mValueText.SetStroke(TextBox::STROKE_OUTLINE);
+
+            // Append textboxes for drawing
+            AppendChild(&mNameText);
+            AppendChild(&mValueText);
         }
         virtual ~IMenuOption() {}
 
-        virtual void Draw() const = 0;
-
-        const char* GetName() const { return mNameText.GetText(); }
-        void SetName(const char* name) { mNameText.SetText(name); }
-
-        void SetNamePosition(const nw4r::math::VEC2& pos)
-        {
-            CADDIE_LOG_EX("SetNamePosition: %s -> (%.2f, %.2f)\n", mNameText.GetText(), pos.mCoords.x, pos.mCoords.y);
-            mNameText.SetPosition(pos);
-        }
-        void SetValuePosition(const nw4r::math::VEC2& pos)
-        {
-            CADDIE_LOG_EX("SetValuePosition: %s -> (%.2f, %.2f)\n", mValueText.GetText(), pos.mCoords.x, pos.mCoords.y);
-            mValueText.SetPosition(pos);
-        }
-
-        bool IsEnabled() const { return mIsEnabled; }
-        void SetEnabled(bool enable) { mIsEnabled = enable; }
+        virtual void DrawSelf() const {}
 
         virtual void Increment() = 0;
         virtual void Decrement() = 0;
@@ -49,6 +42,54 @@ namespace caddie
 
         virtual void OnClick() = 0;
 
+        const char* GetName() const { return mNameText.GetText(); }
+        void SetName(const char* name) { mNameText.SetText(name); }
+
+        nw4r::ut::Color GetTextColor() const { return mNameText.GetTextColor(); }
+        void SetTextColor(nw4r::ut::Color color)
+        {
+            if (!mIsEnabled) {
+                color = sDisabledTextColor;
+            }
+
+            mNameText.SetTextColor(color);
+            mValueText.SetTextColor(color);
+        }
+
+        nw4r::ut::Color GetStrokeColor() const { return mNameText.GetStrokeColor(); }
+        void SetStrokeColor(nw4r::ut::Color color)
+        {
+            if (!mIsEnabled) {
+                color = sDisabledStrokeColor;
+            }
+
+            mNameText.SetStrokeColor(color);
+            mValueText.SetStrokeColor(color);
+        }
+
+        f32 GetNameWidth() const { return mNameWidth; }
+        void SetNameWidth(f32 w) { mNameWidth = w; }
+
+        virtual void SetPosition(nw4r::math::VEC2 pos)
+        {
+            mNameText.SetPosition(nw4r::math::VEC2(pos.mCoords.x, pos.mCoords.y));
+            mValueText.SetPosition(nw4r::math::VEC2(pos.mCoords.x + mNameWidth, pos.mCoords.y));
+        }
+
+        // TODO: Remove these
+        void SetNamePosition(nw4r::math::VEC2 pos) { mNameText.SetPosition(pos); }
+        void SetValuePosition(nw4r::math::VEC2 pos) { mValueText.SetPosition(pos); }
+
+        bool IsEnabled() const { return mIsEnabled; }
+        void SetEnabled(bool enable)
+        {
+            mIsEnabled = enable;
+            if (!enable) {
+                SetTextColor(sDisabledTextColor);
+                SetStrokeColor(sDisabledStrokeColor);
+            }
+        }
+
     public:
         //! @brief Node for intrusive list
         TLinkListNode mNode;
@@ -58,8 +99,14 @@ namespace caddie
         TextBox mNameText;
         //! @brief Option value
         TextBox mValueText;
+        //! @brief Option name width
+        f32 mNameWidth;
         //! @brief Enable option
         bool mIsEnabled;
+
+    private:
+        static const nw4r::ut::Color sDisabledTextColor;
+        static const nw4r::ut::Color sDisabledStrokeColor;
     };
 
     typedef TLinkList<IMenuOption> MenuOptionList;
@@ -77,7 +124,9 @@ namespace caddie
             mMin(min),
             mMax(max),
             mValue(initial)
-        { UpdateString(); }
+        {
+            UpdateString();
+        }
         virtual ~MenuPrimOption() {}
 
         virtual void Increment()
@@ -92,8 +141,8 @@ namespace caddie
         virtual void Decrement()
         {
             mValue--;
-            if (mValue <= mMin) {
-                mValue = mMax;
+            if (mValue < mMin) {
+                mValue = mMax - 1;
             }
             UpdateString();
         }
@@ -115,9 +164,9 @@ namespace caddie
         virtual void Validate()
         {
             if (mValue >= mMax) {
-                mValue = mMax;
+                mValue = mMax - 1;
             }
-            else if (mValue <= mMin) {
+            else if (mValue < mMin) {
                 mValue = mMin;
             }
             UpdateString();
@@ -138,14 +187,10 @@ namespace caddie
         virtual void UpdateString()
         {
         }
-
-        virtual void Draw() const
-        {
-            mNameText.Draw();
-            mValueText.Draw();
-        }
         
-        virtual void OnClick() {}
+        virtual void OnClick()
+        {
+        }
 
     private:
         //! @brief Minimum value
@@ -210,33 +255,31 @@ namespace caddie
 
         MenuActionOption(const char* name, Action act) :
             IMenuOption(name),
-            mOnClick(NULL)
-        {}
+            mClickAction(act)
+        {
+            // Action options have no value
+            mValueText.SetText("");
+        }
         virtual ~MenuActionOption() {}
 
-        virtual void Draw() const
-        {
-            mNameText.Draw();
-        }
+        virtual void Increment() {}
+        virtual void Decrement() {}
+        virtual void Validate() {}
 
-        virtual void Increment() {};
-        virtual void Decrement() {};
-        virtual void Validate() {};
-
-        virtual void SaveChanges() {};
-        virtual void DeleteChanges() {};
+        virtual void SaveChanges() {}
+        virtual void DeleteChanges() {}
         
         virtual void OnClick()
         {
-            if (mOnClick != NULL) {
-                mOnClick();
+            if (mClickAction != NULL) {
+                mClickAction();
             }
         }
 
-        void SetOnClick(Action act) { mOnClick = act; }
+        void SetClickAction(Action act) { mClickAction = act; }
 
     private:
-        Action mOnClick;
+        Action mClickAction;
     };
 }
 

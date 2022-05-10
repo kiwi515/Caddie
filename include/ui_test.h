@@ -17,6 +17,7 @@ namespace caddie
         static TextBox* sTextBox;
         static TextBox* sTextBoxOutline;
         static TextBox* sTextBoxShadow;
+        static IMenuOption* sIntOption;
     };
 }
 

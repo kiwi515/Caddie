@@ -1,15 +1,21 @@
 #include "ui_test.h"
 #include "caddieTextBox.h"
+#include "caddieMenuOption.h"
+#include <egg/core/eggController.h>
 
 using namespace nw4r::math;
 using namespace nw4r::ut;
+using namespace EGG;
 
 namespace caddie
 {
+    static void LogClick()
+    {
+        CADDIE_LOG("\nOption clicked!!!\n");
+    }
+
     void UiTest::Configure(RPSysScene*)
     {
-        CADDIE_LOG("\nConfiguring the UI test!!!\n");
-
         if (sTextBox == NULL) {
             sTextBox = new TextBox();
             CADDIE_ASSERT(sTextBox != NULL);
@@ -35,33 +41,60 @@ namespace caddie
             sTextBoxShadow->SetTextFmt("%s 3", "Text Test");
             sTextBoxShadow->SetStrokeColor(Color(0, 0, 255, 255));
         }
+
+        if (sIntOption == NULL) {
+            sIntOption = new MenuActionOption("Action Log Test", LogClick);
+            sIntOption->SetPosition(VEC2(100.0f, 110.0f));
+        }
     }
 
     void UiTest::Calculate(RPSysScene*)
     {
+        // Update player input
+        CoreControllerMgr* contMgr = CoreControllerMgr::getInstance();
+        CADDIE_ASSERT(contMgr != NULL);
+        // Only use player 1 input
+        CoreController* cont = contMgr->getNthController(0);
+        CADDIE_ASSERT(cont != NULL);
+
+        const u32 btn = cont->getButtons();
+        if (btn & BTN_RIGHT) {
+            sIntOption->Increment();
+        }
+        else if (btn & BTN_LEFT) {
+            sIntOption->Decrement();
+        }
+        else if (btn & BTN_A) {
+            sIntOption->OnClick();
+        }
     }
 
     void UiTest::UserDraw(RPSysScene*)
     {
-        // CADDIE_LOG("\nDrawing the UI test!!!\n");
         sTextBox->Draw();
         sTextBoxOutline->Draw();
         sTextBoxShadow->Draw();
+
+        sIntOption->Draw();
     }
 
     void UiTest::Exit(RPSysScene*)
     {
-        delete sTextBox;
-        sTextBox = NULL;
+        // delete sTextBox;
+        // sTextBox = NULL;
         
-        delete sTextBoxOutline;
-        sTextBoxOutline = NULL;
+        // delete sTextBoxOutline;
+        // sTextBoxOutline = NULL;
 
-        delete sTextBoxShadow;
-        sTextBoxShadow = NULL;
+        // delete sTextBoxShadow;
+        // sTextBoxShadow = NULL;
+
+        // delete sIntOption;
+        // sIntOption = NULL;
     }
 
     TextBox* UiTest::sTextBox = NULL;
     TextBox* UiTest::sTextBoxOutline = NULL;
     TextBox* UiTest::sTextBoxShadow = NULL;
+    IMenuOption* UiTest::sIntOption = NULL;
 }
