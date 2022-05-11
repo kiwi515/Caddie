@@ -3,6 +3,7 @@
 #include "types_caddie.h"
 #include "caddieLinkList.h"
 #include "caddieTextBox.h"
+#include "caddieLocalizer.h"
 
 namespace caddie
 {
@@ -48,7 +49,7 @@ namespace caddie
         void SetTextColor(nw4r::ut::Color color)
         {
             if (!mIsEnabled) {
-                color = sDisabledTextColor;
+                return;
             }
 
             mNameText.SetTextColor(color);
@@ -59,7 +60,7 @@ namespace caddie
         void SetStrokeColor(nw4r::ut::Color color)
         {
             if (!mIsEnabled) {
-                color = sDisabledStrokeColor;
+                return;
             }
 
             mNameText.SetStrokeColor(color);
@@ -91,8 +92,6 @@ namespace caddie
         TextBox mNameText;
         //! @brief Option value
         TextBox mValueText;
-        //! @brief Option name width
-        f32 mNameWidth;
         //! @brief Enable option
         bool mIsEnabled;
 
@@ -139,15 +138,15 @@ namespace caddie
             UpdateString();
         }
 
-        virtual T GetUnsavedValue() const { return mValue; }
-        virtual void SetUnsavedValue(T val)
+        T GetUnsavedValue() const { return mValue; }
+        void SetUnsavedValue(T val)
         {
             mValue = val;
             UpdateString();
         }
 
-        virtual T GetSavedValue() const { return mSavedValue; }
-        virtual void SetSavedValue(T val)
+        T GetSavedValue() const { return mSavedValue; }
+        void SetSavedValue(T val)
         {
             mSavedValue = val;
             UpdateString();
@@ -176,13 +175,9 @@ namespace caddie
             UpdateString();
         }
 
-        virtual void UpdateString()
-        {
-        }
+        virtual void UpdateString() {}
         
-        virtual void OnClick()
-        {
-        }
+        virtual void OnClick() {}
 
     private:
         //! @brief Minimum value
@@ -230,11 +225,19 @@ namespace caddie
     class MenuEnumOption : public MenuPrimOption<int>
     {
     public:
-        // MenuEnumOption()
-        // virtual ~MenuEnumOption()
+        MenuEnumOption(const char *name, const char** values,
+            int min, int max, int initial = 0) :
+            MenuPrimOption(name, min, max, initial),
+            mValues(values)
+        {
+        }
+        virtual ~MenuEnumOption() {}
 
-        // TODO
-        // virtual void Draw();
+        virtual void UpdateString() { mValueText.SetText(mValues[GetUnsavedValue()]); }
+
+    private:
+        //! @brief Enum value strings
+        const char** mValues;
     };
 
     /**
@@ -247,7 +250,7 @@ namespace caddie
 
         MenuActionOption(const char* name, Action act) :
             IMenuOption(name),
-            mClickAction(act)
+            mAction(act)
         {
             // Action options have no value
             mValueText.SetText("");
@@ -263,15 +266,16 @@ namespace caddie
         
         virtual void OnClick()
         {
-            if (mClickAction != NULL) {
-                mClickAction();
+            if (mAction != NULL) {
+                mAction();
             }
         }
 
-        void SetClickAction(Action act) { mClickAction = act; }
+        Action GetAction() const { return mAction; }
+        void SetAction(Action act) { mAction = act; }
 
     private:
-        Action mClickAction;
+        Action mAction;
     };
 }
 

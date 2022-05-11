@@ -49,7 +49,7 @@ namespace caddie
             }
 
             T* operator->() const { return GetElemFromNode(mNode); }
-            T & operator*() const { return *GetElemFromNode(mNode); }
+            T& operator*() const { return *GetElemFromNode(mNode); }
 
             bool operator==(Iterator rhs) const { return (mNode == rhs.mNode); }
             bool operator!=(Iterator rhs) const { return (mNode != rhs.mNode); }
