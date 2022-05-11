@@ -15,10 +15,12 @@ namespace caddie
     public:
         static u32 GetNodeOffset() { return offsetof(MenuPage, mNode); }
 
-        MenuPage(const char* name, f32 x, f32 y, f32 width = 10.0f, f32 leading = 5.0f);
+        MenuPage(const char* name, f32 x, f32 y, f32 leading = sDefaultLeading);
         virtual ~MenuPage();
 
         virtual void DrawSelf() const;
+
+        void CalcWidth();
 
         f32 GetWidth() const { return mWidth; }
         void SetWidth(f32 w) { mWidth = w; }
@@ -27,6 +29,7 @@ namespace caddie
         {
             CADDIE_ASSERT(opt != NULL);
             mOptions.Append(opt);
+            CalcWidth();
         }
 
         IMenuOption& GetOption(int i) const
@@ -34,8 +37,6 @@ namespace caddie
             CADDIE_ASSERT(i < GetNumOptions());
             return *mOptions.At(i);
         }
-
-        IMenuOption* GetOption(const char* name) const;
 
         u32 GetNumOptions() const { return mOptions.Size(); }
 
@@ -50,6 +51,9 @@ namespace caddie
         f32 mLeading;
         //! @brief Page width
         f32 mWidth;
+
+        static const f32 sDefaultLeading;
+        static const f32 sCharWidth;
     };
 
     typedef TLinkList<MenuPage> MenuPageList;

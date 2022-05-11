@@ -18,6 +18,8 @@ namespace caddie
             CADDIE_ASSERT(sGlfMenu != NULL);
         }
 
+        // Hide menu
+        MenuMgr::GetInstance().SetVisible(false);
         // Open menu root
         MenuMgr::GetInstance().OpenPage(sGlfMenu->GetRootPage());
     }

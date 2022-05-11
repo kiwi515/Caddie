@@ -31,6 +31,8 @@ _restfpr_29=0x80007814
 
 _savegpr_27=0x80007858
 _restgpr_27=0x800078a4
+_savegpr_28=0x8000785c
+_restgpr_28=0x800078a8
 _savegpr_29=0x80007860
 _restgpr_29=0x800078ac
 

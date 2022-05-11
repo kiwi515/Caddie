@@ -11,10 +11,14 @@ namespace caddie
 
     Pane::~Pane()
     {
-        PaneIterator it = mChildren.Begin();
-        for (; it != mChildren.End(); it++) {
-            delete &*it;
-        }
+        // TODO: Fix this
+
+        // PaneIterator it = mChildren.Begin();
+        // for (; it != mChildren.End(); it++) {
+        //     PaneIterator next = it++;
+        //     mChildren.Remove(next);            
+        //     delete &*next;
+        // }
     }
 
     /**
@@ -28,26 +32,6 @@ namespace caddie
         for (; it != mChildren.End(); it++) {
             it->Draw();
         }
-    }
-
-    /**
-     * @brief Find child pane by name
-     * 
-     * @param name Target pane name
-     * @return Pane* Child pane
-     */
-    Pane* Pane::FindChild(const char* name) const
-    {
-        CADDIE_ASSERT(name != NULL);
-
-        PaneIterator it = mChildren.Begin();
-        for (; it != mChildren.End(); it++) {
-            if (strcmp(name, it->mName) == 0) {
-                return &*it;
-            }
-        }
-
-        return NULL;
     }
 
     /**
@@ -80,6 +64,26 @@ namespace caddie
                 mChildren.Remove(it);
             }
         }
+    }
+
+    /**
+     * @brief Find child pane by name
+     * 
+     * @param name Target pane name
+     * @return Pane* Child pane
+     */
+    Pane* Pane::FindChild(const char* name) const
+    {
+        CADDIE_ASSERT(name != NULL);
+
+        PaneIterator it = mChildren.Begin();
+        for (; it != mChildren.End(); it++) {
+            if (strcmp(name, it->mName) == 0) {
+                return &*it;
+            }
+        }
+
+        return NULL;
     }
 
     /**

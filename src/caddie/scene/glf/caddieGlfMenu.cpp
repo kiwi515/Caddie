@@ -7,7 +7,7 @@ using namespace Sp2;
 namespace caddie
 {
     GlfMenu::GlfMenu() :
-        mRootPage("Golf Menu", 100.0f, 100.0f),
+        mRootPage("Golf Menu", sMenuPosX, sMenuPosY),
         mHole("Hole", 1, Glf::HOLE_MAX),
         mRepeatHole("Repeat Hole", 0, 1, true)
         // mPinType("Pin Type", 0, 0),
@@ -24,4 +24,7 @@ namespace caddie
     GlfMenu::~GlfMenu()
     {
     }
+
+    const f32 GlfMenu::sMenuPosX = 100.0f;
+    const f32 GlfMenu::sMenuPosY = 200.0f;
 }

@@ -4,9 +4,12 @@ using namespace nw4r::math;
 
 namespace caddie
 {
-    MenuPage::MenuPage(const char* name, f32 x, f32 y, f32 width, f32 leading) :
-        mWidth(width),
-        mLeading(leading)
+    /**
+     * @note Width is dynamically calculated later
+     */
+    MenuPage::MenuPage(const char* name, f32 x, f32 y, f32 leading) :
+        mLeading(leading),
+        mWidth(0.0f)
     {
         SetName(name);
         SetPosition(VEC2(x, y));
@@ -14,10 +17,14 @@ namespace caddie
 
     MenuPage::~MenuPage()
     {
-        MenuOptionIterator it = mOptions.Begin();
-        for(; it != mOptions.End(); it++) {
-            delete &*it;
-        }
+        // TODO: Fix this
+
+        // MenuOptionIterator it = mOptions.Begin();
+        // for(; it != mOptions.End(); it++) {
+        //     MenuOptionIterator next = it++;
+        //     mOptions.Remove(next);            
+        //     delete &*next;
+        // }
     }
 
     /**
@@ -25,36 +32,33 @@ namespace caddie
      */
     void MenuPage::DrawSelf() const
     {       
-        VEC2 namePos = mPos;
+        VEC2 pos = mPos;
 
         MenuOptionIterator it = mOptions.Begin();
         for(; it != mOptions.End(); it++) {
-            it->SetNamePosition(namePos);
-            
-            VEC2 valuePos = namePos;
-            valuePos.mCoords.x += mWidth;
-            it->SetValuePosition(valuePos);
-
+            it->SetOptionPosition(pos, mWidth);
             it->Draw();
-
-            namePos.mCoords.y += mLeading;
+            pos.mCoords.y += mLeading;
         }
     }
 
     /**
-     * @brief Get option by name
-     * 
-     * @param name Option name
+     * @brief Calculate menu option width,
+     * based on the longest option name
      */
-    IMenuOption* MenuPage::GetOption(const char* name) const
+    void MenuPage::CalcWidth()
     {
+        size_t max = 0;
+
         MenuOptionIterator it = mOptions.Begin();
-        for (; it != mOptions.End(); it++) {
-            if (strcmp(name, it->GetName()) == 0) {
-                return &*it;
-            }
+        for(; it != mOptions.End(); it++) {
+            const size_t nameLen = strlen(it->GetName());
+            max = MAX(nameLen, max);
         }
 
-        return NULL;
+        mWidth = max * sCharWidth;
     }
+
+    const f32 MenuPage::sDefaultLeading = 20.0f;
+    const f32 MenuPage::sCharWidth = 9.0f;
 }

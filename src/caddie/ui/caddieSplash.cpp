@@ -28,7 +28,7 @@ namespace caddie
     {
         char buf[512];
         sprintf(buf, "%s (%.1f KB free)\n", CADDIE_BUILD, (MemManager::GetFreeSize() / KB_AS_B));
-        // Sp2::PrintOutline(buf, COLOR_SPLASH_TEXT, COLOR_SPLASH_SHADOW, true, 400.0f, 20.0f);
+        Sp2::PrintOutline(buf, COLOR_SPLASH_TEXT, COLOR_SPLASH_SHADOW, true, 400.0f, 20.0f);
     }
     // Region free
     kmBranch(0x801c3490, &ShowSplash);

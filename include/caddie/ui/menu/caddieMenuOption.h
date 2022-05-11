@@ -15,8 +15,7 @@ namespace caddie
         static u32 GetNodeOffset() { return offsetof(IMenuOption, mNode); }
 
         IMenuOption(const char* name) :
-            mIsEnabled(true),
-            mNameWidth(0.0f)
+            mIsEnabled(true)
         {
             // Option name
             mNameText.SetText(name);
@@ -67,18 +66,11 @@ namespace caddie
             mValueText.SetStrokeColor(color);
         }
 
-        f32 GetNameWidth() const { return mNameWidth; }
-        void SetNameWidth(f32 w) { mNameWidth = w; }
-
-        virtual void SetPosition(nw4r::math::VEC2 pos)
+        void SetOptionPosition(nw4r::math::VEC2 pos, f32 width)
         {
             mNameText.SetPosition(nw4r::math::VEC2(pos.mCoords.x, pos.mCoords.y));
-            mValueText.SetPosition(nw4r::math::VEC2(pos.mCoords.x + mNameWidth, pos.mCoords.y));
+            mValueText.SetPosition(nw4r::math::VEC2(pos.mCoords.x + width, pos.mCoords.y));
         }
-
-        // TODO: Remove these
-        void SetNamePosition(nw4r::math::VEC2 pos) { mNameText.SetPosition(pos); }
-        void SetValuePosition(nw4r::math::VEC2 pos) { mValueText.SetPosition(pos); }
 
         bool IsEnabled() const { return mIsEnabled; }
         void SetEnabled(bool enable)

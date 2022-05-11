@@ -27,6 +27,9 @@ namespace caddie
         // MenuEnumOption mWindSpdRange;
         // MenuActionOption mApplyRestart;
         // MenuActionOption mQuitGame;
+
+        static const f32 sMenuPosX;
+        static const f32 sMenuPosY;
     };
 }
 
