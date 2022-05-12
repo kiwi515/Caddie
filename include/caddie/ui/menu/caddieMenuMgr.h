@@ -53,7 +53,10 @@ namespace caddie
             mCursorText.SetTextColor(sCursorColor);
             mCursorText.SetStroke(TextBox::STROKE_OUTLINE);
         }
-        virtual ~MenuMgr() {}
+
+        virtual ~MenuMgr()
+        {
+        }
 
         void CalcInput();
 
