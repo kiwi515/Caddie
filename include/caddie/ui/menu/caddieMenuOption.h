@@ -269,14 +269,28 @@ namespace caddie
             // Action options have no value
             mValueText.SetText("");
         }
-        virtual ~MenuActionOption() {}
 
-        virtual void Increment() {}
-        virtual void Decrement() {}
-        virtual void Validate() {}
+        virtual ~MenuActionOption()
+        {
+        }
 
-        virtual void SaveChanges() {}
-        virtual void DeleteChanges() {}
+        virtual void Increment()
+        {
+        }
+        virtual void Decrement()
+        {
+        }
+
+        virtual void Validate()
+        {
+        }
+
+        virtual void SaveChanges()
+        {
+        }
+        virtual void DeleteChanges()
+        {
+        }
         
         virtual void OnClick()
         {
