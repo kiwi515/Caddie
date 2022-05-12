@@ -235,6 +235,9 @@ namespace caddie
 
         virtual void UpdateString() { mValueText.SetText(mValues[GetUnsavedValue()]); }
 
+        const char** GetEnumValues() const { return mValues; }
+        void SetEnumValues(const char** values) { mValues = values; }
+
     private:
         //! @brief Enum value strings
         const char** mValues;
