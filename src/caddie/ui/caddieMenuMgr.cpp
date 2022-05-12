@@ -1,7 +1,11 @@
 #include "caddieMenuMgr.h"
 #include "caddieAssert.h"
+
+#include <nw4r/math/math_types.h>
+
 #include <egg/core/eggController.h>
 
+using namespace nw4r;
 using namespace EGG;
 
 namespace caddie
@@ -46,6 +50,11 @@ namespace caddie
         else if (mBtnTrig & BTN_LEFT) {
             currPage->GetOption(mCursor).Decrement();
         }
+
+        // Update cursor screen position
+        const math::VEC2 pos = currPage->GetOption(mCursor).GetPosition();
+        const math::VEC2 cursorPos(pos.mCoords.x - sCursorOffset, pos.mCoords.y);
+        mCursorText.SetPosition(cursorPos);
     }
 
     /**
@@ -57,9 +66,13 @@ namespace caddie
             return;
         }
 
+        // Draw page
         const MenuPage* page = mPageStack.Peek();
         CADDIE_ASSERT(page != NULL);
         page->Draw();
+
+        // Draw cursor
+        mCursorText.Draw();
     }
 
     /**
@@ -88,4 +101,19 @@ namespace caddie
             SetVisible(!mIsVisible);
         }
     }
+
+    /**
+     * @brief Cursor text string
+     */
+    const char* MenuMgr::sCursorStr = "==>";
+
+    /**
+     * @brief Cursor text color
+     */
+    const ut::Color MenuMgr::sCursorColor(255, 0, 0, 255);
+
+    /**
+     * @brief Cursor text X offset from option
+     */
+    const f32 MenuMgr::sCursorOffset = 10.0f;
 }

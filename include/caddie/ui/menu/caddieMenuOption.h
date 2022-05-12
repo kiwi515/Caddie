@@ -67,6 +67,10 @@ namespace caddie
             mValueText.SetStrokeColor(color);
         }
 
+        nw4r::math::VEC2 GetOptionPosition() const
+        {
+            return mNameText.GetPosition();
+        }
         void SetOptionPosition(nw4r::math::VEC2 pos, f32 width)
         {
             mNameText.SetPosition(nw4r::math::VEC2(pos.mCoords.x, pos.mCoords.y));

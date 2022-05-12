@@ -47,7 +47,12 @@ namespace caddie
             mBtnHeld(0x0),
             mBtnTrig(0x0),
             mBtnReleased(0x0)
-        {}
+        {
+            // Set up cursor textbox
+            mCursorText.SetText(sCursorStr);
+            mCursorText.SetTextColor(sCursorColor);
+            mCursorText.SetStroke(TextBox::STROKE_OUTLINE);
+        }
         virtual ~MenuMgr() {}
 
         void CalcInput();
@@ -57,6 +62,8 @@ namespace caddie
         TStack<MenuPage> mPageStack;
         //! @brief Cursor position
         int mCursor;
+        //! @brief Cursor textbox
+        TextBox mCursorText;
         //! @brief Visiblity flag
         bool mIsVisible;
 
@@ -66,6 +73,10 @@ namespace caddie
         u32 mBtnTrig;
         //! @brief Buttons released
         u32 mBtnReleased;
+
+        static const char* sCursorStr;
+        static const nw4r::ut::Color sCursorColor;
+        static const f32 sCursorOffset;
     };
 }
 
