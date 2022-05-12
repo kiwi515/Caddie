@@ -209,7 +209,7 @@ namespace caddie
     };
 
     /**
-     * @brief Menu option with boolean type
+     * @brief Menu option with boolean value
      */
     class MenuBoolOption : public MenuIntOption
     {
@@ -231,7 +231,7 @@ namespace caddie
     };
 
     /**
-     * @brief Menu option with enum type
+     * @brief Menu option with enum value
      */
     class MenuEnumOption : public MenuIntOption
     {
