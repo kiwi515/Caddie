@@ -31,12 +31,20 @@ namespace caddie
             mPageStack.Pop();
         }
         // Move cursor up
-        else if (mBtnHeld & BTN_UP) {
+        else if (mBtnTrig & BTN_UP) {
             mCursor = MAX(mCursor - 1, 0);
         }
         // Move cursor down
-        else if (mBtnHeld & BTN_DOWN) {
-            mCursor = MIN(mCursor + 1, currPage->GetNumOptions());
+        else if (mBtnTrig & BTN_DOWN) {
+            mCursor = MIN(mCursor + 1, currPage->GetNumOptions() - 1);
+        }
+        // Increment option
+        else if (mBtnTrig & BTN_RIGHT) {
+            currPage->GetOption(mCursor).Increment();
+        }
+        // Decrement option
+        else if (mBtnTrig & BTN_LEFT) {
+            currPage->GetOption(mCursor).Decrement();
         }
     }
 

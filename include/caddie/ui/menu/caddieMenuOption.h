@@ -113,29 +113,28 @@ namespace caddie
         MenuPrimOption(const char* name, T min, T max, T initial = T()) :
             IMenuOption(name),
             mMin(min),
-            mMax(max),
-            mValue(initial)
+            mMax(max)
         {
-            UpdateString();
+            SetUnsavedValue(initial);
         }
         virtual ~MenuPrimOption() {}
 
         virtual void Increment()
         {
-            mValue++;
-            if (mValue >= mMax) {
-                mValue = mMin;
+            int next = mValue + 1;
+            if (next >= mMax) {
+                next = mMin;
             }
-            UpdateString();
+            SetUnsavedValue(next);
         }
 
         virtual void Decrement()
         {
-            mValue--;
-            if (mValue < mMin) {
-                mValue = mMax - 1;
+            int next = mValue - 1;
+            if (next < mMin) {
+                next = mMax - 1;
             }
-            UpdateString();
+            SetUnsavedValue(next);
         }
 
         T GetUnsavedValue() const { return mValue; }
@@ -155,24 +154,22 @@ namespace caddie
         virtual void Validate()
         {
             if (mValue >= mMax) {
-                mValue = mMax - 1;
+                SetUnsavedValue(mMax - 1);
             }
             else if (mValue < mMin) {
-                mValue = mMin;
+                SetUnsavedValue(mMin);
             }
-            UpdateString();
         }
 
         virtual void SaveChanges()
         {
             Validate();
-            mSavedValue = mValue;
+            SetSavedValue(mValue);
         }
 
         virtual void DeleteChanges()
         {
-            mValue = mSavedValue;
-            UpdateString();
+            SetUnsavedValue(mSavedValue);
         }
 
         virtual void UpdateString() {}
@@ -193,13 +190,13 @@ namespace caddie
     template<>
     void MenuPrimOption<bool>::Increment()
     {
-        mValue = !mValue;
+        SetUnsavedValue(!mValue);
     }
 
     template<>
     void MenuPrimOption<bool>::Decrement()
     {
-        mValue = !mValue;
+        SetUnsavedValue(!mValue);
     }
 
     template<>

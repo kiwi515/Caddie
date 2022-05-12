@@ -36,8 +36,10 @@ namespace caddie
                 case 'RZTP': return PAL;
                 case 'RZTJ': return NTSC_J;
                 case 'RZTK': return KOR;
-                default: CADDIE_ASSERT_EX(false, "Invalid game region!!!");
             }
+
+            CADDIE_ASSERT_EX(false, "Invalid game region!!!");
+            return (Region)-1;
         }
 
         const char* Localize(const char* locale[REGION_MAX]) { return locale[GetGameRegion()]; }
