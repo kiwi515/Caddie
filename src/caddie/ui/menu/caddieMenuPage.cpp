@@ -1,6 +1,6 @@
 #include "caddieMenuPage.h"
 
-using namespace nw4r::math;
+using namespace nw4r;
 
 namespace caddie
 {
@@ -12,7 +12,7 @@ namespace caddie
         mWidth(0.0f)
     {
         SetName(name);
-        SetPosition(VEC2(x, y));
+        SetPosition(math::VEC2(x, y));
     }
 
     MenuPage::~MenuPage()
@@ -32,7 +32,7 @@ namespace caddie
      */
     void MenuPage::DrawSelf() const
     {       
-        VEC2 pos = mPos;
+        math::VEC2 pos = mPos;
 
         MenuOptionIterator it = mOptions.Begin();
         for(; it != mOptions.End(); it++) {
