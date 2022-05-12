@@ -19,8 +19,8 @@ namespace caddie
 
     private:
         MenuPage mRootPage;
-        MenuPrimOption<int> mHole;
-        MenuPrimOption<bool> mRepeatHole;
+        MenuIntOption mHole;
+        MenuBoolOption mRepeatHole;
         // MenuEnumOption mPinType;
         // MenuEnumOption mWindDir;
         // MenuEnumOption mWindSpd;

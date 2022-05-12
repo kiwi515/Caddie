@@ -29,9 +29,14 @@ namespace caddie
             AppendChild(&mNameText);
             AppendChild(&mValueText);
         }
-        virtual ~IMenuOption() {}
+        
+        virtual ~IMenuOption()
+        {
+        }
 
-        virtual void DrawSelf() const {}
+        virtual void DrawSelf() const
+        {
+        }
 
         virtual void Increment() = 0;
         virtual void Decrement() = 0;
@@ -108,25 +113,32 @@ namespace caddie
     typedef MenuOptionList::Iterator MenuOptionIterator;
 
     /**
-     * @brief Menu option with primitive value
+     * @brief Menu option with integer value
      */
-    template <typename T>
-    class MenuPrimOption : public IMenuOption
+    class MenuIntOption : public IMenuOption
     {
     public:
-        MenuPrimOption(const char* name, T min, T max, T initial = T()) :
+        MenuIntOption(const char* name, int min, int max, int initial = 0x7FFFFFFF) :
             IMenuOption(name),
             mMin(min),
             mMax(max)
         {
+            // Initial unused
+            if (initial == 0x7FFFFFFF) {
+                initial = mMin;
+            }
+
             SetUnsavedValue(initial);
         }
-        virtual ~MenuPrimOption() {}
+
+        virtual ~MenuIntOption()
+        {
+        }
 
         virtual void Increment()
         {
             int next = mValue + 1;
-            if (next >= mMax) {
+            if (next > mMax) {
                 next = mMin;
             }
             SetUnsavedValue(next);
@@ -136,20 +148,20 @@ namespace caddie
         {
             int next = mValue - 1;
             if (next < mMin) {
-                next = mMax - 1;
+                next = mMax;
             }
             SetUnsavedValue(next);
         }
 
-        T GetUnsavedValue() const { return mValue; }
-        void SetUnsavedValue(T val)
+        int GetUnsavedValue() const { return mValue; }
+        void SetUnsavedValue(int val)
         {
             mValue = val;
             UpdateString();
         }
 
-        T GetSavedValue() const { return mSavedValue; }
-        void SetSavedValue(T val)
+        int GetSavedValue() const { return mSavedValue; }
+        void SetSavedValue(int val)
         {
             mSavedValue = val;
             UpdateString();
@@ -157,8 +169,8 @@ namespace caddie
 
         virtual void Validate()
         {
-            if (mValue >= mMax) {
-                SetUnsavedValue(mMax - 1);
+            if (mValue > mMax) {
+                SetUnsavedValue(mMax);
             }
             else if (mValue < mMin) {
                 SetUnsavedValue(mMin);
@@ -176,30 +188,57 @@ namespace caddie
             SetUnsavedValue(mSavedValue);
         }
 
-        virtual void UpdateString();
+        virtual void UpdateString()
+        {
+            mValueText.SetTextFmt("%i", mValue);
+        }
         
-        virtual void OnClick() {}
+        virtual void OnClick()
+        {
+        }
 
     private:
         //! @brief Minimum value
-        T mMin;
+        int mMin;
         //! @brief Maximum value
-        T mMax;
+        int mMax;
         //! @brief Current (unsaved) value
-        T mValue;
+        int mValue;
         //! @brief Saved value
-        T mSavedValue;
+        int mSavedValue;
+    };
+
+    /**
+     * @brief Menu option with boolean type
+     */
+    class MenuBoolOption : public MenuIntOption
+    {
+    public:
+        MenuBoolOption(const char* name, bool initial = false) :
+            MenuIntOption(name, 0, 1, initial)
+        {
+            SetUnsavedValue(initial);
+        }
+
+        virtual ~MenuBoolOption()
+        {
+        }
+
+        virtual void UpdateString()
+        {
+            mValueText.SetText(GetUnsavedValue() ? "Yes" : "No");
+        }
     };
 
     /**
      * @brief Menu option with enum type
      */
-    class MenuEnumOption : public MenuPrimOption<int>
+    class MenuEnumOption : public MenuIntOption
     {
     public:
         MenuEnumOption(const char *name, const char** values,
             int min, int max, int initial = 0) :
-            MenuPrimOption(name, min, max, initial),
+            MenuIntOption(name, min, max, initial),
             mValues(values)
         {
         }

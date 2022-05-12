@@ -9,7 +9,7 @@ namespace caddie
     GlfMenu::GlfMenu() :
         mRootPage("Golf Menu", sMenuPosX, sMenuPosY),
         mHole("Hole", 1, Glf::HOLE_MAX),
-        mRepeatHole("Repeat Hole", 0, 1, true)
+        mRepeatHole("Repeat Hole", true)
         // mPinType("Pin Type", 0, 0),
         // mWindDir("Wind Direction", 0, 0),
         // mWindSpd("Wind Speed", 0, 0),
