@@ -52,8 +52,8 @@ namespace caddie
         }
 
         // Update cursor screen position
-        const math::VEC2 pos = currPage->GetOption(mCursor).GetPosition();
-        const math::VEC2 cursorPos(pos.mCoords.x - sCursorOffset, pos.mCoords.y);
+        const math::VEC2 optionPos = currPage->GetOption(mCursor).GetOptionPosition();
+        const math::VEC2 cursorPos(optionPos.mCoords.x - sCursorOffset, optionPos.mCoords.y);
         mCursorText.SetPosition(cursorPos);
     }
 
@@ -115,5 +115,5 @@ namespace caddie
     /**
      * @brief Cursor text X offset from option
      */
-    const f32 MenuMgr::sCursorOffset = 10.0f;
+    const f32 MenuMgr::sCursorOffset = 35.0f;
 }
