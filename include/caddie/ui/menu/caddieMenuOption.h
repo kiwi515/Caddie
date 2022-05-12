@@ -172,7 +172,7 @@ namespace caddie
             SetUnsavedValue(mSavedValue);
         }
 
-        virtual void UpdateString() {}
+        virtual void UpdateString();
         
         virtual void OnClick() {}
 
@@ -186,35 +186,6 @@ namespace caddie
         //! @brief Saved value
         T mSavedValue;
     };
-
-    template<>
-    void MenuPrimOption<bool>::Increment()
-    {
-        SetUnsavedValue(!mValue);
-    }
-
-    template<>
-    void MenuPrimOption<bool>::Decrement()
-    {
-        SetUnsavedValue(!mValue);
-    }
-
-    template<>
-    void MenuPrimOption<bool>::Validate()
-    {
-    }
-
-    template <>
-    void MenuPrimOption<int>::UpdateString()
-    {
-        mValueText.SetTextFmt("%i", mValue);
-    }
-
-    template <>
-    void MenuPrimOption<bool>::UpdateString()
-    {
-        mValueText.SetText(mValue ? "Yes" : "No");
-    }
 
     /**
      * @brief Menu option with enum type
