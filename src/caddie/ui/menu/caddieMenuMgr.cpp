@@ -32,7 +32,9 @@ namespace caddie
         }
         // Close current page
         else if (mBtnTrig & BTN_B) {
-            mPageStack.Pop();
+            if (mPageStack.Size() > 1) {
+                mPageStack.Pop();
+            }
         }
         // Move cursor up
         else if (mBtnTrig & BTN_UP) {
