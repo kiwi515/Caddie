@@ -7,6 +7,7 @@ using namespace Sp2;
 namespace caddie
 {
     GlfMenu::GlfMenu() :
+        mIsAwaitingSave(false),
         mRootPage("Golf Menu", sMenuPosX, sMenuPosY),
         mHole("Hole", 1, Glf::HOLE_MAX),
         mRepeatHole("Repeat Hole", true)
@@ -25,6 +26,8 @@ namespace caddie
     {
     }
 
+    //! @brief Menu X screen position
     const f32 GlfMenu::sMenuPosX = 100.0f;
+    //! @brief Menu Y screen position
     const f32 GlfMenu::sMenuPosY = 200.0f;
 }

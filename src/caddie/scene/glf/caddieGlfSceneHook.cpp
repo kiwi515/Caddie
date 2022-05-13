@@ -51,8 +51,13 @@ namespace caddie
      */
     void GlfSceneHook::OnExit(RPSysScene* scene)
     {
-        delete sGlfMenu;
-        sGlfMenu = NULL;
+        CADDIE_ASSERT(sGlfMenu != NULL);
+
+        // Do not delete menu if settings are waiting to be applied
+        if (!sGlfMenu->IsAwaitingSave()) {
+            delete sGlfMenu;
+            sGlfMenu = NULL;
+        }
     }
 
     /**
