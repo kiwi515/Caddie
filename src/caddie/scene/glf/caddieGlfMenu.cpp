@@ -12,8 +12,7 @@ using namespace nw4r;
 namespace caddie
 {
     GlfMenu::GlfMenu() :
-        mIsAwaitingSave(false),
-        mRootPage(MSG_MENU_TITLE, sMenuPosX, sMenuPosY),
+        MenuBase(MSG_MENU_TITLE, sMenuPosX, sMenuPosY),
         mHole(MSG_HOLE, 1, Sp2::Glf::HOLE_MAX),
         mRepeatHole(MSG_REPEAT_HOLE, true),
         mPinType(MSG_PIN_TYPE, ENUM_PIN_TYPE, 0, CADDIE_ENUM_MAX(ENUM_PIN_TYPE)),
@@ -23,14 +22,15 @@ namespace caddie
         mApplyRestart(MSG_APPLY, Action_ApplyRestart, this),
         mQuitGame(MSG_QUIT, Action_QuitGame, this)
     {
-        mRootPage.AppendOption(&mHole);
-        mRootPage.AppendOption(&mRepeatHole);
-        mRootPage.AppendOption(&mPinType);
-        mRootPage.AppendOption(&mWindDir);
-        mRootPage.AppendOption(&mWindSpd);
-        mRootPage.AppendOption(&mWindSpdRange);
-        mRootPage.AppendOption(&mApplyRestart);
-        mRootPage.AppendOption(&mQuitGame);
+        // Build root page
+        GetRootPage().AppendOption(&mHole);
+        GetRootPage().AppendOption(&mRepeatHole);
+        GetRootPage().AppendOption(&mPinType);
+        GetRootPage().AppendOption(&mWindDir);
+        GetRootPage().AppendOption(&mWindSpd);
+        GetRootPage().AppendOption(&mWindSpdRange);
+        GetRootPage().AppendOption(&mApplyRestart);
+        GetRootPage().AppendOption(&mQuitGame);
     }
 
     GlfMenu::~GlfMenu()
@@ -45,9 +45,9 @@ namespace caddie
         CADDIE_ASSERT(menu != NULL);
         GlfMenu* thisx = (GlfMenu*)menu;
         // Save all options' changes
-        thisx->mRootPage.SaveChanges();
+        thisx->SaveChanges();
         // Ask scene to apply settings
-        thisx->mIsAwaitingSave = true;
+        thisx->SetAwaitingSave(true);
 
         // Reload golf scene
         RPSysSceneCreator *creator = RPSysSceneCreator::getInstance();
@@ -64,9 +64,9 @@ namespace caddie
         CADDIE_ASSERT(menu != NULL);
         GlfMenu* thisx = (GlfMenu*)menu;
         // Delete all options' changes
-        thisx->mRootPage.DeleteChanges();
+        thisx->DeleteChanges();
         // Ask scene not to apply settings
-        thisx->mIsAwaitingSave = false;
+        thisx->SetAwaitingSave(false);
 
         // Return to title scene
         RPSysSceneCreator *creator = RPSysSceneCreator::getInstance();

@@ -23,9 +23,10 @@ namespace caddie
     // ui
     struct Pane;
     struct TextBox;
-    struct MenuPage;
-    struct MenuMgr;
     struct IMenuOption;
+    struct MenuPage;
+    struct MenuBase;
+    struct MenuMgr;
 
     // scene/glf
     struct GlfMenu;

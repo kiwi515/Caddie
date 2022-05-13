@@ -42,6 +42,7 @@ namespace caddie
 
     private:
         MenuMgr() :
+            mMenu(NULL),
             mCursor(0),
             mIsVisible(false),
             mBtnHeld(0x0),
@@ -61,6 +62,8 @@ namespace caddie
         void CalcInput();
 
     private:
+        //! @brief Current menu
+        MenuBase* mMenu;
         //! @brief Menu page hierarchy
         TStack<MenuPage> mPageStack;
         //! @brief Cursor position
