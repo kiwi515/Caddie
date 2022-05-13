@@ -63,7 +63,7 @@ CheckInput__17RPSysSysMsgWinMgrFv=0x802352d4
 sInstance__17RPSysSysMsgWinMgr=0x806f4ce0
 
 # RP/RPSystem/RPSysSceneCreator
-changeSceneAfterFade__17RPSysSceneCreatorFiPQ34nw4r2ut5Color=0x8022edfc
+changeSceneAfterFade__17RPSysSceneCreatorFiQ34nw4r2ut5Color=0x8022edfc
 sInstance__17RPSysSceneCreator=0x806f4c88
 
 # Sports2/Sp2StaticMem

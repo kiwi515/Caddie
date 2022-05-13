@@ -260,11 +260,12 @@ namespace caddie
     class MenuActionOption : public IMenuOption
     {
     public:
-        typedef void (*Action)();
+        typedef void (*Action)(void* arg);
 
-        MenuActionOption(const char* name, Action act) :
+        MenuActionOption(const char* name, Action act, void* arg) :
             IMenuOption(name),
-            mAction(act)
+            mAction(act),
+            mActionArg(arg)
         {
             // Action options have no value
             mValueText.SetText("");
@@ -295,15 +296,19 @@ namespace caddie
         virtual void OnClick()
         {
             if (mAction != NULL) {
-                mAction();
+                mAction(mActionArg);
             }
         }
 
         Action GetAction() const { return mAction; }
         void SetAction(Action act) { mAction = act; }
 
+        void* GetActionArg() const { return mActionArg; }
+        void SetActionArg(void* arg) { mActionArg = arg; }
+
     private:
         Action mAction;
+        void* mActionArg;
     };
 }
 

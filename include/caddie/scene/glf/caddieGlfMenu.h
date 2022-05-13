@@ -20,6 +20,8 @@ namespace caddie
         bool IsAwaitingSave() const { return mIsAwaitingSave; }
         void SetAwaitingSave(bool save) { mIsAwaitingSave = save; }
 
+        static void Action_QuitGame(void* menu);
+
     private:
         //! @brief Prevents menu from being deleted on scene exit
         bool mIsAwaitingSave;
@@ -33,7 +35,7 @@ namespace caddie
         // MenuEnumOption mWindSpd;
         // MenuEnumOption mWindSpdRange;
         // MenuActionOption mApplyRestart;
-        // MenuActionOption mQuitGame;
+        MenuActionOption mQuitGame;
 
         static const f32 sMenuPosX;
         static const f32 sMenuPosY;

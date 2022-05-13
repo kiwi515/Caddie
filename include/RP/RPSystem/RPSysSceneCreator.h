@@ -47,7 +47,7 @@ public:
 public:    
     static RPSysSceneCreator * getInstance() { return sInstance; }
 
-    void changeSceneAfterFade(int id, nw4r::ut::Color *fadeColor);
+    void changeSceneAfterFade(int id, nw4r::ut::Color fadeColor);
 
 private:
     static RPSysSceneCreator *sInstance;
