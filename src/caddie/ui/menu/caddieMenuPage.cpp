@@ -59,6 +59,8 @@ namespace caddie
         mWidth = max * sCharWidth;
     }
 
+    //! @brief Default option leading
     const f32 MenuPage::sDefaultLeading = 20.0f;
+    //! @brief Estimated text character width
     const f32 MenuPage::sCharWidth = 9.0f;
 }
