@@ -104,18 +104,10 @@ namespace caddie
         }
     }
 
-    /**
-     * @brief Cursor text string
-     */
+    //! @brief Cursor text string
     const char* MenuMgr::sCursorStr = "==>";
-
-    /**
-     * @brief Cursor text color
-     */
+    //! @brief Cursor text color
     const ut::Color MenuMgr::sCursorColor(255, 0, 0, 255);
-
-    /**
-     * @brief Cursor text X offset from option
-     */
+    //! @brief Cursor text X offset from option
     const f32 MenuMgr::sCursorOffset = 35.0f;
 }
