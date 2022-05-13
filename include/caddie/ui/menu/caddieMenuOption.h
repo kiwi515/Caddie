@@ -153,6 +153,18 @@ namespace caddie
             SetUnsavedValue(next);
         }
 
+        int GetMax() const { return mMax; }
+        void SetMax(int max) { mMax = max; }
+
+        int GetMin() const { return mMin; }
+        void SetMin(int min) { mMin = min; }
+
+        void SetRange(int min, int max)
+        {
+            mMin = min;
+            mMax = max;
+        }
+
         int GetUnsavedValue() const { return mValue; }
         void SetUnsavedValue(int val)
         {
@@ -241,6 +253,7 @@ namespace caddie
             MenuIntOption(name, min, max, initial),
             mValues(values)
         {
+            SetUnsavedValue(initial);
         }
         virtual ~MenuEnumOption() {}
 

@@ -31,11 +31,11 @@ namespace caddie
 
         MenuIntOption mHole;
         MenuBoolOption mRepeatHole;
-        // MenuEnumOption mPinType;
-        // MenuEnumOption mWindDir;
-        // MenuEnumOption mWindSpd;
-        // MenuEnumOption mWindSpdRange;
-        // MenuActionOption mApplyRestart;
+        MenuEnumOption mPinType;
+        MenuEnumOption mWindDir;
+        MenuEnumOption mWindSpd;
+        MenuEnumOption mWindSpdRange;
+        MenuActionOption mApplyRestart;
         MenuActionOption mQuitGame;
 
         static const f32 sMenuPosX;

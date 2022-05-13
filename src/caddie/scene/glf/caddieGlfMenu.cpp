@@ -1,4 +1,5 @@
 #include "caddieGlfMenu.h"
+#include "caddieGlfMessage.h"
 
 #include <nw4r/ut/ut_Color.h>
 
@@ -7,25 +8,28 @@
 #include <Sports2/Scene/Glf/Sp2GlfDefine.h>
 
 using namespace nw4r;
-using namespace Sp2;
 
 namespace caddie
 {
     GlfMenu::GlfMenu() :
         mIsAwaitingSave(false),
-        mRootPage("Golf Menu", sMenuPosX, sMenuPosY),
-        mHole("Hole", 1, Glf::HOLE_MAX),
-        mRepeatHole("Repeat Hole", true),
-        // mPinType("Pin Type", 0, 0),
-        // mWindDir("Wind Direction", 0, 0),
-        // mWindSpd("Wind Speed", 0, 0),
-        // mWindSpdRange("Wind Spd Range", 0, 0),
-        // mApplyRestart("Apply and Restart", Action_ApplyRestart),
-        mQuitGame("Quit Game", Action_QuitGame, this)
+        mRootPage(MSG_MENU_TITLE, sMenuPosX, sMenuPosY),
+        mHole(MSG_HOLE, 1, Sp2::Glf::HOLE_MAX),
+        mRepeatHole(MSG_REPEAT_HOLE, true),
+        mPinType(MSG_PIN_TYPE, ENUM_PIN_TYPE, 0, CADDIE_ENUM_MAX(ENUM_PIN_TYPE)),
+        mWindDir(MSG_WIND_DIR, ENUM_WIND_DIR, 0, CADDIE_ENUM_MAX(ENUM_WIND_DIR)),
+        mWindSpd(MSG_WIND_SPD, ENUM_WIND_SPD, 0, WIND_SPD_RANDOM),
+        mWindSpdRange(MSG_WIND_SPD_RANGE, ENUM_WIND_SPD_RANGE, 0, CADDIE_ENUM_MAX(ENUM_WIND_SPD_RANGE)),
+        mApplyRestart(MSG_APPLY, Action_ApplyRestart, this),
+        mQuitGame(MSG_QUIT, Action_QuitGame, this)
     {
         mRootPage.AppendOption(&mHole);
         mRootPage.AppendOption(&mRepeatHole);
-
+        mRootPage.AppendOption(&mPinType);
+        mRootPage.AppendOption(&mWindDir);
+        mRootPage.AppendOption(&mWindSpd);
+        mRootPage.AppendOption(&mWindSpdRange);
+        mRootPage.AppendOption(&mApplyRestart);
         mRootPage.AppendOption(&mQuitGame);
     }
 
@@ -40,9 +44,12 @@ namespace caddie
     {
         CADDIE_ASSERT(menu != NULL);
         GlfMenu* thisx = (GlfMenu*)menu;
+        // Save all options' changes
         thisx->mRootPage.SaveChanges();
+        // Ask scene to apply settings
         thisx->mIsAwaitingSave = true;
 
+        // Reload golf scene
         RPSysSceneCreator *creator = RPSysSceneCreator::getInstance();
         CADDIE_ASSERT(creator != NULL);
         creator->changeSceneAfterFade(-1,
@@ -56,9 +63,12 @@ namespace caddie
     {
         CADDIE_ASSERT(menu != NULL);
         GlfMenu* thisx = (GlfMenu*)menu;
+        // Delete all options' changes
         thisx->mRootPage.DeleteChanges();
+        // Ask scene not to apply settings
         thisx->mIsAwaitingSave = false;
 
+        // Return to title scene
         RPSysSceneCreator *creator = RPSysSceneCreator::getInstance();
         CADDIE_ASSERT(creator != NULL);
         creator->changeSceneAfterFade(RPSysSceneCreator::SCENE_TITLE,
