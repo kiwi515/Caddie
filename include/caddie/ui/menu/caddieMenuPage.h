@@ -40,6 +40,9 @@ namespace caddie
 
         u32 GetNumOptions() const { return mOptions.Size(); }
 
+        void SaveChanges();
+        void DeleteChanges();
+
     public:
         //! @brief Node for intrusive list
         TLinkListNode mNode;

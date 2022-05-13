@@ -20,6 +20,7 @@ namespace caddie
         bool IsAwaitingSave() const { return mIsAwaitingSave; }
         void SetAwaitingSave(bool save) { mIsAwaitingSave = save; }
 
+        static void Action_ApplyRestart(void* menu);
         static void Action_QuitGame(void* menu);
 
     private:

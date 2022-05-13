@@ -59,6 +59,28 @@ namespace caddie
         mWidth = max * sCharWidth;
     }
 
+    /**
+     * @brief Save all options' changes
+     */
+    void MenuPage::SaveChanges()
+    {
+        MenuOptionIterator it = mOptions.Begin();
+        for(; it != mOptions.End(); it++) {
+            it->SaveChanges();
+        }   
+    }
+
+    /**
+     * @brief Delete all options' changes
+     */
+    void MenuPage::DeleteChanges()
+    {
+        MenuOptionIterator it = mOptions.Begin();
+        for(; it != mOptions.End(); it++) {
+            it->DeleteChanges();
+        }   
+    }
+
     //! @brief Default option leading
     const f32 MenuPage::sDefaultLeading = 20.0f;
     //! @brief Estimated text character width

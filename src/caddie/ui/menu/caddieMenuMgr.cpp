@@ -101,6 +101,15 @@ namespace caddie
         // Toggle visibility
         if (mBtnTrig & BTN_PLUS) {
             SetVisible(!mIsVisible);
+
+            // Delete changes on menu close
+            // TODO: Maybe make MenuPage have child pages?
+            // Then recursive DeleteChanges
+            if (!IsVisible()) {
+                // MenuPage* currPage = mPageStack.Peek();
+                // CADDIE_ASSERT(currPage != NULL);
+                // currPage->DeleteChanges();
+            }
         }
     }
 

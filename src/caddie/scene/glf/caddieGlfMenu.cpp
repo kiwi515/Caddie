@@ -34,12 +34,29 @@ namespace caddie
     }
 
     /**
+     * @brief Save menu settings and reload scene
+     */
+    void GlfMenu::Action_ApplyRestart(void* menu)
+    {
+        CADDIE_ASSERT(menu != NULL);
+        GlfMenu* thisx = (GlfMenu*)menu;
+        thisx->mRootPage.SaveChanges();
+        thisx->mIsAwaitingSave = true;
+
+        RPSysSceneCreator *creator = RPSysSceneCreator::getInstance();
+        CADDIE_ASSERT(creator != NULL);
+        creator->changeSceneAfterFade(-1,
+            ut::Color(0, 0, 0, 255));
+    }
+
+    /**
      * @brief Quit game by returning to the menu scene
      */
     void GlfMenu::Action_QuitGame(void* menu)
     {
         CADDIE_ASSERT(menu != NULL);
         GlfMenu* thisx = (GlfMenu*)menu;
+        thisx->mRootPage.DeleteChanges();
         thisx->mIsAwaitingSave = false;
 
         RPSysSceneCreator *creator = RPSysSceneCreator::getInstance();
