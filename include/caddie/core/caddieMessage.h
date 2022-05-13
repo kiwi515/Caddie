@@ -7,14 +7,14 @@ namespace caddie
     {
         namespace Glf
         {
-            extern const char* sHoleOption;
-            extern const char* sRepeatHoleOption;
-            extern const char* sPinTypeOption;
-            extern const char* sWindDirectionOption;
-            extern const char* sWindSpeedOption;
-            extern const char* sWindSpeedRangeOption;
-            extern const char* sApplyRestartOption;
-            extern const char* sQuitGameOption;
+            extern const char* sHole;
+            extern const char* sRepeatHole;
+            extern const char* sPinType;
+            extern const char* sWindDirection;
+            extern const char* sWindSpeed;
+            extern const char* sWindSpeedRange;
+            extern const char* sApplyRestart;
+            extern const char* sQuitGame;
         }
     }
 }

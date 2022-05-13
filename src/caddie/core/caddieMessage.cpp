@@ -22,56 +22,56 @@ namespace caddie
     {
         namespace Glf
         {
-            const char* sHoleOption = MESSAGE_DEF(
+            const char* sHole = MESSAGE_DEF(
                 "Hole",
                 "Not Localized",
                 "Not Localized",
                 "Not Localized"
             );
 
-            const char* sRepeatHoleOption = MESSAGE_DEF(
+            const char* sRepeatHole = MESSAGE_DEF(
                 "Repeat Hole",
                 "Not Localized",
                 "Not Localized",
                 "Not Localized"
             );
 
-            const char* sPinTypeOption = MESSAGE_DEF(
+            const char* sPinType = MESSAGE_DEF(
                 "Pin Type",
                 "Not Localized",
                 "Not Localized",
                 "Not Localized"
             );
 
-            const char* sWindDirectionOption = MESSAGE_DEF(
+            const char* sWindDirection = MESSAGE_DEF(
                 "Wind Direction",
                 "Not Localized",
                 "Not Localized",
                 "Not Localized"
             );
 
-            const char* sWindSpeedOption = MESSAGE_DEF(
+            const char* sWindSpeed = MESSAGE_DEF(
                 "Wind Speed (mph)",
                 "Wind Speed (m/s)",
                 "Wind Speed (m/s)",
                 "Wind Speed (m/s)"
             );
 
-            const char* sWindSpeedRangeOption = MESSAGE_DEF(
+            const char* sWindSpeedRange = MESSAGE_DEF(
                 "Wind Speed Range",
                 "Not Localized",
                 "Not Localized",
                 "Not Localized"
             );
 
-            const char* sApplyRestartOption = MESSAGE_DEF(
+            const char* sApplyRestart = MESSAGE_DEF(
                 "Apply and Restart",
                 "Not Localized",
                 "Not Localized",
                 "Not Localized"
             );
 
-            const char* sQuitGameOption = MESSAGE_DEF(
+            const char* sQuitGame = MESSAGE_DEF(
                 "Quit Game",
                 "Not Localized",
                 "Not Localized",
