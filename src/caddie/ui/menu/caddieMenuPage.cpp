@@ -20,9 +20,9 @@ namespace caddie
     {
         // TODO: Fix this
 
-        // MenuOptionIterator it = mOptions.Begin();
+        // TLinkList<IMenuOption>::Iterator it = mOptions.Begin();
         // for(; it != mOptions.End(); it++) {
-        //     MenuOptionIterator next = it++;
+        //     TLinkList<IMenuOption>::Iterator next = it++;
         //     mOptions.Remove(next);            
         //     delete &*next;
         // }
@@ -35,7 +35,7 @@ namespace caddie
     {       
         math::VEC2 pos = mPos;
 
-        MenuOptionIterator it = mOptions.Begin();
+        TLinkList<IMenuOption>::Iterator it = mOptions.Begin();
         for(; it != mOptions.End(); it++) {
             it->SetOptionPosition(pos, mWidth);
             it->Draw();
@@ -51,7 +51,7 @@ namespace caddie
     {
         size_t max = 0;
 
-        MenuOptionIterator it = mOptions.Begin();
+        TLinkList<IMenuOption>::Iterator it = mOptions.Begin();
         for(; it != mOptions.End(); it++) {
             const size_t nameLen = strlen(it->GetName());
             max = MAX(nameLen, max);
@@ -66,7 +66,7 @@ namespace caddie
     void MenuPage::SaveChanges()
     {
         // Save changes in this page
-        MenuOptionIterator option = mOptions.Begin();
+        TLinkList<IMenuOption>::Iterator option = mOptions.Begin();
         for(; option != mOptions.End(); option++) {
             option->SaveChanges();
         }
@@ -84,7 +84,7 @@ namespace caddie
     void MenuPage::DeleteChanges()
     {
         // Delete changes in this page
-        MenuOptionIterator option = mOptions.Begin();
+        TLinkList<IMenuOption>::Iterator option = mOptions.Begin();
         for(; option != mOptions.End(); option++) {
             option->DeleteChanges();
         }

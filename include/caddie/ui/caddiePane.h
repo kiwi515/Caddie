@@ -58,9 +58,6 @@ namespace caddie
         //! @brief Pane name
         char mName[PANE_NAME_LEN + 1];
     };
-
-    typedef TLinkList<Pane> PaneList;
-    typedef PaneList::Iterator PaneIterator;
 }
 
 #endif

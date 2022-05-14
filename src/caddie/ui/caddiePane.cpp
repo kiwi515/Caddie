@@ -13,9 +13,9 @@ namespace caddie
     {
         // TODO: Fix this
 
-        // PaneIterator it = mChildren.Begin();
+        // TLinkList<Pane>::Iterator it = mChildren.Begin();
         // for (; it != mChildren.End(); it++) {
-        //     PaneIterator next = it++;
+        //     TLinkList<Pane>::Iterator next = it++;
         //     mChildren.Remove(next);            
         //     delete &*next;
         // }
@@ -28,7 +28,7 @@ namespace caddie
     {
         DrawSelf();
         
-        PaneIterator it = mChildren.Begin();
+        TLinkList<Pane>::Iterator it = mChildren.Begin();
         for (; it != mChildren.End(); it++) {
             it->Draw();
         }
@@ -57,7 +57,7 @@ namespace caddie
         CADDIE_ASSERT(child != NULL);
 
         // Look for child pane in list, by address
-        PaneIterator it = mChildren.Begin();
+        TLinkList<Pane>::Iterator it = mChildren.Begin();
         for (; it != mChildren.End(); it++) {
             if (&*it == child) {
                 it->SetParent(NULL);
@@ -76,7 +76,7 @@ namespace caddie
     {
         CADDIE_ASSERT(name != NULL);
 
-        PaneIterator it = mChildren.Begin();
+        TLinkList<Pane>::Iterator it = mChildren.Begin();
         for (; it != mChildren.End(); it++) {
             if (strcmp(name, it->mName) == 0) {
                 return &*it;

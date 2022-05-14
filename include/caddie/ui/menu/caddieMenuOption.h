@@ -109,9 +109,6 @@ namespace caddie
         static const nw4r::ut::Color sDisabledStrokeColor;
     };
 
-    typedef TLinkList<IMenuOption> MenuOptionList;
-    typedef MenuOptionList::Iterator MenuOptionIterator;
-
     /**
      * @brief Menu option with integer value
      */

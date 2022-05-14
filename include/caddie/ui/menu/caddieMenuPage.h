@@ -74,9 +74,6 @@ namespace caddie
         static const f32 sDefaultLeading;
         static const f32 sCharWidth;
     };
-
-    typedef TLinkList<MenuPage> MenuPageList;
-    typedef MenuPageList::Iterator MenuPageIterator;
 }
 
 #endif
