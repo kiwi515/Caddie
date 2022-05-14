@@ -33,17 +33,32 @@ namespace caddie
             mSceneHooks[scene] = hook;
         }
 
+        void AllowPause(RPSysSceneCreator::ESceneID scene, bool pause)
+        {
+            mPauseSetting[scene] = pause;
+        }
+
         static void ConfigureCallback();
         static void CalculateCallback();
         static void UserDrawCallback();
         static void ExitCallback();
+        static void PauseCheckCallback();
 
     private:
-        SceneHookMgr() {}
-        virtual ~SceneHookMgr() {}
+        SceneHookMgr()
+        {
+            for (int i = 0; i < RPSysSceneCreator::SCENE_MAX; i++) {
+                mPauseSetting[i] = true;
+            }
+        }
+
+        virtual ~SceneHookMgr()
+        {
+        }
 
     private:
         SceneHook mSceneHooks[RPSysSceneCreator::SCENE_MAX];
+        bool mPauseSetting[RPSysSceneCreator::SCENE_MAX];
     };
 }
 

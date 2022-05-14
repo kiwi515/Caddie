@@ -18,6 +18,9 @@ namespace caddie
                 GlfSceneHook::OnExit
             }
         );
+
+        // Disable pausing in the Golf scene
+        hookMgr.AllowPause(RPSysSceneCreator::SCENE_GLF, false);
     }
     kmBranch(0x80230fc4, main);
 }

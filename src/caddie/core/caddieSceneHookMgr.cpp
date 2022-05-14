@@ -1,6 +1,8 @@
 #include "caddieSceneHookMgr.h"
 #include "caddieAssert.h"
 
+#include <RPSystem/RPSysPauseMgr.h>
+
 namespace caddie
 {
     static s32 GetCurrentSceneID()
@@ -56,4 +58,15 @@ namespace caddie
             hookMgr.mSceneHooks[scene].onExit(GetCurrentScene());
     }
     kmBranch(0x8022f6f4, SceneHookMgr::ExitCallback);
+
+    void SceneHookMgr::PauseCheckCallback()
+    {
+        s32 scene = GetCurrentSceneID();
+        SceneHookMgr& hookMgr = SceneHookMgr::GetInstance();
+
+        if (hookMgr.mPauseSetting[scene]) {
+            RPSysPauseMgr::getInstance()->update();
+        }
+    }
+    kmCall(0x80232984, SceneHookMgr::PauseCheckCallback);
 }
