@@ -8,6 +8,7 @@ namespace caddie
      * @note Width is dynamically calculated later
      */
     MenuPage::MenuPage(const char* name, f32 x, f32 y, f32 leading) :
+        mParentPage(NULL),
         mLeading(leading),
         mWidth(0.0f)
     {
@@ -64,10 +65,17 @@ namespace caddie
      */
     void MenuPage::SaveChanges()
     {
-        MenuOptionIterator it = mOptions.Begin();
-        for(; it != mOptions.End(); it++) {
-            it->SaveChanges();
-        }   
+        // Save changes in this page
+        MenuOptionIterator option = mOptions.Begin();
+        for(; option != mOptions.End(); option++) {
+            option->SaveChanges();
+        }
+
+        // Save changes in children
+        TLinkList<MenuPage>::Iterator page = mChildPages.Begin();
+        for (; page != mChildPages.End(); page++) {
+            page->SaveChanges();
+        }
     }
 
     /**
@@ -75,10 +83,17 @@ namespace caddie
      */
     void MenuPage::DeleteChanges()
     {
-        MenuOptionIterator it = mOptions.Begin();
-        for(; it != mOptions.End(); it++) {
-            it->DeleteChanges();
-        }   
+        // Delete changes in this page
+        MenuOptionIterator option = mOptions.Begin();
+        for(; option != mOptions.End(); option++) {
+            option->DeleteChanges();
+        }
+
+        // Delete changes in children
+        TLinkList<MenuPage>::Iterator page = mChildPages.Begin();
+        for (; page != mChildPages.End(); page++) {
+            page->DeleteChanges();
+        }
     }
 
     //! @brief Default option leading

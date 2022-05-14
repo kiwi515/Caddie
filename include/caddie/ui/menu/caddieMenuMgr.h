@@ -24,14 +24,16 @@ namespace caddie
         void OpenPage(MenuPage* page)
         {
             CADDIE_ASSERT(page != NULL);
-            mPageStack.Push(page);
+            mOpenPage = page;
             mCursor = 0;
         }
 
         void ClosePage()
         {
-            mPageStack.Pop();
-            mCursor = 0;
+            if (!mOpenPage->IsRootPage()) {
+                mOpenPage = mOpenPage->GetParentPage();
+                mCursor = 0;
+            }
         }
 
         int GetCursor() const { return mCursor; }
@@ -43,6 +45,7 @@ namespace caddie
     private:
         MenuMgr() :
             mMenu(NULL),
+            mOpenPage(NULL),
             mCursor(0),
             mIsVisible(false),
             mBtnHeld(0x0),
@@ -64,8 +67,8 @@ namespace caddie
     private:
         //! @brief Current menu
         MenuBase* mMenu;
-        //! @brief Menu page hierarchy
-        TStack<MenuPage> mPageStack;
+        //! @brief Current page
+        MenuPage* mOpenPage;
         //! @brief Cursor position
         int mCursor;
         //! @brief Cursor textbox

@@ -128,7 +128,9 @@ namespace caddie
                 initial = mMin;
             }
 
+            // Initialized saved/unsaved values
             SetUnsavedValue(initial);
+            SaveChanges();
         }
 
         virtual ~MenuIntOption()
@@ -229,7 +231,9 @@ namespace caddie
         MenuBoolOption(const char* name, bool initial = false) :
             MenuIntOption(name, 0, 1, initial)
         {
+            // Initialized saved/unsaved values
             SetUnsavedValue(initial);
+            SaveChanges();
         }
 
         virtual ~MenuBoolOption()
@@ -253,7 +257,9 @@ namespace caddie
             MenuIntOption(name, min, max, initial),
             mValues(values)
         {
+            // Initialized saved/unsaved values
             SetUnsavedValue(initial);
+            SaveChanges();
         }
         virtual ~MenuEnumOption() {}
 

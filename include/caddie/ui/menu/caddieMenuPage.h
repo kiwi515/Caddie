@@ -25,7 +25,19 @@ namespace caddie
         f32 GetWidth() const { return mWidth; }
         void SetWidth(f32 w) { mWidth = w; }
 
-        void AppendOption(IMenuOption *opt)
+        MenuPage* GetParentPage() const { return mParentPage; }
+        void SetParentPage(MenuPage* p) { mParentPage = p; }
+
+        bool IsRootPage() const { return (GetParentPage() == NULL); }
+
+        void AppendChildPage(MenuPage* p)
+        {
+            CADDIE_ASSERT(p != NULL);
+            mChildPages.Append(p);
+            p->SetParentPage(this);
+        }
+
+        void AppendOption(IMenuOption* opt)
         {
             CADDIE_ASSERT(opt != NULL);
             mOptions.Append(opt);
@@ -48,8 +60,12 @@ namespace caddie
         TLinkListNode mNode;
 
     private:
+        //! @brief Parent page
+        MenuPage* mParentPage;
+        //! @brief Child pages
+        TLinkList<MenuPage> mChildPages;
         //! @brief Page options
-        TLinkList<IMenuOption> mOptions;
+        TLinkList<IMenuOption> mOptions;        
         //! @brief Page leading
         f32 mLeading;
         //! @brief Page width

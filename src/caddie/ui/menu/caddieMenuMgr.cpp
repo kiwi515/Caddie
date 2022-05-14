@@ -15,6 +15,8 @@ namespace caddie
      */
     void MenuMgr::Calc()
     {
+        CADDIE_ASSERT(mOpenPage != NULL);
+
         // Update player input
         CalcInput();
 
@@ -22,19 +24,13 @@ namespace caddie
             return;
         }
 
-        // Page currently in focus
-        const MenuPage* currPage = mPageStack.Peek();
-        CADDIE_ASSERT(currPage != NULL);
-
         // Select option
         if (mBtnTrig & BTN_A) {
-            currPage->GetOption(mCursor).OnClick();
+            mOpenPage->GetOption(mCursor).OnClick();
         }
         // Close current page
         else if (mBtnTrig & BTN_B) {
-            if (mPageStack.Size() > 1) {
-                mPageStack.Pop();
-            }
+            ClosePage();
         }
         // Move cursor up
         else if (mBtnTrig & BTN_UP) {
@@ -42,19 +38,19 @@ namespace caddie
         }
         // Move cursor down
         else if (mBtnTrig & BTN_DOWN) {
-            mCursor = MIN(mCursor + 1, currPage->GetNumOptions() - 1);
+            mCursor = MIN(mCursor + 1, mOpenPage->GetNumOptions() - 1);
         }
         // Increment option
         else if (mBtnTrig & BTN_RIGHT) {
-            currPage->GetOption(mCursor).Increment();
+            mOpenPage->GetOption(mCursor).Increment();
         }
         // Decrement option
         else if (mBtnTrig & BTN_LEFT) {
-            currPage->GetOption(mCursor).Decrement();
+            mOpenPage->GetOption(mCursor).Decrement();
         }
 
         // Update cursor screen position
-        const math::VEC2 optionPos = currPage->GetOption(mCursor).GetOptionPosition();
+        const math::VEC2 optionPos = mOpenPage->GetOption(mCursor).GetOptionPosition();
         const math::VEC2 cursorPos(optionPos.mCoords.x - sCursorOffset, optionPos.mCoords.y);
         mCursorText.SetPosition(cursorPos);
     }
@@ -64,15 +60,14 @@ namespace caddie
      */
     void MenuMgr::Draw() const
     {
+        CADDIE_ASSERT(mOpenPage != NULL);
+
         if (!IsVisible()) {
             return;
         }
 
         // Draw page
-        const MenuPage* page = mPageStack.Peek();
-        CADDIE_ASSERT(page != NULL);
-        page->Draw();
-
+        mOpenPage->Draw();
         // Draw cursor
         mCursorText.Draw();
     }
@@ -82,6 +77,8 @@ namespace caddie
      */
     void MenuMgr::CalcInput()
     {
+        CADDIE_ASSERT(mOpenPage != NULL);
+
         // Update player input
         CoreControllerMgr* contMgr = CoreControllerMgr::getInstance();
         CADDIE_ASSERT(contMgr != NULL);
@@ -101,14 +98,10 @@ namespace caddie
         // Toggle visibility
         if (mBtnTrig & BTN_PLUS) {
             SetVisible(!mIsVisible);
-
+            
             // Delete changes on menu close
-            // TODO: Maybe make MenuPage have child pages?
-            // Then recursive DeleteChanges
             if (!IsVisible()) {
-                // MenuPage* currPage = mPageStack.Peek();
-                // CADDIE_ASSERT(currPage != NULL);
-                // currPage->DeleteChanges();
+                mOpenPage->DeleteChanges();
             }
         }
     }

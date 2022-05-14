@@ -21,7 +21,7 @@ namespace caddie
         // Hide menu
         MenuMgr::GetInstance().SetVisible(false);
         // Open menu root
-        MenuMgr::GetInstance().OpenPage(sGlfMenu->GetRootPage());
+        MenuMgr::GetInstance().OpenPage(&sGlfMenu->GetRootPage());
     }
 
     /**
