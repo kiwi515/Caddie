@@ -6,6 +6,7 @@ namespace caddie
 {
     TextBox::TextBox() :
         mStroke(STROKE_NONE),
+        mIsCentered(false),
         mTextBuffer(NULL),
         mTextColor(255, 255, 255, 255),
         mStrokeColor(0, 0, 0, 255)
@@ -31,17 +32,17 @@ namespace caddie
         switch(mStroke)
         {
             case STROKE_NONE:
-                Sp2::Print(mTextBuffer, Nw4rToARGB(mTextColor), false,
+                Sp2::Print(mTextBuffer, Nw4rToARGB(mTextColor), mIsCentered,
                     mPos.mCoords.x, mPos.mCoords.y);
                 break;
             case STROKE_OUTLINE:
                 Sp2::PrintOutline(mTextBuffer, Nw4rToARGB(mTextColor),
-                    Nw4rToARGB(mStrokeColor), false,
+                    Nw4rToARGB(mStrokeColor), mIsCentered,
                     mPos.mCoords.x, mPos.mCoords.y);
                 break;
             case STROKE_SHADOW:
                 Sp2::PrintShadow(mTextBuffer, Nw4rToARGB(mTextColor),
-                    Nw4rToARGB(mStrokeColor), false,
+                    Nw4rToARGB(mStrokeColor), mIsCentered,
                     mPos.mCoords.x, mPos.mCoords.y);
                 break;
         }

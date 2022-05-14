@@ -52,6 +52,9 @@ namespace caddie
         EStroke GetStroke() const { return mStroke; }
         void SetStroke(EStroke st) { mStroke = st; }
 
+        bool IsCentered() const { return mIsCentered; }
+        void SetCentered(bool center) { mIsCentered = center; }
+
         const char* GetText() const { return mTextBuffer; }
         void SetText(const char* str);
         void SetTextFmt(const char* str, ...);
@@ -65,6 +68,8 @@ namespace caddie
     private:
         //! @brief Stroke type
         EStroke mStroke;
+        //! @brief Center text
+        bool mIsCentered;
         //! @brief String buffer (owned)
         char* mTextBuffer;
         //! @brief Text color
