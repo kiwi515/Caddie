@@ -4,7 +4,7 @@
 #include "caddieMenuBase.h"
 #include "caddieMenuPage.h"
 #include "caddieMenuOption.h"
-
+#include "caddieGlfMessage.h"
 
 namespace caddie
 {
@@ -19,6 +19,13 @@ namespace caddie
 
         static void Action_ApplyRestart(void* menu);
         static void Action_QuitGame(void* menu);
+
+        int GetHole() const { return mHole.GetSavedValue(); }
+        bool GetRepeatHole() const { return mRepeatHole.GetSavedValue(); }
+        int GetPinType() const { return mPinType.GetSavedValue(); }
+        EWindDir GetWindDir() const { return (EWindDir)mWindDir.GetSavedValue(); }
+        int GetWindSpd() const { return mWindSpd.GetSavedValue(); }
+        EWindSpdRange GetWindSpdRange() const { return (EWindSpdRange)mWindSpdRange.GetSavedValue(); }
 
     private:
         MenuIntOption mHole;
