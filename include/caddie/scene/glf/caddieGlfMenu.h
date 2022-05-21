@@ -20,7 +20,7 @@ namespace caddie
         static void Action_ApplyRestart(void* menu);
         static void Action_QuitGame(void* menu);
 
-        int GetHole() const { return mHole.GetSavedValue(); }
+        int GetHole() const { return mHole.GetSavedValue() - 1; }
         bool GetRepeatHole() const { return mRepeatHole.GetSavedValue(); }
         int GetPinType() const { return mPinType.GetSavedValue(); }
         EWindDir GetWindDir() const { return (EWindDir)mWindDir.GetSavedValue(); }

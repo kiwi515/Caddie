@@ -15,6 +15,11 @@ namespace caddie
         static void OnCalculate(RPSysScene *);
         static void OnUserDraw(RPSysScene *);
         static void OnExit(RPSysScene *);
+
+        static void Apply_Hole();
+        static void Apply_Pin();
+        static void Apply_Wind();
+
         static GlfMenu* GetMenu();
 
     private:

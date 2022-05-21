@@ -59,25 +59,12 @@ namespace Sp2
             
             VAR_BLINDFLAG = 3,
 
-            VAR_PACKEDWIND = 7,
+            VAR_WIND = 7,
         };
 
-        struct PackedWind
+        inline u8 PackWind(u8 direction, u8 speed)
         {
-            inline u8 value() const { return (mSpeed << 3) | mDirection; }
-
-            u8 mSpeed : 4;
-            u8 mDirection : 3;
-        };
-
-        inline u8 PackWind(int direction, int speed)
-        {
-            PackedWind wind;
-
-            wind.mDirection = direction;
-            wind.mSpeed = speed;
-
-            return wind.value();
+            return (speed << 3) | direction; 
         }
     }
 }

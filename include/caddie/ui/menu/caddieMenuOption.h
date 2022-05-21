@@ -3,7 +3,6 @@
 #include "types_caddie.h"
 #include "caddieLinkList.h"
 #include "caddieTextBox.h"
-#include "caddieLocalizer.h"
 
 namespace caddie
 {
@@ -254,7 +253,7 @@ namespace caddie
             MenuIntOption(name, min, max, initial),
             mValues(values)
         {
-            // Initialized saved/unsaved values
+            // Initialize saved/unsaved values
             SetUnsavedValue(initial);
             SaveChanges();
         }
@@ -305,6 +304,7 @@ namespace caddie
         virtual void SaveChanges()
         {
         }
+
         virtual void DeleteChanges()
         {
         }
