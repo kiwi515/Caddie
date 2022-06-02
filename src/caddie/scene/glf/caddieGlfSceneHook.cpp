@@ -75,10 +75,9 @@ namespace caddie
             return;
         }
 
+        // Update hole
         Sp2::StaticMem* mem = Sp2::StaticMem::getInstance();
         CADDIE_ASSERT(mem != NULL);
-
-        // Update hole
         mem->setStaticVar(Sp2::Glf::VAR_NEXTHOLE, sGlfMenu->GetHole(), false);
     }
 
@@ -97,9 +96,10 @@ namespace caddie
         int pin = sGlfMenu->GetPinType();
 
         // Next hole to be played determines how to interpret pin value
-        int nextHole;
+        int nextHole = 0;
         if (sGlfMenu->GetRepeatHole()) {
-            nextHole = main->getCurrentHole();
+            // Value is internal hole num (zero indexed)
+            nextHole = main->getCurrentHole() + 1;
         }
         else {
             nextHole = sGlfMenu->GetHole();
@@ -109,7 +109,7 @@ namespace caddie
         switch(nextHole)
         {
             // Hole 1
-            case 0:
+            case 1:
                 switch(pin)
                 {
                     // Random pin 1-3
@@ -120,14 +120,14 @@ namespace caddie
                 break;
 
             // Hole 18
-            case 17:
+            case 18:
                 pin = PIN_1;
                 break;
 
             // Special Course (19-21)
-            case 18:
             case 19:
             case 20:
+            case 21:
                 switch(pin)
                 {
                     // Random pin 1-6
@@ -170,7 +170,57 @@ namespace caddie
      */
     void GlfSceneHook::Apply_Wind()
     {
-        
+        Sp2::StaticMem* mem = Sp2::StaticMem::getInstance();
+        CADDIE_ASSERT(mem != NULL);
+
+        int spd = sGlfMenu->GetWindSpd();
+        int dir = sGlfMenu->GetWindDir();
+
+        // Random wind speed
+        if (spd == WIND_SPD_RANDOM) {
+            // Wind range
+            int min = 0;
+            int max = Sp2::Glf::WIND_MAX;
+
+            switch(sGlfMenu->GetWindSpdRange())
+            {
+                // 0-10 m/s (0-20 mph)
+                case RANGE_0_10:
+                    min = 0;
+                    max = 10;
+                    break;
+                // 0-5 m/s (0-10 mph)
+                case RANGE_0_5:
+                    min = 0;
+                    max = 5;
+                    break;
+                // 5-10 m/s (10-20 mph)
+                case RANGE_5_10:
+                    min = 5;
+                    max = 10;
+                    break;
+                // 10-15 m/s (20-30 mph)
+                case RANGE_10_15:
+                    min = 10;
+                    max = 15;
+                    break;
+                // 0-15 m/s (0-30 mph)
+                case RANGE_0_15:
+                    // Min/max initialized to 0-15
+                    break;
+            }
+
+            // Generate random speed
+            spd = Sp2::Rand(min, max);
+        }
+
+        // Random direction
+        if (dir == DIR_RND) {
+            dir = Sp2::Rand(Sp2::Glf::MAX_WIND_DIV);
+        }
+
+        mem->setStaticVar(Sp2::Glf::VAR_WIND + sGlfMenu->GetHoleInternal(),
+            Sp2::Glf::PackWind(dir, spd), false);
     }
 
     /**

@@ -52,8 +52,7 @@ namespace caddie
         // Reload golf scene
         RPSysSceneCreator *creator = RPSysSceneCreator::getInstance();
         CADDIE_ASSERT(creator != NULL);
-        creator->changeSceneAfterFade(-1,
-            ut::Color(0, 0, 0, 255));
+        creator->changeSceneAfterFade(-1, ut::Color(0, 0, 0, 255));
     }
 
     /**

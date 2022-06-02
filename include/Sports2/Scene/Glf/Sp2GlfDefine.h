@@ -1,5 +1,6 @@
 #ifndef SP2_GLF_DEFINE_H
 #define SP2_GLF_DEFINE_H
+#include "types.h"
 
 namespace Sp2
 {
@@ -62,7 +63,7 @@ namespace Sp2
             VAR_WIND = 7,
         };
 
-        inline u8 PackWind(u8 direction, u8 speed)
+        static inline u8 PackWind(u8 direction, u8 speed)
         {
             return (speed << 3) | direction; 
         }
