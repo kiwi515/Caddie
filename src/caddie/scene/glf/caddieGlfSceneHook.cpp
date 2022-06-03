@@ -266,7 +266,6 @@ namespace caddie
     bool GlfSceneHook::CanPlayNextHole()
     {
         CADDIE_ASSERT(sGlfMenu != NULL);
-        
         return sGlfMenu->GetRepeatHole() ? true : !GlfUtil::IsNextRoundOver();
     } kmBranch(0x80406554, GlfSceneHook::CanPlayNextHole);
 
