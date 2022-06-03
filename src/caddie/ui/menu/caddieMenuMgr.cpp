@@ -15,6 +15,7 @@ namespace caddie
      */
     void MenuMgr::Calc()
     {
+        CADDIE_ASSERT(mMenu != NULL);
         CADDIE_ASSERT(mOpenPage != NULL);
 
         // Update player input
@@ -43,10 +44,12 @@ namespace caddie
         // Increment option
         else if (mBtnTrig & BTN_RIGHT) {
             mOpenPage->GetOption(mCursor).Increment();
+            mMenu->OnChange();
         }
         // Decrement option
         else if (mBtnTrig & BTN_LEFT) {
             mOpenPage->GetOption(mCursor).Decrement();
+            mMenu->OnChange();
         }
 
         // Update cursor screen position

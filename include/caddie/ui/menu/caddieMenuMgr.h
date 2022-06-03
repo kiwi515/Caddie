@@ -3,6 +3,7 @@
 #include "types_caddie.h"
 #include "caddieMenuPage.h"
 #include "caddieStack.h"
+#include "caddieMenuBase.h"
 
 namespace caddie
 {
@@ -21,11 +22,13 @@ namespace caddie
         virtual void Calc();
         virtual void Draw() const;
 
-        void OpenPage(MenuPage* page)
+        void OpenMenu(MenuBase* menu)
         {
-            CADDIE_ASSERT(page != NULL);
-            mOpenPage = page;
+            CADDIE_ASSERT(menu != NULL);
+            mMenu = menu;
+            mOpenPage = &menu->GetRootPage();
             mCursor = 0;
+            mMenu->OnChange();
         }
 
         void ClosePage()

@@ -16,6 +16,7 @@ namespace caddie
     public:
         GlfMenu();
         virtual ~GlfMenu();
+        virtual void OnChange();
 
         static void Action_ApplyRestart(void* menu);
         static void Action_QuitGame(void* menu);

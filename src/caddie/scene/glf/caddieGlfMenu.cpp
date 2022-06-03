@@ -38,6 +38,37 @@ namespace caddie
     }
 
     /**
+     * @brief Option change callback
+     */
+    void GlfMenu::OnChange()
+    {
+        // Hole 18 has one pin
+        mPinType.SetEnabled(mHole.GetUnsavedValue() != 18);
+
+        // Update pin type choices
+        switch(mHole.GetUnsavedValue())
+        {
+            case 1:
+                mPinType.SetEnumValues(ENUM_PIN_TYPE_HOLE1);
+                mPinType.SetRange(0, CADDIE_ENUM_MAX(ENUM_PIN_TYPE_HOLE1));
+                break;
+            case 19:
+            case 20:
+            case 21:
+                mPinType.SetEnumValues(ENUM_PIN_TYPE_SPECIAL);
+                mPinType.SetRange(0, CADDIE_ENUM_MAX(ENUM_PIN_TYPE_SPECIAL));
+                break;
+            default:
+                mPinType.SetEnumValues(ENUM_PIN_TYPE);
+                mPinType.SetRange(0, CADDIE_ENUM_MAX(ENUM_PIN_TYPE));
+                break;
+        }
+
+        // Wind speed range
+        mWindSpdRange.SetEnabled(mWindSpd.GetUnsavedValue() == WIND_SPD_RANDOM);
+    }
+
+    /**
      * @brief Save menu settings and reload scene
      */
     void GlfMenu::Action_ApplyRestart(void* menu)

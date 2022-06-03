@@ -22,6 +22,8 @@ namespace caddie
         {
         }
 
+        virtual void OnChange() = 0;
+
         void SaveChanges() { mRootPage.SaveChanges(); }
         void DeleteChanges() { mRootPage.DeleteChanges(); }
 

@@ -41,6 +41,8 @@ namespace caddie
         virtual void Decrement() = 0;
         virtual void Validate() = 0;
 
+        virtual void UpdateString() = 0;
+
         virtual void SaveChanges() = 0;
         virtual void DeleteChanges() = 0;
 
@@ -52,10 +54,6 @@ namespace caddie
         nw4r::ut::Color GetTextColor() const { return mNameText.GetTextColor(); }
         void SetTextColor(nw4r::ut::Color color)
         {
-            if (!mIsEnabled) {
-                return;
-            }
-
             mNameText.SetTextColor(color);
             mValueText.SetTextColor(color);
         }
@@ -63,10 +61,6 @@ namespace caddie
         nw4r::ut::Color GetStrokeColor() const { return mNameText.GetStrokeColor(); }
         void SetStrokeColor(nw4r::ut::Color color)
         {
-            if (!mIsEnabled) {
-                return;
-            }
-
             mNameText.SetStrokeColor(color);
             mValueText.SetStrokeColor(color);
         }
@@ -85,10 +79,9 @@ namespace caddie
         void SetEnabled(bool enable)
         {
             mIsEnabled = enable;
-            if (!enable) {
-                SetTextColor(sDisabledTextColor);
-                SetStrokeColor(sDisabledStrokeColor);
-            }
+            SetTextColor(enable ? sEnabledTextColor : sDisabledTextColor);
+            SetStrokeColor(enable ? sEnabledStrokeColor : sDisabledStrokeColor);
+            UpdateString();
         }
 
     public:
@@ -104,7 +97,9 @@ namespace caddie
         bool mIsEnabled;
 
     private:
+        static const nw4r::ut::Color sEnabledTextColor;
         static const nw4r::ut::Color sDisabledTextColor;
+        static const nw4r::ut::Color sEnabledStrokeColor;
         static const nw4r::ut::Color sDisabledStrokeColor;
     };
 
@@ -135,6 +130,10 @@ namespace caddie
 
         virtual void Increment()
         {
+            if (!mIsEnabled) {
+                return;
+            }
+
             int next = mValue + 1;
             if (next > mMax) {
                 next = mMin;
@@ -144,6 +143,10 @@ namespace caddie
 
         virtual void Decrement()
         {
+            if (!mIsEnabled) {
+                return;
+            }
+            
             int next = mValue - 1;
             if (next < mMin) {
                 next = mMax;
@@ -152,15 +155,23 @@ namespace caddie
         }
 
         int GetMax() const { return mMax; }
-        void SetMax(int max) { mMax = max; }
+        void SetMax(int max)
+        {
+            mMax = max;
+            Validate();
+        }
 
         int GetMin() const { return mMin; }
-        void SetMin(int min) { mMin = min; }
+        void SetMin(int min)
+        {
+            mMin = min;
+            Validate();
+        }
 
         void SetRange(int min, int max)
         {
-            mMin = min;
-            mMax = max;
+            SetMin(min);
+            SetMax(max);
         }
 
         int GetUnsavedValue() const { return mValue; }
@@ -200,7 +211,12 @@ namespace caddie
 
         virtual void UpdateString()
         {
-            mValueText.SetTextFmt("%i", mValue);
+            if (mIsEnabled) {
+                mValueText.SetTextFmt("%i", mValue);
+            }
+            else {
+                mValueText.SetText("DISABLED");
+            }
         }
         
         virtual void OnClick()
@@ -238,7 +254,12 @@ namespace caddie
 
         virtual void UpdateString()
         {
-            mValueText.SetText(GetUnsavedValue() ? "Yes" : "No");
+            if (mIsEnabled) {
+                mValueText.SetText(GetUnsavedValue() ? "Yes" : "No");
+            }
+            else {
+                mValueText.SetText("DISABLED");
+            }
         }
     };
 
@@ -257,12 +278,27 @@ namespace caddie
             SetUnsavedValue(initial);
             SaveChanges();
         }
-        virtual ~MenuEnumOption() {}
 
-        virtual void UpdateString() { mValueText.SetText(mValues[GetUnsavedValue()]); }
+        virtual ~MenuEnumOption()
+        {
+        }
+
+        virtual void UpdateString()
+        {
+            if (mIsEnabled) {
+                mValueText.SetText(mValues[GetUnsavedValue()]);
+            }
+            else {
+                mValueText.SetText("DISABLED");
+            }
+        }
 
         const char** GetEnumValues() const { return mValues; }
-        void SetEnumValues(const char** values) { mValues = values; }
+        void SetEnumValues(const char** values)
+        {
+            mValues = values;
+            UpdateString();
+        }
 
     private:
         //! @brief Enum value strings
@@ -298,6 +334,10 @@ namespace caddie
         }
 
         virtual void Validate()
+        {
+        }
+
+        virtual void UpdateString()
         {
         }
 
