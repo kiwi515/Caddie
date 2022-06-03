@@ -273,9 +273,10 @@ namespace caddie
     /**
      * @brief Access golf menu
      */
-    GlfMenu* GlfSceneHook::GetMenu()
+    GlfMenu& GlfSceneHook::GetMenu()
     {
-        return sGlfMenu;
+        CADDIE_ASSERT(sGlfMenu != NULL);
+        return *sGlfMenu;
     }
 
     GlfMenu* GlfSceneHook::sGlfMenu = NULL;

@@ -26,7 +26,7 @@ namespace caddie
 
         static bool CanPlayNextHole();
 
-        static GlfMenu* GetMenu();
+        static GlfMenu& GetMenu();
 
     private:
         static GlfMenu* sGlfMenu;

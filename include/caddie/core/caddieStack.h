@@ -21,7 +21,6 @@ namespace caddie
 
         T* Pop()
         {
-            CADDIE_ASSERT(!IsEmpty());
             T* elem = mData.Back();
             mData.Remove(mData.End());
             return elem;
@@ -29,7 +28,6 @@ namespace caddie
 
         T* Peek() const
         {
-            CADDIE_ASSERT(!IsEmpty());
             return mData.Back();
         }
 
