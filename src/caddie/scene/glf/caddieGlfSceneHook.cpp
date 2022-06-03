@@ -75,6 +75,8 @@ namespace caddie
      */
     void GlfSceneHook::Apply_Hole()
     {
+        CADDIE_ASSERT(sGlfMenu != NULL);
+
         // Update hole
         Sp2::StaticMem::getInstance().setStaticVar(
             Sp2::Glf::VAR_NEXTHOLE, sGlfMenu->GetHoleInternal(), false);
@@ -85,6 +87,8 @@ namespace caddie
      */
     void GlfSceneHook::Apply_RepeatHole()
     {
+        CADDIE_ASSERT(sGlfMenu != NULL);
+        
         Sp2::StaticMem& mem = Sp2::StaticMem::getInstance();
 
         if (sGlfMenu->GetRepeatHole()) {
@@ -98,6 +102,8 @@ namespace caddie
      */
     void GlfSceneHook::Apply_Pin()
     {
+        CADDIE_ASSERT(sGlfMenu != NULL);
+
         Sp2::Glf::GlfMain& main = Sp2::Glf::GlfMain::getInstance();
 
         // Next pin type
@@ -178,6 +184,8 @@ namespace caddie
      */
     void GlfSceneHook::Apply_Wind()
     {
+        CADDIE_ASSERT(sGlfMenu != NULL);
+
         int spd = sGlfMenu->GetWindSpd();
         int dir = sGlfMenu->GetWindDir();
 
@@ -231,6 +239,8 @@ namespace caddie
      */
     void GlfSceneHook::Apply_StaticMem()
     {
+        CADDIE_ASSERT(sGlfMenu != NULL);
+
         Apply_Wind();
 
         // Hole option should not automatically be applied
@@ -255,6 +265,8 @@ namespace caddie
      */
     bool GlfSceneHook::CanPlayNextHole()
     {
+        CADDIE_ASSERT(sGlfMenu != NULL);
+        
         return sGlfMenu->GetRepeatHole() ? true : !GlfUtil::IsNextRoundOver();
     } kmBranch(0x80406554, GlfSceneHook::CanPlayNextHole);
 
