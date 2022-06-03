@@ -1,7 +1,9 @@
 #ifndef SP2_UTIL_H
 #define SP2_UTIL_H
 #include "types_sp2.h"
+
 #include <stdarg.h>
+#include <stdio.h>
 
 namespace Sp2
 {

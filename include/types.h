@@ -24,8 +24,6 @@ typedef void UNKTYPE;
 typedef enum { FALSE, TRUE } BOOL;
 
 #define ARRAY_COUNT(x) (sizeof((x)) / sizeof(((x)[0])))
-#define MIN(x, y) (((x) < (y)) ? (x) : (y))
-#define MAX(x, y) (((x) > (y)) ? (x) : (y))
 
 /**
  * @brief Define a localizable message.

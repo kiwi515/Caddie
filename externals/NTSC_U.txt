@@ -13,6 +13,7 @@ vprintf=0x8000ceec
 vsprintf=0x8000cff0
 vsnprintf=0x8000cf68
 sprintf=0x8000d168
+snprintf=0x8000d074
 
 # STL/string
 strcmp=0x8000e8b0
