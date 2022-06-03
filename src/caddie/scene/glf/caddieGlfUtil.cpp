@@ -13,7 +13,7 @@ namespace caddie
         Sp2::Glf::GlfMain* main = Sp2::Glf::GlfMain::getInstance();
         CADDIE_ASSERT(main != NULL);
 
-        return IsFirstHole(main->getGamemode(), main->getCurrentHole());
+        return IsFirstHoleInternal(main->getGamemode(), main->getCurrentHole());
     }
 
     /**
@@ -22,9 +22,9 @@ namespace caddie
      * @param gm Gamemode
      * @param hole Hole (zero-indexed)
      */
-    bool GlfUtil::IsFirstHole(Sp2::Glf::GameMode gm, u32 hole)
+    bool GlfUtil::IsFirstHoleInternal(Sp2::Glf::GameMode gm, u32 hole)
     {
-        return IsFirstHoleInternal(gm, hole + 1);
+        return IsFirstHole(gm, hole + 1);
     }
 
     /**
@@ -33,7 +33,7 @@ namespace caddie
      * @param gm Gamemode
      * @param hole Hole (one-indexed)
      */
-    bool GlfUtil::IsFirstHoleInternal(Sp2::Glf::GameMode gm, u32 hole)
+    bool GlfUtil::IsFirstHole(Sp2::Glf::GameMode gm, u32 hole)
     {
         switch(gm)
         {
@@ -68,7 +68,7 @@ namespace caddie
         Sp2::Glf::GlfMain* main = Sp2::Glf::GlfMain::getInstance();
         CADDIE_ASSERT(main != NULL);
 
-        return IsRoundOver(main->getGamemode(), main->getCurrentHole());
+        return IsRoundOverInternal(main->getGamemode(), main->getCurrentHole());
     }
 
     /**
@@ -79,7 +79,7 @@ namespace caddie
         Sp2::Glf::GlfMain* main = Sp2::Glf::GlfMain::getInstance();
         CADDIE_ASSERT(main != NULL);
 
-        return IsRoundOver(main->getGamemode(), main->getCurrentHole() + 1);
+        return IsRoundOverInternal(main->getGamemode(), main->getCurrentHole() + 1);
     }
 
     /**
@@ -88,9 +88,9 @@ namespace caddie
      * @param gm Gamemode
      * @param hole Hole (zero-indexed)
      */
-    bool GlfUtil::IsRoundOver(Sp2::Glf::GameMode gm, u32 hole)
+    bool GlfUtil::IsRoundOverInternal(Sp2::Glf::GameMode gm, u32 hole)
     {
-        return IsRoundOverInternal(gm, hole + 1);
+        return IsRoundOver(gm, hole + 1);
     }
 
     /**
@@ -99,7 +99,7 @@ namespace caddie
      * @param gm Gamemode
      * @param hole Hole (one-indexed)
      */
-    bool GlfUtil::IsRoundOverInternal(Sp2::Glf::GameMode gm, u32 hole)
+    bool GlfUtil::IsRoundOver(Sp2::Glf::GameMode gm, u32 hole)
     {
         switch(gm)
         {
