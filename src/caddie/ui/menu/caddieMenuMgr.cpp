@@ -33,13 +33,22 @@ namespace caddie
         else if (mBtnTrig & BTN_B) {
             ClosePage();
         }
+
         // Move cursor up
-        else if (mBtnTrig & BTN_UP) {
-            mCursor = MAX(mCursor - 1, 0);
+        if (mBtnTrig & BTN_UP) {
+            mCursor--;
+            // Wrap around
+            if (mCursor < 0) {
+                mCursor = mOpenPage->GetNumOptions() - 1;
+            }
         }
         // Move cursor down
         else if (mBtnTrig & BTN_DOWN) {
-            mCursor = MIN(mCursor + 1, mOpenPage->GetNumOptions() - 1);
+            mCursor++;
+            // Wrap around
+            if (mCursor >= mOpenPage->GetNumOptions()) {
+                mCursor = 0;
+            }
         }
         // Increment option
         else if (mBtnTrig & BTN_RIGHT) {
