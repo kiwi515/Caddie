@@ -92,10 +92,8 @@ namespace caddie
         CADDIE_ASSERT(mOpenPage != NULL);
 
         // Update player input
-        CoreControllerMgr* contMgr = CoreControllerMgr::getInstance();
-        CADDIE_ASSERT(contMgr != NULL);
-        // Only use player 1 input
-        CoreController* cont = contMgr->getNthController(0);
+        // (Only use player 1 input)
+        const CoreController* cont = CoreControllerMgr::getInstance().getNthController(0);
         CADDIE_ASSERT(cont != NULL);
 
         // Buttons held last frame

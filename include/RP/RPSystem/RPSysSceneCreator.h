@@ -45,7 +45,11 @@ public:
     };
 
 public:    
-    static RPSysSceneCreator * getInstance() { return sInstance; }
+    static RPSysSceneCreator& getInstance()
+    {
+        CADDIE_ASSERT(sInstance != NULL);
+        return *sInstance;
+    }
 
     void changeSceneAfterFade(int id, nw4r::ut::Color fadeColor);
 

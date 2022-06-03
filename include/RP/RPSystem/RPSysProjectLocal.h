@@ -41,7 +41,12 @@ public:
 
     void appendLocalDirectory(char *, const char *);
 
-    static RPSysProjectLocal * getInstance() { return sInstance; }
+    static RPSysProjectLocal& getInstance()
+    {
+        CADDIE_ASSERT(sInstance != NULL);
+        return *sInstance;
+    }
+
     static RPSysProjectLocal * CreateInstance(EGG::Heap *);
 
 private:

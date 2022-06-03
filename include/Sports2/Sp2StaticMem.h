@@ -9,9 +9,10 @@ namespace Sp2
     class StaticMem
     {
     public:
-        inline static StaticMem *getInstance()
+        static StaticMem& getInstance()
         { 
-            return sInstance;
+            CADDIE_ASSERT(sInstance != NULL);
+            return *sInstance;
         }
 
         int getStaticVar(int var, bool b);

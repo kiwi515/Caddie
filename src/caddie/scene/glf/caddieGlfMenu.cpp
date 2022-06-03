@@ -83,9 +83,8 @@ namespace caddie
         thisx->SetCanDelete(false);
 
         // Reload golf scene
-        RPSysSceneCreator *creator = RPSysSceneCreator::getInstance();
-        CADDIE_ASSERT(creator != NULL);
-        creator->changeSceneAfterFade(-1, ut::Color(0, 0, 0, 255));
+        RPSysSceneCreator::getInstance().changeSceneAfterFade(
+            -1, ut::Color(0, 0, 0, 255));
     }
 
     /**
@@ -103,10 +102,8 @@ namespace caddie
         thisx->SetCanDelete(true);
 
         // Return to title scene
-        RPSysSceneCreator *creator = RPSysSceneCreator::getInstance();
-        CADDIE_ASSERT(creator != NULL);
-        creator->changeSceneAfterFade(RPSysSceneCreator::SCENE_TITLE,
-            ut::Color(0, 0, 0, 255));
+        RPSysSceneCreator::getInstance().changeSceneAfterFade(
+            RPSysSceneCreator::SCENE_TITLE, ut::Color(0, 0, 0, 255));
     }
 
     //! @brief Menu X screen position

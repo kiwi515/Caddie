@@ -23,7 +23,7 @@ namespace EGG
     class CoreController
     {
     public:
-        inline u16 getButtons()
+        inline u16 getButtons() const
         {
             return mButtons;
         }
@@ -37,9 +37,10 @@ namespace EGG
     class CoreControllerMgr
     {
     public:
-        static inline CoreControllerMgr *getInstance() 
+        static CoreControllerMgr& getInstance() 
         {
-            return sInstance;
+            CADDIE_ASSERT(sInstance != NULL);
+            return *sInstance;
         }
 
         CoreController *getNthController(int i);

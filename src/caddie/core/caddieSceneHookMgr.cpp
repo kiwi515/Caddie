@@ -7,21 +7,17 @@ namespace caddie
 {
     static s32 GetCurrentSceneID()
     {
-        RPSysSceneMgr *mgr = RPSysSceneMgr::getInstance();
-        CADDIE_ASSERT(mgr != NULL);
-        return mgr->getCurrentSceneID();
+        return RPSysSceneMgr::getInstance().getCurrentSceneID();
     }
 
-    static RPSysScene * GetCurrentScene()
+    static RPSysScene* GetCurrentScene()
     {
-        RPSysSceneMgr *mgr = RPSysSceneMgr::getInstance();
-        CADDIE_ASSERT(mgr != NULL);
-        return (RPSysScene *)mgr->getCurrentScene();
+        return (RPSysScene*)RPSysSceneMgr::getInstance().getCurrentScene();
     }
 
     void SceneHookMgr::ConfigureCallback()
     {
-        s32 scene = GetCurrentSceneID();
+        const s32 scene = GetCurrentSceneID();
         SceneHookMgr& hookMgr = SceneHookMgr::GetInstance();
 
         if (hookMgr.mSceneHooks[scene].onConfigure != NULL)
@@ -31,7 +27,7 @@ namespace caddie
 
     void SceneHookMgr::CalculateCallback()
     {
-        s32 scene = GetCurrentSceneID();
+        const s32 scene = GetCurrentSceneID();
         SceneHookMgr& hookMgr = SceneHookMgr::GetInstance();
 
         if (hookMgr.mSceneHooks[scene].onCalculate != NULL)
@@ -41,7 +37,7 @@ namespace caddie
 
     void SceneHookMgr::UserDrawCallback()
     {
-        s32 scene = GetCurrentSceneID();
+        const s32 scene = GetCurrentSceneID();
         SceneHookMgr& hookMgr = SceneHookMgr::GetInstance();
 
         if (hookMgr.mSceneHooks[scene].onUserDraw != NULL)
@@ -51,7 +47,7 @@ namespace caddie
 
     void SceneHookMgr::ExitCallback()
     {
-        s32 scene = GetCurrentSceneID();
+        const s32 scene = GetCurrentSceneID();
         SceneHookMgr& hookMgr = SceneHookMgr::GetInstance();
 
         if (hookMgr.mSceneHooks[scene].onExit != NULL)
@@ -61,11 +57,11 @@ namespace caddie
 
     void SceneHookMgr::PauseCheckCallback()
     {
-        s32 scene = GetCurrentSceneID();
+        const s32 scene = GetCurrentSceneID();
         SceneHookMgr& hookMgr = SceneHookMgr::GetInstance();
 
         if (hookMgr.mPauseSetting[scene]) {
-            RPSysPauseMgr::getInstance()->update();
+            RPSysPauseMgr::getInstance().update();
         }
     }
     kmCall(0x80232984, SceneHookMgr::PauseCheckCallback);

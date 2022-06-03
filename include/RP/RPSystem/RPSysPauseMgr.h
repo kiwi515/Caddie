@@ -4,9 +4,10 @@
 class RPSysPauseMgr
 {
 public:
-    static RPSysPauseMgr* getInstance()
+    static RPSysPauseMgr& getInstance()
     {
-        return sInstance;
+        CADDIE_ASSERT(sInstance != NULL);
+        return *sInstance;
     }
 
     void update();

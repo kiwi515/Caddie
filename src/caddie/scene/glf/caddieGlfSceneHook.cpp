@@ -75,12 +75,9 @@ namespace caddie
      */
     void GlfSceneHook::Apply_Hole()
     {
-        Sp2::StaticMem* mem = Sp2::StaticMem::getInstance();
-        CADDIE_ASSERT(mem != NULL);
-
         // Update hole
-        mem->setStaticVar(Sp2::Glf::VAR_NEXTHOLE,
-            sGlfMenu->GetHoleInternal(), false);
+        Sp2::StaticMem::getInstance().setStaticVar(
+            Sp2::Glf::VAR_NEXTHOLE, sGlfMenu->GetHoleInternal(), false);
     }
 
     /**
@@ -88,12 +85,11 @@ namespace caddie
      */
     void GlfSceneHook::Apply_RepeatHole()
     {
-        Sp2::StaticMem* mem = Sp2::StaticMem::getInstance();
-        CADDIE_ASSERT(mem != NULL);
+        Sp2::StaticMem& mem = Sp2::StaticMem::getInstance();
 
         if (sGlfMenu->GetRepeatHole()) {
-            const int nextHole = mem->getStaticVar(Sp2::Glf::VAR_NEXTHOLE, false);
-            mem->setStaticVar(Sp2::Glf::VAR_NEXTHOLE, nextHole - 1, false);
+            const int nextHole = mem.getStaticVar(Sp2::Glf::VAR_NEXTHOLE, false);
+            mem.setStaticVar(Sp2::Glf::VAR_NEXTHOLE, nextHole - 1, false);
         }        
     }
 
@@ -102,11 +98,7 @@ namespace caddie
      */
     void GlfSceneHook::Apply_Pin()
     {
-        Sp2::Glf::GlfMain* main = Sp2::Glf::GlfMain::getInstance();
-        CADDIE_ASSERT(main != NULL);
-
-        Sp2::StaticMem* mem = Sp2::StaticMem::getInstance();
-        CADDIE_ASSERT(mem != NULL);
+        Sp2::Glf::GlfMain& main = Sp2::Glf::GlfMain::getInstance();
 
         // Next pin type
         int pin = sGlfMenu->GetPinType();
@@ -115,7 +107,7 @@ namespace caddie
         int nextHole = 0;
         if (sGlfMenu->GetRepeatHole()) {
             // Value is internal hole num (zero indexed)
-            nextHole = main->getCurrentHole() + 1;
+            nextHole = main.getCurrentHole() + 1;
         }
         else {
             nextHole = sGlfMenu->GetHole();
@@ -159,7 +151,7 @@ namespace caddie
                 {
                     // Do not update pin
                     case PIN_SCORE:
-                        pin = main->getPin();
+                        pin = main.getPin();
                         break;
                     // Random pin 1-6
                     case PIN_RND_ALL:
@@ -178,7 +170,7 @@ namespace caddie
         }
 
         // Apply pin
-        main->setPin(pin);
+        main.setPin(pin);
     }
 
     /**
@@ -186,9 +178,6 @@ namespace caddie
      */
     void GlfSceneHook::Apply_Wind()
     {
-        Sp2::StaticMem* mem = Sp2::StaticMem::getInstance();
-        CADDIE_ASSERT(mem != NULL);
-
         int spd = sGlfMenu->GetWindSpd();
         int dir = sGlfMenu->GetWindDir();
 
@@ -232,7 +221,8 @@ namespace caddie
             dir = Sp2::Rand(Sp2::Glf::MAX_WIND_DIV);
         }
 
-        mem->setStaticVar(Sp2::Glf::VAR_WIND + sGlfMenu->GetHoleInternal(),
+        Sp2::StaticMem::getInstance().setStaticVar(
+            Sp2::Glf::VAR_WIND + sGlfMenu->GetHoleInternal(),
             Sp2::Glf::PackWind(dir, spd), false);
     }
 

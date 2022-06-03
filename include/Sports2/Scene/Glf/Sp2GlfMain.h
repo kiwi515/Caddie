@@ -12,9 +12,10 @@ namespace Sp2
         class GlfMain
         {
         public:
-            inline static GlfMain *getInstance()
+            static GlfMain& getInstance()
             {
-                return sInstance;
+                CADDIE_ASSERT(sInstance != NULL);
+                return *sInstance;
             }
 
             GameMode getGamemode() const { return (GameMode)mGamemode; }

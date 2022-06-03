@@ -10,10 +10,8 @@ namespace caddie
      */
     bool GlfUtil::IsCurrentFirstHole()
     {
-        Sp2::Glf::GlfMain* main = Sp2::Glf::GlfMain::getInstance();
-        CADDIE_ASSERT(main != NULL);
-
-        return IsFirstHoleInternal(main->getGamemode(), main->getCurrentHole());
+        Sp2::Glf::GlfMain& main = Sp2::Glf::GlfMain::getInstance();
+        return IsFirstHoleInternal(main.getGamemode(), main.getCurrentHole());
     }
 
     /**
@@ -65,10 +63,8 @@ namespace caddie
      */
     bool GlfUtil::IsCurrentRoundOver()
     {
-        Sp2::Glf::GlfMain* main = Sp2::Glf::GlfMain::getInstance();
-        CADDIE_ASSERT(main != NULL);
-
-        return IsRoundOverInternal(main->getGamemode(), main->getCurrentHole());
+        Sp2::Glf::GlfMain& main = Sp2::Glf::GlfMain::getInstance();
+        return IsRoundOverInternal(main.getGamemode(), main.getCurrentHole());
     }
 
     /**
@@ -76,10 +72,8 @@ namespace caddie
      */
     bool GlfUtil::IsNextRoundOver()
     {
-        Sp2::Glf::GlfMain* main = Sp2::Glf::GlfMain::getInstance();
-        CADDIE_ASSERT(main != NULL);
-
-        return IsRoundOverInternal(main->getGamemode(), main->getCurrentHole() + 1);
+        Sp2::Glf::GlfMain& main = Sp2::Glf::GlfMain::getInstance();
+        return IsRoundOverInternal(main.getGamemode(), main.getCurrentHole() + 1);
     }
 
     /**

@@ -10,9 +10,10 @@
 class RPSysSceneMgr : public EGG::SceneManager
 {
 public:
-    inline static RPSysSceneMgr * getInstance()
+    static RPSysSceneMgr& getInstance()
     {
-        return sInstance;
+        CADDIE_ASSERT(sInstance != NULL);
+        return *sInstance;
     }
 
 private:
