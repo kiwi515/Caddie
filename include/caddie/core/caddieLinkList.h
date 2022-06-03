@@ -198,7 +198,7 @@ namespace caddie
             
             TLinkListNode* after = it.mNode;
             TLinkListNode* before = after->mPrev;
-            CADDIE_ASSERT_EX(before != NULL, "List is broken!!!\n");
+            CADDIE_ASSERT_EX(before != NULL, "List is broken!");
 
             before->mNext = node;
             node->mPrev = before;
