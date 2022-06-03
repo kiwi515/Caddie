@@ -1,7 +1,5 @@
 #include "caddieGlfMessage.h"
 
-using namespace Sp2;
-
 namespace caddie
 {
     //! @brief Text for menu title

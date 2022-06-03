@@ -1,6 +1,7 @@
 #include "caddieAssert.h"
 #include "caddieGlfSceneHook.h"
 #include "caddieGlfMenu.h"
+#include "caddieGlfUtil.h"
 #include "caddieMenuMgr.h"
 
 #include <Sports2/Sp2StaticMem.h>
@@ -59,9 +60,13 @@ namespace caddie
         CADDIE_ASSERT(sGlfMenu != NULL);
 
         // Do not delete menu if settings are waiting to be applied
-        if (!sGlfMenu->IsAwaitingSave()) {
+        if (sGlfMenu->CanDelete()) {
             delete sGlfMenu;
             sGlfMenu = NULL;
+        }
+        // Apply static mem settings
+        else {  
+            Apply_StaticMem();
         }
     }
 
@@ -70,15 +75,26 @@ namespace caddie
      */
     void GlfSceneHook::Apply_Hole()
     {
-        // Repeat current hole
-        if (sGlfMenu->GetRepeatHole()) {
-            return;
-        }
-
-        // Update hole
         Sp2::StaticMem* mem = Sp2::StaticMem::getInstance();
         CADDIE_ASSERT(mem != NULL);
-        mem->setStaticVar(Sp2::Glf::VAR_NEXTHOLE, sGlfMenu->GetHole(), false);
+
+        // Update hole
+        mem->setStaticVar(Sp2::Glf::VAR_NEXTHOLE,
+            sGlfMenu->GetHoleInternal(), false);
+    }
+
+    /**
+     * @brief Allow hole to be repeated if option is set
+     */
+    void GlfSceneHook::Apply_RepeatHole()
+    {
+        Sp2::StaticMem* mem = Sp2::StaticMem::getInstance();
+        CADDIE_ASSERT(mem != NULL);
+
+        if (sGlfMenu->GetRepeatHole()) {
+            const int nextHole = mem->getStaticVar(Sp2::Glf::VAR_NEXTHOLE, false);
+            mem->setStaticVar(Sp2::Glf::VAR_NEXTHOLE, nextHole - 1, false);
+        }        
     }
 
     /**
@@ -186,12 +202,10 @@ namespace caddie
             {
                 // 0-10 m/s (0-20 mph)
                 case RANGE_0_10:
-                    min = 0;
                     max = 10;
                     break;
                 // 0-5 m/s (0-10 mph)
                 case RANGE_0_5:
-                    min = 0;
                     max = 5;
                     break;
                 // 5-10 m/s (10-20 mph)
@@ -202,7 +216,6 @@ namespace caddie
                 // 10-15 m/s (20-30 mph)
                 case RANGE_10_15:
                     min = 10;
-                    max = 15;
                     break;
                 // 0-15 m/s (0-30 mph)
                 case RANGE_0_15:
@@ -222,6 +235,38 @@ namespace caddie
         mem->setStaticVar(Sp2::Glf::VAR_WIND + sGlfMenu->GetHoleInternal(),
             Sp2::Glf::PackWind(dir, spd), false);
     }
+
+    /**
+     * @brief Apply menu settings which require StaticMem
+     */
+    void GlfSceneHook::Apply_StaticMem()
+    {
+        Apply_Wind();
+
+        // Hole option should not automatically be applied
+        if (sGlfMenu->IsAwaitingApply()) {
+            Apply_Hole();
+            sGlfMenu->SetAwaitingApply(false);
+        }
+    }
+
+    /**
+     * @brief Apply menu settings which require GlfMain
+     */
+    void GlfSceneHook::Apply_GlfMain()
+    {
+        Apply_RepeatHole();
+        Apply_Pin();
+    } kmBranch(0x8040680c, GlfSceneHook::Apply_GlfMain);
+
+    /**
+     * @brief Check whether the next hole can be played
+     * @note Repeat Hole option prevents game from ending
+     */
+    bool GlfSceneHook::CanPlayNextHole()
+    {
+        return sGlfMenu->GetRepeatHole() ? true : !GlfUtil::IsNextRoundOver();
+    } kmBranch(0x80406554, GlfSceneHook::CanPlayNextHole);
 
     /**
      * @brief Access golf menu

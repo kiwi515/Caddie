@@ -47,7 +47,9 @@ namespace caddie
         // Save all options' changes
         thisx->SaveChanges();
         // Ask scene to apply settings
-        thisx->SetAwaitingSave(true);
+        thisx->SetAwaitingApply(true);
+        // Do not delete menu on scene re-init
+        thisx->SetCanDelete(false);
 
         // Reload golf scene
         RPSysSceneCreator *creator = RPSysSceneCreator::getInstance();
@@ -65,7 +67,9 @@ namespace caddie
         // Delete all options' changes
         thisx->DeleteChanges();
         // Ask scene not to apply settings
-        thisx->SetAwaitingSave(false);
+        thisx->SetAwaitingApply(false);
+        // Delete menu when returning
+        thisx->SetCanDelete(true);
 
         // Return to title scene
         RPSysSceneCreator *creator = RPSysSceneCreator::getInstance();

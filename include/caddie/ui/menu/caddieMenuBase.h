@@ -12,7 +12,8 @@ namespace caddie
     {
     public:
         MenuBase(const char* rootName, f32 x, f32 y) :
-            mIsAwaitingSave(false),
+            mIsAwaitingApply(false),
+            mCanDelete(false),
             mRootPage(rootName, x, y)
         {
         }
@@ -24,15 +25,20 @@ namespace caddie
         void SaveChanges() { mRootPage.SaveChanges(); }
         void DeleteChanges() { mRootPage.DeleteChanges(); }
 
-        bool IsAwaitingSave() const { return mIsAwaitingSave; }
-        void SetAwaitingSave(bool save) { mIsAwaitingSave = save; }
+        bool IsAwaitingApply() const { return mIsAwaitingApply; }
+        void SetAwaitingApply(bool save) { mIsAwaitingApply = save; }
+
+        bool CanDelete() const { return mCanDelete; }
+        void SetCanDelete(bool del) { mCanDelete = del; }
 
         MenuPage& GetRootPage() { return mRootPage; }
         const MenuPage& GetRootPage() const { return mRootPage; }
 
     private:
-        //! @brief Prevents menu from being deleted on scene exit
-        bool mIsAwaitingSave;
+        //! @brief Settings are waiting to be applied
+        bool mIsAwaitingApply;
+        //! @brief Prevent menu from being deleted on scene re-init
+        bool mCanDelete;
         //! @brief Menu root
         MenuPage mRootPage;
     };

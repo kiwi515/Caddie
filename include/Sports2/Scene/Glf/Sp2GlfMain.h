@@ -1,6 +1,7 @@
 #ifndef SP2_GLF_MAIN_H
 #define SP2_GLF_MAIN_H
 #include "types_sp2.h"
+#include <Scene/Glf/Sp2GlfDefine.h>
 
 #include "caddieAssert.h"
 
@@ -16,8 +17,8 @@ namespace Sp2
                 return sInstance;
             }
 
-            u32 getGamemode() const { return mGamemode; }
-            void setGamemode(u32 gm) { mGamemode = gm; }
+            GameMode getGamemode() const { return (GameMode)mGamemode; }
+            void setGamemode(GameMode gm) { mGamemode = gm; }
 
             u32 getCurrentHole() const { return mCurrentHole; }
             void setCurrentHole(u32 i) { mCurrentHole = i; }

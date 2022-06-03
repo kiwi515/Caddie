@@ -1,5 +1,5 @@
-#ifndef CADDIE_SCENE_GLF_GLFMENU_H
-#define CADDIE_SCENE_GLF_GLFMENU_H
+#ifndef CADDIE_SCENE_GLF_MENU_H
+#define CADDIE_SCENE_GLF_MENU_H
 #include "types_caddie.h"
 #include "caddieMenuBase.h"
 #include "caddieMenuPage.h"
