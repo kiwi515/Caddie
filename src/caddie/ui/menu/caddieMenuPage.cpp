@@ -1,4 +1,5 @@
 #include "caddieMenuPage.h"
+#include "caddieAlgorithm.h"
 
 using namespace nw4r;
 
@@ -54,7 +55,7 @@ namespace caddie
         TLinkList<IMenuOption>::Iterator it = mOptions.Begin();
         for(; it != mOptions.End(); it++) {
             const size_t nameLen = strlen(it->GetName());
-            max = MAX(nameLen, max);
+            max = Max(nameLen, max);
         }
 
         mWidth = max * sCharWidth;
