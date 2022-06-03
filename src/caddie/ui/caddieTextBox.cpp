@@ -12,8 +12,7 @@ namespace caddie
         mStrokeColor(0, 0, 0, 255)
     {
         // Placeholder text
-        mTextBuffer = new char[sizeof("TextBox")];
-        strncpy(mTextBuffer, "TextBox", sizeof("TextBox"));
+        SetText("TextBox");
     }
 
     TextBox::~TextBox()
