@@ -17,6 +17,7 @@ void main() {
 
     // C++ static initializers
     for (StaticCtor* p = &__ctor_loc; p < &__ctor_end; p++) {
+        CADDIE_ASSERT(*p != NULL);
         (*p)();
     }
 
