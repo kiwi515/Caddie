@@ -1,7 +1,10 @@
 #include "caddieGlfSceneHook.h"
+#include "caddieRuntime.h"
 #include "caddieSceneHookMgr.h"
 
 #include <RP/RPSystem/RPSysProjectLocal.h>
+#include <egg/core/eggController.h>
+#include <egg/util/eggException.h>
 
 namespace caddie {
 
@@ -9,6 +12,20 @@ namespace caddie {
  * @brief Mod entrypoint
  */
 void main() {
+    // Initialize heap
+    MemManager::Initialize();
+
+    // C++ static initializers
+    for (StaticCtor* p = &__ctor_loc; p < &__ctor_end; p++) {
+        (*p)();
+    }
+
+    // Debug builds always show the exception handler
+#ifndef NDEBUG
+    static u16 sEmptyBtnCombo[] = {EGG::BTN_NONE};
+    EGG::Exception::setUserCallback(sEmptyBtnCombo);
+#endif
+
     // Skip MotionPlus video
     RPSysProjectLocal::getInstance().setMPlusVideoSeen(true);
 

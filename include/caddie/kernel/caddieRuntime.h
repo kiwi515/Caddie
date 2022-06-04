@@ -1,5 +1,20 @@
-#ifndef CADDIE_KERNEL_ASM_H
-#define CADDIE_KERNEL_ASM_H
+#ifndef CADDIE_KERNEL_RUNTIME_H
+#define CADDIE_KERNEL_RUNTIME_H
+#include "types_caddie.h"
+
+namespace caddie {
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+typedef void (*StaticCtor)(void);
+extern StaticCtor __ctor_loc;
+extern StaticCtor __ctor_end;
+
+#ifdef __cplusplus
+}
+#endif
 
 #define CADDIE_ASM_BEGIN asm volatile {
 #define CADDIE_ASM_END }
@@ -24,5 +39,7 @@
         lmw r3, 0xC(r1);                                                       \
         addi r1, r1, 0x90;                                                     \
     }
+
+} // namespace caddie
 
 #endif

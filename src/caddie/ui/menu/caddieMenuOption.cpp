@@ -1,7 +1,5 @@
 #include "caddieMenuOption.h"
 
-#include "caddieDebug.h"
-
 using namespace nw4r;
 
 namespace caddie {

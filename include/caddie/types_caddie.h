@@ -1,9 +1,8 @@
 #ifndef TYPES_CADDIE_H
 #define TYPES_CADDIE_H
-#include "caddieAsm.h"
 #include "caddieAssert.h"
-#include "caddieDebug.h"
 #include "caddieMemMgr.h"
+#include "caddieRuntime.h"
 
 #include <types.h>
 
@@ -15,9 +14,6 @@ struct MemManager;
 // core
 template <typename T> struct TLinkList;
 struct TLinkListNode;
-struct Timer;
-struct IGTTimer;
-struct RTATimer;
 struct SceneHook;
 
 // ui

@@ -30,6 +30,7 @@ class MemManager {
     ~MemManager() {}
 
     static EGG::ExpHeap* sHeap;
+    static u32 sHeapSize;
 };
 
 } // namespace caddie

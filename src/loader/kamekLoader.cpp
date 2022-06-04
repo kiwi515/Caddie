@@ -1,4 +1,3 @@
-#include <kernel/caddieDebug.h>
 #include <loader/kamekLoader.h>
 
 struct KBHeader {

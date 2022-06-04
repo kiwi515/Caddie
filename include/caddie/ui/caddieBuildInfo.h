@@ -5,7 +5,7 @@
 namespace caddie {
 
 /**
- * @brief Text box displaying info about the build of Caddie
+ * @brief Text box displaying info about the current build of Caddie
  */
 class BuildInfo : public TextBox {
   public:
