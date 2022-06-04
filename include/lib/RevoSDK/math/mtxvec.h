@@ -3,10 +3,10 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include <types.h>
 #include <mtx.h>
+#include <types.h>
 
-void PSMTXMultVec(const Mtx, const struct Vec *, struct Vec *);
+void PSMTXMultVec(const Mtx, const struct Vec*, struct Vec*);
 
 #ifdef __cplusplus
 }

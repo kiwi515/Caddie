@@ -1,79 +1,76 @@
 #ifndef CADDIE_UI_MENU_PAGE_H
 #define CADDIE_UI_MENU_PAGE_H
-#include "types_caddie.h"
-#include "caddiePane.h"
-#include "caddieMenuOption.h"
 #include "caddieAssert.h"
+#include "caddieMenuOption.h"
+#include "caddiePane.h"
+#include "types_caddie.h"
 
-namespace caddie
-{
-    /**
-     * @brief Page of menu options
-     */
-    class MenuPage : public Pane
-    {
-    public:
-        static u32 GetNodeOffset() { return offsetof(MenuPage, mNode); }
+namespace caddie {
 
-        MenuPage(const char* name, f32 x, f32 y, f32 leading = sDefaultLeading);
-        virtual ~MenuPage();
+/**
+ * @brief Page of menu options
+ */
+class MenuPage : public Pane {
+  public:
+    static u32 GetNodeOffset() { return offsetof(MenuPage, mNode); }
 
-        virtual void DrawSelf() const;
+    MenuPage(const char* name, f32 x, f32 y, f32 leading = sDefaultLeading);
+    virtual ~MenuPage();
 
-        void CalcWidth();
+    virtual void DrawSelf() const;
 
-        f32 GetWidth() const { return mWidth; }
-        void SetWidth(f32 w) { mWidth = w; }
+    void CalcWidth();
 
-        MenuPage* GetParentPage() const { return mParentPage; }
-        void SetParentPage(MenuPage* p) { mParentPage = p; }
+    f32 GetWidth() const { return mWidth; }
+    void SetWidth(f32 w) { mWidth = w; }
 
-        bool IsRootPage() const { return (GetParentPage() == NULL); }
+    MenuPage* GetParentPage() const { return mParentPage; }
+    void SetParentPage(MenuPage* p) { mParentPage = p; }
 
-        void AppendChildPage(MenuPage* p)
-        {
-            CADDIE_ASSERT(p != NULL);
-            mChildPages.Append(p);
-            p->SetParentPage(this);
-        }
+    bool IsRootPage() const { return (GetParentPage() == NULL); }
 
-        void AppendOption(IMenuOption* opt)
-        {
-            CADDIE_ASSERT(opt != NULL);
-            mOptions.Append(opt);
-            CalcWidth();
-        }
+    void AppendChildPage(MenuPage* p) {
+        CADDIE_ASSERT(p != NULL);
+        mChildPages.Append(p);
+        p->SetParentPage(this);
+    }
 
-        IMenuOption& GetOption(int i) const
-        {
-            CADDIE_ASSERT(i < GetNumOptions());
-            return *mOptions.At(i);
-        }
+    void AppendOption(IMenuOption* opt) {
+        CADDIE_ASSERT(opt != NULL);
+        mOptions.Append(opt);
+        CalcWidth();
+    }
 
-        u32 GetNumOptions() const { return mOptions.Size(); }
+    IMenuOption& GetOption(int i) const {
+        CADDIE_ASSERT(i < GetNumOptions());
+        return *mOptions.At(i);
+    }
 
-        void SaveChanges();
-        void DeleteChanges();
+    u32 GetNumOptions() const { return mOptions.Size(); }
 
-    public:
-        //! @brief Node for intrusive list
-        TLinkListNode mNode;
+    void SaveChanges();
+    void DeleteChanges();
 
-    private:
-        //! @brief Parent page
-        MenuPage* mParentPage;
-        //! @brief Child pages
-        TLinkList<MenuPage> mChildPages;
-        //! @brief Page options
-        TLinkList<IMenuOption> mOptions;
-        //! @brief Page leading
-        f32 mLeading;
-        //! @brief Page width
-        f32 mWidth;
+  public:
+    //! @brief Node for intrusive list
+    TLinkListNode mNode;
 
-        static const f32 sDefaultLeading;
-        static const f32 sCharWidth;
-    };
-}
+  private:
+    //! @brief Parent page
+    MenuPage* mParentPage;
+    //! @brief Child pages
+    TLinkList<MenuPage> mChildPages;
+    //! @brief Page options
+    TLinkList<IMenuOption> mOptions;
+    //! @brief Page leading
+    f32 mLeading;
+    //! @brief Page width
+    f32 mWidth;
+
+    static const f32 sDefaultLeading;
+    static const f32 sCharWidth;
+};
+
+} // namespace caddie
 
 #endif

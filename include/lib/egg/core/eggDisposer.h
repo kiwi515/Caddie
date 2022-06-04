@@ -2,18 +2,18 @@
 #define EGG_CORE_DISPOSER_H
 #include "types_egg.h"
 
-#include "ut_list.h"
+#include <nw4r/ut/ut_list.h>
 
-namespace EGG
-{
-    struct Disposer
-    {
-        Disposer();
-        virtual ~Disposer();
+namespace EGG {
 
-        Heap *mHeap;
-        nw4r::ut::Node mNode;
-    };
-}
+struct Disposer {
+    Disposer();
+    virtual ~Disposer();
+
+    Heap* mHeap;
+    nw4r::ut::Node mNode;
+};
+
+} // namespace EGG
 
 #endif

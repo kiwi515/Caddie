@@ -2,14 +2,6 @@
 #define SP2_TYPES_H
 #include <types.h>
 
-namespace Sp2
-{
-    class StaticMem;
-
-    namespace Glf
-    {
-        class GlfMain;
-    }
-}
+namespace Sp2 {} // namespace Sp2
 
 #endif

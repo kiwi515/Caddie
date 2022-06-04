@@ -5,8 +5,8 @@
 extern "C" {
 #endif
 
-void OSReport(const char *, ...);
-void OSPanic(const char *, int, const char *, ...);
+void OSReport(const char*, ...);
+void OSPanic(const char*, int, const char*, ...);
 
 #ifdef __cplusplus
 }

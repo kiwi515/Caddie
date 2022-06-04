@@ -4,7 +4,7 @@
 extern "C" {
 #endif
 
-void * __va_arg(va_list, int);
+void* __va_arg(va_list, int);
 
 #ifdef __cplusplus
 }

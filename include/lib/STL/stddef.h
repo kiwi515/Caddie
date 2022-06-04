@@ -7,6 +7,6 @@
 
 typedef unsigned long size_t;
 
-#define offsetof(ST,M) ((size_t)&(((ST*)0)->M))
+#define offsetof(ST, M) ((size_t) & (((ST*)0)->M))
 
 #endif

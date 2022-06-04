@@ -1,7 +1,6 @@
 #include "caddieAssert.h"
 
 #include <OS/OSFatal.h>
-
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
@@ -17,8 +16,7 @@ static const u32 sDebugFg = 0xFFFFFF00;
  * @param msg Expression/message
  * @param ... Extra args
  */
-void caddie_fail_assert(const char* file, int line, const char* msg, ...)
-{
+void caddie_fail_assert(const char* file, int line, const char* msg, ...) {
     CADDIE_LOG("------------- HALT -------------\n");
 
     // Format message
@@ -30,7 +28,8 @@ void caddie_fail_assert(const char* file, int line, const char* msg, ...)
 
     // Format full string
     char assert_buf[0x1000];
-    snprintf(assert_buf, sizeof(assert_buf), "Assertion Failed: %s\nFile: %s(%d)", msg_buf, file, line);
+    snprintf(assert_buf, sizeof(assert_buf),
+             "Assertion Failed: %s\nFile: %s(%d)", msg_buf, file, line);
 
     // Print to console
     CADDIE_LOG_EX("%s\n", assert_buf);
@@ -38,4 +37,5 @@ void caddie_fail_assert(const char* file, int line, const char* msg, ...)
 
     // Print to screen
     OSFatal(&sDebugFg, &sDebugBg, assert_buf);
-} kmBranch(0x80047150, caddie_fail_assert);
+}
+kmBranch(0x80047150, caddie_fail_assert);

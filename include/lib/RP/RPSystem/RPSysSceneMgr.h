@@ -1,24 +1,23 @@
 #ifndef RP_SYSTEM_SCENE_MGR_H
 #define RP_SYSTEM_SCENE_MGR_H
-#include "types_rp.h"
-#include "types_nw4r.h"
-
 #include "caddieAssert.h"
+#include "types_nw4r.h"
+#include "types_rp.h"
 
-#include "eggSceneManager.h"
+#include <egg/core/eggSceneManager.h>
 
-class RPSysSceneMgr : public EGG::SceneManager
-{
-public:
-    static RPSysSceneMgr& getInstance()
-    {
+class RPSysSceneMgr : public EGG::SceneManager {
+  public:
+    static RPSysSceneMgr& getInstance() {
         CADDIE_ASSERT(sInstance != NULL);
         return *sInstance;
     }
 
-private:
+  private:
     virtual ~RPSysSceneMgr();
-    static RPSysSceneMgr *sInstance;
+
+  private:
+    static RPSysSceneMgr* sInstance;
 };
 
 #endif

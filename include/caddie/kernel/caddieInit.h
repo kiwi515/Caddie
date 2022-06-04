@@ -2,23 +2,23 @@
 #define CADDIE_KERNEL_INIT_H
 #include "types_caddie.h"
 
-namespace caddie
-{
-    #ifdef __cplusplus
-    extern "C"
-    {
-    #endif
+namespace caddie {
 
-        typedef void(* StaticCtor)(void);
-        extern StaticCtor __ctor_loc;
-        extern StaticCtor __ctor_end;
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-        void CaddieMain();
-        void InitCpp();
+typedef void (*StaticCtor)(void);
+extern StaticCtor __ctor_loc;
+extern StaticCtor __ctor_end;
 
-    #ifdef __cplusplus
-    }
-    #endif
+void CaddieMain();
+void InitCpp();
+
+#ifdef __cplusplus
 }
+#endif
+
+} // namespace caddie
 
 #endif

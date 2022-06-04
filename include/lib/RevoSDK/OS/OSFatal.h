@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-void OSFatal(const u32 *fg, const u32 *bg, const char *message);
+void OSFatal(const u32* fg, const u32* bg, const char* message);
 
 #ifdef __cplusplus
 }

@@ -1,36 +1,37 @@
 #ifndef TYPES_CADDIE_H
 #define TYPES_CADDIE_H
-#include <types.h>
-
+#include "caddieAsm.h"
 #include "caddieAssert.h"
 #include "caddieDebug.h"
 #include "caddieMemMgr.h"
-#include "caddieAsm.h"
 
-namespace caddie
-{
-    // kernel
-    struct MemManager;
+#include <types.h>
 
-    // core
-    template <typename T> struct TLinkList;
-    struct TLinkListNode;
-    struct Timer;
-    struct IGTTimer;
-    struct RTATimer;
-    struct SceneHook;
+namespace caddie {
 
-    // ui
-    struct Pane;
-    struct TextBox;
-    struct IMenuOption;
-    struct MenuPage;
-    struct MenuBase;
-    struct MenuMgr;
+// kernel
+struct MemManager;
 
-    // scene/glf
-    struct GlfMenu;
-    struct GlfSceneHook;
-}
+// core
+template <typename T> struct TLinkList;
+struct TLinkListNode;
+struct Timer;
+struct IGTTimer;
+struct RTATimer;
+struct SceneHook;
+
+// ui
+struct Pane;
+struct TextBox;
+struct IMenuOption;
+struct MenuPage;
+struct MenuBase;
+struct MenuMgr;
+
+// scene/glf
+struct GlfMenu;
+struct GlfSceneHook;
+
+} // namespace caddie
 
 #endif

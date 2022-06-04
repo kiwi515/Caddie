@@ -7,8 +7,7 @@ extern "C" {
 
 u32 SCGetLanguage();
 
-typedef enum
-{
+typedef enum {
     SC_JAPANESE = 0,
     SC_ENGLISH = 1,
     SC_GERMAN = 2,

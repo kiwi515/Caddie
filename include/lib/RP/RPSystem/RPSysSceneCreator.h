@@ -1,15 +1,13 @@
 #ifndef RP_SYSTEM_SCENE_CREATOR_H
 #define RP_SYSTEM_SCENE_CREATOR_H
-#include "types_rp.h"
 #include "types_nw4r.h"
+#include "types_rp.h"
 
-class RPSysSceneCreator
-{
-public:
+class RPSysSceneCreator {
+  public:
     //! @brief RP Scene ID
     //! @wfuname
-    enum ESceneID
-    {
+    enum ESceneID {
         SCENE_STRAP,
         SCENE_SAVE_DATA_LOAD,
         SCENE_TITLE,
@@ -44,17 +42,16 @@ public:
         SCENE_MAX
     };
 
-public:
-    static RPSysSceneCreator& getInstance()
-    {
+  public:
+    static RPSysSceneCreator& getInstance() {
         CADDIE_ASSERT(sInstance != NULL);
         return *sInstance;
     }
 
     void changeSceneAfterFade(int id, nw4r::ut::Color fadeColor);
 
-private:
-    static RPSysSceneCreator *sInstance;
+  private:
+    static RPSysSceneCreator* sInstance;
 };
 
 #endif

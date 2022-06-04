@@ -1,26 +1,23 @@
-#include "caddieSceneHookMgr.h"
 #include "caddieGlfSceneHook.h"
+#include "caddieSceneHookMgr.h"
 
-namespace caddie
-{
-    /**
-     * @brief Mod entrypoint
-     */
-    void main()
-    {
-        SceneHookMgr& hookMgr = SceneHookMgr::GetInstance();
+namespace caddie {
 
-        // Set up Golf scene hook
-        hookMgr.SetHook(RPSysSceneCreator::SCENE_GLF, (SceneHook){
-                GlfSceneHook::OnConfigure,
-                GlfSceneHook::OnCalculate,
-                GlfSceneHook::OnUserDraw,
-                GlfSceneHook::OnExit
-            }
-        );
+/**
+ * @brief Mod entrypoint
+ */
+void main() {
+    SceneHookMgr& hookMgr = SceneHookMgr::GetInstance();
 
-        // Disable pausing in the Golf scene
-        hookMgr.AllowPause(RPSysSceneCreator::SCENE_GLF, false);
-    }
-    kmBranch(0x80230fc4, main);
+    // Set up Golf scene hook
+    hookMgr.SetHook(
+        RPSysSceneCreator::SCENE_GLF,
+        (SceneHook){GlfSceneHook::OnConfigure, GlfSceneHook::OnCalculate,
+                    GlfSceneHook::OnUserDraw, GlfSceneHook::OnExit});
+
+    // Disable pausing in the Golf scene
+    hookMgr.AllowPause(RPSysSceneCreator::SCENE_GLF, false);
 }
+kmBranch(0x80230fc4, main);
+
+} // namespace caddie
