@@ -57,10 +57,8 @@ namespace caddie
      */
     void GlfSceneHook::OnExit(RPSysScene* scene)
     {
-        CADDIE_ASSERT(sGlfMenu != NULL);
-
         // Do not delete menu if settings are waiting to be applied
-        if (sGlfMenu->CanDelete()) {
+        if (GetMenu().CanDelete()) {
             delete sGlfMenu;
             sGlfMenu = NULL;
         }
@@ -75,23 +73,19 @@ namespace caddie
      */
     void GlfSceneHook::Apply_Hole()
     {
-        CADDIE_ASSERT(sGlfMenu != NULL);
-
         // Update hole
         Sp2::StaticMem::getInstance().setStaticVar(
-            Sp2::Glf::VAR_NEXTHOLE, sGlfMenu->GetHoleInternal(), false);
+            Sp2::Glf::VAR_NEXTHOLE, GetMenu().GetHoleInternal(), false);
     }
 
     /**
      * @brief Allow hole to be repeated if option is set
      */
     void GlfSceneHook::Apply_RepeatHole()
-    {
-        CADDIE_ASSERT(sGlfMenu != NULL);
-        
+    {      
         Sp2::StaticMem& mem = Sp2::StaticMem::getInstance();
 
-        if (sGlfMenu->GetRepeatHole()) {
+        if (GetMenu().GetRepeatHole()) {
             const int nextHole = mem.getStaticVar(Sp2::Glf::VAR_NEXTHOLE, false);
             mem.setStaticVar(Sp2::Glf::VAR_NEXTHOLE, nextHole - 1, false);
         }        
@@ -102,21 +96,19 @@ namespace caddie
      */
     void GlfSceneHook::Apply_Pin()
     {
-        CADDIE_ASSERT(sGlfMenu != NULL);
-
         Sp2::Glf::GlfMain& main = Sp2::Glf::GlfMain::getInstance();
 
         // Next pin type
-        int pin = sGlfMenu->GetPinType();
+        int pin = GetMenu().GetPinType();
 
         // Next hole to be played determines how to interpret pin value
         int nextHole = 0;
-        if (sGlfMenu->GetRepeatHole()) {
+        if (GetMenu().GetRepeatHole()) {
             // Value is internal hole num (zero indexed)
             nextHole = main.getCurrentHole() + 1;
         }
         else {
-            nextHole = sGlfMenu->GetHole();
+            nextHole = GetMenu().GetHole();
         }
 
         // Adjust pin value
@@ -184,10 +176,8 @@ namespace caddie
      */
     void GlfSceneHook::Apply_Wind()
     {
-        CADDIE_ASSERT(sGlfMenu != NULL);
-
-        int spd = sGlfMenu->GetWindSpd();
-        int dir = sGlfMenu->GetWindDir();
+        int spd = GetMenu().GetWindSpd();
+        int dir = GetMenu().GetWindDir();
 
         // Random wind speed
         if (spd == WIND_SPD_RANDOM) {
@@ -195,7 +185,7 @@ namespace caddie
             int min = 0;
             int max = Sp2::Glf::WIND_MAX;
 
-            switch(sGlfMenu->GetWindSpdRange())
+            switch(GetMenu().GetWindSpdRange())
             {
                 // 0-10 m/s (0-20 mph)
                 case RANGE_0_10:
@@ -230,7 +220,7 @@ namespace caddie
         }
 
         Sp2::StaticMem::getInstance().setStaticVar(
-            Sp2::Glf::VAR_WIND + sGlfMenu->GetHoleInternal(),
+            Sp2::Glf::VAR_WIND + GetMenu().GetHoleInternal(),
             Sp2::Glf::PackWind(dir, spd), false);
     }
 
@@ -239,14 +229,12 @@ namespace caddie
      */
     void GlfSceneHook::Apply_StaticMem()
     {
-        CADDIE_ASSERT(sGlfMenu != NULL);
-
         Apply_Wind();
 
         // Hole option should not automatically be applied
-        if (sGlfMenu->IsAwaitingApply()) {
+        if (GetMenu().IsAwaitingApply()) {
             Apply_Hole();
-            sGlfMenu->SetAwaitingApply(false);
+            GetMenu().SetAwaitingApply(false);
         }
     }
 
@@ -265,8 +253,7 @@ namespace caddie
      */
     bool GlfSceneHook::CanPlayNextHole()
     {
-        CADDIE_ASSERT(sGlfMenu != NULL);
-        return sGlfMenu->GetRepeatHole() ? true : !GlfUtil::IsNextRoundOver();
+        return GetMenu().GetRepeatHole() ? true : !GlfUtil::IsNextRoundOver();
     } kmBranch(0x80406554, GlfSceneHook::CanPlayNextHole);
 
     /**
