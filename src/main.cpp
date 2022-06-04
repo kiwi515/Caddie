@@ -1,23 +1,25 @@
 #include "caddieGlfSceneHook.h"
 #include "caddieSceneHookMgr.h"
 
+#include <RP/RPSystem/RPSysProjectLocal.h>
+
 namespace caddie {
 
 /**
  * @brief Mod entrypoint
  */
 void main() {
-    SceneHookMgr& hookMgr = SceneHookMgr::GetInstance();
+    // Skip MotionPlus video
+    RPSysProjectLocal::getInstance().setMPlusVideoSeen(true);
 
     // Set up Golf scene hook
-    hookMgr.SetHook(
+    SceneHookMgr::GetInstance().SetHook(
         RPSysSceneCreator::SCENE_GLF,
         (SceneHook){GlfSceneHook::OnConfigure, GlfSceneHook::OnCalculate,
                     GlfSceneHook::OnUserDraw, GlfSceneHook::OnExit});
-
     // Disable pausing in the Golf scene
-    hookMgr.AllowPause(RPSysSceneCreator::SCENE_GLF, false);
+    SceneHookMgr::GetInstance().AllowPause(RPSysSceneCreator::SCENE_GLF, false);
 }
-kmBranch(0x80230fc4, main);
+kmBranch(0x80230b60, main);
 
 } // namespace caddie

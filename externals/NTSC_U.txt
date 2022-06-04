@@ -71,6 +71,9 @@ sInstance__17RPSysSceneCreator=0x806f4c88
 sInstance__13RPSysPauseMgr=0x806f4cd0
 update__13RPSysPauseMgrFv=0x802352d4
 
+# RP/RPSystem/RPSysProjectLocal
+sInstance__17RPSysProjectLocal=0x806f4ca0
+
 # Sports2/Sp2StaticMem
 getStaticVar__Q23Sp29StaticMemFib=0x80269f4c
 setStaticVar__Q23Sp29StaticMemFiib=0x80269f08
