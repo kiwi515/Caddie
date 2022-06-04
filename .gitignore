@@ -2,10 +2,12 @@
 build/
 modules/
 baserom/
-tools/*
+tools/
 romfs/
 riivo/caddie/
+riivo/apps/
 distro/
 
 *.dol
 *.bin
+*.o

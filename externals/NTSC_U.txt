@@ -11,10 +11,14 @@ OSReport=0x80061470
 # STL/cstdio
 vprintf=0x8000ceec
 vsprintf=0x8000cff0
+vsnprintf=0x8000cf68
 sprintf=0x8000d168
+snprintf=0x8000d074
 
 # STL/string
 strcmp=0x8000e8b0
+strlen=0x800071c0
+strncpy=0x8000e7f4
 
 # TRK/runtime
 _savefpr_25=0x800077b8
@@ -25,6 +29,14 @@ _savefpr_28=0x800077c4
 _restfpr_28=0x80007810
 _savefpr_29=0x800077c8
 _restfpr_29=0x80007814
+
+_savegpr_27=0x80007858
+_restgpr_27=0x800078a4
+_savegpr_28=0x8000785c
+_restgpr_28=0x800078a8
+_savegpr_29=0x80007860
+_restgpr_29=0x800078ac
+
 __register_global_object=0x800072a4
 __destroy_arr=0x800075bc
 
@@ -48,12 +60,19 @@ sInstance__Q23EGG17CoreControllerMgr=0x806f4a08
 sInstance__13RPSysSceneMgr=0x806f4c98
 
 # RP/RPSystem/RPSysSysMsgWinMgr
-CheckInput__17RPSysSysMsgWinMgrFv=0x802352d4
+update__17RPSysSysMsgWinMgrFv=0x802352d4
 sInstance__17RPSysSysMsgWinMgr=0x806f4ce0
 
 # RP/RPSystem/RPSysSceneCreator
-changeSceneAfterFade__17RPSysSceneCreatorFiPQ34nw4r2ut5Color=0x8022edfc
+changeSceneAfterFade__17RPSysSceneCreatorFiQ34nw4r2ut5Color=0x8022edfc
 sInstance__17RPSysSceneCreator=0x806f4c88
+
+# RP/RPSystem/RPSysPauseMgr
+sInstance__13RPSysPauseMgr=0x806f4cd0
+update__13RPSysPauseMgrFv=0x802352d4
+
+# RP/RPSystem/RPSysProjectLocal
+sInstance__17RPSysProjectLocal=0x806f4ca0
 
 # Sports2/Sp2StaticMem
 getStaticVar__Q23Sp29StaticMemFib=0x80269f4c
@@ -69,10 +88,6 @@ __dt__Q33Sp23Glf7GlfMainFv=0x80406c10
 # Sports2/Sp2Util
 Rand__3Sp2Fv=0x8025c9b0
 Print__3Sp2FPCcUlbfff=0x80373098
-
-# Sports2/Obj806f4cd0
-sInstance__Q26caddie11Obj806f4cd0=0x806f4cd0
-func_802352d4__Q26caddie11Obj806f4cd0Fv=0x802352d4
 
 # Sports2/Glf/Sp2GlfBall
 Stop__Q33Sp23Glf7GlfBallFb=0x80413b04
