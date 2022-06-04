@@ -99,9 +99,7 @@ void GlfMenu::Action_QuitGame(void* menu) {
         RPSysSceneCreator::SCENE_TITLE, ut::Color(0, 0, 0, 255));
 }
 
-//! @brief Menu X screen position
 const f32 GlfMenu::sMenuPosX = 100.0f;
-//! @brief Menu Y screen position
 const f32 GlfMenu::sMenuPosY = 200.0f;
 
 } // namespace caddie

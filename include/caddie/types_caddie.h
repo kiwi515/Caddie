@@ -15,18 +15,26 @@ struct MemManager;
 template <typename T> struct TLinkList;
 struct TLinkListNode;
 struct SceneHook;
+struct SceneHookMgr;
+template <typename T> struct TStack;
 
 // ui
-struct Pane;
-struct TextBox;
-struct IMenuOption;
-struct MenuPage;
 struct MenuBase;
 struct MenuMgr;
+struct IMenuOption;
+struct MenuIntOption;
+struct MenuBoolOption;
+struct MenuEnumOption;
+struct MenuActionOption;
+struct MenuPage;
+struct BuildInfo;
+struct Pane;
+struct TextBox;
 
 // scene/glf
 struct GlfMenu;
 struct GlfSceneHook;
+struct GlfUtil;
 
 } // namespace caddie
 

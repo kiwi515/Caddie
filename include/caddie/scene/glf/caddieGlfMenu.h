@@ -40,7 +40,9 @@ class GlfMenu : public MenuBase {
     MenuActionOption mApplyRestart;
     MenuActionOption mQuitGame;
 
+    //! @brief Menu X screen position
     static const f32 sMenuPosX;
+    //! @brief Menu Y screen position
     static const f32 sMenuPosY;
 };
 

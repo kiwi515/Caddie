@@ -51,7 +51,7 @@ class MenuPage : public Pane {
     void SaveChanges();
     void DeleteChanges();
 
-  public:
+  private:
     //! @brief Node for intrusive list
     TLinkListNode mNode;
 

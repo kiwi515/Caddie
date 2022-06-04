@@ -13,7 +13,9 @@ class BuildInfo : public TextBox {
     virtual ~BuildInfo() {}
 
   private:
+    //! @brief Build info text position
     static const nw4r::math::VEC2 sBuildTextPos;
+    //! @brief Build info text color
     static const nw4r::ut::Color sBuildTextColor;
 };
 

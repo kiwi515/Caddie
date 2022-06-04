@@ -6,6 +6,12 @@
 
 namespace caddie {
 
+/**
+ * @brief Generic stack
+ * @tparam T Iterable type
+ * @note Uses TLinkList under the hood, so the generic type still requires a
+ * TLinkListNode and GetNodeOffset()
+ */
 template <typename T> class TStack {
   public:
     TStack() {}

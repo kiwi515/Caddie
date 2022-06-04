@@ -37,7 +37,7 @@ class Pane {
     const char* GetName() const { return mName; }
     void SetName(const char* str);
 
-  public:
+  private:
     //! @brief Node for intrusive list
     TLinkListNode mNode;
 

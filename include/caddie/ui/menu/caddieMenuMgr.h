@@ -2,7 +2,6 @@
 #define CADDIE_UI_MENU_MGR_H
 #include "caddieMenuBase.h"
 #include "caddieMenuPage.h"
-#include "caddieStack.h"
 #include "types_caddie.h"
 
 namespace caddie {

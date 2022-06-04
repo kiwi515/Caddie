@@ -9,8 +9,16 @@
 
 namespace caddie {
 
+/**
+ * @brief Scene callback function pointer
+ * @details Function receives pointer to current scene
+ */
 typedef void (*SceneCallback)(RPSysScene*);
 
+/**
+ * @brief Scene hook structure
+ * @details Contains all callbacks for a scene
+ */
 struct SceneHook {
     SceneCallback onConfigure;
     SceneCallback onCalculate;
@@ -18,6 +26,10 @@ struct SceneHook {
     SceneCallback onExit;
 };
 
+/**
+ * @brief Scene hook manager
+ * @details Controls scene hooks and pause permission
+ */
 class SceneHookMgr {
   public:
     static SceneHookMgr& GetInstance() {
@@ -49,7 +61,9 @@ class SceneHookMgr {
     virtual ~SceneHookMgr() {}
 
   private:
+    //! @brief Scene hooks for every scene
     SceneHook mSceneHooks[RPSysSceneCreator::SCENE_MAX];
+    //! @brief Pause permission for every scene
     bool mPauseSetting[RPSysSceneCreator::SCENE_MAX];
 };
 

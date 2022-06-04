@@ -79,7 +79,7 @@ class IMenuOption : public Pane {
         UpdateString();
     }
 
-  public:
+  private:
     //! @brief Node for intrusive list
     TLinkListNode mNode;
 

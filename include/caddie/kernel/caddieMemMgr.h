@@ -6,6 +6,10 @@
 
 namespace caddie {
 
+/**
+ * @brief Caddie memory manager
+ * @details Manages child of main game heap
+ */
 class MemManager {
   public:
     static void Initialize();
@@ -29,7 +33,9 @@ class MemManager {
     MemManager() {}
     ~MemManager() {}
 
+    //! @brief Caddie main heap
     static EGG::ExpHeap* sHeap;
+    //! @brief Caddie main heap size (configurable)
     static u32 sHeapSize;
 };
 

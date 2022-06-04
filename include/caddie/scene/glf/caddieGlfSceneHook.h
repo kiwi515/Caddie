@@ -28,6 +28,7 @@ class GlfSceneHook {
     static GlfMenu& GetMenu();
 
   private:
+    //! @brief Golf menu
     static GlfMenu* sGlfMenu;
 };
 

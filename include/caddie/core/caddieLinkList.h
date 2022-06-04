@@ -4,6 +4,10 @@
 
 namespace caddie {
 
+/**
+ * @brief Node for intrusive linked-list
+ * @note Required for objects used in a list
+ */
 struct TLinkListNode {
     TLinkListNode() : mNext(NULL), mPrev(NULL) {}
     ~TLinkListNode() {}
@@ -12,6 +16,11 @@ struct TLinkListNode {
     TLinkListNode* mPrev;
 };
 
+/**
+ * @brief Intrusive, generic linked list
+ * @tparam T Iterable type (must contain a member TLinkListNode,
+ * and GetNodeOffset())
+ */
 template <typename T> class TLinkList {
   public:
     static inline TLinkListNode* GetNodeFromElem(T* elem) {
@@ -21,6 +30,9 @@ template <typename T> class TLinkList {
         return (T*)((char*)node - T::GetNodeOffset());
     }
 
+    /**
+     * @brief Linked-list iterator
+     */
     struct Iterator {
         Iterator(TLinkListNode* node) : mNode(node) {}
         ~Iterator() {}

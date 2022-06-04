@@ -4,11 +4,17 @@
 
 namespace caddie {
 
-template <typename T> inline const T Max(const T& a, const T& b) {
+/**
+ * @brief Get maximum of two values
+ */
+template <typename T> static inline const T& Max(const T& a, const T& b) {
     return (a < b) ? b : a;
 }
 
-template <typename T> inline const T Min(const T& a, const T& b) {
+/**
+ * @brief Get minimum of two values
+ */
+template <typename T> static inline const T& Min(const T& a, const T& b) {
     return (b < a) ? b : a;
 }
 
