@@ -108,7 +108,7 @@ namespace caddie
         // Toggle visibility
         if (mBtnTrig & BTN_PLUS) {
             SetVisible(!mIsVisible);
-            
+
             // Delete changes on menu close
             if (!IsVisible()) {
                 mOpenPage->DeleteChanges();

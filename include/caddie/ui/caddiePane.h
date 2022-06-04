@@ -20,7 +20,7 @@ namespace caddie
         virtual ~Pane();
         virtual void Draw() const;
         virtual void DrawSelf() const = 0;
-        
+
         void AppendChild(Pane* child);
         void RemoveChild(const Pane* child);
         Pane* FindChild(const char* name) const;

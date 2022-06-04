@@ -28,7 +28,7 @@ namespace caddie
             AppendChild(&mNameText);
             AppendChild(&mValueText);
         }
-        
+
         virtual ~IMenuOption()
         {
         }
@@ -151,7 +151,7 @@ namespace caddie
             if (!mIsEnabled) {
                 return;
             }
-            
+
             int next = mValue - 1;
             if (next < mMin) {
                 next = mMax;
@@ -223,7 +223,7 @@ namespace caddie
                 mValueText.SetText("DISABLED");
             }
         }
-        
+
         virtual void OnClick()
         {
         }
@@ -353,7 +353,7 @@ namespace caddie
         virtual void DeleteChanges()
         {
         }
-        
+
         virtual void OnClick()
         {
             if (mAction != NULL) {

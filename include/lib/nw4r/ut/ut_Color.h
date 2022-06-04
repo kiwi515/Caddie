@@ -9,28 +9,28 @@ namespace nw4r
 		struct Color
 		{
 			u8 r, g, b, a;
-			
+
 			inline u32 & ToU32ref()
 			{
 				return *reinterpret_cast<u32 *>(this);
 			}
-			
+
 			inline const u32 & ToU32ref() const
 			{
 				return *reinterpret_cast<const u32 *>(this);
 			}
-			
+
 			inline Color & operator=(u32 value)
 			{
 				ToU32ref() = value;
 				return *this;
 			}
-			
+
 			inline Color()
 			{
 				*this = 0xFFFFFFFF;
 			}
-			
+
 			inline Color(const Color & other)
 			{
 				r = other.r;
@@ -43,7 +43,7 @@ namespace nw4r
 			{
 				*this = rgba;
 			}
-			
+
 			inline Color(int red, int green, int blue, int alpha)
 			{
 				r = red;
@@ -51,12 +51,12 @@ namespace nw4r
 				b = blue;
 				a = alpha;
 			}
-			
+
 			inline operator u32() const
 			{
 				return ToU32ref();
 			}
-			
+
 			inline ~Color() {}
 		};
 	}

@@ -1,0 +1,8 @@
+﻿---
+BasedOnStyle: LLVM
+Language: Cpp
+SortIncludes: 'true'
+SortUsingDeclarations: 'true'
+UseTab: Never
+
+...

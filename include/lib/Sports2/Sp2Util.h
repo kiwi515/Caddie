@@ -22,7 +22,7 @@ namespace Sp2
 
     static inline void PrintOutline(const char *msg, u32 textColor, u32 outlineColor, bool center, f32 x, f32 y, f32 scale = 1.0f)
     {
-        // Outline 
+        // Outline
         Print(msg, outlineColor, center, x - 2.0f, y + 0.0f, scale);
         Print(msg, outlineColor, center, x + 2.0f, y + 0.0f, scale);
         Print(msg, outlineColor, center, x + 0.0f, y - 2.0f, scale);

@@ -45,7 +45,7 @@ const loaderFunctionsEx cFunctionsNTSC_U =
     (sprintf_t)0x8000d168,
     allocAdapter,
     freeAdapter},
-    
+
     (eggAlloc_t)0x801c1654,
     (eggFree_t)0x801c19c4,
     (vprintf_t)0x8000ceec,
@@ -64,7 +64,7 @@ const loaderFunctionsEx cFunctionsPAL =
     (sprintf_t)0x8000d168,
     allocAdapter,
     freeAdapter},
-    
+
     (eggAlloc_t)0x801c1654,
     (eggFree_t)0x801c19c4,
     (vprintf_t)0x8000ceec,

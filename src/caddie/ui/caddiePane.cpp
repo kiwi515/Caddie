@@ -16,7 +16,7 @@ namespace caddie
         // TLinkList<Pane>::Iterator it = mChildren.Begin();
         // for (; it != mChildren.End(); it++) {
         //     TLinkList<Pane>::Iterator next = it++;
-        //     mChildren.Remove(next);            
+        //     mChildren.Remove(next);
         //     delete &*next;
         // }
     }
@@ -27,7 +27,7 @@ namespace caddie
     void Pane::Draw() const
     {
         DrawSelf();
-        
+
         TLinkList<Pane>::Iterator it = mChildren.Begin();
         for (; it != mChildren.End(); it++) {
             it->Draw();
@@ -36,7 +36,7 @@ namespace caddie
 
     /**
      * @brief Append child pane
-     * 
+     *
      * @param child Child pane
      */
     void Pane::AppendChild(Pane* child)
@@ -49,7 +49,7 @@ namespace caddie
 
     /**
      * @brief Remove child pane
-     * 
+     *
      * @param child Child pane
      */
     void Pane::RemoveChild(const Pane* child)
@@ -68,7 +68,7 @@ namespace caddie
 
     /**
      * @brief Find child pane by name
-     * 
+     *
      * @param name Target pane name
      * @return Pane* Child pane
      */
@@ -88,7 +88,7 @@ namespace caddie
 
     /**
      * @brief Set pane name
-     * 
+     *
      * @param name New name
      */
     void Pane::SetName(const char* name)

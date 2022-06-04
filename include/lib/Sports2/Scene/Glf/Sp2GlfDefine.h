@@ -57,7 +57,7 @@ namespace Sp2
         {
             VAR_GAMEMODE,
             VAR_NEXTHOLE,
-            
+
             VAR_BLINDFLAG = 3,
 
             VAR_WIND = 7,
@@ -65,7 +65,7 @@ namespace Sp2
 
         static inline u8 PackWind(u8 direction, u8 speed)
         {
-            return (speed << 3) | direction; 
+            return (speed << 3) | direction;
         }
     }
 }

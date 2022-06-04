@@ -57,7 +57,7 @@ namespace caddie
         SP_PIN_MAX
     };
     extern const char* ENUM_PIN_TYPE_SPECIAL[SP_PIN_MAX];
-    
+
     enum EWindDir
     {
         DIR_S,

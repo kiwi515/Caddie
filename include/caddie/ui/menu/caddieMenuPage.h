@@ -65,7 +65,7 @@ namespace caddie
         //! @brief Child pages
         TLinkList<MenuPage> mChildPages;
         //! @brief Page options
-        TLinkList<IMenuOption> mOptions;        
+        TLinkList<IMenuOption> mOptions;
         //! @brief Page leading
         f32 mLeading;
         //! @brief Page width

@@ -8,7 +8,7 @@ namespace EGG
 	{
 	public:
 		Scene();
-		
+
 		virtual ~Scene();
 		inline virtual void calc() {}
 		inline virtual void draw() {}
@@ -17,7 +17,7 @@ namespace EGG
 		inline virtual void reinit() {}
 		inline virtual void incoming_childDestroy() {}
 		inline virtual void outgoing_childCreate() {}
-		
+
 		inline Heap * getHeap() const { return mHeap; }
 		inline Heap * getHeap_Mem1() const { return mHeap_Mem1; }
 		inline Heap * getHeap_Mem2() const { return mHeap_Mem2; }
@@ -25,7 +25,7 @@ namespace EGG
 		inline Scene * getParentScene() const { return mParentScene; }
 		inline Scene * getChildScene() const { return mChildScene; }
 		inline s32 getSceneID() const { return mSceneID; }
-		
+
 	private:
 		Heap * mHeap; // at 0x4
 		Heap * mHeap_Mem1; // at 0x8

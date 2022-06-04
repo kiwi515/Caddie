@@ -1,6 +1,6 @@
 /********************************************************************************
 
-         Kamek loader (custom code "entrypoint") integrated with Resort           
+         Kamek loader (custom code "entrypoint") integrated with Resort
 
 ********************************************************************************/
 #include <loader/kamekLoader.h>
@@ -24,7 +24,7 @@ void * allocAdapter(u32 size, bool isForCode, const loaderFunctions *funcs)
 void freeAdapter(void *memBlock, bool isForCode, const loaderFunctions *funcs)
 {
     const loaderFunctionsEx *funcsEx = (const loaderFunctionsEx *)funcs;
-    
+
     // Non-code is allocated in MEM2
     void *pHeap = (isForCode) ? *funcsEx->rootHeapMEM1 : *funcsEx->rootHeapMEM2;
     funcsEx->eggFree(memBlock, pHeap);

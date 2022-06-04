@@ -13,8 +13,8 @@ namespace caddie
 {
     /**
      * @brief Golf scene configure (enter) callback
-     * 
-     * @param scene Current scene 
+     *
+     * @param scene Current scene
      */
     void GlfSceneHook::OnConfigure(RPSysScene* scene)
     {
@@ -32,8 +32,8 @@ namespace caddie
 
     /**
      * @brief Golf scene calculate callback
-     * 
-     * @param scene Current scene 
+     *
+     * @param scene Current scene
      */
     void GlfSceneHook::OnCalculate(RPSysScene* scene)
     {
@@ -42,8 +42,8 @@ namespace caddie
 
     /**
      * @brief Golf scene user draw callback
-     * 
-     * @param scene Current scene 
+     *
+     * @param scene Current scene
      */
     void GlfSceneHook::OnUserDraw(RPSysScene* scene)
     {
@@ -52,8 +52,8 @@ namespace caddie
 
     /**
      * @brief Golf scene exit callback
-     * 
-     * @param scene Current scene 
+     *
+     * @param scene Current scene
      */
     void GlfSceneHook::OnExit(RPSysScene* scene)
     {
@@ -63,7 +63,7 @@ namespace caddie
             sGlfMenu = NULL;
         }
         // Apply static mem settings
-        else {  
+        else {
             Apply_StaticMem();
         }
     }
@@ -82,13 +82,13 @@ namespace caddie
      * @brief Allow hole to be repeated if option is set
      */
     void GlfSceneHook::Apply_RepeatHole()
-    {      
+    {
         Sp2::StaticMem& mem = Sp2::StaticMem::getInstance();
 
         if (GetMenu().GetRepeatHole()) {
             const int nextHole = mem.getStaticVar(Sp2::Glf::VAR_NEXTHOLE, false);
             mem.setStaticVar(Sp2::Glf::VAR_NEXTHOLE, nextHole - 1, false);
-        }        
+        }
     }
 
     /**

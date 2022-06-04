@@ -18,53 +18,53 @@ namespace EGG
 			AFTER_FADE_TYPE_DESTROY_TO_SELECT,
 			AFTER_FADE_TYPE_NULL = -1
 		};
-		
+
 		virtual void calc();
 		virtual void draw();
-		
+
 		virtual void calcCurrentScene();
 		virtual void calcCurrentFader();
-		
+
 		virtual void drawCurrentScene();
 		virtual void drawCurrentFader();
-		
+
 		virtual void createDefaultFader();
-		
+
 		SceneManager(SceneCreator *);
 		~SceneManager();
-		
+
 		UNKTYPE fadeIn();
 		bool fadeOut(); //inlined
-		
+
 		void reinitCurrentScene(); //inlined
 		bool reinitCurrentSceneAfterFadeOut();
-		
+
 		void changeScene(s32);
 		bool changeSceneAfterFadeOut(s32);
-		
+
 		void changeSiblingScene(s32); //inlined
 		bool changeSiblingSceneAfterFadeOut(s32);
-		
+
 		void createScene(s32, Scene *);
 		void createChildScene(s32, Scene *);
 		bool createChildSceneAfterFadeOut(s32, Scene *);
-		
+
 		void destroyToSelectSceneID(s32); //inlined
 		bool destroyToSelectSceneIDAfterFadeOut(s32);
-		
+
 		UNKTYPE destroyScene(Scene *);
-		
+
 		void incomingCurrentScene(); //inlined
-		
+
 		void setupNextSceneID(); //inlined
-		
+
 		void outgoingParentScene(Scene *); //inlined
-		
+
 		Scene * findParentScene(s32);
-		
+
 		inline s32 getCurrentSceneID() const { return mCurrentSceneID; }
 		inline Scene * getCurrentScene() const { return mCurrentScene; }
-		
+
 		static inline Heap * getHeapForCreateScene_Mem1() { return sHeapMem1_ForCreateScene; }
 		static inline Heap * getHeapForCreateScene_Mem2() { return sHeapMem2_ForCreateScene; }
 		static inline Heap * getHeapForCreateScene_Debug() { return sHeapDebug_ForCreateScene; }
@@ -79,9 +79,9 @@ namespace EGG
 		eAfterFadeType mAfterFadeType; // at 0x20
 		Fader * mCurrentFader; // at 0x24
 		UNKWORD INT_0x28; // at 0x28
-		
+
 		static u16 sHeapOptionFlg;
-		
+
 		static Heap * sHeapMem1_ForCreateScene;
 		static Heap * sHeapMem2_ForCreateScene;
 		static Heap * sHeapDebug_ForCreateScene;

@@ -45,7 +45,7 @@ namespace caddie
             {
                 Iterator curr = Iterator(mNode);
                 mNode = mNode->mPrev;
-                return curr;                
+                return curr;
             }
 
             T* operator->() const { return GetElemFromNode(mNode); }
@@ -93,7 +93,7 @@ namespace caddie
             while (n-- > 0) it++;
             return &*it;
         }
-        
+
         void Prepend(T* obj)
         {
             CADDIE_ASSERT(obj != NULL);
@@ -132,7 +132,7 @@ namespace caddie
             }
 
             mSize++;
-        }     
+        }
 
         void Insert(Iterator it, T* obj)
         {
@@ -195,7 +195,7 @@ namespace caddie
         void Insert(Iterator it, TLinkListNode* node)
         {
             CADDIE_ASSERT(node != NULL);
-            
+
             TLinkListNode* after = it.mNode;
             TLinkListNode* before = after->mPrev;
             CADDIE_ASSERT_EX(before != NULL, "List is broken!");

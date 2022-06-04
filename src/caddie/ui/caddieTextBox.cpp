@@ -49,7 +49,7 @@ namespace caddie
 
     /**
      * @brief Set textbox text
-     * 
+     *
      * @param str New text
      */
     void TextBox::SetText(const char* str)
@@ -83,7 +83,7 @@ namespace caddie
 
     /**
      * @brief Set textbox text with format string
-     * 
+     *
      * @param str Format string
      * @param ... Extra args
      */

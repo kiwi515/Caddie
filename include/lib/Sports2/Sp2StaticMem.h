@@ -10,7 +10,7 @@ namespace Sp2
     {
     public:
         static StaticMem& getInstance()
-        { 
+        {
             CADDIE_ASSERT(sInstance != NULL);
             return *sInstance;
         }

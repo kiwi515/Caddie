@@ -133,7 +133,7 @@ void loadKamekBinary(const loaderFunctions *funcs, const void *binary, u32 binar
         funcs->sprintf(err, "FATAL ERROR: Incompatible file (version %d), please upgrade your Kamek Loader", header->version);
         kamekError(funcs, err);
     }
-    
+
     funcs->OSReport("header: bssSize=%u, codeSize=%u\n", header->bssSize, header->codeSize);
 
     u32 textSize = header->codeSize + header->bssSize;
@@ -144,13 +144,13 @@ void loadKamekBinary(const loaderFunctions *funcs, const void *binary, u32 binar
     const u8 *input = ((const u8 *)binary) + sizeof(KBHeader);
     const u8 *inputEnd = ((const u8 *)binary) + binaryLength;
     u8 *output = (u8 *)text;
-    
+
     // Create text + bss sections
     for (u32 i = 0; i < header->codeSize; i++)
         *(output++) = *(input++);
     for (u32 i = 0; i < header->bssSize; i++)
         *(output++) = 0;
-    
+
     while (input < inputEnd) {
         u32 cmdHeader = *((u32 *)input);
         input += 4;
@@ -184,7 +184,7 @@ void loadKamekBinary(const loaderFunctions *funcs, const void *binary, u32 binar
             default:
                 funcs->OSReport("Unknown command: %d\n", cmd);
         }
-        
+
         register u32 cacheAddr = address;
         asm {
             dcbst r0, cacheAddr
@@ -211,19 +211,19 @@ void loadKamekBinaryFromDisc(const loaderFunctions *funcs, const char *path)
     DVDHandle handle;
     if (!funcs->DVDFastOpen(entrynum, &handle))
         kamekError(funcs, "FATAL ERROR: Failed to open file!");
-    
+
     funcs->OSReport("DVD file located: addr=%p, size=%d\n", handle.address, handle.length);
 
     u32 length = handle.length, roundedLength = (handle.length + 0x1F) & ~0x1F;
     void *buffer = funcs->kamekAlloc(roundedLength, false, funcs);
     if (!buffer)
         kamekError(funcs, "FATAL ERROR: Out of file memory");
-    
+
     funcs->DVDReadPrio(&handle, buffer, roundedLength, 0, 2);
     funcs->DVDClose(&handle);
 
     loadKamekBinary(funcs, buffer, handle.length);
-    
+
     funcs->kamekFree(buffer, false, funcs);
     funcs->OSReport("All done!\n");
 }

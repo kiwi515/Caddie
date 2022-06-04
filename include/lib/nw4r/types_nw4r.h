@@ -17,7 +17,7 @@ namespace nw4r
 			struct RuntimeTypeInfo;
 		}
 	}
-	
+
 	namespace ef
 	{
 		struct DrawOrder;
@@ -39,7 +39,7 @@ namespace nw4r
 		struct MemoryManager;
 		struct MemoryManagerBase;
 	}
-	
+
 	namespace math
 	{
 		struct VEC2;
@@ -48,7 +48,7 @@ namespace nw4r
 		struct AABB;
 		struct FRUSTUM;
 	}
-	
+
 	namespace snd
 	{
 		struct FxBase;
@@ -87,7 +87,7 @@ namespace nw4r
 			struct WsdPlayer;
 		}
 	}
-	
+
 	namespace g3d
 	{
 		struct AnmScn;

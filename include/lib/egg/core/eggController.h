@@ -37,7 +37,7 @@ namespace EGG
     class CoreControllerMgr
     {
     public:
-        static CoreControllerMgr& getInstance() 
+        static CoreControllerMgr& getInstance()
         {
             CADDIE_ASSERT(sInstance != NULL);
             return *sInstance;

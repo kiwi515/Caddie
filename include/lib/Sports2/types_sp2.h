@@ -5,7 +5,7 @@
 namespace Sp2
 {
     class StaticMem;
-    
+
     namespace Glf
     {
         class GlfMain;

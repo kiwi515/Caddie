@@ -17,13 +17,13 @@ namespace nw4r
 			u16 mSize;
 			u16 mOffset;
 		};
-		
+
 		struct Node
 		{
 			void *mPrev;
 			void *mNext;
 		};
-		
+
 		void List_Init(List *, u16);
 		void List_Append(List *, void *);
 		void List_Insert(List *, void *, void *);
@@ -31,7 +31,7 @@ namespace nw4r
 		void * List_GetNext(const List *, const void *);
 		void * List_GetPrev(const List *, const void *);
 		void * List_GetNth(const List *, u16);
-		
+
 		inline void * List_GetFirst(const List * list)
 		{
 			return List_GetNext(list, NULL);

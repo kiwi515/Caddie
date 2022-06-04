@@ -20,7 +20,7 @@ namespace nw4r
 		{
 			float x, y;
 		};
-		
+
 		struct VEC2
 		{
 			_VEC2 mCoords;
@@ -39,12 +39,12 @@ namespace nw4r
 				return *this;
 			}
 		};
-		
+
 		struct _VEC3
 		{
 			float x, y, z;
 		};
-		
+
 		inline void VEC3Add(register VEC3 * destVec, register const VEC3 * srcVec1, register const VEC3 * srcVec2)
 		{
 			asm
@@ -59,7 +59,7 @@ namespace nw4r
 				psq_st f0, 0x8(destVec), 1, 0
 			}
 		}
-		
+
 		inline void VEC3Sub(register VEC3 * destVec, register const VEC3 * srcVec1, register const VEC3 * srcVec2)
 		{
 			asm
@@ -74,7 +74,7 @@ namespace nw4r
 				psq_st f0, 0x8(destVec), 1, 0
 			}
 		}
-		
+
 		inline void VEC3Scale(register VEC3 * outVec, register const VEC3 * inVec, register float scalar)
 		{
 			asm
@@ -87,7 +87,7 @@ namespace nw4r
 				psq_st f1, 0x8(outVec), 1, 0
 			}
 		}
-		
+
 		inline float VEC3Dot(register const VEC3 * vec1, register const VEC3 * vec2)
 		{
 			register f32 a, b, d, c, e;
@@ -107,33 +107,33 @@ namespace nw4r
 		struct VEC3
 		{
 			_VEC3 mCoords;
-			
+
 			inline VEC3() {}
-			
+
 			inline VEC3(const VEC3 & other) : mCoords(other.mCoords) {}
-			
+
 			inline VEC3 & operator=(const VEC3 & other)
 			{
 				mCoords = other.mCoords;
 				return *this;
 			}
-			
+
 			inline VEC3(float x, float y, float z)
 			{
 				mCoords.x = x;
 				mCoords.y = y;
 				mCoords.z = z;
 			}
-			
+
 			inline VEC3 operator-(register const VEC3 & other) const
 			{
 				VEC3 ret;
-				
+
 				VEC3Sub(&ret, this, &other);
-				
+
 				return ret;
 			}
-			
+
 			inline bool operator!=(const VEC3 & other) const
 			{
 				return mCoords.x != other.mCoords.x || mCoords.y != other.mCoords.y || mCoords.z != other.mCoords.z;
@@ -143,13 +143,13 @@ namespace nw4r
 			{
 				return reinterpret_cast<Vec *>(this);
 			}
-			
+
 			inline operator const Vec *() const
 			{
 				return reinterpret_cast<const Vec *>(this);
 			}
 		};
-		
+
 		struct _MTX33
 		{
 			float tbl[3][3];
@@ -161,12 +161,12 @@ namespace nw4r
 
 			typedef float (* MtxRef)[3];
 			typedef const float (* MtxRefConst)[3];
-			
+
 			inline operator MtxRef()
 			{
 				return mEntries.tbl;
 			}
-			
+
 			inline operator MtxRefConst() const
 			{
 				return mEntries.tbl;
@@ -177,21 +177,21 @@ namespace nw4r
 		{
 			float tbl[3][4];
 		};
-		
+
 		struct MTX34
 		{
 			MTX34() {}
 
 			_MTX34 mEntries;
-			
+
 			typedef float (* MtxRef)[4];
 			typedef const float (* MtxRefConst)[4];
-			
+
 			inline operator MtxRef()
 			{
 				return mEntries.tbl;
 			}
-			
+
 			inline operator MtxRefConst() const
 			{
 				return mEntries.tbl;
@@ -209,12 +209,12 @@ namespace nw4r
 
 			typedef float (* MtxRef)[4];
 			typedef const float (* MtxRefConst)[4];
-			
+
 			inline operator MtxRef()
 			{
 				return mEntries.tbl;
 			}
-			
+
 			inline operator MtxRefConst() const
 			{
 				return mEntries.tbl;
@@ -233,17 +233,17 @@ namespace nw4r
 		{
 			PSVECNormalize(*in, *out);
 		}
-		
+
 		inline float VEC3DistSq(const VEC3 * point1, const VEC3 * point2)
 		{
 			return PSVECSquareDistance(*point1, *point2);
 		}
-		
+
 		inline void VEC3Transform(VEC3 * outVec, const MTX34 * mtx, const VEC3 * inVec)
 		{
 			PSMTXMultVec(*mtx, *inVec, *outVec);
 		}
-		
+
 		void MTX33Identity(register MTX33 *);
 
 		int MTX34InvTranspose(register MTX33 *, register const MTX34 *);
@@ -256,7 +256,7 @@ namespace nw4r
 		{
 			PSMTXInverse(*in, *out);
 		}
-		
+
 		inline void MTX34Mult(MTX34 * outMtx, const MTX34 * inMtx1, const MTX34 * inMtx2)
 		{
 			PSMTXConcat(*inMtx1, *inMtx2, *outMtx);
@@ -274,12 +274,12 @@ namespace nw4r
 		{
 			PSMTXIdentity(*mtx);
 		}
-		
+
 		inline void MTX34Copy(MTX34 * out, const MTX34 * in)
 		{
 			PSMTXCopy(*in, *out);
 		}
-		
+
 		VEC3 * VEC3TransformNormal(VEC3 *, const MTX34 *, const VEC3 *);
 
 		void MTX44Identity(register MTX44 *);
@@ -287,23 +287,23 @@ namespace nw4r
 		void MTX44Copy(register MTX44 *, register const MTX44 *);
 
 		UNKTYPE GetDirMtxY(MTX34 *, const VEC3 &);
-		
+
 		MTX34 * MTX34RotXYZFIdx(MTX34 *, float, float, float);
-		
+
 		inline void MTX34Scale(MTX34 * outMtx, const VEC3 * vec, const MTX34 * inMtx)
 		{
 			PSMTXScaleApply(*inMtx, *outMtx, vec->mCoords.x, vec->mCoords.y, vec->mCoords.z);
 		}
-		
+
 		UNKTYPE MtxGetRotation(const MTX34 &, VEC3 *);
-		
+
 		float FrSqrt(float);
-		
+
 		inline float FSqrt(float f)
 		{
 			return f * FrSqrt(f);
 		}
-		
+
 		inline float VEC3Len(const VEC3 * in)
 		{
 			return PSVECMag(*in);

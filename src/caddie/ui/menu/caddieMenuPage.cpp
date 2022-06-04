@@ -24,7 +24,7 @@ namespace caddie
         // TLinkList<IMenuOption>::Iterator it = mOptions.Begin();
         // for(; it != mOptions.End(); it++) {
         //     TLinkList<IMenuOption>::Iterator next = it++;
-        //     mOptions.Remove(next);            
+        //     mOptions.Remove(next);
         //     delete &*next;
         // }
     }
@@ -33,7 +33,7 @@ namespace caddie
      * @brief Draw all options on page
      */
     void MenuPage::DrawSelf() const
-    {       
+    {
         math::VEC2 pos = mPos;
 
         TLinkList<IMenuOption>::Iterator it = mOptions.Begin();

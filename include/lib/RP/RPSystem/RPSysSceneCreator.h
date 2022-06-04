@@ -40,11 +40,11 @@ public:
         SCENE_LAYOUT_TEST_1,
         SCENE_SOUND_TEST_1,
         SCENE_CPU_MII,
-        
+
         SCENE_MAX
     };
 
-public:    
+public:
     static RPSysSceneCreator& getInstance()
     {
         CADDIE_ASSERT(sInstance != NULL);
