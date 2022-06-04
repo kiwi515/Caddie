@@ -65,6 +65,11 @@ namespace caddie
             mValueText.SetStrokeColor(color);
         }
 
+        void SetPosition(nw4r::math::VEC2 pos)
+        {
+            CADDIE_ASSERT_EX(false, "Not implemented. Use SetOptionPosition");
+        }
+
         nw4r::math::VEC2 GetOptionPosition() const
         {
             return mNameText.GetPosition();
