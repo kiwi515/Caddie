@@ -1,5 +1,6 @@
 #ifndef CADDIE_KERNEL_RUNTIME_H
 #define CADDIE_KERNEL_RUNTIME_H
+#include "caddieAlgorithm.h"
 #include "types_caddie.h"
 
 namespace caddie {
@@ -10,14 +11,72 @@ extern "C" {
 
 //! @brief C++ static initializer function pointer
 typedef void (*StaticCtor)(void);
-//! @brief Static constructor list begin ptr
 extern StaticCtor __ctor_loc;
-//! @brief Static constructor list end ptr
 extern StaticCtor __ctor_end;
+
+extern void* _f_init;
+extern void* _e_init;
+
+extern void* _f_text;
+extern void* _e_text;
+
+extern void* _f_ctors;
+extern void* _e_ctors;
+
+extern void* _f_dtors;
+extern void* _e_dtors;
+
+extern void* _f_rodata;
+extern void* _e_rodata;
+
+extern void* _f_data;
+extern void* _e_data;
 
 #ifdef __cplusplus
 }
 #endif
+
+// .init section layout
+static inline const void* GetInitStart() { return &_f_init; }
+static inline const void* GetInitEnd() { return &_e_init; }
+static inline u32 GetInitSize() {
+    return PtrDistance(GetInitStart(), GetInitEnd());
+}
+
+// .text section layout
+static inline const void* GetTextStart() { return &_f_text; }
+static inline const void* GetTextEnd() { return &_e_text; }
+static inline u32 GetTextSize() {
+    return PtrDistance(GetTextStart(), GetTextEnd());
+}
+
+// .ctors section layout
+static inline const void* GetCtorsStart() { return &_f_ctors; }
+static inline const void* GetCtorsEnd() { return &_e_ctors; }
+static inline u32 GetCtorsSize() {
+    return PtrDistance(GetCtorsStart(), GetCtorsEnd());
+}
+
+// .dtors section layout
+static inline const void* GetDtorsStart() { return &_f_dtors; }
+static inline const void* GetDtorsEnd() { return &_e_dtors; }
+static inline u32 GetDtorsSize() {
+    return PtrDistance(GetDtorsStart(), GetDtorsEnd());
+}
+
+// .rodata section layout
+static inline const void* GetRodataStart() { return &_f_rodata; }
+static inline const void* GetRodataEnd() { return &_e_rodata; }
+static inline u32 GetRodataSize() {
+    return PtrDistance(GetRodataStart(), GetRodataEnd());
+}
+
+// .data section layout
+static inline const void* GetDataStart() { return &_f_data; }
+static inline const void* GetDataEnd() { return &_e_data; }
+static inline u32 GetDataSize() {
+    return PtrDistance(GetDataStart(), GetDataEnd());
+}
 
 //! @brief Begin ASM block
 #define CADDIE_ASM_BEGIN asm volatile {

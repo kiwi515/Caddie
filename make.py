@@ -27,7 +27,7 @@ def kamekLink(o_files : list, path : str, kamekArgs : str = "") -> None:
         makedirs(MODULES_DIR)
     except FileExistsError: pass
 
-    cmd = f"tools\\Kamek.exe {kamekArgs} {' '.join(o_files)} -externals={EXTERNALS_DIR}{args.region}.txt -output-kamek={path}"
+    cmd = f"tools\\Kamek.exe {kamekArgs} {' '.join(o_files)} -externals={EXTERNALS_DIR}{args.region}.txt -output-kamek={path} -output-map={path.replace('.bin', '.map')}"
     result = run(cmd, shell=True, stdout=PIPE, stderr=PIPE, universal_newlines=True)
     if (result.returncode != 0):
         print(result.returncode, result.stdout, result.stderr)
@@ -118,7 +118,7 @@ if __name__ == "__main__":
         kamekLink(kamek_o_files, f"build/modules/Loader_{args.region}.bin",
         kamekArgs=f"-static=0x80001900 -input-dol={BASEROM_DIR}baserom_{args.region}.dol -output-dol={BUILD_DIR}main_{args.region}.dol")
 
-    # Link Caddie executable (TO-DO)
+    # Link Caddie executable
     game_o_files = []
     for _path, dir, files in walk(BUILD_DIR, topdown=True):
         for file in files:

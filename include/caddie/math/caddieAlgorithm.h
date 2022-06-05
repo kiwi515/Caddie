@@ -18,6 +18,13 @@ template <typename T> static inline const T& Min(const T& a, const T& b) {
     return (b < a) ? b : a;
 }
 
+/**
+ * @brief Distance between two pointers
+ */
+static inline u32 PtrDistance(const void* start, const void* end) {
+    return (u32)end - (u32)start;
+}
+
 } // namespace caddie
 
 #endif

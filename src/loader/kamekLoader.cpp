@@ -1,4 +1,4 @@
-#include <loader/kamekLoader.h>
+#include "kamekLoader.h"
 
 struct KBHeader {
     u32 magic1;
@@ -6,6 +6,9 @@ struct KBHeader {
     u16 version;
     u32 bssSize;
     u32 codeSize;
+    u32 ctorStart;
+    u32 ctorEnd;
+    u32 _pad[2];
 };
 
 #define kAddr32 1
@@ -124,13 +127,22 @@ kCommandHandler(BranchLink) {
     return kHandleRel24(input, text, address);
 }
 
+inline void cacheInvalidateAddress(u32 address) {
+    register u32 addressRegister = address;
+    asm {
+		dcbst 0, addressRegister
+		sync
+		icbi 0, addressRegister
+    }
+}
+
 void loadKamekBinary(const loaderFunctions* funcs, const void* binary,
                      u32 binaryLength) {
     const KBHeader* header = (const KBHeader*)binary;
     if (header->magic1 != 'Kame' || header->magic2 != 'k\0')
         kamekError(funcs, "FATAL ERROR: Corrupted file, please check your "
                           "game's Kamek files");
-    if (header->version != 1) {
+    if (header->version != 2) {
         char err[512];
         funcs->sprintf(err,
                        "FATAL ERROR: Incompatible file (version %d), please "
@@ -139,8 +151,9 @@ void loadKamekBinary(const loaderFunctions* funcs, const void* binary,
         kamekError(funcs, err);
     }
 
-    funcs->OSReport("header: bssSize=%u, codeSize=%u\n", header->bssSize,
-                    header->codeSize);
+    funcs->OSReport("header: bssSize=%u, codeSize=%u, ctors=%u-%u\n",
+                    header->bssSize, header->codeSize, header->ctorStart,
+                    header->ctorEnd);
 
     u32 textSize = header->codeSize + header->bssSize;
     u32 text = (u32)funcs->kamekAlloc(textSize, true, funcs);
@@ -152,10 +165,14 @@ void loadKamekBinary(const loaderFunctions* funcs, const void* binary,
     u8* output = (u8*)text;
 
     // Create text + bss sections
-    for (u32 i = 0; i < header->codeSize; i++)
-        *(output++) = *(input++);
-    for (u32 i = 0; i < header->bssSize; i++)
-        *(output++) = 0;
+    for (u32 i = 0; i < header->codeSize; i++) {
+        *output = *(input++);
+        cacheInvalidateAddress((u32)(output++));
+    }
+    for (u32 i = 0; i < header->bssSize; i++) {
+        *output = 0;
+        cacheInvalidateAddress((u32)(output++));
+    }
 
     while (input < inputEnd) {
         u32 cmdHeader = *((u32*)input);
@@ -191,20 +208,21 @@ void loadKamekBinary(const loaderFunctions* funcs, const void* binary,
             funcs->OSReport("Unknown command: %d\n", cmd);
         }
 
-        register u32 cacheAddr = address;
-        asm {
-            dcbst r0, cacheAddr
-            sync
-            icbi r0, cacheAddr
-        }
+        cacheInvalidateAddress(address);
     }
 
     __sync();
     __isync();
+
+    typedef void (*Func)(void);
+    for (Func* f = (Func*)(text + header->ctorStart);
+         f < (Func*)(text + header->ctorEnd); f++) {
+        (*f)();
+    }
 }
 
 void loadKamekBinaryFromDisc(const loaderFunctions* funcs, const char* path) {
-    funcs->OSReport("Loading Kamek binary '%s'...\n", path);
+    funcs->OSReport("{Kamek by Treeki}\nLoading Kamek binary '%s'...\n", path);
 
     int entrynum = funcs->DVDConvertPathToEntrynum(path);
     if (entrynum < 0) {
