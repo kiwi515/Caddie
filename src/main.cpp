@@ -1,4 +1,5 @@
 #include "caddieGlfSceneHook.h"
+#include "caddieMapFile.h"
 #include "caddieRuntime.h"
 #include "caddieSceneHookMgr.h"
 
@@ -15,10 +16,14 @@ void main() {
     // Initialize heap
     MemManager::Initialize();
 
-    // Debug builds always show the exception handler
 #ifndef NDEBUG
-    static u16 sEmptyBtnCombo[] = {EGG::BTN_NONE};
+    // Always show exception handler
+    static const u16 sEmptyBtnCombo[] = {0};
     EGG::Exception::setUserCallback(sEmptyBtnCombo);
+
+    // Open symbol map
+    MapFile::GetInstance().LoadFromDVD("modules/main_NTSC_U.map",
+                                       MapFile::LINK_DYNAMIC);
 #endif
 
     // Skip MotionPlus video

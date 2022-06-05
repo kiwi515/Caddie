@@ -6,7 +6,8 @@ namespace EGG {
 
 class Exception {
   public:
-    static void setUserCallback(u16*);
+    static Exception* create(u16, u16, u16, Heap*, u16);
+    static void setUserCallback(const u16*);
 };
 
 } // namespace EGG

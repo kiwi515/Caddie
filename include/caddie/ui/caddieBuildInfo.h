@@ -9,6 +9,10 @@ namespace caddie {
  */
 class BuildInfo : public TextBox {
   public:
+    static const char* GetBuildDate();
+    static const char* GetBuildRegion();
+    static const char* GetBuildTarget();
+
     BuildInfo();
     virtual ~BuildInfo() {}
 

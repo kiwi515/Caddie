@@ -17,7 +17,7 @@ static const u32 sDebugFg = 0xFFFFFF00;
  * @param ... Extra args
  */
 void caddie_fail_assert(const char* file, int line, const char* msg, ...) {
-    CADDIE_LOG("------------- HALT -------------\n");
+    CADDIE_LOG("------------- HALT -------------");
 
     // Format message
     char msg_buf[0x800];
@@ -32,8 +32,8 @@ void caddie_fail_assert(const char* file, int line, const char* msg, ...) {
              "Assertion Failed: %s\nFile: %s(%d)", msg_buf, file, line);
 
     // Print to console
-    CADDIE_LOG_EX("%s\n", assert_buf);
-    CADDIE_LOG("Program Halt\n");
+    CADDIE_LOG_EX("%s", assert_buf);
+    CADDIE_LOG("Program Halt");
 
     // Print to screen
     OSFatal(&sDebugFg, &sDebugBg, assert_buf);
