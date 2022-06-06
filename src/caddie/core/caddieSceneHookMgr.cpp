@@ -6,11 +6,11 @@
 
 namespace caddie {
 
-static s32 GetCurrentSceneID() {
+s32 GetCurrentSceneID() {
     return RPSysSceneMgr::getInstance().getCurrentSceneID();
 }
 
-static RPSysScene* GetCurrentScene() {
+RPSysScene* GetCurrentScene() {
     return (RPSysScene*)RPSysSceneMgr::getInstance().getCurrentScene();
 }
 

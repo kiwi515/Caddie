@@ -3,6 +3,7 @@
 #include <STL/stdarg.h>
 #include <STL/stdio.h>
 #include <SYSCONF/scapi.h>
+#include <egg/util/eggException.h>
 #include <loader/kamekLoader.h>
 #include <loader/rzte.h>
 
@@ -49,4 +50,4 @@ void loadMainCode() {
         break;
     }
 }
-kmBranch(CADDIE_ENTRYPOINT, loadMainCode);
+kmCall(CADDIE_ENTRYPOINT, loadMainCode);

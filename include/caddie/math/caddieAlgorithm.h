@@ -25,6 +25,13 @@ static inline u32 PtrDistance(const void* start, const void* end) {
     return (u32)end - (u32)start;
 }
 
+/**
+ * @brief Add offset to pointer
+ */
+static inline const void* AddToPtr(const void* ptr, s32 ofs) {
+    return (char*)ptr + ofs;
+}
+
 } // namespace caddie
 
 #endif

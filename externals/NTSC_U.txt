@@ -46,15 +46,23 @@ List_GetNth__Q24nw4r2utFPCQ34nw4r2ut4ListUs=0x8010bc40
 List_Append__Q24nw4r2utFPQ34nw4r2ut4ListPv=0x8010ba00
 List_GetNext__Q24nw4r2utFPCQ34nw4r2ut4ListPCv=0x8010bc00
 
+# nw4r/db/db_exception
+Exception_Printf___Q24nw4r2dbFPCce=0x80166a10
+ShowFloat___Q24nw4r2dbFPC9OSContext=0x80167230
+
 # EGG/core/eggExpHeap
 create__Q23EGG7ExpHeapFUlPQ23EGG4HeapUs=0x801c0e58
 
 # EGG/core/eggException
-setUserCallback__Q23EGG9ExceptionFPUs=0x801cec48
+setUserCallback__Q23EGG9ExceptionFPCUs=0x801cec48
+create__Q23EGG9ExceptionFUsUsUsPQ23EGG4HeapUs=0x801cebb8
 
 # EGG/core/eggController
 getNthController__Q23EGG17CoreControllerMgrFi=0x801c4ab8
 sInstance__Q23EGG17CoreControllerMgr=0x806f4a08
+
+# EGG/core/eggDvdRipper
+loadToMainRAM__Q23EGG9DvdRipperFPCcPUcPQ23EGG4HeapQ33EGG9DvdRipper15EAllocDirectionUlPUlPUl=0x801c7ce0
 
 # RP/RPSystem/RPSysSceneMgr
 sInstance__13RPSysSceneMgr=0x806f4c98

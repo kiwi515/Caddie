@@ -9,9 +9,11 @@
 namespace caddie {
 
 // kernel
+struct Exception;
 struct MemManager;
 
 // core
+struct MapFile;
 template <typename T> struct TLinkList;
 struct TLinkListNode;
 struct SceneHook;
