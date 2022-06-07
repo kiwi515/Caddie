@@ -46,7 +46,7 @@ void MenuMgr::Calc() {
     // Initial up input before DAS
     if ((mBtnTrig & BTN_UP && mControlDAS == sControlMaxDAS) ||
         // Auto repeat up
-        ((mBtnHeld & BTN_UP) && mControlARR <= 0)) {
+        (mBtnHeld & BTN_UP && mControlARR <= 0)) {
         mCursor--;
         // Wrap around
         if (mCursor < 0) {
@@ -56,7 +56,7 @@ void MenuMgr::Calc() {
     // Initial down input before DAS
     else if ((mBtnTrig & BTN_DOWN && mControlDAS == sControlMaxDAS) ||
              // Auto repeat down
-             ((mBtnHeld & BTN_DOWN) && mControlARR <= 0)) {
+             (mBtnHeld & BTN_DOWN && mControlARR <= 0)) {
         mCursor++;
         // Wrap around
         if (mCursor >= mOpenPage->GetNumOptions()) {
@@ -66,14 +66,14 @@ void MenuMgr::Calc() {
     // Initial right input before DAS
     else if ((mBtnTrig & BTN_RIGHT && mControlDAS == sControlMaxDAS) ||
              // Auto repeat right
-             ((mBtnHeld & BTN_RIGHT) && mControlARR <= 0)) {
+             (mBtnHeld & BTN_RIGHT && mControlARR <= 0)) {
         mOpenPage->GetOption(mCursor).Increment();
         mMenu->OnChange();
     }
     // Initial left input before DAS
     else if ((mBtnTrig & BTN_LEFT && mControlDAS == sControlMaxDAS) ||
              // Auto repeat left
-             ((mBtnHeld & BTN_LEFT) && mControlARR <= 0)) {
+             (mBtnHeld & BTN_LEFT && mControlARR <= 0)) {
         mOpenPage->GetOption(mCursor).Decrement();
         mMenu->OnChange();
     }
