@@ -66,7 +66,7 @@ void Exception::PrintContext(u32 type, const OSContext* ctx, u32 dsisr,
     db::Exception_Printf_("Caddie Discord server. (#bug-report)\n");
     db::Exception_Printf_("https://discord.gg/BW23QvJaZk\n");
 
-    // GPR regs
+    // GP regs
     db::Exception_Printf_("\n---EXCEPTION_INFO_GPR---\n");
     db::Exception_Printf_("-------------------------------- GPRMAP\n");
     for (int reg = 0; reg < 10; reg++) {
@@ -77,7 +77,7 @@ void Exception::PrintContext(u32 type, const OSContext* ctx, u32 dsisr,
     db::Exception_Printf_("R10:%08XH  R21:%08XH\n", ctx->gprs[10],
                           ctx->gprs[21]);
 
-    // FPR regs
+    // FP regs
     db::Exception_Printf_("\n---EXCEPTION_INFO_FPR---\n");
     db::ShowFloat_(ctx);
 
