@@ -108,6 +108,7 @@ s32 strtol(const char* str, char** endptr, int base) {
         }
     }
 
+    CADDIE_ASSERT_EX(base != 0, "Failed to auto-detect base");
     CADDIE_ASSERT_EX(2 <= base <= 36, "Invalid base");
 
     // Parse digits
