@@ -8,7 +8,9 @@ class RPSysSceneCreator {
     //! @brief RP Scene ID
     //! @wfuname
     enum ESceneID {
-        SCENE_STRAP,
+        SCENE_ALL = -1,
+
+        SCENE_STRAP = 0,
         SCENE_SAVE_DATA_LOAD,
         SCENE_TITLE,
         SCENE_MII_SELECT,

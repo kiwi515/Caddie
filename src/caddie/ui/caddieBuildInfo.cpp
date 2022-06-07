@@ -43,10 +43,4 @@ BuildInfo::BuildInfo() {
 const math::VEC2 BuildInfo::sBuildTextPos(400.0f, 20.0f);
 const ut::Color BuildInfo::sBuildTextColor(255, 0, 0, 255);
 
-void ShowBuildInfo() {
-    static BuildInfo text;
-    text.Draw();
-}
-kmBranch(0x801c3490, &ShowBuildInfo);
-
 } // namespace caddie

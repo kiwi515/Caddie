@@ -38,11 +38,17 @@ class SceneHookMgr {
     }
 
     void SetHook(RPSysSceneCreator::ESceneID scene, const SceneHook& hook) {
-        mSceneHooks[scene] = hook;
+        if (scene != RPSysSceneCreator::SCENE_ALL) {
+            mSceneHooks[scene] = hook;
+        } else {
+            mGlobalSceneHook = hook;
+        }
     }
 
     void AllowPause(RPSysSceneCreator::ESceneID scene, bool pause) {
-        mPauseSetting[scene] = pause;
+        if (scene != RPSysSceneCreator::SCENE_ALL) {
+            mPauseSetting[scene] = pause;
+        }
     }
 
     static void DoConfigure();
@@ -63,6 +69,8 @@ class SceneHookMgr {
   private:
     //! @brief Scene hooks for every scene
     SceneHook mSceneHooks[RPSysSceneCreator::SCENE_MAX];
+    //! @brief Global scene hook
+    SceneHook mGlobalSceneHook;
     //! @brief Pause permission for every scene
     bool mPauseSetting[RPSysSceneCreator::SCENE_MAX];
 };

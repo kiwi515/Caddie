@@ -1,3 +1,4 @@
+#include "caddieCmnGlobalSceneHook.h"
 #include "caddieGlfSceneHook.h"
 #include "caddieMapFile.h"
 #include "caddieRuntime.h"
@@ -29,7 +30,13 @@ void main() {
     // Skip MotionPlus video
     RPSysProjectLocal::getInstance().setMPlusVideoSeen(true);
 
-    // Set up Golf scene hook
+    // Global scene hook
+    SceneHookMgr::GetInstance().SetHook(
+        RPSysSceneCreator::SCENE_ALL,
+        (SceneHook){GlobalSceneHook::OnConfigure, GlobalSceneHook::OnCalculate,
+                    GlobalSceneHook::OnUserDraw, GlobalSceneHook::OnExit});
+
+    // Golf scene hook
     SceneHookMgr::GetInstance().SetHook(
         RPSysSceneCreator::SCENE_GLF,
         (SceneHook){GlfSceneHook::OnConfigure, GlfSceneHook::OnCalculate,
