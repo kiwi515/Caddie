@@ -16,6 +16,9 @@ class GlfUtil {
     static bool IsNextRoundOver();
     static bool IsRoundOverInternal(Sp2::Glf::GameMode gm, u32 hole);
     static bool IsRoundOver(Sp2::Glf::GameMode gm, u32 hole);
+
+    static u32 GetGamemodeNthHoleInternal(u32 n);
+    static u32 GetGamemodeNthHole(u32 n);
 };
 
 } // namespace caddie

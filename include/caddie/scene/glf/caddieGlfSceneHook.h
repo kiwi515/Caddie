@@ -24,6 +24,7 @@ class GlfSceneHook {
     static void Apply_GlfMain();
 
     static bool CanPlayNextHole();
+    static u32 GetNumHolesPlayed();
 
     static GlfMenu& GetMenu();
 

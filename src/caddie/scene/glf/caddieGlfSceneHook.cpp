@@ -243,6 +243,26 @@ bool GlfSceneHook::CanPlayNextHole() {
 kmBranch(0x80406554, GlfSceneHook::CanPlayNextHole);
 
 /**
+ * @brief Number of holes played in the match
+ * @details Fixes infinite recursion bug
+ */
+u32 GlfSceneHook::GetNumHolesPlayed() {
+    // First hole of gamemode
+    const u32 gmFirst = GlfUtil::GetGamemodeNthHoleInternal(0);
+    // Current hole
+    const u32 gmCurrent = Sp2::Glf::GlfMain::getInstance().getCurrentHole();
+
+    // Avoid returning negative result
+    if (gmCurrent < gmFirst) {
+        return 0;
+    }
+
+    // Vanilla behavior
+    return gmCurrent - gmFirst;
+}
+kmBranch(0x80405f1c, GlfSceneHook::GetNumHolesPlayed);
+
+/**
  * @brief Access golf menu
  */
 GlfMenu& GlfSceneHook::GetMenu() {
