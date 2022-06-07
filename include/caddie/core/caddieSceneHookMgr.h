@@ -45,11 +45,11 @@ class SceneHookMgr {
         mPauseSetting[scene] = pause;
     }
 
-    static void ConfigureCallback();
-    static void CalculateCallback();
-    static void UserDrawCallback();
-    static void ExitCallback();
-    static void PauseCheckCallback();
+    static void DoConfigure();
+    static void DoCalculate();
+    static void DoUserDraw();
+    static void DoExit();
+    static void DoUpdatePause();
 
   private:
     SceneHookMgr() {

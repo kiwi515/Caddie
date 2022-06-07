@@ -14,43 +14,43 @@ RPSysScene* GetCurrentScene() {
     return (RPSysScene*)RPSysSceneMgr::getInstance().getCurrentScene();
 }
 
-void SceneHookMgr::ConfigureCallback() {
+void SceneHookMgr::DoConfigure() {
     const s32 scene = GetCurrentSceneID();
     SceneHookMgr& hookMgr = SceneHookMgr::GetInstance();
 
     if (hookMgr.mSceneHooks[scene].onConfigure != NULL)
         hookMgr.mSceneHooks[scene].onConfigure(GetCurrentScene());
 }
-kmBranch(0x801c389c, SceneHookMgr::ConfigureCallback);
+kmBranch(0x801c389c, SceneHookMgr::DoConfigure);
 
-void SceneHookMgr::CalculateCallback() {
+void SceneHookMgr::DoCalculate() {
     const s32 scene = GetCurrentSceneID();
     SceneHookMgr& hookMgr = SceneHookMgr::GetInstance();
 
     if (hookMgr.mSceneHooks[scene].onCalculate != NULL)
         hookMgr.mSceneHooks[scene].onCalculate(GetCurrentScene());
 }
-kmBranch(0x8022f8f8, SceneHookMgr::CalculateCallback);
+kmBranch(0x8022f8f8, SceneHookMgr::DoCalculate);
 
-void SceneHookMgr::UserDrawCallback() {
+void SceneHookMgr::DoUserDraw() {
     const s32 scene = GetCurrentSceneID();
     SceneHookMgr& hookMgr = SceneHookMgr::GetInstance();
 
     if (hookMgr.mSceneHooks[scene].onUserDraw != NULL)
         hookMgr.mSceneHooks[scene].onUserDraw(GetCurrentScene());
 }
-kmBranch(0x802542a8, SceneHookMgr::UserDrawCallback);
+kmBranch(0x802542a8, SceneHookMgr::DoUserDraw);
 
-void SceneHookMgr::ExitCallback() {
+void SceneHookMgr::DoExit() {
     const s32 scene = GetCurrentSceneID();
     SceneHookMgr& hookMgr = SceneHookMgr::GetInstance();
 
     if (hookMgr.mSceneHooks[scene].onExit != NULL)
         hookMgr.mSceneHooks[scene].onExit(GetCurrentScene());
 }
-kmBranch(0x8022f6f4, SceneHookMgr::ExitCallback);
+kmBranch(0x8022f6f4, SceneHookMgr::DoExit);
 
-void SceneHookMgr::PauseCheckCallback() {
+void SceneHookMgr::DoUpdatePause() {
     const s32 scene = GetCurrentSceneID();
     SceneHookMgr& hookMgr = SceneHookMgr::GetInstance();
 
@@ -58,6 +58,6 @@ void SceneHookMgr::PauseCheckCallback() {
         RPSysPauseMgr::getInstance().update();
     }
 }
-kmCall(0x80232984, SceneHookMgr::PauseCheckCallback);
+kmCall(0x80232984, SceneHookMgr::DoUpdatePause);
 
 } // namespace caddie
