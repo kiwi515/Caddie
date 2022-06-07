@@ -54,7 +54,6 @@ class MenuMgr {
         mCursorText.SetTextColor(sCursorColor);
         mCursorText.SetStroke(TextBox::STROKE_OUTLINE);
     }
-
     virtual ~MenuMgr() {}
 
     void CalcInput();
@@ -78,8 +77,21 @@ class MenuMgr {
     //! @brief Buttons released
     u32 mBtnReleased;
 
+    //! @brief Delayed auto shift
+    s32 mControlDAS;
+    //! @brief Auto repeat rate
+    s32 mControlARR;
+
+    //! @brief Menu delay before auto repeat (in frames)
+    static const u32 sControlMaxDAS;
+    //! @brief Menu auto repeat rate (in frames)
+    static const u32 sControlMaxARR;
+
+    //! @brief Cursor text string
     static const char* sCursorStr;
+    //! @brief Cursor text color
     static const nw4r::ut::Color sCursorColor;
+    //! @brief Cursor text X offset from option
     static const f32 sCursorOffset;
 };
 

@@ -17,8 +17,17 @@ void MenuMgr::Calc() {
     CADDIE_ASSERT(mMenu != NULL);
     CADDIE_ASSERT(mOpenPage != NULL);
 
-    // Update player input
     CalcInput();
+
+    // Toggle visibility
+    if (mBtnTrig & BTN_PLUS) {
+        SetVisible(!mIsVisible);
+
+        // Delete changes on menu close
+        if (!IsVisible()) {
+            mOpenPage->DeleteChanges();
+        }
+    }
 
     if (!IsVisible()) {
         return;
@@ -33,29 +42,37 @@ void MenuMgr::Calc() {
         ClosePage();
     }
 
-    // Move cursor up
-    if (mBtnTrig & BTN_UP) {
+    // Initial up input before DAS
+    if ((mBtnTrig & BTN_UP && mControlDAS == sControlMaxDAS) ||
+        // Auto repeat up
+        ((mBtnHeld & BTN_UP) && mControlARR <= 0)) {
         mCursor--;
         // Wrap around
         if (mCursor < 0) {
             mCursor = mOpenPage->GetNumOptions() - 1;
         }
     }
-    // Move cursor down
-    else if (mBtnTrig & BTN_DOWN) {
+    // Initial down input before DAS
+    else if ((mBtnTrig & BTN_DOWN && mControlDAS == sControlMaxDAS) ||
+             // Auto repeat down
+             ((mBtnHeld & BTN_DOWN) && mControlARR <= 0)) {
         mCursor++;
         // Wrap around
         if (mCursor >= mOpenPage->GetNumOptions()) {
             mCursor = 0;
         }
     }
-    // Increment option
-    else if (mBtnTrig & BTN_RIGHT) {
+    // Initial right input before DAS
+    else if ((mBtnTrig & BTN_RIGHT && mControlDAS == sControlMaxDAS) ||
+             // Auto repeat right
+             ((mBtnHeld & BTN_RIGHT) && mControlARR <= 0)) {
         mOpenPage->GetOption(mCursor).Increment();
         mMenu->OnChange();
     }
-    // Decrement option
-    else if (mBtnTrig & BTN_LEFT) {
+    // Initial left input before DAS
+    else if ((mBtnTrig & BTN_LEFT && mControlDAS == sControlMaxDAS) ||
+             // Auto repeat left
+             ((mBtnHeld & BTN_LEFT) && mControlARR <= 0)) {
         mOpenPage->GetOption(mCursor).Decrement();
         mMenu->OnChange();
     }
@@ -105,22 +122,28 @@ void MenuMgr::CalcInput() {
     // Buttons released
     mBtnReleased = heldLastFrame & ~mBtnHeld;
 
-    // Toggle visibility
-    if (mBtnTrig & BTN_PLUS) {
-        SetVisible(!mIsVisible);
+    // Reset DAS on D-Pad input change
+    if (mBtnTrig & BTN_DPAD_ALL) {
+        mControlDAS = sControlMaxDAS;
+        mControlARR = sControlMaxARR;
+    } else {
+        mControlDAS = Max<s32>(mControlDAS - 1, 0);
+    }
 
-        // Delete changes on menu close
-        if (!IsVisible()) {
-            mOpenPage->DeleteChanges();
+    // Auto repeat
+    if (mControlDAS <= 0) {
+        mControlARR--;
+        if (mControlARR < 0) {
+            mControlARR = sControlMaxARR;
         }
     }
 }
 
-//! @brief Cursor text string
+const u32 MenuMgr::sControlMaxDAS = 15;
+const u32 MenuMgr::sControlMaxARR = 8;
+
 const char* MenuMgr::sCursorStr = "==>";
-//! @brief Cursor text color
 const ut::Color MenuMgr::sCursorColor(255, 0, 0, 255);
-//! @brief Cursor text X offset from option
 const f32 MenuMgr::sCursorOffset = 35.0f;
 
 } // namespace caddie

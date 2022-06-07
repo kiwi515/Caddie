@@ -17,6 +17,8 @@ enum eButtonType {
     BTN_A = 0x0800,
     BTN_MINUS = 0x1000,
     BTN_HOME = 0x8000,
+
+    BTN_DPAD_ALL = BTN_LEFT | BTN_RIGHT | BTN_DOWN | BTN_UP
 };
 
 class CoreController {
