@@ -47,9 +47,8 @@ void MenuMgr::Calc() {
     if ((mBtnTrig & BTN_UP && mControlDAS == sControlMaxDAS) ||
         // Auto repeat up
         (mBtnHeld & BTN_UP && mControlARR <= 0)) {
-        mCursor--;
         // Wrap around
-        if (mCursor < 0) {
+        if (--mCursor < 0) {
             mCursor = mOpenPage->GetNumOptions() - 1;
         }
     }
@@ -57,9 +56,8 @@ void MenuMgr::Calc() {
     else if ((mBtnTrig & BTN_DOWN && mControlDAS == sControlMaxDAS) ||
              // Auto repeat down
              (mBtnHeld & BTN_DOWN && mControlARR <= 0)) {
-        mCursor++;
         // Wrap around
-        if (mCursor >= mOpenPage->GetNumOptions()) {
+        if (++mCursor >= mOpenPage->GetNumOptions()) {
             mCursor = 0;
         }
     }
@@ -120,7 +118,7 @@ void MenuMgr::CalcInput() {
     // Buttons released
     mBtnReleased = heldLastFrame & ~mBtnHeld;
 
-    // Reset DAS on D-Pad input change
+    // Reset DAS/ARR on D-Pad input change
     if (mBtnTrig & BTN_DPAD_ALL) {
         mControlDAS = sControlMaxDAS;
         mControlARR = sControlMaxARR;
@@ -128,7 +126,7 @@ void MenuMgr::CalcInput() {
         mControlDAS = Max<s32>(mControlDAS - 1, 0);
     }
 
-    // Auto repeat
+    // Auto repeat after DAS ends
     if (mControlDAS <= 0) {
         mControlARR--;
         if (mControlARR < 0) {
