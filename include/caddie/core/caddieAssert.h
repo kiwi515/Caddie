@@ -6,10 +6,10 @@
 
 #ifndef NDEBUG
 //! @brief Log a message to the console
-#define CADDIE_LOG(msg) OSReport(msg "\n")
+#define CADDIE_LOG(msg) caddie_log(msg)
 
 //! @brief Log a variadic message to the console
-#define CADDIE_LOG_EX(msg, ...) OSReport(msg "\n", __VA_ARGS__)
+#define CADDIE_LOG_EX(msg, ...) caddie_log(msg, __VA_ARGS__)
 
 //! @brief Log a message to the console when a condition is met
 #define CADDIE_WARN(exp, msg)                                                  \
@@ -44,6 +44,7 @@
 extern "C" {
 #endif
 
+void caddie_log(const char* msg, ...);
 void caddie_fail_assert(const char* file, int line, const char* msg, ...);
 
 #ifdef __cplusplus
