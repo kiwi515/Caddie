@@ -4,7 +4,7 @@
 #include "types_rp.h"
 
 class RPSysSceneCreator {
-  public:
+public:
     //! @brief RP Scene ID
     //! @wfuname
     enum ESceneID {
@@ -44,7 +44,7 @@ class RPSysSceneCreator {
         SCENE_MAX
     };
 
-  public:
+public:
     static RPSysSceneCreator& getInstance() {
         CADDIE_ASSERT(sInstance != NULL);
         return *sInstance;
@@ -52,7 +52,7 @@ class RPSysSceneCreator {
 
     void changeSceneAfterFade(int id, nw4r::ut::Color fadeColor);
 
-  private:
+private:
     static RPSysSceneCreator* sInstance;
 };
 

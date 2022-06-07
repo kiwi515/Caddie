@@ -12,7 +12,7 @@ namespace caddie {
  * @brief Golf scene menu
  */
 class GlfMenu : public MenuBase {
-  public:
+public:
     GlfMenu();
     virtual ~GlfMenu();
     virtual void OnChange();
@@ -30,7 +30,7 @@ class GlfMenu : public MenuBase {
         return (EWindSpdRange)mWindSpdRange.GetSavedValue();
     }
 
-  private:
+private:
     MenuIntOption mHole;
     MenuBoolOption mRepeatHole;
     MenuEnumOption mPinType;

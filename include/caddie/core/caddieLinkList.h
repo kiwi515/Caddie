@@ -22,7 +22,7 @@ struct TLinkListNode {
  * and GetNodeOffset())
  */
 template <typename T> class TLinkList {
-  public:
+public:
     static inline TLinkListNode* GetNodeFromElem(T* elem) {
         return (TLinkListNode*)((char*)elem + T::GetNodeOffset());
     }
@@ -165,7 +165,7 @@ template <typename T> class TLinkList {
 
     void Clear() { Remove(Begin(), End()); }
 
-  private:
+private:
     void Insert(Iterator it, TLinkListNode* node) {
         CADDIE_ASSERT(node != NULL);
 
@@ -181,7 +181,7 @@ template <typename T> class TLinkList {
         mSize++;
     }
 
-  private:
+private:
     TLinkListNode* mHead;
     TLinkListNode* mTail;
     u32 mSize;

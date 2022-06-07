@@ -9,7 +9,7 @@ namespace caddie {
  * @brief Base menu class used by the menu manager
  */
 class MenuBase {
-  public:
+public:
     MenuBase(const char* rootName, f32 x, f32 y)
         : mIsAwaitingApply(false),
           mCanDelete(false),
@@ -31,7 +31,7 @@ class MenuBase {
     MenuPage& GetRootPage() { return mRootPage; }
     const MenuPage& GetRootPage() const { return mRootPage; }
 
-  private:
+private:
     //! @brief Settings are waiting to be applied
     bool mIsAwaitingApply;
     //! @brief Prevent menu from being deleted on scene re-init

@@ -10,7 +10,7 @@ namespace caddie {
  * @brief Menu option interface
  */
 class IMenuOption : public Pane {
-  public:
+public:
     static u32 GetNodeOffset() { return offsetof(IMenuOption, mNode); }
 
     IMenuOption(const char* name) : mIsEnabled(true) {
@@ -79,11 +79,11 @@ class IMenuOption : public Pane {
         UpdateString();
     }
 
-  private:
+private:
     //! @brief Node for intrusive list
     TLinkListNode mNode;
 
-  protected:
+protected:
     //! @brief Option name
     TextBox mNameText;
     //! @brief Option value
@@ -91,7 +91,7 @@ class IMenuOption : public Pane {
     //! @brief Enable option
     bool mIsEnabled;
 
-  private:
+private:
     static const nw4r::ut::Color sEnabledTextColor;
     static const nw4r::ut::Color sDisabledTextColor;
     static const nw4r::ut::Color sEnabledStrokeColor;
@@ -102,7 +102,7 @@ class IMenuOption : public Pane {
  * @brief Menu option with integer value
  */
 class MenuIntOption : public IMenuOption {
-  public:
+public:
     MenuIntOption(const char* name, int min, int max, int initial = 0x7FFFFFFF)
         : IMenuOption(name), mMin(min), mMax(max) {
         // Initial unused
@@ -195,7 +195,7 @@ class MenuIntOption : public IMenuOption {
 
     virtual void OnClick() {}
 
-  private:
+private:
     //! @brief Minimum value
     int mMin;
     //! @brief Maximum value
@@ -210,7 +210,7 @@ class MenuIntOption : public IMenuOption {
  * @brief Menu option with boolean value
  */
 class MenuBoolOption : public MenuIntOption {
-  public:
+public:
     MenuBoolOption(const char* name, bool initial = false)
         : MenuIntOption(name, 0, 1, initial) {
         // Initialized saved/unsaved values
@@ -233,7 +233,7 @@ class MenuBoolOption : public MenuIntOption {
  * @brief Menu option with enum value
  */
 class MenuEnumOption : public MenuIntOption {
-  public:
+public:
     MenuEnumOption(const char* name, const char** values, int min, int max,
                    int initial = 0)
         : MenuIntOption(name, min, max, initial), mValues(values) {
@@ -258,7 +258,7 @@ class MenuEnumOption : public MenuIntOption {
         UpdateString();
     }
 
-  private:
+private:
     //! @brief Enum value strings
     const char** mValues;
 };
@@ -267,7 +267,7 @@ class MenuEnumOption : public MenuIntOption {
  * @brief Menu option with click callback
  */
 class MenuActionOption : public IMenuOption {
-  public:
+public:
     typedef void (*Action)(void* arg);
 
     MenuActionOption(const char* name, Action act, void* arg)
@@ -301,7 +301,7 @@ class MenuActionOption : public IMenuOption {
     void* GetActionArg() const { return mActionArg; }
     void SetActionArg(void* arg) { mActionArg = arg; }
 
-  private:
+private:
     Action mAction;
     void* mActionArg;
 };

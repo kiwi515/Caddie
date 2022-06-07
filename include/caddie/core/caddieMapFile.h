@@ -9,7 +9,7 @@ namespace caddie {
  * @brief Kamek symbol map utility for debugging exceptions
  */
 class MapFile {
-  public:
+public:
     enum LinkType {
         LINK_NONE,   //!< Map file not loaded
         LINK_STATIC, //!< Map file for static module
@@ -37,7 +37,7 @@ class MapFile {
         char* name;
     };
 
-  public:
+public:
     static MapFile& GetInstance() {
         static MapFile instance;
         return instance;
@@ -47,13 +47,13 @@ class MapFile {
     void Close();
     const Symbol* QueryTextSymbol(const void* addr);
 
-  private:
+private:
     MapFile();
     virtual ~MapFile();
 
     void Unpack();
 
-  private:
+private:
     //! @brief Map file type
     LinkType mType;
     //! @brief Map file text

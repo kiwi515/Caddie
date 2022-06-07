@@ -7,16 +7,16 @@
 #include <egg/core/eggSceneManager.h>
 
 class RPSysSceneMgr : public EGG::SceneManager {
-  public:
+public:
     static RPSysSceneMgr& getInstance() {
         CADDIE_ASSERT(sInstance != NULL);
         return *sInstance;
     }
 
-  private:
+private:
     virtual ~RPSysSceneMgr();
 
-  private:
+private:
     static RPSysSceneMgr* sInstance;
 };
 

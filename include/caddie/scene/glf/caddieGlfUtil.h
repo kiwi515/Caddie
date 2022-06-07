@@ -7,7 +7,7 @@
 namespace caddie {
 
 class GlfUtil {
-  public:
+public:
     static bool IsCurrentFirstHole();
     static bool IsFirstHoleInternal(Sp2::Glf::GameMode gm, u32 hole);
     static bool IsFirstHole(Sp2::Glf::GameMode gm, u32 hole);

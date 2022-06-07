@@ -11,7 +11,7 @@ namespace caddie {
  * @brief Page of menu options
  */
 class MenuPage : public Pane {
-  public:
+public:
     static u32 GetNodeOffset() { return offsetof(MenuPage, mNode); }
 
     MenuPage(const char* name, f32 x, f32 y, f32 leading = sDefaultLeading);
@@ -51,11 +51,11 @@ class MenuPage : public Pane {
     void SaveChanges();
     void DeleteChanges();
 
-  private:
+private:
     //! @brief Node for intrusive list
     TLinkListNode mNode;
 
-  private:
+private:
     //! @brief Parent page
     MenuPage* mParentPage;
     //! @brief Child pages

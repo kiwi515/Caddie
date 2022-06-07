@@ -6,7 +6,7 @@ namespace Sp2 {
 namespace Glf {
 
 class GlfBall {
-  public:
+public:
     virtual ~GlfBall();
 
     u32 GetLifetime() const { return mLifetime; }
@@ -14,7 +14,7 @@ class GlfBall {
 
     void Stop(bool);
 
-  private:
+private:
     char UNK_0x4[0x54 - 0x4];
     u32 mLifetime; // at 0x54
 };

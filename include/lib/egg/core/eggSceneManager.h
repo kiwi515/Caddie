@@ -7,7 +7,7 @@
 namespace EGG {
 
 class SceneManager {
-  public:
+public:
     enum eAfterFadeType {
         AFTER_FADE_TYPE_CHANGE,
         AFTER_FADE_TYPE_CHANGE_SIBLING,
@@ -73,7 +73,7 @@ class SceneManager {
         return sHeapDebug_ForCreateScene;
     }
 
-  private:
+private:
     SceneCreator* mSceneCreator;   // at 0x4
     UNKWORD WORD_0x8;              // at 0x8
     Scene* mCurrentScene;          // at 0xc

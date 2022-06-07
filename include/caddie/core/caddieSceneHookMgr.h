@@ -31,7 +31,7 @@ struct SceneHook {
  * @details Controls scene hooks and pause permission
  */
 class SceneHookMgr {
-  public:
+public:
     static SceneHookMgr& GetInstance() {
         static SceneHookMgr instance;
         return instance;
@@ -57,7 +57,7 @@ class SceneHookMgr {
     static void DoExit();
     static void DoUpdatePause();
 
-  private:
+private:
     SceneHookMgr() {
         for (int i = 0; i < RPSysSceneCreator::SCENE_MAX; i++) {
             mPauseSetting[i] = true;
@@ -66,7 +66,7 @@ class SceneHookMgr {
 
     virtual ~SceneHookMgr() {}
 
-  private:
+private:
     //! @brief Scene hooks for every scene
     SceneHook mSceneHooks[RPSysSceneCreator::SCENE_MAX];
     //! @brief Global scene hook

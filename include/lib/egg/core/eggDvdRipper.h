@@ -5,13 +5,13 @@
 namespace EGG {
 
 class DvdRipper {
-  public:
+public:
     enum EAllocDirection { ALLOC_DIRECTION_0, ALLOC_DIRECTION_1 };
 
     static void* loadToMainRAM(const char*, u8*, Heap*, EAllocDirection, u32,
                                u32*, u32*);
 
-  private:
+private:
     static bool sErrorRetry;
 };
 

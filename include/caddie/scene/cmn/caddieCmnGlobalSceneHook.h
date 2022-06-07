@@ -9,13 +9,13 @@ namespace caddie {
  * @brief Global scene hook
  */
 class GlobalSceneHook {
-  public:
+public:
     static void OnConfigure(RPSysScene*);
     static void OnCalculate(RPSysScene*);
     static void OnUserDraw(RPSysScene*);
     static void OnExit(RPSysScene*);
 
-  private:
+private:
     //! @brief Build info text
     static BuildInfo* sBuildInfo;
 };

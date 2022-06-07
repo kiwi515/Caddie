@@ -3,7 +3,7 @@
 #include "types_RP.h"
 
 class RPSysPauseMgr {
-  public:
+public:
     static RPSysPauseMgr& getInstance() {
         CADDIE_ASSERT(sInstance != NULL);
         return *sInstance;
@@ -11,7 +11,7 @@ class RPSysPauseMgr {
 
     void update();
 
-  private:
+private:
     static RPSysPauseMgr* sInstance;
 };
 

@@ -4,7 +4,7 @@
 #include "types_rp.h"
 
 class RPSysProjectLocal {
-  public:
+public:
     enum eRPNumberSys {
         NUMSYS_0,
         NUMSYS_1,
@@ -45,7 +45,7 @@ class RPSysProjectLocal {
 
     static RPSysProjectLocal* CreateInstance(EGG::Heap*);
 
-  private:
+private:
     RPSysProjectLocal(EGG::Heap*);
     virtual ~RPSysProjectLocal();
 

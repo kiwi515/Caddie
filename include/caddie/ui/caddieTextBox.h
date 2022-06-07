@@ -29,13 +29,13 @@ static inline u32 Nw4rToRGBA(nw4r::ut::Color color) {
  * @brief UI textbox
  */
 class TextBox : public Pane {
-  public:
+public:
     /**
      * @brief Text stroke types
      */
     enum EStroke { STROKE_NONE, STROKE_OUTLINE, STROKE_SHADOW };
 
-  public:
+public:
     TextBox();
     virtual ~TextBox();
     virtual void DrawSelf() const;
@@ -56,7 +56,7 @@ class TextBox : public Pane {
     nw4r::ut::Color GetStrokeColor() const { return mStrokeColor; }
     void SetStrokeColor(nw4r::ut::Color color) { mStrokeColor = color; }
 
-  private:
+private:
     //! @brief Stroke type
     EStroke mStroke;
     //! @brief Center text

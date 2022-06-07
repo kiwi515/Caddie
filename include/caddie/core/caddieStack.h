@@ -13,7 +13,7 @@ namespace caddie {
  * TLinkListNode and GetNodeOffset()
  */
 template <typename T> class TStack {
-  public:
+public:
     TStack() {}
     virtual ~TStack() {}
 
@@ -34,7 +34,7 @@ template <typename T> class TStack {
 
     bool IsEmpty() const { return Size() == 0; }
 
-  private:
+private:
     TLinkList<T> mData;
 };
 

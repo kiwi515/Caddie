@@ -8,7 +8,7 @@ namespace caddie {
  * @brief Text box displaying info about the current build of Caddie
  */
 class BuildInfo : public TextBox {
-  public:
+public:
     static const char* GetBuildDate();
     static const char* GetBuildRegion();
     static const char* GetBuildTarget();
@@ -16,7 +16,7 @@ class BuildInfo : public TextBox {
     BuildInfo();
     virtual ~BuildInfo() {}
 
-  private:
+private:
     //! @brief Build info text position
     static const nw4r::math::VEC2 sBuildTextPos;
     //! @brief Build info text color

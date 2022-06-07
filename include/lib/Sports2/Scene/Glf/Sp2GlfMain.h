@@ -9,7 +9,7 @@ namespace Sp2 {
 namespace Glf {
 
 class GlfMain {
-  public:
+public:
     static GlfMain& getInstance() {
         CADDIE_ASSERT(sInstance != NULL);
         return *sInstance;
@@ -24,7 +24,7 @@ class GlfMain {
     u32 getPin() const { return mPin; }
     void setPin(u32 i) { mPin = i; }
 
-  private:
+private:
     GlfMain();
     virtual ~GlfMain();
 

@@ -22,17 +22,17 @@ enum eButtonType {
 };
 
 class CoreController {
-  public:
+public:
     inline u16 getButtons() const { return mButtons; }
 
-  private:
+private:
     char UNK_0x0[0x1A];
     u16 mButtons; // at 0x1A
     // . . .
 };
 
 class CoreControllerMgr {
-  public:
+public:
     static CoreControllerMgr& getInstance() {
         CADDIE_ASSERT(sInstance != NULL);
         return *sInstance;
@@ -40,7 +40,7 @@ class CoreControllerMgr {
 
     CoreController* getNthController(int i);
 
-  private:
+private:
     static CoreControllerMgr* sInstance;
 };
 

@@ -13,7 +13,7 @@ namespace caddie {
  * @brief Base UI class
  */
 class Pane {
-  public:
+public:
     static u32 GetNodeOffset() { return offsetof(Pane, mNode); }
 
     Pane();
@@ -37,11 +37,11 @@ class Pane {
     const char* GetName() const { return mName; }
     void SetName(const char* str);
 
-  private:
+private:
     //! @brief Node for intrusive list
     TLinkListNode mNode;
 
-  protected:
+protected:
     //! @brief Pane name max length
     static const int PANE_NAME_LEN = 32;
 

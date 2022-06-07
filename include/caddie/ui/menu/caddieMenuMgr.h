@@ -10,7 +10,7 @@ namespace caddie {
  * @brief Menu context manager
  */
 class MenuMgr {
-  public:
+public:
     static MenuMgr& GetInstance() {
         static MenuMgr instance;
         return instance;
@@ -40,7 +40,7 @@ class MenuMgr {
     bool IsVisible() const { return mIsVisible; }
     void SetVisible(bool vis) { mIsVisible = vis; }
 
-  private:
+private:
     MenuMgr()
         : mMenu(NULL),
           mOpenPage(NULL),
@@ -58,7 +58,7 @@ class MenuMgr {
 
     void CalcInput();
 
-  private:
+private:
     //! @brief Current menu
     MenuBase* mMenu;
     //! @brief Current page

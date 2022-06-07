@@ -9,14 +9,14 @@ namespace Sp2 {
 namespace Glf {
 
 class GlfBallMgr {
-  public:
+public:
     static GlfBall& GetBall(int i) {
         CADDIE_ASSERT(i < PLAYER_MAX);
         CADDIE_ASSERT(sGlfBalls[i] != NULL);
         return *sGlfBalls[i];
     }
 
-  private:
+private:
     static GlfBall* sGlfBalls[PLAYER_MAX];
 };
 

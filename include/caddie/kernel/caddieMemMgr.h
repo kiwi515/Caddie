@@ -11,7 +11,7 @@ namespace caddie {
  * @details Manages child of main game heap
  */
 class MemManager {
-  public:
+public:
     static void Initialize();
 
     static void* Alloc(u32 size, s32 align) {
@@ -29,7 +29,7 @@ class MemManager {
         return sHeap->getAllocatableSize(4);
     }
 
-  private:
+private:
     MemManager() {}
     ~MemManager() {}
 

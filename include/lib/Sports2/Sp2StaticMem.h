@@ -6,7 +6,7 @@
 namespace Sp2 {
 
 class StaticMem {
-  public:
+public:
     static StaticMem& getInstance() {
         CADDIE_ASSERT(sInstance != NULL);
         return *sInstance;
@@ -15,7 +15,7 @@ class StaticMem {
     int getStaticVar(int var, bool b);
     void setStaticVar(int var, int value, bool b);
 
-  private:
+private:
     static StaticMem* sInstance;
 };
 

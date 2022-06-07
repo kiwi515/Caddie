@@ -5,7 +5,7 @@
 namespace EGG {
 
 class Scene {
-  public:
+public:
     Scene();
 
     virtual ~Scene();
@@ -25,7 +25,7 @@ class Scene {
     inline Scene* getChildScene() const { return mChildScene; }
     inline s32 getSceneID() const { return mSceneID; }
 
-  private:
+private:
     Heap* mHeap;         // at 0x4
     Heap* mHeap_Mem1;    // at 0x8
     Heap* mHeap_Mem2;    // at 0xc

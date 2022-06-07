@@ -9,7 +9,7 @@ namespace caddie {
  * @brief Golf scene hook
  */
 class GlfSceneHook {
-  public:
+public:
     static void OnConfigure(RPSysScene*);
     static void OnCalculate(RPSysScene*);
     static void OnUserDraw(RPSysScene*);
@@ -29,7 +29,7 @@ class GlfSceneHook {
 
     static GlfMenu& GetMenu();
 
-  private:
+private:
     //! @brief Golf menu
     static GlfMenu* sGlfMenu;
 };
