@@ -14,9 +14,6 @@ namespace caddie {
  * @brief Menu logic
  */
 void MenuMgr::Calc() {
-    CADDIE_ASSERT(mMenu != NULL);
-    CADDIE_ASSERT(mOpenPage != NULL);
-
     CalcInput();
 
     // Toggle visibility
@@ -24,7 +21,7 @@ void MenuMgr::Calc() {
         SetVisible(!mIsVisible);
 
         // Delete changes on menu close
-        if (!IsVisible()) {
+        if (!IsVisible() && mOpenPage != NULL) {
             mOpenPage->DeleteChanges();
         }
     }
@@ -32,6 +29,10 @@ void MenuMgr::Calc() {
     if (!IsVisible()) {
         return;
     }
+
+    // Menu is required to be open when visible
+    CADDIE_ASSERT(mMenu != NULL);
+    CADDIE_ASSERT(mOpenPage != NULL);
 
     // Select option
     if (mBtnTrig & BTN_A) {
@@ -89,12 +90,11 @@ void MenuMgr::Calc() {
  * @brief Draw focused page
  */
 void MenuMgr::Draw() const {
-    CADDIE_ASSERT(mOpenPage != NULL);
-
     if (!IsVisible()) {
         return;
     }
 
+    CADDIE_ASSERT(mOpenPage != NULL);
     // Draw page
     mOpenPage->Draw();
     // Draw cursor
@@ -105,8 +105,6 @@ void MenuMgr::Draw() const {
  * @brief Update P1 input
  */
 void MenuMgr::CalcInput() {
-    CADDIE_ASSERT(mOpenPage != NULL);
-
     // Update player input
     // (Only use player 1 input)
     const CoreController* cont =
