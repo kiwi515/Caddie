@@ -6,14 +6,23 @@
 
 namespace caddie {
 
+/**
+ * @brief Get current scene's ID
+ */
 s32 GetCurrentSceneID() {
     return RPSysSceneMgr::getInstance().getCurrentSceneID();
 }
 
+/**
+ * @brief Get current scene
+ */
 RPSysScene* GetCurrentScene() {
     return (RPSysScene*)RPSysSceneMgr::getInstance().getCurrentScene();
 }
 
+/**
+ * @brief Dispatch scene hook Configure callback
+ */
 void SceneHookMgr::DoConfigure() {
     const s32 scene = GetCurrentSceneID();
     SceneHookMgr& hookMgr = SceneHookMgr::GetInstance();
@@ -23,6 +32,9 @@ void SceneHookMgr::DoConfigure() {
 }
 kmBranch(0x801c389c, SceneHookMgr::DoConfigure);
 
+/**
+ * @brief Dispatch scene hook Calculate callback
+ */
 void SceneHookMgr::DoCalculate() {
     const s32 scene = GetCurrentSceneID();
     SceneHookMgr& hookMgr = SceneHookMgr::GetInstance();
@@ -32,6 +44,9 @@ void SceneHookMgr::DoCalculate() {
 }
 kmBranch(0x8022f8f8, SceneHookMgr::DoCalculate);
 
+/**
+ * @brief Dispatch scene hook UserDraw callback
+ */
 void SceneHookMgr::DoUserDraw() {
     const s32 scene = GetCurrentSceneID();
     SceneHookMgr& hookMgr = SceneHookMgr::GetInstance();
@@ -41,6 +56,9 @@ void SceneHookMgr::DoUserDraw() {
 }
 kmBranch(0x802542a8, SceneHookMgr::DoUserDraw);
 
+/**
+ * @brief Dispatch scene hook Exit callback
+ */
 void SceneHookMgr::DoExit() {
     const s32 scene = GetCurrentSceneID();
     SceneHookMgr& hookMgr = SceneHookMgr::GetInstance();
@@ -50,6 +68,9 @@ void SceneHookMgr::DoExit() {
 }
 kmBranch(0x8022f6f4, SceneHookMgr::DoExit);
 
+/**
+ * @brief Update pause manager
+ */
 void SceneHookMgr::DoUpdatePause() {
     const s32 scene = GetCurrentSceneID();
     SceneHookMgr& hookMgr = SceneHookMgr::GetInstance();

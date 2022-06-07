@@ -35,7 +35,7 @@ enum GameMode {
     GM_SPECIAL = 18
 };
 
-// For use with StaticMem during the Glf scene
+// Glf scene StaticMem variables
 enum GlfStaticMem {
     VAR_GAMEMODE,
     VAR_NEXTHOLE,
@@ -45,6 +45,9 @@ enum GlfStaticMem {
     VAR_WIND = 7,
 };
 
+/**
+ * @brief Pack wind into a byte for StaticMem
+ */
 static inline u8 PackWind(u8 direction, u8 speed) {
     return (speed << 3) | direction;
 }

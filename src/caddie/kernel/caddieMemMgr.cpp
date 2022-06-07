@@ -2,6 +2,9 @@
 
 namespace caddie {
 
+/**
+ * @brief Initialize Caddie main heap
+ */
 void MemManager::Initialize() {
     CADDIE_ASSERT_EX(sHeap == NULL, "MemManager already initialized!");
 
