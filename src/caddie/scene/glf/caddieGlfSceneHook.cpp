@@ -234,6 +234,12 @@ void GlfSceneHook::Apply_GlfMain() {
 kmBranch(0x8040680c, GlfSceneHook::Apply_GlfMain);
 
 /**
+ * @brief Disable Golf tutorial
+ */
+bool GlfSceneHook::ShouldShowTutorial() { return false; }
+kmBranch(0x803fa370, GlfSceneHook::ShouldShowTutorial);
+
+/**
  * @brief Check whether the next hole can be played
  * @note Repeat Hole option prevents game from ending
  */

@@ -23,6 +23,7 @@ class GlfSceneHook {
     static void Apply_StaticMem();
     static void Apply_GlfMain();
 
+    static bool ShouldShowTutorial();
     static bool CanPlayNextHole();
     static u32 GetNumHolesPlayed();
 
