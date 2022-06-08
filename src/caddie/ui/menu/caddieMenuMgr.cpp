@@ -26,13 +26,9 @@ void MenuMgr::Calc() {
         }
     }
 
-    if (!IsVisible()) {
+    if (!IsVisible() || mMenu == NULL || mOpenPage == NULL) {
         return;
     }
-
-    // Menu is required to be open when visible
-    CADDIE_ASSERT(mMenu != NULL);
-    CADDIE_ASSERT(mOpenPage != NULL);
 
     // Select option
     if (mBtnTrig & BTN_A) {
@@ -88,11 +84,10 @@ void MenuMgr::Calc() {
  * @brief Draw focused page
  */
 void MenuMgr::Draw() const {
-    if (!IsVisible()) {
+    if (!IsVisible() || mMenu == NULL || mOpenPage == NULL) {
         return;
     }
 
-    CADDIE_ASSERT(mOpenPage != NULL);
     // Draw page
     mOpenPage->Draw();
     // Draw cursor

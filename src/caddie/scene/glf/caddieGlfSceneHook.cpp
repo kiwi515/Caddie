@@ -24,8 +24,6 @@ void GlfSceneHook::OnConfigure(RPSysScene* scene) {
         CADDIE_ASSERT(sGlfMenu != NULL);
     }
 
-    // Hide menu
-    MenuMgr::GetInstance().SetVisible(false);
     // Open menu root
     MenuMgr::GetInstance().OpenMenu(sGlfMenu);
 }
@@ -35,18 +33,14 @@ void GlfSceneHook::OnConfigure(RPSysScene* scene) {
  *
  * @param scene Current scene
  */
-void GlfSceneHook::OnCalculate(RPSysScene* scene) {
-    MenuMgr::GetInstance().Calc();
-}
+void GlfSceneHook::OnCalculate(RPSysScene* scene) {}
 
 /**
  * @brief Golf scene user draw callback
  *
  * @param scene Current scene
  */
-void GlfSceneHook::OnUserDraw(RPSysScene* scene) {
-    MenuMgr::GetInstance().Draw();
-}
+void GlfSceneHook::OnUserDraw(RPSysScene* scene) {}
 
 /**
  * @brief Golf scene exit callback

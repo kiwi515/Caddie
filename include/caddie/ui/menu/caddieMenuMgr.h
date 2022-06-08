@@ -27,8 +27,16 @@ public:
         mMenu->OnChange();
     }
 
+    void CloseMenu() {
+        if (mMenu != NULL && mOpenPage != NULL) {
+            mMenu->DeleteChanges();
+            mMenu = NULL;
+            mOpenPage = NULL;
+        }
+    }
+
     void ClosePage() {
-        if (!mOpenPage->IsRootPage()) {
+        if (mOpenPage != NULL && !mOpenPage->IsRootPage()) {
             mOpenPage = mOpenPage->GetParentPage();
             mCursor = 0;
         }
