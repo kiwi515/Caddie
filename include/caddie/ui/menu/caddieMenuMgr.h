@@ -1,5 +1,6 @@
 #ifndef CADDIE_UI_MENU_MGR_H
 #define CADDIE_UI_MENU_MGR_H
+#include "caddieInputMgr.h"
 #include "caddieMenuBase.h"
 #include "caddieMenuPage.h"
 #include "types_caddie.h"
@@ -49,14 +50,7 @@ public:
     void SetVisible(bool vis) { mIsVisible = vis; }
 
 private:
-    MenuMgr()
-        : mMenu(NULL),
-          mOpenPage(NULL),
-          mCursor(0),
-          mIsVisible(false),
-          mBtnHeld(0x0),
-          mBtnTrig(0x0),
-          mBtnReleased(0x0) {
+    MenuMgr() : mMenu(NULL), mOpenPage(NULL), mCursor(0), mIsVisible(false) {
         // Set up cursor textbox
         mCursorText.SetText(sCursorStr);
         mCursorText.SetTextColor(sCursorColor);
@@ -78,17 +72,10 @@ private:
     //! @brief Visiblity flag
     bool mIsVisible;
 
-    //! @brief Buttons being held
-    u32 mBtnHeld;
-    //! @brief Buttons pressed this frame
-    u32 mBtnTrig;
-    //! @brief Buttons released
-    u32 mBtnReleased;
-
     //! @brief Delayed auto shift
-    s32 mControlDAS;
+    s32 mControlDAS[InputMgr::PLAYER_MAX];
     //! @brief Auto repeat rate
-    s32 mControlARR;
+    s32 mControlARR[InputMgr::PLAYER_MAX];
 
     //! @brief Menu delay before auto repeat (in frames)
     static const u32 sControlMaxDAS;

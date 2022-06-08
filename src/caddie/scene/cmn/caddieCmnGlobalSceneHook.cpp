@@ -2,6 +2,7 @@
 
 #include "caddieAssert.h"
 #include "caddieBuildInfo.h"
+#include "caddieInputMgr.h"
 #include "caddieMenuMgr.h"
 
 namespace caddie {
@@ -28,6 +29,7 @@ void GlobalSceneHook::OnConfigure(RPSysScene* scene) {
  * @param scene Current scene
  */
 void GlobalSceneHook::OnCalculate(RPSysScene* scene) {
+    InputMgr::GetInstance().Calc();
     MenuMgr::GetInstance().Calc();
 }
 

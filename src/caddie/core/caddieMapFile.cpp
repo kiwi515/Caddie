@@ -63,8 +63,8 @@ void MapFile::Close() {
  * @brief Query text section symbol name by address
  */
 const MapFile::Symbol* MapFile::QueryTextSymbol(const void* addr) {
-    CADDIE_ASSERT_EX((u32)addr & 0x80000000 || (u32)addr & 0x90000000,
-                     "Address not in MEM1/MEM2");
+    CADDIE_WARN_EX((u32)addr & 0x80000000 || (u32)addr & 0x90000000,
+                   "Address not in MEM1/MEM2 (%08X)", addr);
 
     if (mMapBinary == NULL || !mIsUnpacked) {
         return NULL;
