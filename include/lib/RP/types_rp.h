@@ -6,6 +6,9 @@ struct RPSysSceneCreator;
 struct RPSysScene;
 struct RPSysSceneMgr;
 struct RPSysSysMsgWinMgr;
+struct RPSysEffect;
 struct RPSysProjectLocal;
+struct RPGrpModelG3D;
+struct RPUtlMapObject;
 
 #endif

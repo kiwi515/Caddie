@@ -3,12 +3,15 @@
 #include "caddieAssert.h"
 #include "caddieGlfMenu.h"
 #include "caddieGlfUtil.h"
+#include "caddieInputMgr.h"
 #include "caddieMenuMgr.h"
 
+#include <Sports2/Scene/Glf/RPGlfBall.h>
+#include <Sports2/Scene/Glf/RPGlfPlayerManager.h>
+#include <Sports2/Scene/Glf/Sp2GlfDefine.h>
+#include <Sports2/Scene/Glf/Sp2GlfMain.h>
 #include <Sports2/Sp2StaticMem.h>
 #include <Sports2/Sp2Util.h>
-#include <Sports2/scene/Glf/Sp2GlfDefine.h>
-#include <Sports2/scene/Glf/Sp2GlfMain.h>
 
 namespace caddie {
 
@@ -226,6 +229,37 @@ void GlfSceneHook::Apply_GlfMain() {
     Apply_Pin();
 }
 kmBranch(0x8040680c, GlfSceneHook::Apply_GlfMain);
+
+/**
+ * @brief Allow shot to be canceled by holding B + MINUS + 2
+ * @details Forces shot to end while removing the stroke penalty
+ */
+void GlfSceneHook::OnGlfBallCalc(RPGlfBall* ball, u32 frame, u32) {
+    CADDIE_ASSERT(ball != NULL);
+
+    static const u32 STOP_SHOT_BTNS =
+        InputMgr::BTN_B | InputMgr::BTN_MINUS | InputMgr::BTN_2;
+
+    if (ball->IsMoving()) {
+        // Stop shot with B + MINUS + 2
+        // TO-DO: Check input from current player's remote
+        const u32 held = InputMgr::GetInstance().Held(InputMgr::PLAYER_1);
+        if ((held & STOP_SHOT_BTNS) == STOP_SHOT_BTNS) {
+            // Remove OOB stroke penalty
+            RPGlfPlayer& player =
+                RPGlfPlayerManager::GetInstance().GetCurrentPlayer();
+            player.SetStroke(player.GetStroke() - 2);
+
+            // Mark ball as OOB, then force shot to end
+            ball->SetCollision(RPGlfCollisionModel::COL_OB);
+            ball->SetCollisionNoAir(RPGlfCollisionModel::COL_OB);
+            ball->SetMoving(false);
+        }
+    }
+
+    ball->Calc(frame);
+}
+kmCall(0x80414754, GlfSceneHook::OnGlfBallCalc);
 
 /**
  * @brief Disable Golf tutorial

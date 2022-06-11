@@ -3,7 +3,6 @@
 #include "caddieAssert.h"
 #include "caddieInputMgr.h"
 
-#include <egg/core/eggController.h>
 #include <nw4r/math/math_types.h>
 
 using namespace nw4r;
@@ -25,7 +24,7 @@ void MenuMgr::Calc() {
         const u32 held = InputMgr::GetInstance().Held(player);
 
         // Toggle visibility
-        if (trig & BTN_PLUS) {
+        if (trig & InputMgr::BTN_PLUS) {
             SetVisible(!mIsVisible);
 
             // Delete changes on menu close
@@ -39,43 +38,46 @@ void MenuMgr::Calc() {
         }
 
         // Select option
-        if (trig & BTN_A) {
+        if (trig & InputMgr::BTN_A) {
             mOpenPage->GetOption(mCursor).OnClick();
         }
         // Close current page
-        else if (trig & BTN_B) {
+        else if (trig & InputMgr::BTN_B) {
             ClosePage();
         }
 
         // Initial up input before DAS
-        if ((trig & BTN_UP && mControlDAS[i] == sControlMaxDAS) ||
+        if ((trig & InputMgr::BTN_UP && mControlDAS[i] == sControlMaxDAS) ||
             // Auto repeat up
-            (held & BTN_UP && mControlARR[i] <= 0)) {
+            (held & InputMgr::BTN_UP && mControlARR[i] <= 0)) {
             // Wrap around
             if (--mCursor < 0) {
                 mCursor = mOpenPage->GetNumOptions() - 1;
             }
         }
         // Initial down input before DAS
-        else if ((trig & BTN_DOWN && mControlDAS[i] == sControlMaxDAS) ||
+        else if ((trig & InputMgr::BTN_DOWN &&
+                  mControlDAS[i] == sControlMaxDAS) ||
                  // Auto repeat down
-                 (held & BTN_DOWN && mControlARR[i] <= 0)) {
+                 (held & InputMgr::BTN_DOWN && mControlARR[i] <= 0)) {
             // Wrap around
             if (++mCursor >= mOpenPage->GetNumOptions()) {
                 mCursor = 0;
             }
         }
         // Initial right input before DAS
-        else if ((trig & BTN_RIGHT && mControlDAS[i] == sControlMaxDAS) ||
+        else if ((trig & InputMgr::BTN_RIGHT &&
+                  mControlDAS[i] == sControlMaxDAS) ||
                  // Auto repeat right
-                 (held & BTN_RIGHT && mControlARR[i] <= 0)) {
+                 (held & InputMgr::BTN_RIGHT && mControlARR[i] <= 0)) {
             mOpenPage->GetOption(mCursor).Increment();
             mMenu->OnChange();
         }
         // Initial left input before DAS
-        else if ((trig & BTN_LEFT && mControlDAS[i] == sControlMaxDAS) ||
+        else if ((trig & InputMgr::BTN_LEFT &&
+                  mControlDAS[i] == sControlMaxDAS) ||
                  // Auto repeat left
-                 (held & BTN_LEFT && mControlARR[i] <= 0)) {
+                 (held & InputMgr::BTN_LEFT && mControlARR[i] <= 0)) {
             mOpenPage->GetOption(mCursor).Decrement();
             mMenu->OnChange();
         }
@@ -112,7 +114,7 @@ void MenuMgr::CalcInput() {
         const u32 trig = InputMgr::GetInstance().Trig(player);
 
         // Reset DAS/ARR on D-Pad input change
-        if (trig & BTN_DPAD_ALL) {
+        if (trig & InputMgr::BTN_DPAD_ALL) {
             mControlDAS[i] = sControlMaxDAS;
             mControlARR[i] = sControlMaxARR;
         } else {

@@ -101,8 +101,9 @@ __dt__Q33Sp23Glf7GlfMainFv=0x80406c10
 Rand__3Sp2Fv=0x8025c9b0
 Print__3Sp2FPCcUlbfff=0x80373098
 
-# Sports2/Glf/Sp2GlfBall
-Stop__Q33Sp23Glf7GlfBallFb=0x80413b04
+# Sports2/Glf/RPGlfBall
+Calc__9RPGlfBallFUl=0x80413b68
+sFlags__9RPGlfBall=0x806fd91c
 
-# Sports2/Glf/Sp2GlfBallMgr
-sGlfBalls__Q33Sp23Glf10GlfBallMgr=0x806f54e8
+# Sports2/Glf/RPGlfPlayerManager
+sInstance__18RPGlfPlayerManager=0x806f5468
