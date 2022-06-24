@@ -28,6 +28,14 @@ public:
         mMenu->OnChange();
     }
 
+    void OpenPage(MenuPage* page) {
+        CADDIE_ASSERT(page != NULL);
+        // New page should be a subpage of our current page
+        CADDIE_ASSERT(page->GetParentPage() == mOpenPage);
+        mOpenPage = page;
+        mCursor = 0;
+    }
+
     void CloseMenu() {
         if (mMenu != NULL && mOpenPage != NULL) {
             mMenu->DeleteChanges();
