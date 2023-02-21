@@ -16,14 +16,16 @@ MenuPage::MenuPage(const char* name, f32 x, f32 y, f32 leading)
 }
 
 MenuPage::~MenuPage() {
-    // TODO: Fix this
+    TLinkList<IMenuOption>::Iterator it = mOptions.Begin();
+    for (; it != mOptions.End(); it++) {
+        TLinkList<IMenuOption>::Iterator next = it++;
 
-    // TLinkList<IMenuOption>::Iterator it = mOptions.Begin();
-    // for(; it != mOptions.End(); it++) {
-    //     TLinkList<IMenuOption>::Iterator next = it++;
-    //     mOptions.Remove(next);
-    //     delete &*next;
-    // }
+        // Free heap memory if possible
+        if (next->IsUserAllocated()) {
+            mOptions.Remove(next);
+            delete &*next;
+        }
+    }
 }
 
 /**

@@ -4,17 +4,24 @@
 
 namespace caddie {
 
-Pane::Pane() : mParent(NULL) {}
+Pane::Pane() : mIsUserAllocated(false), mParent(NULL), mIsVisible(true) {}
 
 Pane::~Pane() {
-    // TODO: Fix this
+    TLinkList<Pane>::Iterator it = mChildren.Begin();
+    for (; it != mChildren.End(); it++) {
+        TLinkList<Pane>::Iterator next = it++;
 
-    // TLinkList<Pane>::Iterator it = mChildren.Begin();
-    // for (; it != mChildren.End(); it++) {
-    //     TLinkList<Pane>::Iterator next = it++;
-    //     mChildren.Remove(next);
-    //     delete &*next;
-    // }
+        // Remove from parent
+        if (mParent != NULL) {
+            mParent->RemoveChild(this);
+        }
+
+        // Free heap memory if possible
+        if (next->IsUserAllocated()) {
+            mChildren.Remove(next);
+            delete &*next;
+        }
+    }
 }
 
 /**
@@ -85,8 +92,6 @@ Pane* Pane::FindChild(const char* name) const {
  */
 void Pane::SetName(const char* name) {
     CADDIE_ASSERT(name != NULL);
-
-    // Warn if pane name will be truncated
     CADDIE_WARN_EX(strlen(name) > PANE_NAME_LEN, "Pane name too long! (%s)",
                    name);
 

@@ -19,6 +19,9 @@ public:
     virtual void Draw() const;
     virtual void DrawSelf() const = 0;
 
+    bool IsUserAllocated() const { return mIsUserAllocated; }
+    void SetUserAllocated(bool b) { mIsUserAllocated = b; }
+
     void AppendChild(Pane* child);
     void RemoveChild(const Pane* child);
     Pane* FindChild(const char* name) const;
@@ -40,6 +43,9 @@ private:
     TLinkListNode mNode;
 
 protected:
+    //! @brief Whether the user must free the pane memory
+    bool mIsUserAllocated;
+
     //! @brief Pane name max length
     static const int PANE_NAME_LEN = 32;
 
