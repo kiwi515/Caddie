@@ -37,7 +37,6 @@ public:
      */
     void Pop() {
         Pane* top = mPaneStack.Pop();
-        top->~Pane();
 
         // Free memory if possible
         if (top->IsUserAllocated()) {
