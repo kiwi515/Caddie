@@ -1,7 +1,6 @@
 #ifndef SP2_GLF_GLFMAIN_H
 #define SP2_GLF_GLFMAIN_H
-#include "caddieAssert.h"
-#include "types_sp2.h"
+#include "types_caddie.h"
 
 #include <Scene/Glf/Sp2GlfDefine.h>
 

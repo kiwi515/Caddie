@@ -1,7 +1,5 @@
 #include "caddieGlfUtil.h"
 
-#include "caddieAssert.h"
-
 #include <Sports2/Scene/Glf/Sp2GlfMain.h>
 
 namespace caddie {

@@ -1,8 +1,6 @@
 #include "caddiePane.h"
 
-#include "caddieAssert.h"
-
-#include <string.h>
+#include <cstring>
 
 namespace caddie {
 

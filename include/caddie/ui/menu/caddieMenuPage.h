@@ -1,6 +1,5 @@
 #ifndef CADDIE_UI_MENU_PAGE_H
 #define CADDIE_UI_MENU_PAGE_H
-#include "caddieAssert.h"
 #include "caddieMenuOption.h"
 #include "caddiePane.h"
 #include "types_caddie.h"

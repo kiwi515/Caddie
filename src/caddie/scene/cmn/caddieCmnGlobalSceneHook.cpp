@@ -1,6 +1,5 @@
 #include "caddieCmnGlobalSceneHook.h"
 
-#include "caddieAssert.h"
 #include "caddieBuildInfo.h"
 #include "caddieInputMgr.h"
 #include "caddieMenuMgr.h"

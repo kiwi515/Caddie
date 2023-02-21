@@ -2,9 +2,9 @@
 
 #include "types_caddie.h"
 
-namespace caddie {
-
 using namespace nw4r;
+
+namespace caddie {
 
 /**
  * @brief Caddie module build date

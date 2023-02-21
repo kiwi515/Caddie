@@ -1,12 +1,10 @@
 #include "caddieMenuMgr.h"
 
-#include "caddieAssert.h"
 #include "caddieInputMgr.h"
 
-#include <nw4r/math/math_types.h>
+#include <nw4r/math.h>
 
 using namespace nw4r;
-using namespace EGG;
 
 namespace caddie {
 

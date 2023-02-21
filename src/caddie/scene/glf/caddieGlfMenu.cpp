@@ -6,9 +6,9 @@
 #include <Sports2/Scene/Glf/Sp2GlfDefine.h>
 #include <nw4r/ut.h>
 
-namespace caddie {
-
 using namespace nw4r;
+
+namespace caddie {
 
 GlfMenu::GlfMenu()
     : MenuBase(MSG_MENU_TITLE, sMenuPosX, sMenuPosY),

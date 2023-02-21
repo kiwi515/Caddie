@@ -1,7 +1,5 @@
 #include "caddieSceneHookMgr.h"
 
-#include "caddieAssert.h"
-
 #include <RP/RPSystem.h>
 
 namespace caddie {
