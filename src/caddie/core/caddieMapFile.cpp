@@ -3,10 +3,8 @@
 #include "caddieRuntime.h"
 #include "caddieSTL.h"
 
-#include <egg/core/eggDvdRipper.h>
+#include <egg/core.h>
 #include <string.h>
-
-using namespace EGG;
 
 namespace caddie {
 
@@ -28,8 +26,8 @@ void MapFile::LoadFromDVD(const char* path, LinkType type) {
     }
 
     // Load file from disc
-    mMapBinary = (char*)DvdRipper::loadToMainRAM(
-        path, NULL, NULL, DvdRipper::ALLOC_DIRECTION_1, 0, NULL, NULL);
+    mMapBinary = static_cast<char*>(EGG::DvdRipper::loadToMainRAM(
+        path, NULL, NULL, EGG::DvdRipper::ALLOC_DIR_TOP, 0, NULL, NULL));
 
     CADDIE_WARN_EX(mMapBinary == NULL, "Map file (%s) could not be opened!",
                    path);
@@ -93,25 +91,25 @@ void MapFile::Unpack() {
     // Skip map file header (2 lines)
     char* map = mMapBinary;
     for (int i = 0; i < 2; i++) {
-        map = strchr(map, '\n') + 1;
+        map = cstl::strchr(map, '\n') + 1;
     }
 
     // Parse lines
-    for (char* next = map; (next = strchr(map, '\n')); map = next + 1) {
+    for (char* next = map; (next = cstl::strchr(map, '\n')); map = next + 1) {
         Symbol* sym = new Symbol();
 
         // Location
         if (mType == LINK_STATIC) {
-            sym->addr = (void*)strtoul(map, &map, 16);
+            sym->addr = reinterpret_cast<void*>(cstl::strtoul(map, &map, 16));
         } else {
-            sym->offset = strtoul(map, &map, 16);
+            sym->offset = cstl::strtoul(map, &map, 16);
         }
 
         // Linkage
         sym->type = mType;
 
         // Size
-        sym->size = strtoul(map, &map, 16);
+        sym->size = cstl::strtoul(map, &map, 16);
 
         // Trim whitespace from name
         while (*map == ' ') {

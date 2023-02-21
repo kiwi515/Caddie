@@ -1,6 +1,5 @@
 #ifndef CADDIE_SCENE_CMN_GLOBAL_SCENE_HOOK_H
 #define CADDIE_SCENE_CMN_GLOBAL_SCENE_HOOK_H
-#include "types_RP.h"
 #include "types_caddie.h"
 
 namespace caddie {

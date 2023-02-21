@@ -36,7 +36,7 @@ void MenuPage::DrawSelf() const {
     for (; it != mOptions.End(); it++) {
         it->SetOptionPosition(pos, mWidth);
         it->Draw();
-        pos.mCoords.y += mLeading;
+        pos.y += mLeading;
     }
 }
 

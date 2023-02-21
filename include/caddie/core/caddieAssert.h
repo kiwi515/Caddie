@@ -1,8 +1,6 @@
 #ifndef CADDIE_CORE_ASSERT_H
 #define CADDIE_CORE_ASSERT_H
-#include "types.h"
-
-#include <OS/OSError.h>
+#include <types.h>
 
 #ifndef NDEBUG
 //! @brief Log a message to the console

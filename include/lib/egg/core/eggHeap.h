@@ -3,8 +3,8 @@
 #include "eggDisposer.h"
 #include "types_egg.h"
 
-#include <RevoSDK/MEM/mem_heapCommon.h>
-#include <nw4r/ut/ut_list.h>
+#include <RevoSDK/MEM.h>
+#include <nw4r/ut.h>
 
 #define MB_AS_B (1024.0f * 1024.0f)
 #define KB_AS_B (1024.0f)

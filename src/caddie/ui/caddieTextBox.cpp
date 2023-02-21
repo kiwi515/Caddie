@@ -28,18 +28,17 @@ void TextBox::DrawSelf() const {
 
     switch (mStroke) {
     case STROKE_NONE:
-        Sp2::Print(mTextBuffer, Nw4rToARGB(mTextColor), mIsCentered,
-                   mPos.mCoords.x, mPos.mCoords.y);
+        Sp2::Print(mTextBuffer, Nw4rToARGB(mTextColor), mIsCentered, mPos.x,
+                   mPos.y);
         break;
     case STROKE_OUTLINE:
         Sp2::PrintOutline(mTextBuffer, Nw4rToARGB(mTextColor),
-                          Nw4rToARGB(mStrokeColor), mIsCentered, mPos.mCoords.x,
-                          mPos.mCoords.y);
+                          Nw4rToARGB(mStrokeColor), mIsCentered, mPos.x,
+                          mPos.y);
         break;
     case STROKE_SHADOW:
         Sp2::PrintShadow(mTextBuffer, Nw4rToARGB(mTextColor),
-                         Nw4rToARGB(mStrokeColor), mIsCentered, mPos.mCoords.x,
-                         mPos.mCoords.y);
+                         Nw4rToARGB(mStrokeColor), mIsCentered, mPos.x, mPos.y);
         break;
     }
 }
@@ -85,7 +84,7 @@ void TextBox::SetTextFmt(const char* str, ...) {
     char msg_buf[512];
     va_list list;
 
-    va_start(str, list);
+    va_start(list, str);
     vsnprintf(msg_buf, sizeof(msg_buf), str, list);
     va_end(list);
 

@@ -6,7 +6,7 @@ namespace EGG {
 
 class DvdRipper {
 public:
-    enum EAllocDirection { ALLOC_DIRECTION_0, ALLOC_DIRECTION_1 };
+    enum EAllocDirection { ALLOC_DIR_NONE, ALLOC_DIR_TOP, ALLOC_DIR_BOTTOM };
 
     static void* loadToMainRAM(const char*, u8*, Heap*, EAllocDirection, u32,
                                u32*, u32*);

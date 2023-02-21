@@ -1,6 +1,10 @@
 #ifndef MSL_STRING_H
 #define MSL_STRING_H
-#include <stddef.h>
+#include <types.h>
+
+#include "internal/mem.h"
+#include <TRK/__mem.h>
+#include <extras.h>
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -12,7 +16,6 @@ char* strcat(char*, const char*);
 char* strncat(char*, const char*, size_t);
 
 int strcmp(const char*, const char*);
-int stricmp(const char*, const char*);
 int strncmp(const char*, const char*, size_t);
 
 char* strchr(const char*, int);

@@ -2,7 +2,8 @@
 #define CADDIE_KERNEL_EXCEPTION_H
 #include "types_caddie.h"
 
-#include <OS/OSContext.h>
+// Forward declaration
+struct OSContext;
 
 namespace caddie {
 

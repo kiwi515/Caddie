@@ -1,12 +1,13 @@
 #include "caddieAssert.h"
 
-#include <OS/OSFatal.h>
-#include <stdarg.h>
-#include <stdio.h>
-#include <string.h>
+#include <OS.h>
+#include <cstdarg>
+#include <cstdio>
+#include <cstring>
 
-static const u32 sDebugBg = 0x008EA1FF;
-static const u32 sDebugFg = 0xFFFFFF00;
+// TODO: Move to caddie color structure
+static const GXColor sDebugBg = (GXColor){0, 142, 161, 0};
+static const GXColor sDebugFg = (GXColor){255, 255, 255, 0};
 
 /**
  * @brief Log message to the console
@@ -16,7 +17,7 @@ void caddie_log(const char* msg, ...) {
     // Format message
     char msg_buf[0x800];
     va_list list;
-    va_start(msg, list);
+    va_start(list, msg);
     vsnprintf(msg_buf, sizeof(msg_buf), msg, list);
     va_end(list);
 
@@ -33,7 +34,7 @@ void caddie_fail_assert(const char* file, int line, const char* msg, ...) {
     // Format message
     char msg_buf[0x800];
     va_list list;
-    va_start(msg, list);
+    va_start(list, msg);
     vsnprintf(msg_buf, sizeof(msg_buf), msg, list);
     va_end(list);
 
@@ -47,6 +48,6 @@ void caddie_fail_assert(const char* file, int line, const char* msg, ...) {
     CADDIE_LOG("Program Halt");
 
     // Print to screen
-    OSFatal(&sDebugFg, &sDebugBg, assert_buf);
+    OSFatal(sDebugFg, sDebugBg, assert_buf);
 }
 kmBranch(0x80047150, caddie_fail_assert);

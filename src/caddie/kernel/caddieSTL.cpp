@@ -1,6 +1,6 @@
 #include "caddieSTL.h"
 
-namespace caddie {
+namespace cstl {
 
 /**
  * @brief Check if character is a decimal digit
@@ -28,9 +28,9 @@ bool islower(char c) { return c >= 'a' && c <= 'z'; }
 char* strchr(const char* str, char c) {
     CADDIE_ASSERT(str != NULL);
 
-    for (char* p = (char*)str; *p != '\0'; p++) {
+    for (const char* p = str; *p != '\0'; p++) {
         if (*p == c) {
-            return p;
+            return const_cast<char*>(p);
         }
     }
 
@@ -134,7 +134,7 @@ s32 strtol(const char* str, char** endptr, int base) {
         // Conversion end
         else {
             if (endptr != NULL) {
-                *endptr = (char*)str;
+                *endptr = const_cast<char*>(str);
             }
             break;
         }
@@ -147,7 +147,7 @@ s32 strtol(const char* str, char** endptr, int base) {
  * @brief Convert string to unsigned long
  */
 u32 strtoul(const char* str, char** endptr, int base) {
-    return (u32)strtol(str, endptr, base);
+    return static_cast<u32>(strtol(str, endptr, base));
 }
 
-} // namespace caddie
+} // namespace cstl

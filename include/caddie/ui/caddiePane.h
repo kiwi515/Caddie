@@ -1,11 +1,9 @@
 #ifndef CADDIE_UI_PANE_H
 #define CADDIE_UI_PANE_H
-#include "caddieAssert.h"
 #include "caddieLinkList.h"
 #include "types_caddie.h"
 
-#include <nw4r/math/math_types.h>
-#include <string.h>
+#include <nw4r/math.h>
 
 namespace caddie {
 

@@ -2,7 +2,7 @@
 #define CADDIE_KERNEL_MEM_MGR_H
 #include "types_caddie.h"
 
-#include <egg/core/eggExpHeap.h>
+#include <egg/core.h>
 
 namespace caddie {
 

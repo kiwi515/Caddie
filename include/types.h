@@ -1,6 +1,7 @@
 #ifndef TYPES_H
 #define TYPES_H
 #include <kamek.h>
+#include <macros.h>
 #include <stddef.h>
 
 typedef unsigned long long u64;

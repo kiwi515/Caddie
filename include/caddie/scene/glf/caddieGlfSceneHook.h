@@ -1,6 +1,5 @@
 #ifndef CADDIE_SCENE_GLF_SCENE_HOOK_H
 #define CADDIE_SCENE_GLF_SCENE_HOOK_H
-#include "types_Sp2.h"
 #include "types_caddie.h"
 
 namespace caddie {

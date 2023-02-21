@@ -1,6 +1,5 @@
 #ifndef CADDIE_CORE_STACK_H
 #define CADDIE_CORE_STACK_H
-#include "caddieAssert.h"
 #include "caddieLinkList.h"
 #include "types_caddie.h"
 

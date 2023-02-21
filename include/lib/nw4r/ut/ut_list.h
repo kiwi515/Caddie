@@ -1,33 +1,46 @@
-#ifndef NW4R_UT_LIST
-#define NW4R_UT_LIST
-#include "types_nw4r.h"
+#ifndef NW4R_UT_LIST_H
+#define NW4R_UT_LIST_H
+#include <types_nw4r.h>
 
 namespace nw4r {
 namespace ut {
 
 struct List {
-    void* mHead;
-    void* mTail;
-    u16 mSize;
-    u16 mOffset;
+    void* first; // at 0x0
+    void* last;  // at 0x4
+    u16 size;    // at 0x8
+    u16 offset;  // at 0xA
 };
 
 struct Node {
-    void* mPrev;
-    void* mNext;
+    void* prev; // at 0x0
+    void* next; // at 0x4
 };
 
-void List_Init(List*, u16);
-void List_Append(List*, void*);
-void List_Insert(List*, void*, void*);
-void List_Remove(List*, void*);
-void* List_GetNext(const List*, const void*);
-void* List_GetPrev(const List*, const void*);
-void* List_GetNth(const List*, u16);
+void List_Init(List* list, u16 offset);
+void List_Append(List* list, void* object);
+void List_Prepend(List* list, void* object);
+void List_Insert(List* list, void* next, void* object);
+void List_Remove(List* list, void* object);
+void* List_GetNext(const List* list, const void* object);
+void* List_GetPrev(const List* list, const void* object);
+void* List_GetNth(const List* list, u16 n);
 
-static inline void* List_GetFirst(const List* list) {
+static void* List_GetFirst(const List* list) {
     return List_GetNext(list, NULL);
 }
+
+static const void* List_GetFirstConst(const List* list) {
+    return static_cast<const void*>(List_GetFirst(list));
+}
+
+static void* List_GetLast(const List* list) { return List_GetPrev(list, NULL); }
+
+static const void* List_GetLastConst(const List* list) {
+    return static_cast<const void*>(List_GetLast(list));
+}
+
+static u16 List_GetSize(const List* list) { return list->size; }
 
 } // namespace ut
 } // namespace nw4r

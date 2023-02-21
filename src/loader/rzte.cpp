@@ -1,9 +1,7 @@
-#include <OS/OSError.h>
-#include <OS/OSFatal.h>
-#include <STL/stdarg.h>
-#include <STL/stdio.h>
-#include <SYSCONF/scapi.h>
-#include <egg/util/eggException.h>
+#include <OS.h>
+#include <cstdarg>
+#include <cstdio>
+#include <egg/util.h>
 #include <loader/kamekLoader.h>
 #include <loader/rzte.h>
 
@@ -25,7 +23,7 @@ void freeAdapter(void* memBlock, bool isForCode, const loaderFunctions* funcs) {
 
 void OSReport(const char* msg, ...) {
     va_list list;
-    va_start(msg, list);
+    va_start(list, msg);
     vprintf(msg, list);
     va_end(list);
 }

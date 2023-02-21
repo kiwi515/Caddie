@@ -2,7 +2,7 @@
 #define EGG_CORE_DISPOSER_H
 #include "types_egg.h"
 
-#include <nw4r/ut/ut_list.h>
+#include <nw4r/ut.h>
 
 namespace EGG {
 

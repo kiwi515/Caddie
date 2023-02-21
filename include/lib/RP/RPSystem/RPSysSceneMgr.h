@@ -4,7 +4,7 @@
 #include "types_nw4r.h"
 #include "types_rp.h"
 
-#include <egg/core/eggSceneManager.h>
+#include <egg/core.h>
 
 class RPSysSceneMgr : public EGG::SceneManager {
 public:

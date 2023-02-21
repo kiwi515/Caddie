@@ -1,32 +1,31 @@
-#ifndef REVOSDK_MEM_ALLOCATOR_H
-#define REVOSDK_MEM_ALLOCATOR_H
+#ifndef RVL_SDK_MEM_ALLOCATOR_H
+#define RVL_SDK_MEM_ALLOCATOR_H
 #include "mem_heapCommon.h"
-
 #include <types.h>
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef UNKTYPE (*MEMAllocatorHeapAllocFunc)(UNKTYPE);
-typedef UNKTYPE (*MEMAllocatorHeapFreeFunc)(UNKTYPE);
+typedef struct MEMAllocator;
+typedef void* (*MEMAllocatorAllocFunc)(struct MEMAllocator*, u32);
+typedef void (*MEMAllocatorFreeFunc)(struct MEMAllocator*, void*);
 
-struct MEMAllocatorFuncs {
-    MEMAllocatorHeapAllocFunc mHeapAllocFunc; // at 0x0
-    MEMAllocatorHeapFreeFunc mHeapFreeFunc;   // at 0x4
-};
+typedef struct MEMAllocatorFuncs {
+    MEMAllocatorAllocFunc allocFunc; // at 0x0
+    MEMAllocatorFreeFunc freeFunc;   // at 0x4
+} MEMAllocatorFuncs;
 
-struct MEMAllocator {
-    struct MEMAllocatorFuncs* mAllocFuncs; // at 0x0
-    struct MEMiHeapHead* mHeapHandle;      // at 0x4
-    UNKWORD WORD_0x8;
+typedef struct MEMAllocator {
+    MEMAllocatorFuncs* funcs; // at 0x0
+    MEMiHeapHead* heap;       // at 0x4
+    s32 align;                // at 0x8
     UNKWORD WORD_0xC;
-};
+} MEMAllocator;
 
-void* MEMAllocFromAllocator(struct MEMAllocator*, UNKWORD);
-UNKTYPE MEMFreeToAllocator(struct MEMAllocator*, UNKTYPE*);
-
-void MEMInitAllocatorForFrmHeap(struct MEMAllocator*, struct MEMiHeapHead*,
-                                s32);
+void* MEMAllocFromAllocator(MEMAllocator*, u32);
+void MEMFreeToAllocator(MEMAllocator*, void*);
+void MEMInitAllocatorForExpHeap(MEMAllocator*, MEMiHeapHead*, s32);
+void MEMInitAllocatorForFrmHeap(MEMAllocator*, MEMiHeapHead*, s32);
 
 #ifdef __cplusplus
 }

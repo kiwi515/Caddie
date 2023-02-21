@@ -2,7 +2,8 @@
 #define NW4R_DB_EXCEPTION_H
 #include "types_nw4r.h"
 
-#include <OS/OSContext.h>
+// Forward declarations
+struct OSContext;
 
 namespace nw4r {
 namespace db {

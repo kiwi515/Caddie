@@ -23,11 +23,15 @@ public:
     int GetHole() const { return mHole.GetSavedValue(); }
     int GetHoleInternal() const { return GetHole() - 1; }
     bool GetRepeatHole() const { return mRepeatHole.GetSavedValue(); }
+
     int GetPinType() const { return mPinType.GetSavedValue(); }
-    EWindDir GetWindDir() const { return (EWindDir)mWindDir.GetSavedValue(); }
+
+    EWindDir GetWindDir() const {
+        return static_cast<EWindDir>(mWindDir.GetSavedValue());
+    }
     int GetWindSpd() const { return mWindSpd.GetSavedValue(); }
     EWindSpdRange GetWindSpdRange() const {
-        return (EWindSpdRange)mWindSpdRange.GetSavedValue();
+        return static_cast<EWindSpdRange>(mWindSpdRange.GetSavedValue());
     }
 
 private:

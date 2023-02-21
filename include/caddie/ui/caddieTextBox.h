@@ -3,7 +3,7 @@
 #include "caddiePane.h"
 #include "types_caddie.h"
 
-#include <nw4r/ut/ut_Color.h>
+#include <nw4r/ut.h>
 
 namespace caddie {
 

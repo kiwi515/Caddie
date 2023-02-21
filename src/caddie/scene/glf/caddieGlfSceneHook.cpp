@@ -1,6 +1,5 @@
 #include "caddieGlfSceneHook.h"
 
-#include "caddieAssert.h"
 #include "caddieGlfMenu.h"
 #include "caddieGlfUtil.h"
 #include "caddieInputMgr.h"
@@ -237,14 +236,14 @@ kmBranch(0x8040680c, GlfSceneHook::Apply_GlfMain);
 void GlfSceneHook::OnGlfBallCalc(RPGlfBall* ball, u32 frame, u32) {
     CADDIE_ASSERT(ball != NULL);
 
-    static const u32 STOP_SHOT_BTNS =
+    static const u32 scStopShotBtns =
         InputMgr::BTN_B | InputMgr::BTN_MINUS | InputMgr::BTN_2;
 
     if (ball->IsMoving()) {
         // Stop shot with B + MINUS + 2
-        // TO-DO: Check input from current player's remote
+        // TODO: Check input from current player's remote
         const u32 held = InputMgr::GetInstance().Held(InputMgr::PLAYER_1);
-        if ((held & STOP_SHOT_BTNS) == STOP_SHOT_BTNS) {
+        if ((held & scStopShotBtns) == scStopShotBtns) {
             // Remove OOB stroke penalty
             RPGlfPlayer& player =
                 RPGlfPlayerManager::GetInstance().GetCurrentPlayer();
@@ -287,6 +286,8 @@ u32 GlfSceneHook::GetNumHolesPlayed() {
     const u32 gmCurrent = Sp2::Glf::GlfMain::getInstance().getCurrentHole();
 
     // Avoid returning negative result
+    // TODO: Figure out why this is even needed. Maybe abs(curr - first) is more
+    // robust?
     if (gmCurrent < gmFirst) {
         return 0;
     }

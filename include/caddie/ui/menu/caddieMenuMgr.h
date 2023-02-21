@@ -30,8 +30,8 @@ public:
 
     void OpenPage(MenuPage* page) {
         CADDIE_ASSERT(page != NULL);
-        // New page should be a subpage of our current page
-        CADDIE_ASSERT(page->GetParentPage() == mOpenPage);
+        CADDIE_ASSERT_EX(page->GetParentPage() == mOpenPage,
+                         "Orphan menu page?");
         mOpenPage = page;
         mCursor = 0;
     }

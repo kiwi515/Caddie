@@ -19,7 +19,7 @@ void MenuMgr::Calc() {
     // All players can control the menu
     for (int i = 0; i < InputMgr::PLAYER_MAX; i++) {
         // Read from input mgr
-        const InputMgr::EPlayer player = (InputMgr::EPlayer)i;
+        const InputMgr::EPlayer player = static_cast<InputMgr::EPlayer>(i);
         const u32 trig = InputMgr::GetInstance().Trig(player);
         const u32 held = InputMgr::GetInstance().Held(player);
 
@@ -86,8 +86,7 @@ void MenuMgr::Calc() {
     // Update cursor screen position
     const math::VEC2 optionPos =
         mOpenPage->GetOption(mCursor).GetOptionPosition();
-    const math::VEC2 cursorPos(optionPos.mCoords.x - sCursorOffset,
-                               optionPos.mCoords.y);
+    const math::VEC2 cursorPos(optionPos.x - sCursorOffset, optionPos.y);
     mCursorText.SetPosition(cursorPos);
 }
 
@@ -110,7 +109,7 @@ void MenuMgr::Draw() const {
  */
 void MenuMgr::CalcInput() {
     for (int i = 0; i < InputMgr::PLAYER_MAX; i++) {
-        const InputMgr::EPlayer player = (InputMgr::EPlayer)i;
+        const InputMgr::EPlayer player = static_cast<InputMgr::EPlayer>(i);
         const u32 trig = InputMgr::GetInstance().Trig(player);
 
         // Reset DAS/ARR on D-Pad input change

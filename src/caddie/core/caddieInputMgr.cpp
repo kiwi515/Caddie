@@ -1,8 +1,6 @@
 #include "caddieInputMgr.h"
 
-#include <egg/core/eggController.h>
-
-using namespace EGG;
+#include <egg/core.h>
 
 namespace caddie {
 
@@ -11,8 +9,8 @@ namespace caddie {
  */
 void InputMgr::Calc() {
     for (int i = 0; i < PLAYER_MAX; i++) {
-        const CoreController* cont =
-            CoreControllerMgr::getInstance().getNthController(i);
+        const EGG::CoreController* cont =
+            EGG::CoreControllerMgr::getInstance().getNthController(i);
         CADDIE_ASSERT(cont != NULL);
 
         // Buttons held last frame

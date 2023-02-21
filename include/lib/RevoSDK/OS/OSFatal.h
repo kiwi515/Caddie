@@ -1,11 +1,12 @@
-#ifndef REVOSDK_OS_FATAL_H
-#define REVOSDK_OS_FATAL_H
-#include "types.h"
+#ifndef RVL_SDK_OS_FATAL_H
+#define RVL_SDK_OS_FATAL_H
+#include <GX/GXTypes.h>
+#include <types.h>
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void OSFatal(const u32* fg, const u32* bg, const char* message);
+void OSFatal(GXColor, GXColor, const char*);
 
 #ifdef __cplusplus
 }

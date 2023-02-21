@@ -1,11 +1,9 @@
 #ifndef CADDIE_CORE_SCENE_HOOK_MGR_H
 #define CADDIE_CORE_SCENE_HOOK_MGR_H
-#include "types_caddie.h"
-#include "types_egg.h"
 
-#include <RPSystem/RPSysScene.h>
-#include <RPSystem/RPSysSceneCreator.h>
-#include <RPSystem/RPSysSceneMgr.h>
+#include "types_caddie.h"
+
+#include <RP/RPSystem.h>
 
 namespace caddie {
 

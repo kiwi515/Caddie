@@ -4,9 +4,9 @@
 #include "caddieRuntime.h"
 #include "caddieSceneHookMgr.h"
 
-#include <RP/RPSystem/RPSysProjectLocal.h>
-#include <egg/core/eggController.h>
-#include <egg/util/eggException.h>
+#include <RP/RPSystem.h>
+#include <egg/core.h>
+#include <egg/util.h>
 
 namespace caddie {
 
@@ -19,8 +19,8 @@ void main() {
 
 #ifndef NDEBUG
     // Always show exception handler
-    static const u16 sEmptyBtnCombo[] = {0};
-    EGG::Exception::setUserCallback(sEmptyBtnCombo);
+    static const u16 scEmptyCombo[] = {0};
+    EGG::Exception::setUserCallback(scEmptyCombo);
 
     // Open symbol map
     MapFile::GetInstance().LoadFromDVD("modules/main_NTSC_U.map",

@@ -2,7 +2,6 @@
 build/
 modules/
 baserom/
-tools/
 romfs/
 riivo/caddie/
 riivo/apps/
@@ -11,3 +10,8 @@ distro/
 *.dol
 *.bin
 *.o
+*.exe
+*.pdb
+*.json
+*.dll
+*.dll.config

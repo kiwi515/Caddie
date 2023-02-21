@@ -4,8 +4,8 @@
 #include "caddieBuildInfo.h"
 #include "caddieMapFile.h"
 
-#include <egg/util/eggException.h>
-#include <nw4r/db/db_exception.h>
+#include <egg/util.h>
+#include <nw4r/db.h>
 
 using namespace nw4r;
 
@@ -27,6 +27,7 @@ kmCall(0x8022e2d4, Exception::InitConsole);
  */
 void Exception::PrintMapSymbol(void* addr) {
     const MapFile::Symbol* sym = MapFile::GetInstance().QueryTextSymbol(addr);
+
     if (sym != NULL) {
         // Offset into function where exception occurred
         const u32 offset =
@@ -51,7 +52,7 @@ void Exception::PrintContext(u32 type, const OSContext* ctx, u32 dsisr,
 
     // SRR0 (Attempt to resolve symbol)
     db::Exception_Printf_("SRR0: ");
-    PrintMapSymbol((void*)ctx->srr0);
+    PrintMapSymbol(reinterpret_cast<void*>(ctx->srr0));
 
     // Caddie details
     db::Exception_Printf_("\n---Caddie Version---\n");
@@ -86,12 +87,13 @@ void Exception::PrintContext(u32 type, const OSContext* ctx, u32 dsisr,
     db::Exception_Printf_("-------------------------------- TRACE\n");
     db::Exception_Printf_("Address:   BackChain   LR save\n");
     // (At most) last 10 back chains
-    u32* sp = (u32*)ctx->gprs[1];
-    for (int i = 0; i < 10 && (u32)sp != 0xFFFFFFFF; i++) {
+    u32* sp = reinterpret_cast<u32*>(ctx->gprs[1]);
+    for (int i = 0; i < 10 && reinterpret_cast<uintptr_t>(sp) != 0xFFFFFFFF;
+         i++) {
         // Print stack frame info
         db::Exception_Printf_("%08X:  %08X    ", sp, *sp);
-        PrintMapSymbol((void*)sp[1]);
-        sp = (u32*)*sp;
+        PrintMapSymbol(reinterpret_cast<void*>(sp[1]));
+        sp = reinterpret_cast<u32*>(*sp);
     }
 }
 kmBranch(0x80166af0, Exception::PrintContext);

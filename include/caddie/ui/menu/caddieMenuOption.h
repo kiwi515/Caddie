@@ -66,9 +66,8 @@ public:
         return mNameText.GetPosition();
     }
     void SetOptionPosition(nw4r::math::VEC2 pos, f32 width) {
-        mNameText.SetPosition(nw4r::math::VEC2(pos.mCoords.x, pos.mCoords.y));
-        mValueText.SetPosition(
-            nw4r::math::VEC2(pos.mCoords.x + width, pos.mCoords.y));
+        mNameText.SetPosition(nw4r::math::VEC2(pos.x, pos.y));
+        mValueText.SetPosition(nw4r::math::VEC2(pos.x + width, pos.y));
     }
 
     bool IsEnabled() const { return mIsEnabled; }

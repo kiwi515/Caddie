@@ -2,9 +2,9 @@
 
 #include "caddieGlfMessage.h"
 
-#include <RPSystem/RPSysSceneCreator.h>
+#include <RP/RPSystem.h>
 #include <Sports2/Scene/Glf/Sp2GlfDefine.h>
-#include <nw4r/ut/ut_Color.h>
+#include <nw4r/ut.h>
 
 namespace caddie {
 
@@ -68,7 +68,7 @@ void GlfMenu::OnChange() {
  */
 void GlfMenu::Action_ApplyRestart(void* menu) {
     CADDIE_ASSERT(menu != NULL);
-    GlfMenu* thisx = (GlfMenu*)menu;
+    GlfMenu* thisx = reinterpret_cast<GlfMenu*>(menu);
     // Save all options' changes
     thisx->SaveChanges();
     // Ask scene to apply settings
@@ -86,7 +86,7 @@ void GlfMenu::Action_ApplyRestart(void* menu) {
  */
 void GlfMenu::Action_QuitGame(void* menu) {
     CADDIE_ASSERT(menu != NULL);
-    GlfMenu* thisx = (GlfMenu*)menu;
+    GlfMenu* thisx = reinterpret_cast<GlfMenu*>(menu);
     // Delete all options' changes
     thisx->DeleteChanges();
     // Ask scene not to apply settings
