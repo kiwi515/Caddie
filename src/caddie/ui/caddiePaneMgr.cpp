@@ -59,11 +59,9 @@ void PaneMgr::UserDraw() const {
  * @brief Draw focused pane (debug-level)
  */
 void PaneMgr::DebugDraw() const {
-#ifndef NDEBUG
     if (!mPaneStack.IsEmpty()) {
         mPaneStack.Peek()->DebugDraw();
     }
-#endif
 }
 
 /**

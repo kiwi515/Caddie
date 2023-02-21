@@ -1,6 +1,5 @@
 #ifndef CADDIE_CORE_SCENE_HOOK_MGR_H
 #define CADDIE_CORE_SCENE_HOOK_MGR_H
-
 #include "types_caddie.h"
 
 #include <RP/RPSystem.h>

@@ -1,58 +1,48 @@
-#include "caddieCmnGlobalSceneHook.h"
-
 #include "caddieBuildInfo.h"
+#include "caddieCmnAllSceneHook.h"
 #include "caddieInputMgr.h"
-#include "caddieMenuMgr.h"
 
 namespace caddie {
 
 /**
- * @brief Global scene configure (enter) callback
+ * @brief All scene configure (enter) callback
  *
  * @param scene Current scene
  */
-void GlobalSceneHook::OnConfigure(RPSysScene* scene) {
-    // Setup menu
+void AllSceneHook::OnConfigure(RPSysScene* scene) {
     if (sBuildInfo == NULL) {
         sBuildInfo = new BuildInfo();
         CADDIE_ASSERT(sBuildInfo != NULL);
     }
-
-    // Hide menu
-    MenuMgr::GetInstance().SetVisible(false);
 }
 
 /**
- * @brief Global scene calculate callback
+ * @brief All scene calculate callback
  *
  * @param scene Current scene
  */
-void GlobalSceneHook::OnCalculate(RPSysScene* scene) {
+void AllSceneHook::OnCalculate(RPSysScene* scene) {
     InputMgr::GetInstance().Calc();
-    MenuMgr::GetInstance().Calc();
 }
 
 /**
- * @brief Global scene user draw callback
+ * @brief All scene user draw callback
  *
  * @param scene Current scene
  */
-void GlobalSceneHook::OnUserDraw(RPSysScene* scene) {
+void AllSceneHook::OnUserDraw(RPSysScene* scene) {
     CADDIE_ASSERT(sBuildInfo != NULL);
-    sBuildInfo->Draw();
-
-    MenuMgr::GetInstance().Draw();
+    sBuildInfo->UserDraw();
+    sBuildInfo->DebugDraw();
 }
 
 /**
- * @brief Global scene exit callback
+ * @brief All scene exit callback
  *
  * @param scene Current scene
  */
-void GlobalSceneHook::OnExit(RPSysScene* scene) {
-    MenuMgr::GetInstance().CloseMenu();
-}
+void AllSceneHook::OnExit(RPSysScene* scene) {}
 
-BuildInfo* GlobalSceneHook::sBuildInfo = NULL;
+BuildInfo* AllSceneHook::sBuildInfo = NULL;
 
 } // namespace caddie

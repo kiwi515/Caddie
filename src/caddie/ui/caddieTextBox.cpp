@@ -1,7 +1,8 @@
 #include "caddieTextBox.h"
 
 #include <Sports2/Sp2Util.h>
-#include <string.h>
+#include <cstdio>
+#include <cstring>
 
 namespace caddie {
 
@@ -23,24 +24,46 @@ TextBox::~TextBox() {
 /**
  * @brief Draw textbox
  */
-void TextBox::DrawSelf() const {
+void TextBox::UserDrawSelf() const {
     CADDIE_ASSERT(mTextBuffer != NULL);
 
     switch (mStroke) {
     case STROKE_NONE:
-        Sp2::Print(mTextBuffer, Nw4rToARGB(mTextColor), mIsCentered, mPos.x,
-                   mPos.y);
+        Sp2::Print(mTextBuffer, mTextColor.ToARGB(), mIsCentered, mPosition.x,
+                   mPosition.y);
         break;
     case STROKE_OUTLINE:
-        Sp2::PrintOutline(mTextBuffer, Nw4rToARGB(mTextColor),
-                          Nw4rToARGB(mStrokeColor), mIsCentered, mPos.x,
-                          mPos.y);
+        Sp2::PrintOutline(mTextBuffer, mTextColor.ToARGB(),
+                          mStrokeColor.ToARGB(), mIsCentered, mPosition.x,
+                          mPosition.y);
         break;
     case STROKE_SHADOW:
-        Sp2::PrintShadow(mTextBuffer, Nw4rToARGB(mTextColor),
-                         Nw4rToARGB(mStrokeColor), mIsCentered, mPos.x, mPos.y);
+        Sp2::PrintShadow(mTextBuffer, mTextColor.ToARGB(),
+                         mStrokeColor.ToARGB(), mIsCentered, mPosition.x,
+                         mPosition.y);
         break;
     }
+}
+
+/**
+ * @brief Reserve capacity in textbox buffer
+ *
+ * @param len Buffer size
+ */
+void TextBox::Reserve(size_t len) {
+    // Buffer already exists
+    if (mTextBuffer != NULL) {
+        const size_t myLen = std::strlen(mTextBuffer);
+
+        // Can we re-use it?
+        if (len <= myLen) {
+            return;
+        }
+    }
+
+    // (Re)allocate buffer
+    delete mTextBuffer;
+    mTextBuffer = new char[len + 1];
 }
 
 /**
@@ -49,26 +72,10 @@ void TextBox::DrawSelf() const {
  * @param str New text
  */
 void TextBox::SetText(const char* str) {
-    const size_t len = strlen(str);
+    const size_t len = std::strlen(str);
 
-    if (mTextBuffer != NULL) {
-        const size_t myLen = strlen(mTextBuffer);
-
-        // Use existing buffer if possible
-        if (len <= myLen) {
-            strncpy(mTextBuffer, str, len);
-        } else {
-            // Reallocate buffer
-            delete mTextBuffer;
-            mTextBuffer = new char[len + 1];
-            strncpy(mTextBuffer, str, len);
-        }
-    } else {
-        // No existing buffer to use
-        delete mTextBuffer;
-        mTextBuffer = new char[len + 1];
-        strncpy(mTextBuffer, str, len);
-    }
+    Reserve(len);
+    std::strncpy(mTextBuffer, str, len);
 
     // Terminate string
     mTextBuffer[len] = '\0';
@@ -82,10 +89,10 @@ void TextBox::SetText(const char* str) {
  */
 void TextBox::SetTextFmt(const char* str, ...) {
     char msg_buf[512];
-    va_list list;
+    std::va_list list;
 
     va_start(list, str);
-    vsnprintf(msg_buf, sizeof(msg_buf), str, list);
+    std::vsnprintf(msg_buf, sizeof(msg_buf), str, list);
     va_end(list);
 
     SetText(msg_buf);

@@ -8,7 +8,7 @@ struct OSContext;
 namespace caddie {
 
 /**
- * @brief Caddie's exception handler
+ * @brief Caddie exception handler
  */
 class Exception {
 public:

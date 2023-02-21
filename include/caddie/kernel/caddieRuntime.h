@@ -84,14 +84,14 @@ static inline u32 GetDataSize() {
 #define CADDIE_ASM_END }
 
 //! @brief Copy GPR to variable
-#define CADDIE_GET_GPR(r, var)                                                 \
+#define CADDIE_ASM_GET_GPR(r, var)                                             \
     asm volatile { mr var, r; }
 //! @brief Copy variable to GPR
-#define CADDIE_SET_GPR(r, var)                                                 \
+#define CADDIE_ASM_SET_GPR(r, var)                                             \
     asm volatile { mr r, var; }
 
 //! @brief Backup GPRs to stack frame
-#define CADDIE_SAVE_GPRS                                                       \
+#define CADDIE_ASM_SAVE_GPRS                                                   \
     asm volatile {                                                             \
         stwu r1, -0x90(r1);                                                    \
         stmw r3, 0xC(r1);                                                      \
@@ -100,7 +100,7 @@ static inline u32 GetDataSize() {
     }
 
 //! @brief Restore GPRs from stack frame
-#define CADDIE_REST_GPRS                                                       \
+#define CADDIE_ASM_REST_GPRS                                                   \
     asm volatile {                                                             \
         lwz r12, 0x8(r1);                                                      \
         mtlr r12;                                                              \

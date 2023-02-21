@@ -13,6 +13,11 @@ using ::strncat;
 using ::strncmp;
 using ::strncpy;
 using ::strstr;
+using ::memmove;
+using ::memchr;
+using ::memcmp;
+using ::memcpy;
+using ::memset;
 } // namespace std
 
 #endif

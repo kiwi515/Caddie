@@ -98,6 +98,22 @@ Pane* Pane::FindChild(const char* name) const {
     return NULL;
 }
 
+void Pane::SetPosition(Vec2<f32> pos, PositionType type) {
+    // Relative to (0, 0) if no parent
+    if (type == POS_TYPE_REL && mParent == NULL) {
+        type = POS_TYPE_ABS;
+    }
+
+    switch (type) {
+    case POS_TYPE_ABS:
+        mPosition = pos;
+        break;
+    case POS_TYPE_REL:
+        mPosition = mParent->GetPosition() + pos;
+        break;
+    }
+}
+
 /**
  * @brief Set pane name
  *

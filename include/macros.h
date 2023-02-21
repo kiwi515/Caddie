@@ -20,22 +20,16 @@
 #define DECL_SECTION(x) __declspec(section x)
 #define DECL_WEAK __declspec(weak)
 
-// Codewarrior tricks for matching decomp
-// (Functions are given prototypes for -requireprotos)
-#ifdef __MWERKS__
-// Force BSS order
-#define CW_FORCE_BSS(module, ...)                                              \
-    void fake_function(...);                                                   \
-    void FORCE_BSS##module##x(void);                                           \
-    void FORCE_BSS##module##x(void) { fake_function(__VA_ARGS__); }
-// Force strings into pool
-#define CW_FORCE_STRINGS(module, ...)                                          \
-    void fake_function(...);                                                   \
-    void FORCE_STRINGS##module(void);                                          \
-    void FORCE_STRINGS##module(void) { fake_function(__VA_ARGS__); }
+#ifdef CADDIE_REGION_NTSC_U
+#define CADDIE_LOCALIZE(NTSC_U, PAL, NTSC_J, KOR) NTSC_U
+#elif CADDIE_REGION_PAL
+#define CADDIE_LOCALIZE(NTSC_U, PAL, NTSC_J, KOR) PAL
+#elif CADDIE_REGION_NTSC_J
+#define CADDIE_LOCALIZE(NTSC_U, PAL, NTSC_J, KOR) NTSC_J
+#elif CADDIE_REGION_KOR
+#define CADDIE_LOCALIZE(NTSC_U, PAL, NTSC_J, KOR) KOR
 #else
-#define CW_FORCE_BSS(module, ...)
-#define CW_FORCE_STRINGS(module, ...)
+#error "No region defined!"
 #endif
 
 // For VSCode

@@ -6,14 +6,14 @@ namespace caddie {
  * @brief Initialize Caddie main heap
  */
 void MemManager::Initialize() {
-    CADDIE_ASSERT_EX(sHeap == NULL, "MemManager already initialized!");
+    CADDIE_ASSERT_EX(sEggHeap == NULL, "MemManager already initialized!");
 
     // Child of sAllocatableHeap
-    sHeap = EGG::ExpHeap::create(sHeapSize, NULL, 0);
-    CADDIE_ASSERT_EX(sHeap != NULL, "Main game heap creation failed!!!");
+    sEggHeap = EGG::ExpHeap::create(scHeapSize, NULL, 0);
+    CADDIE_ASSERT_EX(sEggHeap != NULL, "Main game heap creation failed!!!");
 }
 
-EGG::ExpHeap* MemManager::sHeap = NULL;
-u32 MemManager::sHeapSize = 64 * 1024; // 64KB
+EGG::ExpHeap* MemManager::sEggHeap = NULL;
+const u32 MemManager::scHeapSize = 64 * 1024; // 64KB
 
 } // namespace caddie

@@ -1,6 +1,6 @@
 #ifndef CADDIE_UI_PANE_MGR_H
 #define CADDIE_UI_PANE_MGR_H
-#include "caddieLinkList.h"
+#include "caddiePane.h"
 #include "caddieStack.h"
 #include "caddieVector.h"
 #include "types_caddie.h"
@@ -17,19 +17,12 @@ public:
         return instance;
     }
 
-    //! Initialize
     virtual void Configure();
-    //! Load resources
     virtual void LoadResource();
-    //! Reset
     virtual void Reset();
-    //! Update
     virtual void Calculate();
-    //! User-level recursive draw
     virtual void UserDraw() const;
-    //! Debug-level recursive draw
     virtual void DebugDraw() const;
-    //! Terminate
     virtual void Exit();
 
     /**
@@ -41,10 +34,16 @@ public:
 
     /**
      * @brief Pop pane from focus stack
-     *
-     * @return Pane* Removed pane
      */
-    void Pop() { Pane* old = mPaneStack.Pop(); }
+    void Pop() {
+        Pane* top = mPaneStack.Pop();
+        top->~Pane();
+
+        // Free memory if possible
+        if (top->IsUserAllocated()) {
+            delete top;
+        }
+    }
 
 private:
     PaneMgr();

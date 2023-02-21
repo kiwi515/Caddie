@@ -49,10 +49,19 @@ public:
     void SetVisible(bool vis) { mIsVisible = vis; }
 
     Vec2<f32> GetPosition() const { return mPosition; }
-    void SetPosition(Vec2<f32> pos) { mPosition = pos; }
+    void SetPositionAbsolute(Vec2<f32> pos) { SetPosition(pos, POS_TYPE_ABS); }
+    void SetPositionRelative(Vec2<f32> pos) { SetPosition(pos, POS_TYPE_REL); }
 
     const char* GetName() const { return mName; }
     void SetName(const char* str);
+
+private:
+    enum PositionType {
+        POS_TYPE_ABS, //! Absolute
+        POS_TYPE_REL, //! Relative to parent
+    };
+
+    void SetPosition(Vec2<f32> pos, PositionType type);
 
 private:
     //! @brief Pane name max length

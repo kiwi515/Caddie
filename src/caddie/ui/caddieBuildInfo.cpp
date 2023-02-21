@@ -2,8 +2,6 @@
 
 #include "types_caddie.h"
 
-using namespace nw4r;
-
 namespace caddie {
 
 /**
@@ -32,15 +30,15 @@ const char* BuildInfo::GetBuildTarget() {
 BuildInfo::BuildInfo() {
     SetStroke(TextBox::STROKE_OUTLINE);
     SetCentered(true);
-    SetTextColor(sBuildTextColor);
-    SetPosition(sBuildTextPos);
+    SetTextColor(scTextColor);
+    SetPositionAbsolute(scTextPosition);
 
-    const f32 heapFreeKb = MemManager::GetFreeSize() / KB_AS_B;
+    const f32 heapFreeKb = MemManager::GetFreeSize() / 1024.0f;
     SetTextFmt("Caddie (%s, %s): %s (%.1f KB free)", GetBuildTarget(),
                GetBuildRegion(), GetBuildDate(), heapFreeKb);
 }
 
-const math::VEC2 BuildInfo::sBuildTextPos(400.0f, 20.0f);
-const ut::Color BuildInfo::sBuildTextColor(255, 0, 0, 255);
+const Vec2<f32> BuildInfo::scTextPosition(400.0f, 20.0f);
+const Color BuildInfo::scTextColor(255, 0, 0, 255);
 
 } // namespace caddie

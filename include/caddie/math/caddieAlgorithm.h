@@ -19,6 +19,26 @@ template <typename T> static inline const T& Min(const T& a, const T& b) {
 }
 
 /**
+ * @brief Absolute value
+ */
+template <typename T> static inline T Abs(T x) { return x < 0 ? -x : x; }
+
+/**
+ * @brief Absolute value (float specialization)
+ */
+#ifdef __CWCC__
+template <> static inline f32 Abs<f32>(register f32 x) {
+    // clang-format off
+    asm {
+        fabs x, x
+    }
+    // clang-format on
+
+    return x;
+}
+#endif
+
+/**
  * @brief Distance between two pointers
  */
 static inline ptrdiff_t PtrDistance(const void* start, const void* end) {

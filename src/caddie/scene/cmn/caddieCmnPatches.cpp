@@ -6,8 +6,8 @@ namespace {
 /**
  * @brief Remove AB check
  */
-bool IsABCheckAll() { return true; }
-kmBranch(0x8026a298, IsABCheckAll);
+bool PatchABCheck() { return true; }
+kmBranch(0x8026a298, PatchABCheck);
 
 } // namespace
 } // namespace caddie

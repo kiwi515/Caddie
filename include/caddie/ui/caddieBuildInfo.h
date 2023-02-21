@@ -18,9 +18,9 @@ public:
 
 private:
     //! @brief Build info text position
-    static const nw4r::math::VEC2 sBuildTextPos;
+    static const Vec2<f32> scTextPosition;
     //! @brief Build info text color
-    static const nw4r::ut::Color sBuildTextColor;
+    static const Color scTextColor;
 };
 
 } // namespace caddie

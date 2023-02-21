@@ -15,38 +15,30 @@
 namespace caddie {
 
 // kernel
-struct Exception;
-struct MemManager;
+class Exception;
+class MemManager;
 
 // core
-struct MapFile;
-template <typename T> struct TLinkList;
+class MapFile;
+template <typename T> class TLinkList;
 struct TLinkListNode;
 struct SceneHook;
-struct SceneHookMgr;
-template <typename T> struct TStack;
+class SceneHookMgr;
+template <typename T> class TStack;
 
 // ui
-struct MenuBase;
-struct MenuMgr;
-struct IMenuOption;
-struct MenuIntOption;
-struct MenuBoolOption;
-struct MenuEnumOption;
-struct MenuActionOption;
-struct MenuPage;
-struct BuildInfo;
-struct Pane;
-struct PaneMgr;
-struct TextBox;
+class BuildInfo;
+class Pane;
+class PaneMgr;
+class TextBox;
 
 // math
 template <typename T> class Vec2;
+template <typename T> class Vec3;
+template <typename T> class Vec4;
 
-// scene/glf
-struct GlfMenu;
-struct GlfSceneHook;
-struct GlfUtil;
+// scene/cmn
+class AllSceneHook;
 
 } // namespace caddie
 
