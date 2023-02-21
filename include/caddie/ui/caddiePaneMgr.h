@@ -39,7 +39,7 @@ public:
         Pane* top = mPaneStack.Pop();
 
         // Free memory if possible
-        if (top->IsUserAllocated()) {
+        if (top != NULL && top->IsUserAllocated()) {
             delete top;
         }
     }
