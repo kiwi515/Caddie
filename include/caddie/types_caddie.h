@@ -37,7 +37,11 @@ struct MenuActionOption;
 struct MenuPage;
 struct BuildInfo;
 struct Pane;
+struct PaneMgr;
 struct TextBox;
+
+// math
+template <typename T> class Vec2;
 
 // scene/glf
 struct GlfMenu;

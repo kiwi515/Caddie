@@ -1,14 +1,13 @@
 #ifndef CADDIE_UI_PANE_H
 #define CADDIE_UI_PANE_H
 #include "caddieLinkList.h"
+#include "caddieVector.h"
 #include "types_caddie.h"
-
-#include <nw4r/math.h>
 
 namespace caddie {
 
 /**
- * @brief Base UI class
+ * @brief Base pane (UI) class
  */
 class Pane {
 public:
@@ -16,14 +15,31 @@ public:
 
     Pane();
     virtual ~Pane();
-    virtual void Draw() const;
-    virtual void DrawSelf() const = 0;
+
+    //! Initialize
+    virtual void Configure() = 0;
+    //! Load resources
+    virtual void LoadResource() = 0;
+    //! Reset
+    virtual void Reset() = 0;
+    //! Update
+    virtual void Calculate() = 0;
+    //! User-level recursive draw
+    virtual void UserDraw() const;
+    //! User-level draw self
+    virtual void UserDrawSelf() const = 0;
+    //! Debug-level recursive draw
+    virtual void DebugDraw() const;
+    //! Debug-level draw self
+    virtual void DebugDrawSelf() const = 0;
+    //! Terminate
+    virtual void Exit() = 0;
 
     bool IsUserAllocated() const { return mIsUserAllocated; }
-    void SetUserAllocated(bool b) { mIsUserAllocated = b; }
+    void SetUserAllocated(bool userAlloc) { mIsUserAllocated = userAlloc; }
 
-    void AppendChild(Pane* child);
-    void RemoveChild(const Pane* child);
+    void AppendChild(Pane& child);
+    void RemoveChild(const Pane& child);
     Pane* FindChild(const char* name) const;
 
     Pane* GetParent() const { return mParent; }
@@ -32,22 +48,22 @@ public:
     bool IsVisible() const { return mIsVisible; }
     void SetVisible(bool vis) { mIsVisible = vis; }
 
-    nw4r::math::VEC2 GetPosition() const { return mPos; }
-    void SetPosition(nw4r::math::VEC2 pos) { mPos = pos; }
+    Vec2<f32> GetPosition() const { return mPosition; }
+    void SetPosition(Vec2<f32> pos) { mPosition = pos; }
 
     const char* GetName() const { return mName; }
     void SetName(const char* str);
 
 private:
+    //! @brief Pane name max length
+    static const int PANE_NAME_LEN = 32;
+
     //! @brief Node for intrusive list
     TLinkListNode mNode;
 
 protected:
     //! @brief Whether the user must free the pane memory
     bool mIsUserAllocated;
-
-    //! @brief Pane name max length
-    static const int PANE_NAME_LEN = 32;
 
     //! @brief Parent pane
     Pane* mParent;
@@ -57,7 +73,7 @@ protected:
     //! @brief Pane visibility
     bool mIsVisible;
     //! @brief Screenspace position
-    nw4r::math::VEC2 mPos;
+    Vec2<f32> mPosition;
 
     //! @brief Pane name
     char mName[PANE_NAME_LEN + 1];

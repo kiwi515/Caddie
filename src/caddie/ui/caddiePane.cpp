@@ -4,7 +4,13 @@
 
 namespace caddie {
 
-Pane::Pane() : mIsUserAllocated(false), mParent(NULL), mIsVisible(true) {}
+Pane::Pane()
+    : mIsUserAllocated(false),
+      mParent(NULL),
+      mIsVisible(true),
+      mPosition(0.0f, 0.0f) {
+    std::memset(mName, 0, sizeof(mName));
+}
 
 Pane::~Pane() {
     TLinkList<Pane>::Iterator it = mChildren.Begin();
@@ -13,7 +19,7 @@ Pane::~Pane() {
 
         // Remove from parent
         if (mParent != NULL) {
-            mParent->RemoveChild(this);
+            mParent->RemoveChild(*this);
         }
 
         // Free heap memory if possible
@@ -25,14 +31,26 @@ Pane::~Pane() {
 }
 
 /**
- * @brief Draw pane and all children
+ * @brief Draw pane and all children (user-level)
  */
-void Pane::Draw() const {
-    DrawSelf();
+void Pane::UserDraw() const {
+    UserDrawSelf();
 
     TLinkList<Pane>::Iterator it = mChildren.Begin();
     for (; it != mChildren.End(); it++) {
-        it->Draw();
+        it->UserDraw();
+    }
+}
+
+/**
+ * @brief Draw pane and all children (debug-level)
+ */
+void Pane::DebugDraw() const {
+    DebugDrawSelf();
+
+    TLinkList<Pane>::Iterator it = mChildren.Begin();
+    for (; it != mChildren.End(); it++) {
+        it->DebugDraw();
     }
 }
 
@@ -41,11 +59,9 @@ void Pane::Draw() const {
  *
  * @param child Child pane
  */
-void Pane::AppendChild(Pane* child) {
-    CADDIE_ASSERT(child != NULL);
-
-    mChildren.Append(child);
-    child->SetParent(this);
+void Pane::AppendChild(Pane& child) {
+    mChildren.Append(&child);
+    child.SetParent(this);
 }
 
 /**
@@ -53,15 +69,12 @@ void Pane::AppendChild(Pane* child) {
  *
  * @param child Child pane
  */
-void Pane::RemoveChild(const Pane* child) {
-    CADDIE_ASSERT(child != NULL);
-
+void Pane::RemoveChild(const Pane& child) {
     // Look for child pane in list, by address
     TLinkList<Pane>::Iterator it = mChildren.Begin();
     for (; it != mChildren.End(); it++) {
-        if (&*it == child) {
-            it->SetParent(NULL);
-            mChildren.Remove(it);
+        if (&*it == &child) {
+            it->~Pane();
         }
     }
 }
@@ -77,7 +90,7 @@ Pane* Pane::FindChild(const char* name) const {
 
     TLinkList<Pane>::Iterator it = mChildren.Begin();
     for (; it != mChildren.End(); it++) {
-        if (strcmp(name, it->mName) == 0) {
+        if (std::strcmp(name, it->mName) == 0) {
             return &*it;
         }
     }
@@ -92,11 +105,11 @@ Pane* Pane::FindChild(const char* name) const {
  */
 void Pane::SetName(const char* name) {
     CADDIE_ASSERT(name != NULL);
-    CADDIE_WARN_EX(strlen(name) > PANE_NAME_LEN, "Pane name too long! (%s)",
-                   name);
+    CADDIE_WARN_EX(std::strlen(name) > PANE_NAME_LEN,
+                   "Pane name too long! (%s)", name);
 
     // Append null terminator
-    strncpy(mName, name, PANE_NAME_LEN);
+    std::strncpy(mName, name, PANE_NAME_LEN);
     mName[PANE_NAME_LEN + 1] = '\0';
 }
 
