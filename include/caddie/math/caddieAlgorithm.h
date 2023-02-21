@@ -49,7 +49,7 @@ static inline ptrdiff_t PtrDistance(const void* start, const void* end) {
 /**
  * @brief Add offset to pointer
  */
-static inline const void* AddToPtr(const void* ptr, s32 ofs) {
+static inline const void* AddToPtr(const void* ptr, int ofs) {
     return static_cast<const char*>(ptr) + ofs;
 }
 

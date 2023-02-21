@@ -14,7 +14,7 @@ class MemManager {
 public:
     static void Initialize();
 
-    static void* Alloc(u32 size, s32 align) {
+    static void* Alloc(size_t size, int align) {
         CADDIE_ASSERT(sEggHeap != NULL);
         return sEggHeap->alloc(size, align);
     }

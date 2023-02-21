@@ -10,7 +10,7 @@ namespace caddie {
  * @brief Scene callback function pointer
  * @details Function receives pointer to current scene
  */
-typedef void (*SceneCallback)(RPSysScene*);
+typedef void (*SceneCallback)(RPSysScene* scene);
 
 /**
  * @brief Scene hook structure
@@ -38,13 +38,13 @@ public:
         if (scene != RPSysSceneCreator::SCENE_ALL) {
             mSceneHooks[scene] = hook;
         } else {
-            mGlobalSceneHook = hook;
+            mAllSceneHook = hook;
         }
     }
 
     void AllowPause(RPSysSceneCreator::ESceneID scene, bool pause) {
         if (scene != RPSysSceneCreator::SCENE_ALL) {
-            mPauseSetting[scene] = pause;
+            mAllowPause[scene] = pause;
         }
     }
 
@@ -57,7 +57,7 @@ public:
 private:
     SceneHookMgr() {
         for (int i = 0; i < RPSysSceneCreator::SCENE_MAX; i++) {
-            mPauseSetting[i] = true;
+            mAllowPause[i] = true;
         }
     }
 
@@ -66,10 +66,10 @@ private:
 private:
     //! @brief Scene hooks for every scene
     SceneHook mSceneHooks[RPSysSceneCreator::SCENE_MAX];
-    //! @brief Global scene hook
-    SceneHook mGlobalSceneHook;
+    //! @brief All scene hook
+    SceneHook mAllSceneHook;
     //! @brief Pause permission for every scene
-    bool mPauseSetting[RPSysSceneCreator::SCENE_MAX];
+    bool mAllowPause[RPSysSceneCreator::SCENE_MAX];
 };
 
 } // namespace caddie
