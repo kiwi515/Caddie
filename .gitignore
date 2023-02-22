@@ -6,6 +6,7 @@ romfs/
 riivo/caddie/
 riivo/apps/
 distro/
+__pycache__/
 
 *.dol
 *.bin

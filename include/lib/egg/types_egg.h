@@ -6,6 +6,7 @@ struct Allocator;
 struct CoreController;
 struct CoreControllerMgr;
 struct Disposer;
+struct DvdFile;
 struct DvdRipper;
 struct Exception;
 struct ExpHeap;

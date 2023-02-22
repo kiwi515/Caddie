@@ -10,6 +10,8 @@ public:
 
     static void* loadToMainRAM(const char*, u8*, Heap*, EAllocDirection, u32,
                                u32*, u32*);
+    static void* loadToMainRAM(DvdFile*, u8*, Heap*, EAllocDirection, u32, u32*,
+                               u32*);
 
 private:
     static bool sErrorRetry;

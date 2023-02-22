@@ -1,5 +1,6 @@
 #include "caddieMapFile.h"
 
+#include "caddieResourceMgr.h"
 #include "caddieRuntime.h"
 #include "caddieSTL.h"
 
@@ -26,9 +27,8 @@ void MapFile::LoadFromDVD(const char* path, LinkType type) {
     }
 
     // Load file from disc
-    mMapBinary = static_cast<char*>(EGG::DvdRipper::loadToMainRAM(
-        path, NULL, NULL, EGG::DvdRipper::ALLOC_DIR_TOP, 0, NULL, NULL));
-
+    mMapBinary =
+        static_cast<char*>(ResourceMgr::GetInstance().LoadStaticFromDVD(path));
     CADDIE_WARN_EX(mMapBinary == NULL, "Map file (%s) could not be opened!",
                    path);
 

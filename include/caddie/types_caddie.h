@@ -22,6 +22,8 @@ class MemManager;
 class MapFile;
 template <typename T> class TLinkList;
 struct TLinkListNode;
+class Resource;
+class ResourceMgr;
 struct SceneHook;
 class SceneHookMgr;
 template <typename T> class TStack;

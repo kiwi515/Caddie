@@ -2,6 +2,7 @@
 
 #include "caddieBuildInfo.h"
 #include "caddieInputMgr.h"
+#include "caddieResourceMgr.h"
 
 namespace caddie {
 
@@ -45,8 +46,9 @@ void AllSceneHook::OnUserDraw(RPSysScene* scene) {
  *
  * @param scene Current scene
  */
-void AllSceneHook::OnExit(RPSysScene* scene){
+void AllSceneHook::OnExit(RPSysScene* scene) {
 #pragma unused(scene)
+    ResourceMgr::GetInstance().ClearSceneCache();
 }
 
 BuildInfo* AllSceneHook::sBuildInfo = NULL;

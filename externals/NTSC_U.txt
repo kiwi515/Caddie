@@ -68,6 +68,11 @@ create__Q23EGG9ExceptionFUsUsUsPQ23EGG4HeapUs=0x801cebb8
 getNthController__Q23EGG17CoreControllerMgrFi=0x801c4ab8
 sInstance__Q23EGG17CoreControllerMgr=0x806f4a08
 
+# EGG/core/eggDecomp
+checkCompressed__Q23EGG6DecompFPUc=0x801ca440
+getExpandSize__Q23EGG6DecompFPUc=0x801ca4c4
+decode__Q23EGG6DecompFPUcPUc=0x801c961c
+
 # EGG/core/eggDvdRipper
 loadToMainRAM__Q23EGG9DvdRipperFPCcPUcPQ23EGG4HeapQ33EGG9DvdRipper15EAllocDirectionUlPUlPUl=0x801c7ce0
 

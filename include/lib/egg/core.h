@@ -3,7 +3,9 @@
 
 #include <egg/core/eggAllocator.h>
 #include <egg/core/eggController.h>
+#include <egg/core/eggDecomp.h>
 #include <egg/core/eggDisposer.h>
+#include <egg/core/eggDvdFile.h>
 #include <egg/core/eggDvdRipper.h>
 #include <egg/core/eggExpHeap.h>
 #include <egg/core/eggFader.h>
