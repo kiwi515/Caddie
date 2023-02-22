@@ -1,0 +1,3 @@
+[submodule "kamek"]
+	path = kamek
+	url = https://github.com/kiwi515/kamek
