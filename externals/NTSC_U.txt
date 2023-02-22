@@ -19,6 +19,8 @@ snprintf=0x8000d074
 strcmp=0x8000e8b0
 strlen=0x800071c0
 strncpy=0x8000e7f4
+memset=0x80004350
+memcpy=0x80004000
 
 # TRK/runtime
 _savefpr_25=0x800077b8

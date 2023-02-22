@@ -1,5 +1,6 @@
-#include "caddieBuildInfo.h"
 #include "caddieCmnAllSceneHook.h"
+
+#include "caddieBuildInfo.h"
 #include "caddieInputMgr.h"
 
 namespace caddie {
@@ -10,6 +11,7 @@ namespace caddie {
  * @param scene Current scene
  */
 void AllSceneHook::OnConfigure(RPSysScene* scene) {
+#pragma unused(scene)
     if (sBuildInfo == NULL) {
         sBuildInfo = new BuildInfo();
         CADDIE_ASSERT(sBuildInfo != NULL);
@@ -22,6 +24,7 @@ void AllSceneHook::OnConfigure(RPSysScene* scene) {
  * @param scene Current scene
  */
 void AllSceneHook::OnCalculate(RPSysScene* scene) {
+#pragma unused(scene)
     InputMgr::GetInstance().Calc();
 }
 
@@ -31,6 +34,7 @@ void AllSceneHook::OnCalculate(RPSysScene* scene) {
  * @param scene Current scene
  */
 void AllSceneHook::OnUserDraw(RPSysScene* scene) {
+#pragma unused(scene)
     CADDIE_ASSERT(sBuildInfo != NULL);
     sBuildInfo->UserDraw();
     sBuildInfo->DebugDraw();
@@ -41,7 +45,9 @@ void AllSceneHook::OnUserDraw(RPSysScene* scene) {
  *
  * @param scene Current scene
  */
-void AllSceneHook::OnExit(RPSysScene* scene) {}
+void AllSceneHook::OnExit(RPSysScene* scene){
+#pragma unused(scene)
+}
 
 BuildInfo* AllSceneHook::sBuildInfo = NULL;
 

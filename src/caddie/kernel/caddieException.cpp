@@ -46,6 +46,9 @@ void Exception::PrintMapSymbol(void* addr) {
  */
 void Exception::PrintContext(u32 type, const OSContext* ctx, u32 dsisr,
                              u32 dar) {
+#pragma unused(dsisr)
+#pragma unused(dar)
+
     // Exception type
     db::Exception_Printf_("******** EXCEPTION OCCURRED! ********\n");
     db::Exception_Printf_("Exception Type: %s\n", sExceptionNames[type]);
