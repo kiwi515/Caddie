@@ -19,7 +19,9 @@ class Exception;
 class MemManager;
 
 // core
+struct BinaryBlock;
 class MapFile;
+class Message;
 template <typename T> class TLinkList;
 struct TLinkListNode;
 class Resource;
