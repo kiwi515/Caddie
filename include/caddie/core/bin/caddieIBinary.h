@@ -2,7 +2,7 @@
 #define CADDIE_CORE_IBINARY_H
 #include "types_caddie.h"
 
-#define CADDIE_BIN_VERSION(major, minor) ((major << 16) | minor)
+#define CADDIE_BIN_VERSION(major, minor) ((major << 8) | minor)
 
 namespace caddie {
 
@@ -25,12 +25,11 @@ public:
         Block block;   // at 0x0
         u16 version;   // at 0x8
         u16 numBlocks; // at 0xA
-        u32 reserved;  // at 0xC
     };
 
 public:
     virtual u32 GetBinaryKind() const = 0;
-    virtual u8 GetVersion() const = 0;
+    virtual u16 GetVersion() const = 0;
 
     /**
      * @brief Common behavior before internal deserialization (check kind,

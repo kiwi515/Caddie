@@ -16,10 +16,12 @@ Message::~Message() {}
  */
 void Message::DeserializeImpl(const Bin& bin) {
     // Find first block
-    const Block* block = reinterpret_cast<const Block*>(&block) + sizeof(Bin);
+    const Block* block = reinterpret_cast<const Block*>(&bin) + bin.block.size;
 
     // Parse blocks
     for (int i = 0; i < bin.numBlocks; i++) {
+        CADDIE_LOG_EX("block=%08X", block);
+
         // Check block kind
         switch (block->kind) {
         case DESCBlock::scKind:
@@ -29,7 +31,7 @@ void Message::DeserializeImpl(const Bin& bin) {
             mDataBlock = static_cast<const DATABlock*>(block);
             break;
         default:
-            CADDIE_ASSERT_EX(false, "Unknown block kind: %s", block->kind_str);
+            CADDIE_ASSERT_EX(false, "Unknown block kind: %08X", block->kind);
             break;
         }
 

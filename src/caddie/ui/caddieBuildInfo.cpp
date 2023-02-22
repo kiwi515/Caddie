@@ -1,5 +1,6 @@
 #include "caddieBuildInfo.h"
 
+#include "caddieResourceMgr.h"
 #include "types_caddie.h"
 
 namespace caddie {
@@ -32,6 +33,11 @@ BuildInfo::BuildInfo() {
     SetCentered(true);
     SetTextColor(scTextColor);
     SetPositionAbsolute(scTextPosition);
+
+    void* bin = ResourceMgr::GetInstance().LoadStaticFromDVD(
+        "US/Message/TestMessage.cmsg");
+    CADDIE_ASSERT(bin != NULL);
+    mMessage = new Message(bin);
 
     const f32 heapFreeKb = MemManager::GetFreeSize() / 1024.0f;
     SetTextFmt("Caddie (%s, %s): %s (%.1f KB free)", GetBuildTarget(),
