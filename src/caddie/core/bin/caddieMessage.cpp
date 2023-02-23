@@ -14,14 +14,12 @@ Message::~Message() {}
  *
  * @param bin Binary message (CMSG)
  */
-void Message::DeserializeImpl(const Bin& bin) {
+void Message::DeserializeImpl(const Header& bin) {
     // Find first block
     const Block* block = reinterpret_cast<const Block*>(&bin) + bin.block.size;
 
     // Parse blocks
     for (int i = 0; i < bin.numBlocks; i++) {
-        CADDIE_LOG_EX("block=%08X", block);
-
         // Check block kind
         switch (block->kind) {
         case DESCBlock::scKind:
@@ -31,7 +29,8 @@ void Message::DeserializeImpl(const Bin& bin) {
             mDataBlock = static_cast<const DATABlock*>(block);
             break;
         default:
-            CADDIE_ASSERT_EX(false, "Unknown block kind: %08X", block->kind);
+            CADDIE_ASSERT_EX(false, "Unknown block kind: %s (%08X)",
+                             block->kind_str, block->kind);
             break;
         }
 
@@ -46,7 +45,7 @@ void Message::DeserializeImpl(const Bin& bin) {
  *
  * @param bin Binary message (CMSG)
  */
-void Message::SerializeImpl(Bin& bin) const {
+void Message::SerializeImpl(Header& bin) const {
     CADDIE_ASSERT_EX(false, "Not supported.");
 }
 

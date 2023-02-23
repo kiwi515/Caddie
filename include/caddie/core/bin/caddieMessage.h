@@ -31,12 +31,12 @@ public:
     const wchar_t* GetMessage(u32 id) const;
 
 private:
-    virtual void DeserializeImpl(const Bin& bin);
-    virtual void SerializeImpl(Bin& bin) const;
+    virtual void DeserializeImpl(const Header& header);
+    virtual void SerializeImpl(Header& header) const;
 
 private:
     // CMSG binary header
-    Bin* mHeader;
+    Header* mHeader;
 
     // Message descriptor block
     const DESCBlock* mDescBlock;

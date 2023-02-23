@@ -7,7 +7,7 @@
 namespace caddie {
 
 /**
- * @brief Interface for (de)serializing binary files
+ * @brief Interface for binary file serialization/deserialization
  */
 class IBinary {
 public:
@@ -21,7 +21,7 @@ public:
     };
 
     // Base structure for all Caddie file formats
-    struct Bin {
+    struct Header {
         Block block;   // at 0x0
         u16 version;   // at 0x8
         u16 numBlocks; // at 0xA
@@ -39,39 +39,39 @@ public:
      */
     void Deserialize(const void* bin) {
         CADDIE_ASSERT(bin != NULL);
-        const Bin& binary = *static_cast<const Bin*>(bin);
+        const Header& header = *static_cast<const Header*>(bin);
 
-        // Check binary kind
-        CADDIE_ASSERT_EX(GetBinaryKind() == binary.block.kind,
-                         "Not for this class. Got %s", binary.block.kind_str);
+        // Check header kind
+        CADDIE_ASSERT_EX(GetBinaryKind() == header.block.kind,
+                         "Not for this class. Got %s", header.block.kind_str);
 
-        // Check binary version
-        CADDIE_ASSERT_EX(GetVersion() == binary.version,
+        // Check header version
+        CADDIE_ASSERT_EX(GetVersion() == header.version,
                          "Not for this version. Expected %04X, got %04X",
-                         GetVersion(), binary.version);
+                         GetVersion(), header.version);
 
-        DeserializeImpl(binary);
+        DeserializeImpl(header);
     }
 
     /**
-     * @brief Common behavior before internal deserialization (write kind,
+     * @brief Common behavior before internal serialization (write kind,
      * version, etc.)
      *
      * @param bin Binary
      */
     void Serialize(void* bin) const {
         CADDIE_ASSERT(bin != NULL);
-        Bin& binary = *static_cast<Bin*>(bin);
+        Header& header = *static_cast<Header*>(bin);
 
-        binary.version = GetVersion();
-        binary.block.kind = GetBinaryKind();
+        header.version = GetVersion();
+        header.block.kind = GetBinaryKind();
 
-        SerializeImpl(binary);
+        SerializeImpl(header);
     }
 
 private:
-    virtual void DeserializeImpl(const Bin& bin) = 0;
-    virtual void SerializeImpl(Bin& bin) const = 0;
+    virtual void DeserializeImpl(const Header& header) = 0;
+    virtual void SerializeImpl(Header& header) const = 0;
 };
 
 } // namespace caddie
