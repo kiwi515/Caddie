@@ -34,11 +34,6 @@ BuildInfo::BuildInfo() {
     SetTextColor(scTextColor);
     SetPositionAbsolute(scTextPosition);
 
-    void* bin = ResourceMgr::GetInstance().LoadStaticFromDVD(
-        "US/Message/TestMessage.cmsg");
-    CADDIE_ASSERT(bin != NULL);
-    mMessage = new Message(bin);
-
     const f32 heapFreeKb = MemManager::GetFreeSize() / 1024.0f;
     SetTextFmt("Caddie (%s, %s): %s (%.1f KB free)", GetBuildTarget(),
                GetBuildRegion(), GetBuildDate(), heapFreeKb);
