@@ -53,6 +53,13 @@ static inline const void* AddToPtr(const void* ptr, int ofs) {
     return static_cast<const char*>(ptr) + ofs;
 }
 
+/**
+ * @brief Add offset to pointer
+ */
+template <typename T> static inline T* AddToPtr(const void* ptr, int ofs) {
+    return reinterpret_cast<T*>(static_cast<const char*>(ptr) + ofs);
+}
+
 } // namespace caddie
 
 #endif

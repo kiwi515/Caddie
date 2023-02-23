@@ -1,12 +1,12 @@
 # SYSCONF/scapi
 SCGetLanguage=0x80054090
 
-# OS/OSFatal
+# OS
 OSFatal=0x800493a0
-
-# OS/OSError
 OSPanic=0x80047150
 OSReport=0x80061470
+OSDisableInterrupts=0x8004af10
+OSEnableInterrupts=0x8004af30
 
 # STL/cstdio
 vprintf=0x8000ceec

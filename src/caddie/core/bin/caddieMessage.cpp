@@ -1,5 +1,8 @@
 #include "caddieMessage.h"
 
+#include "caddieAlgorithm.h"
+#include "caddieDebugger.h"
+
 namespace caddie {
 
 Message::Message(const void* bin) {
@@ -16,7 +19,7 @@ Message::~Message() {}
  */
 void Message::DeserializeImpl(const Header& bin) {
     // Find first block
-    const Block* block = reinterpret_cast<const Block*>(&bin) + bin.block.size;
+    const Block* block = AddToPtr<const Block>(&bin, bin.block.size);
 
     // Parse blocks
     for (int i = 0; i < bin.numBlocks; i++) {
@@ -35,8 +38,7 @@ void Message::DeserializeImpl(const Header& bin) {
         }
 
         // Advance block pointer
-        block = reinterpret_cast<const Block*>(
-            reinterpret_cast<const u8*>(block) + block->size);
+        block = AddToPtr<const Block>(block, block->size);
     }
 }
 
@@ -57,8 +59,8 @@ void Message::SerializeImpl(Header& bin) const {
  */
 const wchar_t* Message::GetMessage(u32 id) const {
     CADDIE_ASSERT(id < mDescBlock->numMsg);
-    return reinterpret_cast<const wchar_t*>(mDataBlock->data +
-                                            mDescBlock->msgOffsets[id]);
+    return AddToPtr<const wchar_t>(mDataBlock->data,
+                                   mDescBlock->msgOffsets[id]);
 }
 
 } // namespace caddie
