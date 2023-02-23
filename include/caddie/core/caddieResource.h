@@ -17,7 +17,8 @@ public:
         CADDIE_ASSERT(mPath != NULL);
         CADDIE_ASSERT(mData != NULL);
     }
-    virtual ~Resource() {}
+
+    virtual ~Resource() { delete mData; }
 
     const char* GetPath() const { return mPath; }
     u32 GetSize() const { return mSize; }
