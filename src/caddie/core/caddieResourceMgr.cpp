@@ -98,10 +98,11 @@ bool ResourceMgr::LoadFromDVDImpl(const char* path, void*& dataOut,
 void* ResourceMgr::LoadFromDVD(const char* path, bool local) {
     void* data;
     u32 size;
-    LoadFromDVDImpl(path, data, size);
+
+    const bool cached = LoadFromDVDImpl(path, data, size);
 
     // Add to resource cache
-    if (data != NULL) {
+    if (!cached && data != NULL) {
         AddCachedResource(path, size, data, local);
     }
 
@@ -118,26 +119,27 @@ void* ResourceMgr::LoadFromDVD(const char* path, bool local) {
 void* ResourceMgr::LoadCompressedFromDVD(const char* path, bool local) {
     void* data;
     u32 size;
-    LoadFromDVDImpl(path, data, size);
 
-    // Attempt to decompress file
-    if (EGG::Decomp::checkCompressed(static_cast<u8*>(data))) {
-        // Do decompression
-        const u32 expandSize =
-            EGG::Decomp::getExpandSize(static_cast<u8*>(data));
-        u8* decompBuffer = new u8[expandSize];
-        EGG::Decomp::decode(static_cast<u8*>(data), decompBuffer);
+    const bool cached = LoadFromDVDImpl(path, data, size);
 
-        // Free compressed buffer
-        delete data;
+    if (!cached && data != NULL) {
+        // Attempt to decompress file
+        if (EGG::Decomp::checkCompressed(static_cast<u8*>(data))) {
+            // Do decompression
+            const u32 expandSize =
+                EGG::Decomp::getExpandSize(static_cast<u8*>(data));
+            u8* decompBuffer = new u8[expandSize];
+            EGG::Decomp::decode(static_cast<u8*>(data), decompBuffer);
 
-        // Add to resource cache
-        AddCachedResource(path, expandSize, decompBuffer, local);
-        return decompBuffer;
+            // Free compressed buffer
+            delete data;
+
+            // Add to resource cache
+            AddCachedResource(path, expandSize, decompBuffer, local);
+            return decompBuffer;
+        }
     }
 
-    // Uncompressed resource
-    AddCachedResource(path, size, data, local);
     return data;
 }
 

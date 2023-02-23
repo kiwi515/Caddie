@@ -15,3 +15,6 @@ __pycache__/
 *.pdb
 *.dll
 *.dll.config
+
+tools/Kamek.deps.json
+tools/Kamek.runtimeconfig.json
