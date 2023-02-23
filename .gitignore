@@ -13,6 +13,5 @@ __pycache__/
 *.o
 *.exe
 *.pdb
-*.json
 *.dll
 *.dll.config
