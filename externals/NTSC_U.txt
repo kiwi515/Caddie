@@ -2,11 +2,13 @@
 SCGetLanguage=0x80054090
 
 # OS
-OSFatal=0x800493a0
+LCQueueLength=0x80046480
 OSPanic=0x80047150
-OSReport=0x80061470
+OSFatal=0x800493a0
 OSDisableInterrupts=0x8004af10
 OSEnableInterrupts=0x8004af30
+OSYieldThread=0x8004e280
+OSReport=0x80061470
 
 # STL/cstdio
 vprintf=0x8000ceec
@@ -53,6 +55,14 @@ List_Append__Q24nw4r2utFPQ34nw4r2ut4ListPv=0x8010ba00
 List_GetNext__Q24nw4r2utFPCQ34nw4r2ut4ListPCv=0x8010bc00
 List_GetPrev__Q24nw4r2utFPCQ34nw4r2ut4ListPCv=0x8010bc20
 
+# nw4r/ut/ut_TextWriterBase
+__ct__Q34nw4r2ut17TextWriterBase<w>Fv=0x80113420
+__dt__Q34nw4r2ut17TextWriterBase<w>Fv=0x80113480
+VPrintf__Q34nw4r2ut17TextWriterBase<w>FPCwP16__va_list_struct=0x80114350
+
+# nw4r/ut/ut_CharWriter
+SetupGX__Q34nw4r2ut10CharWriterFv=0x8010f660
+
 # nw4r/db/db_exception
 Exception_Printf___Q24nw4r2dbFPCce=0x80166a10
 ShowFloat___Q24nw4r2dbFPC9OSContext=0x80167230
@@ -76,6 +86,9 @@ decode__Q23EGG6DecompFPUcPUc=0x801c961c
 # EGG/core/eggDvdRipper
 loadToMainRAM__Q23EGG9DvdRipperFPCcPUcPQ23EGG4HeapQ33EGG9DvdRipper15EAllocDirectionUlPUlPUl=0x801c7ce0
 
+# RP/RPKernel/RPSysSystem
+sSystemHeap__11RPSysSystem=0x807ceb78
+
 # RP/RPSystem/RPSysSceneMgr
 sInstance__13RPSysSceneMgr=0x806f4c98
 
@@ -93,6 +106,9 @@ update__13RPSysPauseMgrFv=0x802352d4
 
 # RP/RPSystem/RPSysProjectLocal
 sInstance__17RPSysProjectLocal=0x806f4ca0
+
+# RP/RPSystem/RPSysFontManager
+sInstance__16RPSysFontManager=0x806f4cc8
 
 # Sports2/Sp2StaticMem
 getStaticVar__Q23Sp29StaticMemFib=0x80269f4c

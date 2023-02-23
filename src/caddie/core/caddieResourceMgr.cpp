@@ -79,7 +79,8 @@ bool ResourceMgr::LoadFromDVDImpl(const char* path, void*& dataOut,
 
     // Load as new resource
     dataOut = EGG::DvdRipper::loadToMainRAM(
-        path, NULL, NULL, EGG::DvdRipper::ALLOC_DIR_TOP, 0, NULL, &sizeOut);
+        path, NULL, MemManager::GetGameHeap(), EGG::DvdRipper::ALLOC_DIR_TOP, 0,
+        NULL, &sizeOut);
 
     CADDIE_WARN_EX(dataOut == NULL, "Failed to load DVD file: %s", path);
 

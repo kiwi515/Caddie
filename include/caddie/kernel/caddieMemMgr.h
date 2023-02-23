@@ -15,26 +15,28 @@ public:
     static void Initialize();
 
     static void* Alloc(size_t size, int align) {
-        CADDIE_ASSERT(sEggHeap != NULL);
-        return sEggHeap->alloc(size, align);
+        CADDIE_ASSERT(sGameHeap != NULL);
+        return sGameHeap->alloc(size, align);
     }
 
     static void Free(void* block) {
-        CADDIE_ASSERT(sEggHeap != NULL);
-        sEggHeap->free(block);
+        CADDIE_ASSERT(sGameHeap != NULL);
+        sGameHeap->free(block);
     }
 
     static u32 GetFreeSize() {
-        CADDIE_ASSERT(sEggHeap != NULL);
-        return sEggHeap->getAllocatableSize(4);
+        CADDIE_ASSERT(sGameHeap != NULL);
+        return sGameHeap->getAllocatableSize(4);
     }
+
+    static EGG::ExpHeap* GetGameHeap() { return sGameHeap; }
 
 private:
     MemManager() {}
     virtual ~MemManager() {}
 
     //! @brief Caddie main heap
-    static EGG::ExpHeap* sEggHeap;
+    static EGG::ExpHeap* sGameHeap;
     //! @brief Caddie main heap size (configurable)
     static const u32 scHeapSize;
 };

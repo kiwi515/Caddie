@@ -1,6 +1,5 @@
 #include "caddieBuildInfo.h"
 
-#include "caddieResourceMgr.h"
 #include "types_caddie.h"
 
 namespace caddie {

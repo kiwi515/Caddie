@@ -1,8 +1,10 @@
 #include "caddieCmnAllSceneHook.h"
 
 #include "caddieBuildInfo.h"
+#include "caddieDebugger.h"
 #include "caddieInputMgr.h"
 #include "caddieResourceMgr.h"
+#include "caddieWideTextWriter.h"
 
 namespace caddie {
 
@@ -16,6 +18,13 @@ void AllSceneHook::OnConfigure(RPSysScene* scene) {
     if (sBuildInfo == NULL) {
         sBuildInfo = new BuildInfo();
         CADDIE_ASSERT(sBuildInfo != NULL);
+    }
+
+    if (sTestMessage == NULL) {
+        void* bin = ResourceMgr::GetInstance().LoadStaticFromDVD(
+            "US/Message/TestMessage.cmsg");
+        sTestMessage = new Message(bin);
+        DEBUGGER_PRINT_VAR("%08X", sTestMessage);
     }
 }
 
@@ -39,6 +48,9 @@ void AllSceneHook::OnUserDraw(RPSysScene* scene) {
     CADDIE_ASSERT(sBuildInfo != NULL);
     sBuildInfo->UserDraw();
     sBuildInfo->DebugDraw();
+
+    WideTextWriter::GetInstance().Printf(0.0f, 0.0f,
+                                         sTestMessage->GetMessage(0));
 }
 
 /**
@@ -52,5 +64,6 @@ void AllSceneHook::OnExit(RPSysScene* scene) {
 }
 
 BuildInfo* AllSceneHook::sBuildInfo = NULL;
+Message* AllSceneHook::sTestMessage = NULL;
 
 } // namespace caddie

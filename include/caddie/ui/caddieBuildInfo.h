@@ -22,8 +22,6 @@ private:
     static const Vec2<f32> scTextPosition;
     //! @brief Build info text color
     static const Color scTextColor;
-
-    Message* mMessage;
 };
 
 } // namespace caddie

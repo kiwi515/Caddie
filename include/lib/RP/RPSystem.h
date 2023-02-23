@@ -1,6 +1,7 @@
 #ifndef RP_PUBLIC_SYSTEM_H
 #define RP_PUBLIC_SYSTEM_H
 
+#include <RP/RPSystem/RPSysFontManager.h>
 #include <RP/RPSystem/RPSysPauseMgr.h>
 #include <RP/RPSystem/RPSysProjectLocal.h>
 #include <RP/RPSystem/RPSysScene.h>

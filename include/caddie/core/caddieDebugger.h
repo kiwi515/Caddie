@@ -2,6 +2,8 @@
 #define CADDIE_DEBUGGER_H
 #include "types_caddie.h"
 
+#include <RevoSDK/OS.h>
+
 namespace caddie {
 
 /**

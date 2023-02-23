@@ -35,6 +35,8 @@ class List;
 class NandFileStream;
 class ResFont;
 class RomFont;
+template <typename T> class TagProcessorBase;
+template <typename T> class TextWriterBase;
 
 } // namespace ut
 
