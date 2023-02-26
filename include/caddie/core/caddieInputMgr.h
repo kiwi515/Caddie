@@ -34,7 +34,7 @@ public:
         return instance;
     }
 
-    void Calc();
+    void Calculate();
 
     u32 Held(EPlayer player) const {
         CADDIE_ASSERT(player < PLAYER_MAX);

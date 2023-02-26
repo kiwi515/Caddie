@@ -35,7 +35,7 @@ void AllSceneHook::OnConfigure(RPSysScene* scene) {
  */
 void AllSceneHook::OnCalculate(RPSysScene* scene) {
 #pragma unused(scene)
-    InputMgr::GetInstance().Calc();
+    InputMgr::GetInstance().Calculate();
 }
 
 /**
