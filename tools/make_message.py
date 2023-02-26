@@ -2,17 +2,12 @@ from argparse import ArgumentParser
 from sys import argv
 from json import loads
 from datetime import datetime
+from os import makedirs
 
 from caddieutil.stream import OutputStream, StreamEndian
 from caddieutil.message import CMSGBlock, DESCBlock, DATABlock
 
-REGION_2_LANG = {
-    "NTSC_U": ["FU", "SU", "US"],
-    "PAL": ["EN", "FR", "GE", "IT", "SP"],
-    "NTSC_J": [],
-    "KOR": [],
-    "TWN": []
-}
+CMSG_HEADER_ROOT = "include/caddie/cmsg"
 
 
 def write_binary(messages: list[str], args):
@@ -36,14 +31,17 @@ def write_binary(messages: list[str], args):
 
 def write_header(message_keys: list[str], args):
     """Write C++ header file for use with the CMSG binary"""
-    if args.header == None:
-        return
 
-    last_dir_idx = max(args.header.rfind("/"), args.header.rfind("\\"))
-    file_ext_idx = args.header.rfind(".")
-    file_name = args.header[last_dir_idx+1:file_ext_idx]
+    # Create header file path using JSON file name
+    last_dir_idx = max(args.json.rfind("/"), args.json.rfind("\\"))
+    file_ext_idx = args.json.rfind(".")
+    file_name = args.json[last_dir_idx+1:file_ext_idx]
+    header_path = f"{CMSG_HEADER_ROOT}/{file_name}.h"
 
-    with open(args.header, "w+") as f:
+    # Create header directory if it doesn't exist
+    makedirs(CMSG_HEADER_ROOT, exist_ok=True)
+
+    with open(header_path, "w+") as f:
         # Comment from tool
         now = datetime.now()
         f.write("/**\n")
@@ -96,16 +94,6 @@ def convert_json(args):
         print(f"[FATAL] JSON data could not be decoded: {args.json}")
         return
 
-    # Validate config
-    msg_region = json_data.get("region", "")
-    msg_lang = json_data.get("lang", "")
-    if msg_region not in REGION_2_LANG:
-        print(f"[FATAL] Invalid message region: {msg_region}")
-        return
-    if msg_lang not in REGION_2_LANG[msg_region]:
-        print(f"[FATAL] Invalid message language: {msg_lang}")
-        return
-
     # Message data
     msg_messages = json_data.get("messages", [])
     if len(msg_messages) == 0:
@@ -125,8 +113,6 @@ def main():
                         help="JSON file from which to create message binary")
     parser.add_argument("--cmsg", type=str, required=True,
                         help="Path to output message binary")
-    parser.add_argument("--header", type=str, required=False,
-                        help="Path to output C++ header file")
     args = parser.parse_args(argv[1:])
 
     convert_json(args)

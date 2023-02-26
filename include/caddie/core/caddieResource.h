@@ -13,7 +13,7 @@ public:
     static u32 GetNodeOffset() { return offsetof(Resource, mNode); }
 
     Resource(const char* path, u32 size, void* data)
-        : mPath(path), mSize(size), mData(data) {
+        : mPath(path), mSize(size), mData(static_cast<u8*>(data)) {
         CADDIE_ASSERT(mPath != NULL);
         CADDIE_ASSERT(mData != NULL);
     }
@@ -32,7 +32,7 @@ private:
     // File size
     u32 mSize;
     // File data
-    void* mData;
+    u8* mData;
 };
 
 } // namespace caddie

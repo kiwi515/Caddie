@@ -7,7 +7,7 @@ namespace caddie {
 /**
  * @brief Update player input
  */
-void InputMgr::Calc() {
+void InputMgr::Calculate() {
     for (int i = 0; i < PLAYER_MAX; i++) {
         const EGG::CoreController* cont =
             EGG::CoreControllerMgr::getInstance().getNthController(i);

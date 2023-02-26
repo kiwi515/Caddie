@@ -7,8 +7,7 @@
 namespace caddie {
 
 /**
- * @brief Wide text (wchar_t) writer. RP engine implements both but their wide
- * text writer gets deadstripped
+ * @brief Wide text (wchar_t) writer
  */
 class WideTextWriter : public nw4r::ut::TextWriterBase<wchar_t> {
 public:

@@ -48,6 +48,8 @@ _restgpr_29=0x800078ac
 __register_global_object=0x800072a4
 __destroy_arr=0x800075bc
 
+__ptmf_scall=0x800076e4
+
 # nw4r/ut/ut_list
 List_Init__Q24nw4r2utFPQ34nw4r2ut4ListUs=0x8010b9e0
 List_GetNth__Q24nw4r2utFPCQ34nw4r2ut4ListUs=0x8010bc40
@@ -86,11 +88,22 @@ decode__Q23EGG6DecompFPUcPUc=0x801c961c
 # EGG/core/eggDvdRipper
 loadToMainRAM__Q23EGG9DvdRipperFPCcPUcPQ23EGG4HeapQ33EGG9DvdRipper15EAllocDirectionUlPUlPUl=0x801c7ce0
 
+# EGG/core/eggSceneManager
+calcCurrentScene__Q23EGG12SceneManagerFv=0x801c3a24
+createDefaultFader__Q23EGG12SceneManagerFv=0x801c3dbc
+drawCurrentFader__Q23EGG12SceneManagerFv=0x801c3d9c
+drawCurrentScene__Q23EGG12SceneManagerFv=0x801c3d08
+draw__Q23EGG12SceneManagerFv=0x801c3494
+calc__Q23EGG12SceneManagerFv=0x801c3448
+
 # RP/RPKernel/RPSysSystem
 sSystemHeap__11RPSysSystem=0x807ceb78
 
 # RP/RPSystem/RPSysSceneMgr
 sInstance__13RPSysSceneMgr=0x806f4c98
+updateState__13RPSysSceneMgrFv=0x8023008c
+__dt__13RPSysSceneMgrFv=0x8022fef8
+calcCurrentFader__13RPSysSceneMgrFv=0x802301b4
 
 # RP/RPSystem/RPSysSysMsgWinMgr
 update__17RPSysSysMsgWinMgrFv=0x802352d4
@@ -109,6 +122,10 @@ sInstance__17RPSysProjectLocal=0x806f4ca0
 
 # RP/RPSystem/RPSysFontManager
 sInstance__16RPSysFontManager=0x806f4cc8
+
+# Sports2/LayoutDrawMgr
+UserDraw__Q23Sp213LayoutDrawMgrFv=0x802770ec
+sInstance__Q23Sp213LayoutDrawMgr=0x806f4ed8
 
 # Sports2/Sp2StaticMem
 getStaticVar__Q23Sp29StaticMemFib=0x80269f4c

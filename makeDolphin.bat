@@ -5,12 +5,12 @@ python make.py clean
 
 if [%1]==[] goto standard
 python make.py --region NTSC_U --flags=%1
-python make.py --region PAL --flags=%1
+REM python make.py --region PAL --flags=%1
 goto copy
 
 :standard
 python make.py --region NTSC_U
-python make.py --region PAL
+REM python make.py --region PAL
 
 :copy
 xcopy "build/main_NTSC_U.dol" "romfs/NTSC_U/sys/main.dol" /y /f /i

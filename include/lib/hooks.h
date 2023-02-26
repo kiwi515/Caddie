@@ -84,4 +84,27 @@
     kmCallDefInt(__COUNTER__, addr, returnType, __VA_ARGS__)
 #define kmCallDefAsm(addr) kmCallDefInt(__COUNTER__, addr, asm void, )
 
+/**
+ * HACKY MEMBER FUNCTION IMPL
+ */
+
+//! @brief Create dummy function to call a member function
+#define kmInjectMF(cls, func)                                                  \
+    UNKWORD KM_HOOK_MF_##cls##_##func(void* arg, ...) {                        \
+        typedef UNKWORD (cls::*cls##_fun_t)(...);                              \
+        const cls##_fun_t mem_fun = (cls##_fun_t)(&cls::func);                 \
+        cls* self = reinterpret_cast<cls*>(arg);                               \
+        return (self->*mem_fun)();                                             \
+    }
+
+//! @brief Call hook a member/thiscall function
+#define kmCallMF(addr, cls, func)                                              \
+    kmInjectMF(cls, func);                                                     \
+    kmCall(addr, KM_HOOK_MF_##cls##_##func);
+
+//! @brief Branch hook a member/thiscall function
+#define kmBranchMF(addr, cls, func)                                            \
+    kmInjectMF(cls, func);                                                     \
+    kmBranch(addr, KM_HOOK_MF_##cls##_##func);
+
 #endif
