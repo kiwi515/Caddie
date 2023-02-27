@@ -14,7 +14,12 @@ public:
     int getStaticVar(int var, bool b);
     void setStaticVar(int var, int value, bool b);
 
+    u32 getSceneSeq() const { return mSequence; }
+
 private:
+    char _00[0x18];
+    u32 mSequence;
+
     static StaticMem* sInstance;
 };
 

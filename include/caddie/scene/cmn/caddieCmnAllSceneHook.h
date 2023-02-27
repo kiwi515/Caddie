@@ -17,8 +17,6 @@ public:
 private:
     //! @brief Build info text
     static BuildInfo* sBuildInfo;
-
-    static Message* sTestMessage;
 };
 
 } // namespace caddie

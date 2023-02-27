@@ -9,6 +9,13 @@ OSDisableInterrupts=0x8004af10
 OSEnableInterrupts=0x8004af30
 OSYieldThread=0x8004e280
 OSReport=0x80061470
+OSCalendarTimeToTicks=0x8004f660
+__OSGetSystemTime=0x8004f260
+
+# IPC
+IOS_Open=0x8003b1f0
+IOS_Close=0x8003b3e0
+IOS_Ioctlv=0x8003bf20
 
 # STL/cstdio
 vprintf=0x8000ceec
@@ -23,6 +30,7 @@ strlen=0x800071c0
 strncpy=0x8000e7f4
 memset=0x80004350
 memcpy=0x80004000
+wcstombs=0x8000a938
 
 # TRK/runtime
 _savefpr_25=0x800077b8
@@ -44,6 +52,9 @@ _savegpr_28=0x8000785c
 _restgpr_28=0x800078a8
 _savegpr_29=0x80007860
 _restgpr_29=0x800078ac
+
+__div2u=0x800078bc
+__div2i=0x800079a8
 
 __register_global_object=0x800072a4
 __destroy_arr=0x800075bc

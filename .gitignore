@@ -8,6 +8,10 @@ riivo/apps/
 distro/
 __pycache__/
 
+# Build artifacts
+BCMSG_*.h
+*.bcmsg
+
 *.dol
 *.bin
 *.o

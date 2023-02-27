@@ -41,6 +41,11 @@ template <typename T> class Vec2;
 template <typename T> class Vec3;
 template <typename T> class Vec4;
 
+// net
+class IRichPresence;
+class EmuRichPresence;
+class RichPresenceMgr;
+
 // scene/cmn
 class AllSceneHook;
 

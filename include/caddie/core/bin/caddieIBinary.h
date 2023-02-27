@@ -1,5 +1,5 @@
-#ifndef CADDIE_CORE_IBINARY_H
-#define CADDIE_CORE_IBINARY_H
+#ifndef CADDIE_CORE_I_BINARY_H
+#define CADDIE_CORE_I_BINARY_H
 #include "types_caddie.h"
 
 #define CADDIE_BIN_VERSION(major, minor) ((major << 8) | minor)

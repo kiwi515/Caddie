@@ -1,6 +1,7 @@
 #ifndef CADDIE_CORE_RESOURCE_MGR_H
 #define CADDIE_CORE_RESOURCE_MGR_H
 #include "caddieLinkList.h"
+#include "caddieMessage.h"
 #include "caddieResource.h"
 #include "types_caddie.h"
 
@@ -18,7 +19,7 @@ public:
 
     // Load file from DVD with local (scene) lifetime
     void* LoadLocalFromDVD(const char* path) { return LoadFromDVD(path, true); }
-    // Load file from DVD with global (static) lifetime
+    // Load file from DVD with static (global) lifetime
     void* LoadStaticFromDVD(const char* path) {
         return LoadFromDVD(path, false);
     }
@@ -27,9 +28,23 @@ public:
     void* LoadLocalCompressedFromDVD(const char* path) {
         return LoadCompressedFromDVD(path, true);
     }
-    // Load and decompress file from DVD with global (static) lifetime
+    // Load and decompress file from DVD with static (global) lifetime
     void* LoadStaticCompressedFromDVD(const char* path) {
         return LoadCompressedFromDVD(path, false);
+    }
+
+    // Load BCMSG from DVD with local (scene) lifetime
+    Message* LoadLocalMessage(const char* path) {
+        void* bin = LoadLocalFromDVD(path);
+        CADDIE_ASSERT(bin != NULL);
+        return new Message(bin);
+    }
+
+    // Load BCMSG from DVD with static (global) lifetime
+    Message* LoadStaticMessage(const char* path) {
+        void* bin = LoadStaticFromDVD(path);
+        CADDIE_ASSERT(bin != NULL);
+        return new Message(bin);
     }
 
     void ClearStaticCache();

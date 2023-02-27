@@ -7,15 +7,15 @@ from os import makedirs
 from caddieutil.stream import OutputStream, StreamEndian
 from caddieutil.message import CMSGBlock, DESCBlock, DATABlock
 
-CMSG_HEADER_ROOT = "include/caddie/cmsg"
+BCMSG_HEADER_ROOT = "include/caddie/bcmsg"
 
 
 def write_binary(messages: list[str], args):
-    """Write specified messages to CMSG binary"""
+    """Write specified messages to BCMSG binary"""
     try:
-        strm = OutputStream(args.cmsg, StreamEndian.BIG)
+        strm = OutputStream(args.outfile, StreamEndian.BIG)
     except OSError:
-        print(f"[FATAL] Could not open CMSG file for writing: {args.cmsg}")
+        print(f"[FATAL] Could not open BCMSG file for writing: {args.outfile}")
         return
 
     # Create blocks
@@ -29,17 +29,24 @@ def write_binary(messages: list[str], args):
     strm.close()
 
 
-def write_header(message_keys: list[str], args):
-    """Write C++ header file for use with the CMSG binary"""
+def write_header(message_keys: list[str], args, header_path):
+    """Write C++ header file for use with the BCMSG binary"""
 
-    # Create header file path using JSON file name
-    last_dir_idx = max(args.json.rfind("/"), args.json.rfind("\\"))
-    file_ext_idx = args.json.rfind(".")
-    file_name = args.json[last_dir_idx+1:file_ext_idx]
-    header_path = f"{CMSG_HEADER_ROOT}/{file_name}.h"
+    # Get file name from JSON path
+    last_dir_idx = max(args.infile.rfind("/"), args.infile.rfind("\\"))
+    file_ext_idx = args.infile.rfind(".")
+    file_name = args.infile[last_dir_idx+1:file_ext_idx]
+
+    # Correct header path
+    if header_path != "" and not header_path.endswith("/"):
+        header_path = f"{header_path}/"
+
+    # Path to header file
+    header_dir = f"{BCMSG_HEADER_ROOT}/{header_path}"
+    header_path = f"{header_dir}BCMSG_{file_name}.h"
 
     # Create header directory if it doesn't exist
-    makedirs(CMSG_HEADER_ROOT, exist_ok=True)
+    makedirs(header_dir, exist_ok=True)
 
     with open(header_path, "w+") as f:
         # Comment from tool
@@ -54,8 +61,8 @@ def write_header(message_keys: list[str], args):
         f.write("\n")
 
         # Begin header guard
-        f.write(f"#ifndef CMSG_{file_name.upper()}_H\n")
-        f.write(f"#define CMSG_{file_name.upper()}_H\n")
+        f.write(f"#ifndef BCMSG_{file_name.upper()}_H\n")
+        f.write(f"#define BCMSG_{file_name.upper()}_H\n")
 
         f.write("\n")
 
@@ -64,7 +71,7 @@ def write_header(message_keys: list[str], args):
 
         f.write("\n")
 
-        f.write(f"enum {file_name} {{\n")
+        f.write(f"enum BCMSG_{file_name} {{\n")
         for msg_key in message_keys:
             f.write(f"    {msg_key},\n")
         f.write("};\n")
@@ -85,13 +92,13 @@ def convert_json(args):
 
     # Attempt to decode JSON data
     try:
-        with open(args.json, "rb") as f:
+        with open(args.infile, "rb") as f:
             json_data = loads(f.read())
     except FileNotFoundError:
-        print(f"[FATAL] JSON file could not be opened: {args.json}")
+        print(f"[FATAL] JSON file could not be opened: {args.infile}")
         return
     except UnicodeDecodeError:
-        print(f"[FATAL] JSON data could not be decoded: {args.json}")
+        print(f"[FATAL] JSON data could not be decoded: {args.infile}")
         return
 
     # Message data
@@ -100,19 +107,23 @@ def convert_json(args):
         print("[FATAL] No messages exist in the JSON file")
         return
 
-    # CMSG binary
+    # Header path (optional)
+    # *RELATIVE TO CMSG_HEADER_ROOT*
+    header_path = json_data.get("header_dir", "")
+
+    # BCMSG binary
     write_binary(msg_messages.values(), args)
     # Generate C++ header
-    write_header(msg_messages.keys(), args)
+    write_header(msg_messages.keys(), args, header_path)
 
 
 def main():
     # Parse command-line arguments
     parser = ArgumentParser()
-    parser.add_argument("--json", type=str, required=True,
-                        help="JSON file from which to create message binary")
-    parser.add_argument("--cmsg", type=str, required=True,
-                        help="Path to output message binary")
+    parser.add_argument("--infile", type=str, required=True,
+                        help="CMSG (JSON) file from which to create message binary")
+    parser.add_argument("--outfile", type=str, required=True,
+                        help="(BCMSG) Path to output message binary")
     args = parser.parse_args(argv[1:])
 
     convert_json(args)

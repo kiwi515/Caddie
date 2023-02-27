@@ -1,0 +1,30 @@
+{
+    "header_dir": "cmn/",
+    "messages": {
+        "MSG_RPC_STATE_MENU": "Main Menu",
+        "MSG_RPC_STATE_SWF_VS": "Swordplay (Duel)",
+        "MSG_RPC_STATE_SWF_PRC": "Swordplay (Speed Slice)",
+        "MSG_RPC_STATE_SWF_SGL": "Swordplay (Showdown)",
+        "MSG_RPC_STATE_WKB": "Wakeboarding",
+        "MSG_RPC_STATE_FLD": "Frisbee Dog",
+        "MSG_RPC_STATE_DGL": "Frisbee Golf",
+        "MSG_RPC_STATE_ARC": "Archery",
+        "MSG_RPC_STATE_BSK_3PT": "Basketball (3-Point Contest)",
+        "MSG_RPC_STATE_BSK_VS": "Basketball (Pickup Game)",
+        "MSG_RPC_STATE_PNG": "Table Tennis (Match)",
+        "MSG_RPC_STATE_PNG_RET": "Table Tennis (Return Challenge)",
+        "MSG_RPC_STATE_GLF": "Golf",
+        "MSG_RPC_STATE_BWL_STD": "Bowling (Standard Game)",
+        "MSG_RPC_STATE_BWL_100": "Bowling (100-Pin Game)",
+        "MSG_RPC_STATE_BWL_WAL": "Bowling (Spin Control)",
+        "MSG_RPC_STATE_JSK_RNG": "Power Cruising (Slalom Course)",
+        "MSG_RPC_STATE_JSK_VS": "Power Cruising (VS)",
+        "MSG_RPC_STATE_CAN": "Canoeing (Speed Challenge)",
+        "MSG_RPC_STATE_CAN_VS": "Canoeing (VS)",
+        "MSG_RPC_STATE_BIC": "Cycling (Road Race)",
+        "MSG_RPC_STATE_BIC_VS": "Cycling (VS)",
+        "MSG_RPC_STATE_OMK": "Skydiving",
+        "MSG_RPC_STATE_PLN": "Island Flyover",
+        "MSG_RPC_STATE_PLN_VS": "Dogfight"
+    }
+}
