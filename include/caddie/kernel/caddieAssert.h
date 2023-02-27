@@ -1,5 +1,5 @@
-#ifndef CADDIE_CORE_ASSERT_H
-#define CADDIE_CORE_ASSERT_H
+#ifndef CADDIE_KERNEL_ASSERT_H
+#define CADDIE_KERNEL_ASSERT_H
 #include <types.h>
 
 #ifndef NDEBUG

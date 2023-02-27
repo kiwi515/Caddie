@@ -22,11 +22,9 @@ public:
     u32 ToARGB() const { return (a << 24) | (r << 16) | (g << 8) | (b); }
     u32 ToRGBA() { return (r << 24) | (g << 16) | (b << 8) | (a); }
 
-    operator nw4r::ut::Color*() {
-        return reinterpret_cast<nw4r::ut::Color*>(this);
-    }
-    operator const nw4r::ut::Color*() const {
-        return reinterpret_cast<const nw4r::ut::Color*>(this);
+    operator nw4r::ut::Color() { return nw4r::ut::Color(r, g, b, a); }
+    operator const nw4r::ut::Color() const {
+        return nw4r::ut::Color(r, g, b, a);
     }
 };
 

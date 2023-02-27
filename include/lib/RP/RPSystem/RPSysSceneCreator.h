@@ -82,7 +82,11 @@ public:
         SEQ_BIC = 8,
         SEQ_BIC_VS = 5,
 
-        SEQ_OMK = 1
+        SEQ_OMK = 1,
+
+        // NOTE: Adjust based on other values. The sequence IDs seem arbitrary.
+        // Maybe a lot of cut content?
+        SEQ_MAX = 11
     };
 
 public:

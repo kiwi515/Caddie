@@ -1,13 +1,18 @@
 #include "caddieAssert.h"
 
+#include "caddieColor.h"
+
 #include <OS.h>
 #include <cstdarg>
 #include <cstdio>
 #include <cstring>
 
-// TODO: Move to caddie color structure
-static const GXColor sDebugBg = (GXColor){0, 142, 161, 0};
-static const GXColor sDebugFg = (GXColor){255, 255, 255, 0};
+namespace {
+
+static const caddie::Color scDebugBg(0, 142, 161, 0);
+static const caddie::Color scDebugFg(255, 255, 255, 0);
+
+} // namespace
 
 /**
  * @brief Log message to the console
@@ -48,6 +53,6 @@ void caddie_fail_assert(const char* file, int line, const char* msg, ...) {
     CADDIE_LOG("Program Halt");
 
     // Print to screen
-    OSFatal(sDebugFg, sDebugBg, assert_buf);
+    OSFatal(scDebugFg, scDebugBg, assert_buf);
 }
 kmBranch(0x80047150, caddie_fail_assert);

@@ -53,6 +53,7 @@ void AllSceneHook::OnUserDraw(RPSysScene* scene) {
 void AllSceneHook::OnExit(RPSysScene* scene) {
 #pragma unused(scene)
     ResourceMgr::GetInstance().ClearSceneCache();
+    RichPresenceMgr::GetInstance().Exit();
 }
 
 BuildInfo* AllSceneHook::sBuildInfo = NULL;

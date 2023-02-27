@@ -8,47 +8,8 @@
 
 //
 
-#include <core/caddieAssert.h>
+#include <kernel/caddieAssert.h>
 #include <kernel/caddieMemMgr.h>
 #include <kernel/caddieRuntime.h>
-
-namespace caddie {
-
-// kernel
-class Exception;
-class MemManager;
-
-// core
-struct BinaryBlock;
-class MapFile;
-class Message;
-template <typename T> class TLinkList;
-struct TLinkListNode;
-class Resource;
-class ResourceMgr;
-struct SceneHook;
-class SceneHookMgr;
-template <typename T> class TStack;
-
-// ui
-class BuildInfo;
-class Pane;
-class PaneMgr;
-class TextBox;
-
-// math
-template <typename T> class Vec2;
-template <typename T> class Vec3;
-template <typename T> class Vec4;
-
-// net
-class IRichPresence;
-class EmuRichPresence;
-class RichPresenceMgr;
-
-// scene/cmn
-class AllSceneHook;
-
-} // namespace caddie
 
 #endif

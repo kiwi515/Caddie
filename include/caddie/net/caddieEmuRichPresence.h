@@ -21,7 +21,7 @@ public:
 
 private:
     // Handle to Dolphin device
-    s32 mEmuHandle;
+    int mEmuHandle;
 };
 
 } // namespace caddie

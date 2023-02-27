@@ -10,6 +10,7 @@ OSEnableInterrupts=0x8004af30
 OSYieldThread=0x8004e280
 OSReport=0x80061470
 OSCalendarTimeToTicks=0x8004f660
+OSGetTick=0x8004f250
 __OSGetSystemTime=0x8004f260
 
 # IPC

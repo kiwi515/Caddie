@@ -4,6 +4,8 @@
 
 namespace caddie {
 
+class BuildInfo;
+
 /**
  * @brief Scene hook applied to all scenes
  */

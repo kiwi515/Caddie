@@ -63,7 +63,7 @@ u64 EmuRichPresence::GetTimeNow() const {
     IPCIOVector output[1];
     MakePrimVector(time, output[0]);
 
-    const s32 result = IOS_Ioctlv(mEmuHandle, IOCTLV_GET_SYSTEM_TIME, 0,
+    const int result = IOS_Ioctlv(mEmuHandle, IOCTLV_GET_SYSTEM_TIME, 0,
                                   ARRAY_LENGTH(output), output);
     if (result < 0) {
         CADDIE_LOG_EX("GetTimeNow error: %d", result);
@@ -86,7 +86,7 @@ void EmuRichPresence::UpdateClient() const {
     IPCIOVector input[1];
     MakeStrVector(mClient, input[0]);
 
-    const s32 result = IOS_Ioctlv(mEmuHandle, IOCTLV_RPC_SET_CLIENT,
+    const int result = IOS_Ioctlv(mEmuHandle, IOCTLV_RPC_SET_CLIENT,
                                   ARRAY_LENGTH(input), 0, input);
     if (result < 0) {
         CADDIE_LOG_EX("UpdateClient error: %d", result);
@@ -123,7 +123,7 @@ void EmuRichPresence::UpdatePresence() const {
     MakePrimVector(mPartyNum, input[8]);
     MakePrimVector(mPartyMax, input[9]);
 
-    const s32 result = IOS_Ioctlv(mEmuHandle, IOCTLV_RPC_SET_PRESENCE,
+    const int result = IOS_Ioctlv(mEmuHandle, IOCTLV_RPC_SET_PRESENCE,
                                   ARRAY_LENGTH(input), 0, input);
     if (result < 0) {
         CADDIE_LOG_EX("UpdatePresence error: %d", result);

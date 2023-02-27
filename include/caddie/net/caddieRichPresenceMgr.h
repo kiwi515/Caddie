@@ -4,6 +4,9 @@
 
 namespace caddie {
 
+class IRichPresence;
+class Message;
+
 /**
  * @brief Discord rich presence (console/dolphin) manager
  */
@@ -15,6 +18,7 @@ public:
     }
 
     void Configure();
+    void Exit();
 
 private:
     RichPresenceMgr();
@@ -23,6 +27,7 @@ private:
 private:
     IRichPresence* mRichPresence;
     Message* mMessage;
+    int mLastSceneID;
 
     // Caddie Discord app ID (client ID)
     static const char* scCaddieAppId;

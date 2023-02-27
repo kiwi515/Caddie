@@ -1,5 +1,5 @@
-#ifndef CADDIE_CORE_STACK_H
-#define CADDIE_CORE_STACK_H
+#ifndef CADDIE_KERNEL_STACK_H
+#define CADDIE_KERNEL_STACK_H
 #include "caddieLinkList.h"
 #include "types_caddie.h"
 
