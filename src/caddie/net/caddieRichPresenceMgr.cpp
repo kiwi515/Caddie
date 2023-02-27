@@ -17,7 +17,7 @@ namespace {
  * @brief RPC information for a given scene + sequence
  */
 struct SceneSeqRpcInfo {
-    u32 msg;
+    int msg;
     const char* image;
 };
 
@@ -25,6 +25,8 @@ extern const SceneSeqRpcInfo scRpcInfo[RPSysSceneCreator::SCENE_MAX]
                                       [RPSysSceneCreator::SEQ_MAX];
 
 } // namespace
+
+const char* RichPresenceMgr::scCaddieAppId = "1078748945783734282";
 
 RichPresenceMgr::RichPresenceMgr()
     : mRichPresence(NULL), mMessage(NULL), mLastSceneID(-1) {
@@ -70,7 +72,7 @@ void RichPresenceMgr::Configure() {
     const u32 seq = Sp2::StaticMem::getInstance().getSceneSeq();
     CADDIE_ASSERT_EX(scene < RPSysSceneCreator::SCENE_MAX &&
                          seq < RPSysSceneCreator::SEQ_MAX,
-                     "Invalid scene/seq (%d, %d)", scene, seq);
+                     "Invalid scene(%d) or sequence(%d)", scene, seq);
 
     // Do not change presence if the scene is only reloading
     if (mLastSceneID == scene) {
@@ -79,6 +81,8 @@ void RichPresenceMgr::Configure() {
 
     // Get new state/image for RPC
     const SceneSeqRpcInfo& info = scRpcInfo[scene][seq];
+    CADDIE_ASSERT_EX(info.msg > 0 && info.image != NULL,
+                     "Scene(%d) or sequence(%d) with no RPC info", scene, seq);
     const wchar_t* state = mMessage->GetMessage(info.msg);
     const char* largeImageKey = info.image;
 
@@ -96,8 +100,6 @@ void RichPresenceMgr::Configure() {
 void RichPresenceMgr::Exit() {
     mLastSceneID = RPSysSceneMgr::getInstance().getCurrentSceneID();
 }
-
-const char* RichPresenceMgr::scCaddieAppId = "1078748945783734282";
 
 namespace {
 
@@ -166,212 +168,212 @@ const SceneSeqRpcInfo scRpcInfo[RPSysSceneCreator::SCENE_MAX]
 
     // SCENE_SWF
     {
-        {-1, ""},
+        {-1, NULL},
         {MSG_RPC_STATE_SWF_SGL, "swf_sgl"},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
         {MSG_RPC_STATE_SWF_VS, "swf_vs"},
         {MSG_RPC_STATE_SWF_PRC, "swf_prc"},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
     },
 
     // SCENE_JSK
     {
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
         {MSG_RPC_STATE_JSK_RNG, "jsk_rng"},
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
         {MSG_RPC_STATE_JSK_VS, "jsk_vs"},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
     },
 
     // SCENE_ARC
     {
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
         {MSG_RPC_STATE_ARC, "arc"},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
     },
 
     // SCENE_FLD
     {
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
         {MSG_RPC_STATE_FLD, "fld"},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
     },
 
     // SCENE_BSK
     {
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
         {MSG_RPC_STATE_BSK_3PT, "bsk_3pt"},
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
         {MSG_RPC_STATE_BSK_VS, "bsk_vs"},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
     },
 
     // SCENE_BWL
     {
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
         {MSG_RPC_STATE_BWL_STD, "bwl_std"},
         {MSG_RPC_STATE_BWL_100, "bwl_100"},
         {MSG_RPC_STATE_BWL_WAL, "bwl_wal"},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
     },
 
     // SCENE_CAN
     {
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
         {MSG_RPC_STATE_CAN, "can_vs"},
         {MSG_RPC_STATE_CAN_VS, "can"},
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
     },
 
     // SCENE_PNG
     {
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
         {MSG_RPC_STATE_PNG_RET, "png_ret"},
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
         {MSG_RPC_STATE_PNG, "png"},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
     },
 
     // SCENE_WKB
     {
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
         {MSG_RPC_STATE_WKB, "wkb"},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
     },
 
     // SCENE_PLN
     {
         {MSG_RPC_STATE_PLN, "pln"},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
         {MSG_RPC_STATE_PLN_VS, "pln_vs"},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
     },
 
     // SCENE_GLF
     {
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
         {MSG_RPC_STATE_GLF, "glf"},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
     },
 
     // SCENE_DGL
     {
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
         {MSG_RPC_STATE_DGL, "dgl"},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
     },
 
     // SCENE_BIC
     {
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
         {MSG_RPC_STATE_BIC_VS, "bic_vs"},
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
         {MSG_RPC_STATE_BIC, "bic"},
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
     },
 
     // SCENE_OMK
     {
-        {-1, ""},
+        {-1, NULL},
         {MSG_RPC_STATE_OMK, "omk"},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
-        {-1, ""},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
+        {-1, NULL},
     },
                                    // clang-format on
 };
