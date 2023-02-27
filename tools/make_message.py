@@ -7,7 +7,7 @@ from os import makedirs
 from caddieutil.stream import OutputStream, StreamEndian
 from caddieutil.message import CMSGBlock, DESCBlock, DATABlock
 
-BCMSG_HEADER_ROOT = "include/caddie/bcmsg"
+BCMSG_HEADER_ROOT = "src/caddie/"
 
 
 def write_binary(messages: list[str], args):
@@ -42,7 +42,7 @@ def write_header(message_keys: list[str], args, header_path):
         header_path = f"{header_path}/"
 
     # Path to header file
-    header_dir = f"{BCMSG_HEADER_ROOT}/{header_path}"
+    header_dir = f"{BCMSG_HEADER_ROOT}{header_path}"
     header_path = f"{header_dir}BCMSG_{file_name}.h"
 
     # Create header directory if it doesn't exist

@@ -7,7 +7,7 @@ from subprocess import run, PIPE
 AS = "tools\\powerpc-eabi-as.exe"
 ASFLAGS = "-mgekko -I include"
 CC = "tools\\mwcceppc.exe"
-CFLAGS = "-I- -i include -ir include/lib/STL -ir include/loader -ir include/caddie -ir include/lib -proc gekko -RTTI off -Cpp_exceptions off -enum int -O4,s -use_lmw_stmw on -fp hard -rostr -sdata 0 -sdata2 0 -msgstyle gcc"
+CFLAGS = "-I- -i include -ir include/lib/STL -ir include/loader -ir src/caddie -ir include/lib -proc gekko -RTTI off -Cpp_exceptions off -enum int -O4,s -use_lmw_stmw on -fp hard -rostr -sdata 0 -sdata2 0 -msgstyle gcc"
 SRC_DIR = "src/"
 BUILD_DIR = "build/"
 RIIVO_DIR = "riivo/"

@@ -1,6 +1,6 @@
 #include "caddieRichPresenceMgr.h"
 
-#include "BCMSG_RichPresence.h"
+#include "BCMSG_RichPresence.hpp"
 #include "caddieEmuRichPresence.h"
 #include "caddieHashMap.h"
 #include "caddieMessage.h"
