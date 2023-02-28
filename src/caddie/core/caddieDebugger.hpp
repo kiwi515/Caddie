@@ -12,7 +12,6 @@ namespace caddie {
 class Debugger {
 public:
     static void Break();
-    static void BreakIf(bool expr);
 
 private:
     static void BreakImpl();

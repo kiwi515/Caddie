@@ -4,12 +4,6 @@ namespace caddie {
 
 void Debugger::Break() { BreakImpl(); }
 
-void Debugger::BreakIf(bool expr) {
-    if (expr) {
-        Break();
-    }
-}
-
 asm void Debugger::BreakImpl() {
     // clang-format off
     fralloc
