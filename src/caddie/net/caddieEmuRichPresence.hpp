@@ -1,7 +1,7 @@
 #ifndef CADDIE_NET_EMU_RICH_PRESENCE_H
 #define CADDIE_NET_EMU_RICH_PRESENCE_H
-#include "caddieIRichPresence.h"
-#include "types_caddie.h"
+#include "caddieIRichPresence.hpp"
+#include "types_caddie.hpp"
 
 namespace caddie {
 

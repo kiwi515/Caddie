@@ -1,6 +1,6 @@
 #ifndef CADDIE_CORE_I_BINARY_H
 #define CADDIE_CORE_I_BINARY_H
-#include "types_caddie.h"
+#include "types_caddie.hpp"
 
 #define CADDIE_BIN_VERSION(major, minor) ((major << 8) | minor)
 
@@ -43,7 +43,8 @@ public:
 
         // Check header kind
         CADDIE_ASSERT_EX(GetBinaryKind() == header.block.kind,
-                         "Not for this class. Got %s", header.block.kind_str);
+                         "Not for this class. Got %08X (%s)", header.block.kind,
+                         header.block.kind_str);
 
         // Check header version
         CADDIE_ASSERT_EX(GetVersion() == header.version,

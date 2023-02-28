@@ -1,11 +1,11 @@
-#include "caddieRichPresenceMgr.h"
+#include "caddieRichPresenceMgr.hpp"
 
 #include "BCMSG_RichPresence.hpp"
-#include "caddieEmuRichPresence.h"
-#include "caddieHashMap.h"
-#include "caddieMessage.h"
-#include "caddieResourceMgr.h"
-#include "caddieRvlRichPresence.h"
+#include "caddieEmuRichPresence.hpp"
+#include "caddieHashMap.hpp"
+#include "caddieMessage.hpp"
+#include "caddieResourceMgr.hpp"
+#include "caddieRvlRichPresence.hpp"
 
 #include <RP/RPSystem.h>
 #include <Sports2/Sp2StaticMem.h>

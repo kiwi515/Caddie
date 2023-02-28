@@ -1,6 +1,6 @@
 #ifndef CADDIE_NET_I_RICH_PRESENCE_H
 #define CADDIE_NET_I_RICH_PRESENCE_H
-#include "types_caddie.h"
+#include "types_caddie.hpp"
 
 #include <RevoSDK/OS.h>
 

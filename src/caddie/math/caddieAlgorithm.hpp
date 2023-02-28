@@ -1,6 +1,6 @@
 #ifndef CADDIE_MATH_ALGORITHM_H
 #define CADDIE_MATH_ALGORITHM_H
-#include "types_caddie.h"
+#include "types_caddie.hpp"
 
 namespace caddie {
 

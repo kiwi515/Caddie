@@ -1,6 +1,6 @@
 #ifndef CADDIE_KERNEL_STL_H
 #define CADDIE_KERNEL_STL_H
-#include "types_caddie.h"
+#include "types_caddie.hpp"
 
 #include <cstdio>
 #include <cstring>

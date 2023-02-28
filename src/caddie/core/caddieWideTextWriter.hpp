@@ -1,6 +1,6 @@
 #ifndef CADDIE_WIDE_TEXT_WRITER_H
 #define CADDIE_WIDE_TEXT_WRITER_H
-#include "types_caddie.h"
+#include "types_caddie.hpp"
 
 #include <nw4r/ut.h>
 

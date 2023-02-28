@@ -1,7 +1,7 @@
-#include "caddieCmnAllSceneHook.h"
-#include "caddieMapFile.h"
-#include "caddieRuntime.h"
-#include "caddieSceneHookMgr.h"
+#include "caddieCmnAllSceneHook.hpp"
+#include "caddieMapFile.hpp"
+#include "caddieRuntime.hpp"
+#include "caddieSceneHookMgr.hpp"
 
 #include <RP/RPSystem.h>
 #include <egg/core.h>

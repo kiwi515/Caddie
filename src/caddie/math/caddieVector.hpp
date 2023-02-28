@@ -1,6 +1,6 @@
 #ifndef CADDIE_MATH_VECTOR_H
 #define CADDIE_MATH_VECTOR_H
-#include "types_caddie.h"
+#include "types_caddie.hpp"
 
 #include <nw4r/math.h>
 

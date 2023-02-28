@@ -1,4 +1,4 @@
-#include "caddieTextBox.h"
+#include "caddieTextBox.hpp"
 
 #include <Sports2/Sp2Util.h>
 #include <cstdio>

@@ -1,4 +1,4 @@
-#include "types_caddie.h"
+#include "types_caddie.hpp"
 
 namespace caddie {
 namespace {

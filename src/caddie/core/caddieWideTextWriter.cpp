@@ -1,4 +1,4 @@
-#include "caddieWideTextWriter.h"
+#include "caddieWideTextWriter.hpp"
 
 #include <RP/RPSystem.h>
 

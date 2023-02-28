@@ -1,10 +1,10 @@
-#include "caddieCmnAllSceneHook.h"
+#include "caddieCmnAllSceneHook.hpp"
 
-#include "caddieBuildInfo.h"
-#include "caddieDebugger.h"
-#include "caddieInputMgr.h"
-#include "caddieResourceMgr.h"
-#include "caddieRichPresenceMgr.h"
+#include "caddieBuildInfo.hpp"
+#include "caddieDebugger.hpp"
+#include "caddieInputMgr.hpp"
+#include "caddieResourceMgr.hpp"
+#include "caddieRichPresenceMgr.hpp"
 
 namespace caddie {
 

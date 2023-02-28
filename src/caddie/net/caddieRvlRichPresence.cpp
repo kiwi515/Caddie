@@ -1,4 +1,4 @@
-#include "caddieRvlRichPresence.h"
+#include "caddieRvlRichPresence.hpp"
 
 #include <RevoSDK/IPC.h>
 #include <RevoSDK/OS.h>

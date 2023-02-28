@@ -1,8 +1,8 @@
 #ifndef CADDIE_UI_PANE_H
 #define CADDIE_UI_PANE_H
-#include "caddieLinkList.h"
-#include "caddieVector.h"
-#include "types_caddie.h"
+#include "caddieLinkList.hpp"
+#include "caddieVector.hpp"
+#include "types_caddie.hpp"
 
 namespace caddie {
 

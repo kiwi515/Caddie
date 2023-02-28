@@ -1,7 +1,7 @@
 #ifndef CADDIE_CORE_MAP_FILE_H
 #define CADDIE_CORE_MAP_FILE_H
-#include "caddieLinkList.h"
-#include "types_caddie.h"
+#include "caddieLinkList.hpp"
+#include "types_caddie.hpp"
 
 namespace caddie {
 

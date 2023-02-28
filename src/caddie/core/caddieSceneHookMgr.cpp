@@ -1,4 +1,4 @@
-#include "caddieSceneHookMgr.h"
+#include "caddieSceneHookMgr.hpp"
 
 #include <RP/RPSystem.h>
 

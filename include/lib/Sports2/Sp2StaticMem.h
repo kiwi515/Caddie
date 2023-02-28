@@ -1,6 +1,6 @@
 #ifndef SP2_STATIC_MEM_H
 #define SP2_STATIC_MEM_H
-#include "types_caddie.h"
+#include "types_caddie.hpp"
 
 namespace Sp2 {
 

@@ -1,6 +1,6 @@
 #ifndef CADDIE_KERNEL_EXCEPTION_H
 #define CADDIE_KERNEL_EXCEPTION_H
-#include "types_caddie.h"
+#include "types_caddie.hpp"
 
 // Forward declaration
 struct OSContext;

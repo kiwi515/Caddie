@@ -1,8 +1,8 @@
 #ifndef CADDIE_UI_TEXT_BOX_H
 #define CADDIE_UI_TEXT_BOX_H
-#include "caddieColor.h"
-#include "caddiePane.h"
-#include "types_caddie.h"
+#include "caddieColor.hpp"
+#include "caddiePane.hpp"
+#include "types_caddie.hpp"
 
 #include <nw4r/ut.h>
 

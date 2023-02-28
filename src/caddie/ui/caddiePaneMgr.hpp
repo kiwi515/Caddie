@@ -1,9 +1,9 @@
 #ifndef CADDIE_UI_PANE_MGR_H
 #define CADDIE_UI_PANE_MGR_H
-#include "caddiePane.h"
-#include "caddieStack.h"
-#include "caddieVector.h"
-#include "types_caddie.h"
+#include "caddiePane.hpp"
+#include "caddieStack.hpp"
+#include "caddieVector.hpp"
+#include "types_caddie.hpp"
 
 namespace caddie {
 

@@ -1,7 +1,7 @@
 #ifndef CADDIE_KERNEL_STACK_H
 #define CADDIE_KERNEL_STACK_H
-#include "caddieLinkList.h"
-#include "types_caddie.h"
+#include "caddieLinkList.hpp"
+#include "types_caddie.hpp"
 
 namespace caddie {
 

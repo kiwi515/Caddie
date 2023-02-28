@@ -1,4 +1,4 @@
-#include "caddieResourceMgr.h"
+#include "caddieResourceMgr.hpp"
 
 #include <RevoSDK/OS.h>
 #include <cstring>

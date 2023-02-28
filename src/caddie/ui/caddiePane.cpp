@@ -1,4 +1,4 @@
-#include "caddiePane.h"
+#include "caddiePane.hpp"
 
 #include <cstring>
 

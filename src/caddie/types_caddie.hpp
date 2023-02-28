@@ -9,7 +9,7 @@
 //
 
 #include <kernel/caddieAssert.h>
-#include <kernel/caddieMemMgr.h>
-#include <kernel/caddieRuntime.h>
+#include <kernel/caddieMemMgr.hpp>
+#include <kernel/caddieRuntime.hpp>
 
 #endif

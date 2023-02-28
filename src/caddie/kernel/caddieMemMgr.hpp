@@ -1,6 +1,6 @@
 #ifndef CADDIE_KERNEL_MEM_MGR_H
 #define CADDIE_KERNEL_MEM_MGR_H
-#include "types_caddie.h"
+#include "types_caddie.hpp"
 
 #include <egg/core.h>
 

@@ -1,6 +1,6 @@
 #ifndef RP_SYSTEM_FONT_MANAGER_H
 #define RP_SYSTEM_FONT_MANAGER_H
-#include "types_caddie.h"
+#include "types_caddie.hpp"
 
 #include <nw4r/ut.h>
 

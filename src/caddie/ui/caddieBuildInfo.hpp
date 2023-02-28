@@ -1,7 +1,7 @@
 #ifndef CADDIE_UI_BUILD_INFO_H
 #define CADDIE_UI_BUILD_INFO_H
-#include "caddieMessage.h"
-#include "caddieTextBox.h"
+#include "caddieMessage.hpp"
+#include "caddieTextBox.hpp"
 
 namespace caddie {
 

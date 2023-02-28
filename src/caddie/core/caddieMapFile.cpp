@@ -1,8 +1,8 @@
-#include "caddieMapFile.h"
+#include "caddieMapFile.hpp"
 
-#include "caddieResourceMgr.h"
-#include "caddieRuntime.h"
-#include "caddieSTL.h"
+#include "caddieResourceMgr.hpp"
+#include "caddieRuntime.hpp"
+#include "caddieSTL.hpp"
 
 #include <egg/core.h>
 #include <string.h>

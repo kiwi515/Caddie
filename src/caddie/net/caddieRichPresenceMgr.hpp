@@ -1,6 +1,6 @@
 #ifndef CADDIE_NET_RICH_PRESENCE_MGR_H
 #define CADDIE_NET_RICH_PRESENCE_MGR_H
-#include "types_caddie.h"
+#include "types_caddie.hpp"
 
 namespace caddie {
 

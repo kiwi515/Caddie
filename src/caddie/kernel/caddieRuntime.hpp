@@ -1,7 +1,7 @@
 #ifndef CADDIE_KERNEL_RUNTIME_H
 #define CADDIE_KERNEL_RUNTIME_H
-#include "caddieAlgorithm.h"
-#include "types_caddie.h"
+#include "caddieAlgorithm.hpp"
+#include "types_caddie.hpp"
 
 namespace caddie {
 

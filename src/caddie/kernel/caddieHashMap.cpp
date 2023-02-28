@@ -1,6 +1,6 @@
-#include "caddieHashMap.h"
+#include "caddieHashMap.hpp"
 
-#include "caddieAlgorithm.h"
+#include "caddieAlgorithm.hpp"
 
 namespace caddie {
 namespace {

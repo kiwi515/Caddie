@@ -1,6 +1,6 @@
 #ifndef CADDIE_CORE_RANDOM_H
 #define CADDIE_CORE_RANDOM_H
-#include "types_caddie.h"
+#include "types_caddie.hpp"
 
 namespace caddie {
 

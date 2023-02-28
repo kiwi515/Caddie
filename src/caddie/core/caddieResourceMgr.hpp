@@ -1,9 +1,9 @@
 #ifndef CADDIE_CORE_RESOURCE_MGR_H
 #define CADDIE_CORE_RESOURCE_MGR_H
-#include "caddieLinkList.h"
-#include "caddieMessage.h"
-#include "caddieResource.h"
-#include "types_caddie.h"
+#include "caddieLinkList.hpp"
+#include "caddieMessage.hpp"
+#include "caddieResource.hpp"
+#include "types_caddie.hpp"
 
 namespace caddie {
 

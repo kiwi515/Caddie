@@ -1,4 +1,4 @@
-#include "caddieInputMgr.h"
+#include "caddieInputMgr.hpp"
 
 #include <egg/core.h>
 

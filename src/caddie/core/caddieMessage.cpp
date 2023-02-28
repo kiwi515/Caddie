@@ -1,7 +1,7 @@
-#include "caddieMessage.h"
+#include "caddieMessage.hpp"
 
-#include "caddieAlgorithm.h"
-#include "caddieDebugger.h"
+#include "caddieAlgorithm.hpp"
+#include "caddieDebugger.hpp"
 
 namespace caddie {
 

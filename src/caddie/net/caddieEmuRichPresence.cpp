@@ -1,4 +1,4 @@
-#include "caddieEmuRichPresence.h"
+#include "caddieEmuRichPresence.hpp"
 
 #include <RevoSDK/IPC.h>
 #include <cstdlib>

@@ -1,7 +1,7 @@
 #ifndef CADDIE_CORE_MESSAGE_H
 #define CADDIE_CORE_MESSAGE_H
-#include "caddieIBinary.h"
-#include "types_caddie.h"
+#include "caddieIBinary.hpp"
+#include "types_caddie.hpp"
 
 namespace caddie {
 

@@ -1,4 +1,4 @@
-#include "caddieRandom.h"
+#include "caddieRandom.hpp"
 
 #include <RevoSDK/OS.h>
 

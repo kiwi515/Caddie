@@ -1,6 +1,6 @@
 #include "caddieAssert.h"
 
-#include "caddieColor.h"
+#include "caddieColor.hpp"
 
 #include <OS.h>
 #include <cstdarg>

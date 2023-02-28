@@ -1,8 +1,8 @@
-#include "caddieException.h"
+#include "caddieException.hpp"
 
-#include "caddieAlgorithm.h"
-#include "caddieBuildInfo.h"
-#include "caddieMapFile.h"
+#include "caddieAlgorithm.hpp"
+#include "caddieBuildInfo.hpp"
+#include "caddieMapFile.hpp"
 
 #include <egg/util.h>
 #include <nw4r/db.h>

@@ -1,6 +1,6 @@
 #ifndef CADDIE_DEBUGGER_H
 #define CADDIE_DEBUGGER_H
-#include "types_caddie.h"
+#include "types_caddie.hpp"
 
 #include <RevoSDK/OS.h>
 
