@@ -9,11 +9,6 @@ namespace caddie {
 extern "C" {
 #endif
 
-//! @brief C++ static initializer function pointer
-typedef void (*StaticCtor)(void);
-extern StaticCtor __ctor_loc;
-extern StaticCtor __ctor_end;
-
 extern void* _f_init;
 extern void* _e_init;
 
