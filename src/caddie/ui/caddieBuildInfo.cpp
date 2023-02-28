@@ -33,7 +33,7 @@ BuildInfo::BuildInfo() {
     SetTextColor(scTextColor);
     SetPositionAbsolute(scTextPosition);
 
-    const f32 heapFreeKb = MemManager::GetFreeSize() / 1024.0f;
+    const f32 heapFreeKb = MemoryMgr::GetFreeSize() / 1024.0f;
     SetTextFmt("Caddie (%s, %s): %s (%.1f KB free)", GetBuildTarget(),
                GetBuildRegion(), GetBuildDate(), heapFreeKb);
 }

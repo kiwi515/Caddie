@@ -14,7 +14,7 @@ namespace caddie {
  */
 void main() {
     // Initialize heap
-    MemManager::Initialize();
+    MemoryMgr::Initialize();
 
 #ifndef NDEBUG
     // Always show exception handler
