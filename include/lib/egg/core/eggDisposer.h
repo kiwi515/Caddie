@@ -6,10 +6,12 @@
 
 namespace EGG {
 
-struct Disposer {
+class Disposer {
+public:
     Disposer();
     virtual ~Disposer();
 
+private:
     Heap* mHeap;
     nw4r::ut::Node mNode;
 };

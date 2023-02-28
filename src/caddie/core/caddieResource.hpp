@@ -3,12 +3,15 @@
 #include "caddieLinkList.hpp"
 #include "types_caddie.hpp"
 
+#include <egg/core.h>
+
 namespace caddie {
 
 /**
  * @brief Wrapper for resources loaded into memory
+ * @note Garbage collected when parent heap is destroyed
  */
-class Resource {
+class Resource : public EGG::Disposer {
 public:
     static u32 GetNodeOffset() { return offsetof(Resource, mNode); }
 

@@ -3,7 +3,7 @@
 #include "caddieBuildInfo.hpp"
 #include "caddieDebugger.hpp"
 #include "caddieInputMgr.hpp"
-#include "caddieResourceMgr.hpp"
+#include "caddieMemoryMgr.hpp"
 #include "caddieRichPresenceMgr.hpp"
 
 namespace caddie {
@@ -20,6 +20,7 @@ void AllSceneHook::OnConfigure(RPSysScene* scene) {
         CADDIE_ASSERT(sBuildInfo != NULL);
     }
 
+    MemoryMgr::GetInstance().CreateSceneHeap();
     RichPresenceMgr::GetInstance().Configure();
 }
 
@@ -41,6 +42,7 @@ void AllSceneHook::OnCalculate(RPSysScene* scene) {
 void AllSceneHook::OnUserDraw(RPSysScene* scene) {
 #pragma unused(scene)
     CADDIE_ASSERT(sBuildInfo != NULL);
+    sBuildInfo->Calculate();
     sBuildInfo->UserDraw();
     sBuildInfo->DebugDraw();
 }
@@ -52,8 +54,8 @@ void AllSceneHook::OnUserDraw(RPSysScene* scene) {
  */
 void AllSceneHook::OnExit(RPSysScene* scene) {
 #pragma unused(scene)
-    ResourceMgr::GetInstance().ClearSceneCache();
     RichPresenceMgr::GetInstance().Exit();
+    MemoryMgr::GetInstance().DestroySceneHeap();
 }
 
 BuildInfo* AllSceneHook::sBuildInfo = NULL;

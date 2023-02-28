@@ -1,5 +1,6 @@
 #ifndef CADDIE_KERNEL_MEMORY_MGR_H
 #define CADDIE_KERNEL_MEMORY_MGR_H
+#include "caddieHashMap.hpp"
 #include "types_caddie.hpp"
 
 #include <egg/core.h>
@@ -8,51 +9,53 @@ namespace caddie {
 
 /**
  * @brief Caddie memory manager
- * @details Manages child of main game heap
  */
 class MemoryMgr {
 public:
-    static void Initialize();
-
-    static void* Alloc(size_t size, int align) {
-        CADDIE_ASSERT(sGameHeap != NULL);
-        return sGameHeap->alloc(size, align);
+    static MemoryMgr& GetInstance() {
+        static MemoryMgr instance;
+        return instance;
     }
 
-    static void Free(void* block) {
-        CADDIE_ASSERT(sGameHeap != NULL);
-        sGameHeap->free(block);
+    void CreateSceneHeap();
+    void DestroySceneHeap();
+
+    void* Alloc(size_t size, int align);
+    void* Alloc(size_t size, int align, EGG::Heap* heap);
+
+    void Free(void* block);
+    void Free(void* block, EGG::Heap* heap);
+
+    u32 GetFreeSize() { return GetStaticFreeSize() + GetSceneFreeSize(); }
+
+    u32 GetStaticFreeSize() {
+        CADDIE_ASSERT(mStaticHeap != NULL);
+        return mStaticHeap->getAllocatableSize(4);
     }
 
-    static u32 GetFreeSize() {
-        CADDIE_ASSERT(sGameHeap != NULL);
-        return sGameHeap->getAllocatableSize(4);
+    u32 GetSceneFreeSize() {
+        return mSceneHeap != NULL ? mSceneHeap->getAllocatableSize(4) : 0;
     }
 
-    static EGG::ExpHeap* GetGameHeap() { return sGameHeap; }
+    EGG::ExpHeap* GetStaticHeap() const { return mStaticHeap; }
+    EGG::ExpHeap* GetSceneHeap() const { return mStaticHeap; }
 
 private:
-    MemoryMgr() {}
-    virtual ~MemoryMgr() {}
+    MemoryMgr();
+    virtual ~MemoryMgr();
 
-    //! @brief Caddie main heap
-    static EGG::ExpHeap* sGameHeap;
-    //! @brief Caddie main heap size (configurable)
-    static const u32 scHeapSize;
+    void CreateStaticHeap();
+
+private:
+    // Heap with static lifetime
+    EGG::ExpHeap* mStaticHeap;
+    // Heap with scene lifetime
+    EGG::ExpHeap* mSceneHeap;
+
+    static const u32 scStaticHeapSize = 64 * 1024; // 64KB
+    static const u32 scSceneHeapSize = 16 * 1024;  // 4KB
 };
 
 } // namespace caddie
-
-inline void* operator new(size_t size) {
-    return caddie::MemoryMgr::Alloc(size, 4);
-}
-
-inline void* operator new[](size_t size) {
-    return caddie::MemoryMgr::Alloc(size, 4);
-}
-
-inline void operator delete(void* block) { caddie::MemoryMgr::Free(block); }
-
-inline void operator delete[](void* block) { caddie::MemoryMgr::Free(block); }
 
 #endif

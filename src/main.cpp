@@ -1,5 +1,6 @@
 #include "caddieCmnAllSceneHook.hpp"
 #include "caddieMapFile.hpp"
+#include "caddieMemoryMgr.hpp"
 #include "caddieRuntime.hpp"
 #include "caddieSceneHookMgr.hpp"
 
@@ -13,9 +14,6 @@ namespace caddie {
  * @brief Mod entrypoint
  */
 void main() {
-    // Initialize heap
-    MemoryMgr::Initialize();
-
 #ifndef NDEBUG
     // Always show exception handler
     static const u16 scEmptyCombo[] = {0};

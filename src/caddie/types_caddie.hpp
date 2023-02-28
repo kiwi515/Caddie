@@ -9,7 +9,27 @@
 //
 
 #include <kernel/caddieAssert.h>
-#include <kernel/caddieMemoryMgr.hpp>
 #include <kernel/caddieRuntime.hpp>
+
+/**
+ * New
+ */
+void* operator new(size_t size);
+void* operator new(size_t size, EGG::Heap* heap);
+/**
+ * New array
+ */
+void* operator new[](size_t size);
+void* operator new[](size_t size, EGG::Heap* heap);
+/**
+ * Delete
+ */
+void operator delete(void* block);
+void operator delete(void* block, EGG::Heap* heap);
+/**
+ * Delete array
+ */
+void operator delete[](void* block);
+void operator delete[](void* block, EGG::Heap* heap);
 
 #endif

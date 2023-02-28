@@ -16,6 +16,7 @@ public:
 
     BuildInfo();
     virtual ~BuildInfo() {}
+    virtual void Calculate();
 
 private:
     //! @brief Build info text position

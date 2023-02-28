@@ -2,6 +2,8 @@
 #define CADDIE_CORE_COLOR_H
 #include "types_caddie.hpp"
 
+#include <nw4r/ut.h>
+
 namespace caddie {
 
 /**

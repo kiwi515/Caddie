@@ -28,7 +28,7 @@ void MapFile::LoadFromDVD(const char* path, LinkType type) {
 
     // Load file from disc
     mMapBinary =
-        static_cast<char*>(ResourceMgr::GetInstance().LoadStaticFromDVD(path));
+        static_cast<char*>(ResourceMgr::GetInstance().LoadFromDVD(path));
     CADDIE_WARN_EX(mMapBinary == NULL, "Map file (%s) could not be opened!",
                    path);
 

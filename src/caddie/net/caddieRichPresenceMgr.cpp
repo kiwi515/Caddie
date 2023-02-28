@@ -31,8 +31,8 @@ const char* RichPresenceMgr::scCaddieAppId = "1078748945783734282";
 RichPresenceMgr::RichPresenceMgr()
     : mRichPresence(NULL), mMessage(NULL), mLastSceneID(-1) {
     // Load BCMSG
-    mMessage = ResourceMgr::GetInstance().LoadStaticMessage(
-        "US/Message/RichPresence.bcmsg");
+    mMessage =
+        ResourceMgr::GetInstance().LoadMessage("US/Message/RichPresence.bcmsg");
     CADDIE_ASSERT(mMessage != NULL);
 
     // Try setting up Dolphin Emulator rich presence (assume platform is EMU)
@@ -81,7 +81,7 @@ void RichPresenceMgr::Configure() {
 
     // Get new state/image for RPC
     const SceneSeqRpcInfo& info = scRpcInfo[scene][seq];
-    CADDIE_ASSERT_EX(info.msg > 0 && info.image != NULL,
+    CADDIE_ASSERT_EX(info.msg >= 0 && info.image != NULL,
                      "Scene(%d) or sequence(%d) with no RPC info", scene, seq);
     const wchar_t* state = mMessage->GetMessage(info.msg);
     const char* largeImageKey = info.image;

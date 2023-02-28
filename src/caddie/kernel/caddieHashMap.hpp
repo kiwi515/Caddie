@@ -25,6 +25,8 @@ public:
         struct Pair* next;
     };
 
+    static const int scDefaultCapacity = 32;
+
 public:
     HashMap(int capacity = scDefaultCapacity)
         : mCapacity(capacity), mSize(0), mBuckets(NULL) {
@@ -33,15 +35,7 @@ public:
         CADDIE_ASSERT(mBuckets != NULL);
     }
 
-    ~HashMap() {
-        for (int i = 0; i < mCapacity; i++) {
-            for (Pair* it = mBuckets[i]; it != NULL;) {
-                Pair* p = it;
-                it = it->next;
-                delete p;
-            }
-        }
-    }
+    ~HashMap() { delete[] mBuckets; }
 
     TValue* operator[](const TKey& key) { return Find(key); }
 
@@ -102,8 +96,6 @@ private:
     }
 
 private:
-    static const int scDefaultCapacity = 32;
-
     u32 mCapacity;
     u32 mSize;
     Pair* mBuckets;
