@@ -3,6 +3,7 @@
 #include "caddieMemoryMgr.hpp"
 #include "caddieRuntime.hpp"
 #include "caddieSceneHookMgr.hpp"
+#include "caddieStrapSceneHook.hpp"
 
 #include <RP/RPSystem.h>
 #include <egg/core.h>
@@ -32,6 +33,11 @@ void main() {
         RPSysSceneCreator::SCENE_ALL,
         (SceneHook){AllSceneHook::OnConfigure, AllSceneHook::OnCalculate,
                     AllSceneHook::OnUserDraw, AllSceneHook::OnExit});
+
+    // Strap scene hook
+    SceneHookMgr::GetInstance().SetHook(
+        RPSysSceneCreator::SCENE_STRAP,
+        (SceneHook){NULL, StrapSceneHook::OnCalculate, NULL, NULL});
 }
 kmBranch(0x80230b60, main);
 

@@ -4,6 +4,9 @@
 
 #include <egg/core.h>
 
-class RPSysScene : public EGG::Scene {};
+class RPSysScene : public EGG::Scene {
+public:
+    bool isTaskAsyncFinish();
+};
 
 #endif

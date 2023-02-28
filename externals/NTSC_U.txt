@@ -112,6 +112,9 @@ drawCurrentScene__Q23EGG12SceneManagerFv=0x801c3d08
 draw__Q23EGG12SceneManagerFv=0x801c3494
 calc__Q23EGG12SceneManagerFv=0x801c3448
 
+# RP/RPSystem/RPSysScene
+isTaskAsyncFinish__10RPSysSceneFv=0x80231588
+
 # RP/RPKernel/RPSysSystem
 sSystemHeap__11RPSysSystem=0x807ceb78
 
