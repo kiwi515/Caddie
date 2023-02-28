@@ -43,6 +43,8 @@ public:
         return instance;
     }
 
+    bool IsAvailable() const { return mIsUnpacked; }
+
     void LoadFromDVD(const char* path, LinkType type);
     void Close();
     const Symbol* QueryTextSymbol(const void* addr);

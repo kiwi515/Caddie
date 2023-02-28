@@ -5,7 +5,7 @@
 namespace caddie {
 namespace {
 
-static inline u32 rotl32(register u32 x, register int r) {
+inline u32 rotl32(register u32 x, register int r) {
     // clang-format off
     asm {
         rotlw x, x, r
@@ -15,7 +15,7 @@ static inline u32 rotl32(register u32 x, register int r) {
     return x;
 }
 
-static inline u32 fmix32(u32 h) {
+inline u32 fmix32(u32 h) {
     h ^= h >> 16;
     h *= 0x85ebca6b;
     h ^= h >> 13;

@@ -8,6 +8,8 @@ struct OSContext;
 namespace nw4r {
 namespace db {
 
+void ErrorHandler_(u8 error, OSContext* ctx, u32 dsisr, u32 dar);
+
 void Exception_Printf_(const char*, ...);
 
 void ShowFloat_(const OSContext*);

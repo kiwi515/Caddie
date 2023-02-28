@@ -22,7 +22,7 @@
 //! @brief Assert a condition and halt execution when it fails to hold
 #define CADDIE_ASSERT(exp)                                                     \
     if (!(exp))                                                                \
-    caddie_fail_assert(__FILE__, __LINE__, #exp "\n")
+    caddie_fail_assert(__FILE__, __LINE__, #exp)
 
 //! @brief Assert a condition and halt execution when it fails to hold,
 //! displaying a custom error message

@@ -12,6 +12,7 @@ OSReport=0x80061470
 OSCalendarTimeToTicks=0x8004f660
 OSGetTick=0x8004f250
 __OSGetSystemTime=0x8004f260
+OSGetCurrentContext=0x80046a10
 
 # IPC
 IOS_Open=0x8003b1f0
@@ -80,6 +81,7 @@ SetupGX__Q34nw4r2ut10CharWriterFv=0x8010f660
 # nw4r/db/db_exception
 Exception_Printf___Q24nw4r2dbFPCce=0x80166a10
 ShowFloat___Q24nw4r2dbFPC9OSContext=0x80167230
+ErrorHandler___Q24nw4r2dbFUcP9OSContextUlUl=0x801666b0
 
 # EGG/core/eggExpHeap
 create__Q23EGG7ExpHeapFUlPQ23EGG4HeapUs=0x801c0e58
@@ -87,6 +89,8 @@ create__Q23EGG7ExpHeapFUlPQ23EGG4HeapUs=0x801c0e58
 # EGG/core/eggException
 setUserCallback__Q23EGG9ExceptionFPCUs=0x801cec48
 create__Q23EGG9ExceptionFUsUsUsPQ23EGG4HeapUs=0x801cebb8
+sConsoleHandle__Q23EGG9Exception=0x806f4a9c
+ExceptionCallBack___3EGGFPQ44nw4r2db6detail11ConsoleHeadPv=0x801ce8f8
 
 # EGG/core/eggController
 getNthController__Q23EGG17CoreControllerMgrFi=0x801c4ab8

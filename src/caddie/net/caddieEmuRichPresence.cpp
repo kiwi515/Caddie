@@ -8,12 +8,12 @@ namespace caddie {
 namespace {
 
 template <typename T>
-static void MakePrimVector(const T& prim, IPCIOVector& vec) {
+inline void MakePrimVector(const T& prim, IPCIOVector& vec) {
     vec.base = (void*)&prim;
     vec.length = sizeof(T);
 }
 
-static void MakeStrVector(const char* str, IPCIOVector& vec) {
+inline void MakeStrVector(const char* str, IPCIOVector& vec) {
     vec.base = (void*)str;
     vec.length = std::strlen(str);
 }

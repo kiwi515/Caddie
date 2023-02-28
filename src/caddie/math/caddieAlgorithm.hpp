@@ -60,6 +60,20 @@ template <typename T> static inline T* AddToPtr(const void* ptr, int ofs) {
     return reinterpret_cast<T*>(static_cast<const char*>(ptr) + ofs);
 }
 
+/**
+ * @brief Subtract offset from pointer
+ */
+static inline const void* SubFromPtr(const void* ptr, int ofs) {
+    return static_cast<const char*>(ptr) - ofs;
+}
+
+/**
+ * @brief Subtract offset from pointer
+ */
+template <typename T> static inline T* SubFromPtr(const void* ptr, int ofs) {
+    return reinterpret_cast<T*>(static_cast<const char*>(ptr) - ofs);
+}
+
 } // namespace caddie
 
 #endif

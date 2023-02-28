@@ -1,6 +1,7 @@
 #include "caddieAssert.h"
 
 #include "caddieColor.hpp"
+#include "caddieException.hpp"
 
 #include <OS.h>
 #include <cstdarg>
@@ -9,8 +10,8 @@
 
 namespace {
 
-static const caddie::Color scDebugBg(0, 142, 161, 0);
-static const caddie::Color scDebugFg(255, 255, 255, 0);
+const caddie::Color scDebugBg(0, 142, 161, 0);
+const caddie::Color scDebugFg(255, 255, 255, 0);
 
 } // namespace
 
@@ -43,16 +44,11 @@ void caddie_fail_assert(const char* file, int line, const char* msg, ...) {
     vsnprintf(msg_buf, sizeof(msg_buf), msg, list);
     va_end(list);
 
-    // Format full string
-    char assert_buf[0x1000];
-    snprintf(assert_buf, sizeof(assert_buf),
-             "Assertion Failed: %s\nFile: %s(%d)", msg_buf, file, line);
-
     // Print to console
-    CADDIE_LOG(assert_buf);
+    CADDIE_LOG_EX("Assertion Failed: %s\nFile: %s(%d)", msg_buf, file, line);
     CADDIE_LOG("Program Halt");
 
     // Print to screen
-    OSFatal(scDebugFg, scDebugBg, assert_buf);
+    caddie::Exception::FailAssert(file, line, msg_buf);
 }
 kmBranch(0x80047150, caddie_fail_assert);
