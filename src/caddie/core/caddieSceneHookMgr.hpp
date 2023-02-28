@@ -35,15 +35,15 @@ public:
     }
 
     void SetHook(RPSysSceneCreator::ESceneID scene, const SceneHook& hook) {
-        if (scene != RPSysSceneCreator::SCENE_ALL) {
+        if (scene != RPSysSceneCreator::SCENE_SHARED) {
             mSceneHooks[scene] = hook;
         } else {
-            mAllSceneHook = hook;
+            mSharedSceneHook = hook;
         }
     }
 
     void AllowPause(RPSysSceneCreator::ESceneID scene, bool pause) {
-        if (scene != RPSysSceneCreator::SCENE_ALL) {
+        if (scene != RPSysSceneCreator::SCENE_SHARED) {
             mAllowPause[scene] = pause;
         }
     }
@@ -66,8 +66,8 @@ private:
 private:
     //! @brief Scene hooks for every scene
     SceneHook mSceneHooks[RPSysSceneCreator::SCENE_MAX];
-    //! @brief All scene hook
-    SceneHook mAllSceneHook;
+    //! @brief Shared scene hook
+    SceneHook mSharedSceneHook;
     //! @brief Pause permission for every scene
     bool mAllowPause[RPSysSceneCreator::SCENE_MAX];
 };

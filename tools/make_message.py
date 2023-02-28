@@ -7,8 +7,6 @@ from os import makedirs
 from caddieutil.stream import OutputStream, StreamEndian
 from caddieutil.message import CMSGBlock, DESCBlock, DATABlock
 
-BCMSG_HEADER_ROOT = "src/caddie/"
-
 
 def write_binary(messages: list[str], args):
     """Write specified messages to BCMSG binary"""
@@ -32,18 +30,24 @@ def write_binary(messages: list[str], args):
 def write_header(message_keys: list[str], args, header_path):
     """Write C++ header file for use with the BCMSG binary"""
 
-    # Get file name from JSON path
-    last_dir_idx = max(args.infile.rfind("/"), args.infile.rfind("\\"))
-    file_ext_idx = args.infile.rfind(".")
-    file_name = args.infile[last_dir_idx+1:file_ext_idx]
+    # Autogenerate header path if not specified
+    if header_path == None:
+        # Split up JSON path
+        last_dir_idx = max(args.infile.rfind("/"), args.infile.rfind("\\"))
+        file_ext_idx = args.infile.rfind(".")
 
-    # Correct header path
-    if header_path != "" and not header_path.endswith("/"):
-        header_path = f"{header_path}/"
+        file_name = args.infile[last_dir_idx+1:file_ext_idx]
+        file_dir = args.infile[:last_dir_idx+1]
 
-    # Path to header file
-    header_dir = f"{BCMSG_HEADER_ROOT}{header_path}"
-    header_path = f"{header_dir}BCMSG_{file_name}.h"
+        # Ideally, "assets/*" maps to "src/*", so for autogenerating this path,
+        # we rely on the CMSG being somewhere inside the assets folder.
+        if "assets" not in file_dir:
+            print("[FATAL] CMSG file not in Caddie assets folder! I do not know where to put the header file, please specify using --header.")
+            return
+
+        # Path to header file
+        header_dir = file_dir.replace("assets", "src")
+        header_path = f"{header_dir}BCMSG_{file_name}.hpp"
 
     # Create header directory if it doesn't exist
     makedirs(header_dir, exist_ok=True)
@@ -107,14 +111,10 @@ def convert_json(args):
         print("[FATAL] No messages exist in the JSON file")
         return
 
-    # Header path (optional)
-    # *RELATIVE TO CMSG_HEADER_ROOT*
-    header_path = json_data.get("header_dir", "")
-
     # BCMSG binary
     write_binary(msg_messages.values(), args)
     # Generate C++ header
-    write_header(msg_messages.keys(), args, header_path)
+    write_header(msg_messages.keys(), args, args.header)
 
 
 def main():
@@ -124,6 +124,8 @@ def main():
                         help="CMSG (JSON) file from which to create message binary")
     parser.add_argument("--outfile", type=str, required=True,
                         help="(BCMSG) Path to output message binary")
+    parser.add_argument("--header", type=str, required=False,
+                        help="Path to C++ header file")
     args = parser.parse_args(argv[1:])
 
     convert_json(args)

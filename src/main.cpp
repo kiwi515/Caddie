@@ -1,8 +1,8 @@
-#include "caddieCmnAllSceneHook.hpp"
 #include "caddieMapFile.hpp"
 #include "caddieMemoryMgr.hpp"
 #include "caddieRuntime.hpp"
 #include "caddieSceneHookMgr.hpp"
+#include "caddieSharedSceneHook.hpp"
 #include "caddieStrapSceneHook.hpp"
 
 #include <RP/RPSystem.h>
@@ -28,11 +28,11 @@ void main() {
     // Skip MotionPlus video
     RPSysProjectLocal::getInstance().setMPlusVideoSeen(true);
 
-    // All scene hook
+    // Shared scene hook
     SceneHookMgr::GetInstance().SetHook(
-        RPSysSceneCreator::SCENE_ALL,
-        (SceneHook){AllSceneHook::OnConfigure, AllSceneHook::OnCalculate,
-                    AllSceneHook::OnUserDraw, AllSceneHook::OnExit});
+        RPSysSceneCreator::SCENE_SHARED,
+        (SceneHook){SharedSceneHook::OnConfigure, SharedSceneHook::OnCalculate,
+                    SharedSceneHook::OnUserDraw, SharedSceneHook::OnExit});
 
     // Strap scene hook
     SceneHookMgr::GetInstance().SetHook(

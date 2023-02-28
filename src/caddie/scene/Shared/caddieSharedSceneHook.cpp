@@ -1,4 +1,4 @@
-#include "caddieCmnAllSceneHook.hpp"
+#include "caddieSharedSceneHook.hpp"
 
 #include "caddieBuildInfo.hpp"
 #include "caddieDebugger.hpp"
@@ -9,11 +9,11 @@
 namespace caddie {
 
 /**
- * @brief All scene configure (enter) callback
+ * @brief Shared scene configure (enter) callback
  *
  * @param scene Current scene
  */
-void AllSceneHook::OnConfigure(RPSysScene* scene) {
+void SharedSceneHook::OnConfigure(RPSysScene* scene) {
 #pragma unused(scene)
     if (sBuildInfo == NULL) {
         sBuildInfo = new BuildInfo();
@@ -25,21 +25,21 @@ void AllSceneHook::OnConfigure(RPSysScene* scene) {
 }
 
 /**
- * @brief All scene calculate callback
+ * @brief Shared scene calculate callback
  *
  * @param scene Current scene
  */
-void AllSceneHook::OnCalculate(RPSysScene* scene) {
+void SharedSceneHook::OnCalculate(RPSysScene* scene) {
 #pragma unused(scene)
     InputMgr::GetInstance().Calculate();
 }
 
 /**
- * @brief All scene user draw callback
+ * @brief Shared scene user draw callback
  *
  * @param scene Current scene
  */
-void AllSceneHook::OnUserDraw(RPSysScene* scene) {
+void SharedSceneHook::OnUserDraw(RPSysScene* scene) {
 #pragma unused(scene)
     CADDIE_ASSERT(sBuildInfo != NULL);
     sBuildInfo->Calculate();
@@ -48,16 +48,16 @@ void AllSceneHook::OnUserDraw(RPSysScene* scene) {
 }
 
 /**
- * @brief All scene exit callback
+ * @brief Shared scene exit callback
  *
  * @param scene Current scene
  */
-void AllSceneHook::OnExit(RPSysScene* scene) {
+void SharedSceneHook::OnExit(RPSysScene* scene) {
 #pragma unused(scene)
     RichPresenceMgr::GetInstance().Exit();
     MemoryMgr::GetInstance().DestroySceneHeap();
 }
 
-BuildInfo* AllSceneHook::sBuildInfo = NULL;
+BuildInfo* SharedSceneHook::sBuildInfo = NULL;
 
 } // namespace caddie

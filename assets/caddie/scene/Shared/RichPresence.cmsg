@@ -1,5 +1,4 @@
 {
-    "header_dir": "cmn/",
     "messages": {
         "MSG_RPC_STATE_MENU": "Main Menu",
         "MSG_RPC_STATE_SWF_VS": "Swordplay (Duel)",

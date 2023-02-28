@@ -1,5 +1,5 @@
-#ifndef CADDIE_SCENE_CMN_ALL_SCENE_HOOK_H
-#define CADDIE_SCENE_CMN_ALL_SCENE_HOOK_H
+#ifndef CADDIE_SCENE_SHARED_SCENE_HOOK_H
+#define CADDIE_SCENE_SHARED_SCENE_HOOK_H
 #include "types_caddie.hpp"
 
 namespace caddie {
@@ -7,9 +7,9 @@ namespace caddie {
 class BuildInfo;
 
 /**
- * @brief Scene hook applied to all scenes
+ * @brief Scene hook applied to all scenes (common/"shared")
  */
-class AllSceneHook {
+class SharedSceneHook {
 public:
     static void OnConfigure(RPSysScene* scene);
     static void OnCalculate(RPSysScene* scene);

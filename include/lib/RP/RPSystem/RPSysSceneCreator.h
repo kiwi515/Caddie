@@ -8,7 +8,7 @@ public:
     //! @brief RP Scene ID
     //! @wfuname
     enum ESceneID {
-        SCENE_ALL = -1,
+        SCENE_SHARED = -1,
 
         SCENE_STRAP = 0,
         SCENE_SAVE_DATA_LOAD,

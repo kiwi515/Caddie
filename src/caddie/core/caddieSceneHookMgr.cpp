@@ -33,8 +33,8 @@ void SceneHookMgr::DoConfigure() {
         hookMgr.mSceneHooks[scene].onConfigure(GetCurrentScene());
     }
 
-    if (hookMgr.mAllSceneHook.onConfigure != NULL) {
-        hookMgr.mAllSceneHook.onConfigure(GetCurrentScene());
+    if (hookMgr.mSharedSceneHook.onConfigure != NULL) {
+        hookMgr.mSharedSceneHook.onConfigure(GetCurrentScene());
     }
 }
 kmBranch(0x801c389c, SceneHookMgr::DoConfigure);
@@ -50,8 +50,8 @@ void SceneHookMgr::DoCalculate() {
         hookMgr.mSceneHooks[scene].onCalculate(GetCurrentScene());
     }
 
-    if (hookMgr.mAllSceneHook.onCalculate != NULL) {
-        hookMgr.mAllSceneHook.onCalculate(GetCurrentScene());
+    if (hookMgr.mSharedSceneHook.onCalculate != NULL) {
+        hookMgr.mSharedSceneHook.onCalculate(GetCurrentScene());
     }
 }
 kmBranch(0x8022f8f8, SceneHookMgr::DoCalculate);
@@ -67,8 +67,8 @@ void SceneHookMgr::DoUserDraw() {
         hookMgr.mSceneHooks[scene].onUserDraw(GetCurrentScene());
     }
 
-    if (hookMgr.mAllSceneHook.onUserDraw != NULL) {
-        hookMgr.mAllSceneHook.onUserDraw(GetCurrentScene());
+    if (hookMgr.mSharedSceneHook.onUserDraw != NULL) {
+        hookMgr.mSharedSceneHook.onUserDraw(GetCurrentScene());
     }
 }
 kmBranch(0x802542a8, SceneHookMgr::DoUserDraw);
@@ -84,8 +84,8 @@ void SceneHookMgr::DoExit() {
         hookMgr.mSceneHooks[scene].onExit(GetCurrentScene());
     }
 
-    if (hookMgr.mAllSceneHook.onExit != NULL) {
-        hookMgr.mAllSceneHook.onExit(GetCurrentScene());
+    if (hookMgr.mSharedSceneHook.onExit != NULL) {
+        hookMgr.mSharedSceneHook.onExit(GetCurrentScene());
     }
 }
 kmBranch(0x8022f6f4, SceneHookMgr::DoExit);
