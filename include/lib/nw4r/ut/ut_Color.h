@@ -1,6 +1,6 @@
 #ifndef NW4R_UT_COLOR_H
 #define NW4R_UT_COLOR_H
-#include <GX/GX.h>
+#include <revolution/GX.h>
 #include <types_nw4r.h>
 
 namespace nw4r {
@@ -34,6 +34,8 @@ public:
     const u32& ToU32ref() const { return *reinterpret_cast<const u32*>(this); }
 
     u32 ToU32() const { return ToU32ref(); }
+
+    operator u32() { return ToU32ref(); }
 };
 
 } // namespace ut

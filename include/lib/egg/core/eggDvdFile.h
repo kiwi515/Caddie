@@ -3,9 +3,9 @@
 #include "eggFile.h"
 #include "types_egg.h"
 
-#include <RevoSDK/OS.h>
-#include <RevoSDK/dvd.h>
 #include <nw4r/ut.h>
+#include <revolution/OS.h>
+#include <revolution/dvd.h>
 
 namespace EGG {
 class DvdFile : File {
@@ -20,14 +20,14 @@ public:
     void initiate();
     static void doneProcess(s32, DVDFileInfo*);
 
-    virtual ~DvdFile();                                         // at 0x8
-    virtual bool open(const char*);                             // at 0xC
-    virtual void close();                                       // at 0x10
-    virtual s32 readData(void*, s32, s32);                      // at 0x14
-    virtual s32 writeData(const void*, s32, s32);               // at 0x18
-    virtual u32 getFileSize() const { return mFileInfo.size; }; // at 0x1C
-    virtual bool open(int);                                     // at 0x20
-    virtual bool open(const char*, void*);                      // at 0x24
+    virtual ~DvdFile();                                           // at 0x8
+    virtual bool open(const char*);                               // at 0xC
+    virtual void close();                                         // at 0x10
+    virtual s32 readData(void*, s32, s32);                        // at 0x14
+    virtual s32 writeData(const void*, s32, s32);                 // at 0x18
+    virtual u32 getFileSize() const { return mFileInfo.length; }; // at 0x1C
+    virtual bool open(int);                                       // at 0x20
+    virtual bool open(const char*, void*);                        // at 0x24
 
 private:
     bool mIsOpen; // at 0x4

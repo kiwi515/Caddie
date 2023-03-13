@@ -1,8 +1,8 @@
 #ifndef NW4R_UT_CHAR_WRITER_H
 #define NW4R_UT_CHAR_WRITER_H
 #include "ut_Color.h"
-
 #include <nw4r/math.h>
+#include <revolution/GX.h>
 #include <types_nw4r.h>
 
 namespace nw4r {
@@ -34,7 +34,6 @@ public:
         GXTexFilter atSmall; // at 0x0
         GXTexFilter atLarge; // at 0x4
 
-        // TODO: Can this be implicitly generated?
         bool operator!=(const TextureFilter& other) const {
             return atSmall != other.atSmall || atLarge != other.atLarge;
         }
@@ -45,7 +44,6 @@ public:
         void* texture;   // at 0x4
         TextureFilter filter;
 
-        // TODO: Can this be implicitly generated?
         bool operator!=(const LoadingTexture& other) const {
             return slot != other.slot || texture != other.texture ||
                    filter != other.filter;
@@ -53,32 +51,38 @@ public:
 
         void Reset() {
             slot = GX_TEXMAP_NULL;
-            texture = 0;
+            texture = NULL;
         }
     };
 
 public:
+    static void SetupVertexFormat();
+    static void SetupGXDefault();
+    static void SetupGXWithColorMapping(Color min, Color max);
+    static void SetupGXForI();
+    static void SetupGXForRGBA();
+
     CharWriter();
     ~CharWriter();
-
-    void SetupGX();
-
-    void SetFont(const Font& font) { mFont = &font; }
-
-    void ResetColorMapping() {
-        SetColorMapping(Color(0x00000000), Color(0xFFFFFFFF));
-    }
 
     void SetColorMapping(Color min, Color max) {
         mColorMapping.min = min;
         mColorMapping.max = max;
     }
 
-    void SetTextColor(Color start) { mTextColor.start = start; }
+    void ResetColorMapping() {
+        SetColorMapping(Color(0x00000000), Color(0xFFFFFFFF));
+    }
+
+    void SetTextColor(Color start) {
+        mTextColor.start = start;
+        UpdateVertexColor();
+    }
 
     void SetTextColor(Color start, Color end) {
         mTextColor.start = start;
         mTextColor.end = end;
+        UpdateVertexColor();
     }
 
     void SetGradationMode(GradationMode mode) {
@@ -86,10 +90,18 @@ public:
         UpdateVertexColor();
     }
 
+    f32 GetScaleV() const { return mScale.y; }
+
     void SetScale(f32 x, f32 y) {
         mScale.x = x;
         mScale.y = y;
     }
+
+    f32 GetCursorX() const { return mCursorPos.x; }
+    void SetCursorX(f32 x) { mCursorPos.x = x; }
+
+    f32 GetCursorY() const { return mCursorPos.y; }
+    void SetCursorY(f32 y) { mCursorPos.y = y; }
 
     void SetCursor(f32 x, f32 y) {
         mCursorPos.x = x;
@@ -102,9 +114,25 @@ public:
         mCursorPos.z = z;
     }
 
-    void UpdateVertexColor();
+    bool IsWidthFixed() const { return mIsWidthFixed; }
 
+    f32 GetFixedWidth() const { return mFixedWidth; }
+
+    Font* GetFont() const { return const_cast<Font*>(mFont); }
+
+    void ResetTextureCache() { mLoadingTexture.Reset(); }
+
+    void SetupGX();
+    void SetFontSize(f32 width, f32 height);
+    f32 GetFontWidth() const;
+    f32 GetFontHeight() const;
+    f32 GetFontAscent() const;
+    f32 GetFontDescent() const;
     void EnableLinearFilter(bool atSmall, bool atLarge);
+    f32 Print(u16 ch);
+    void PrintGlyph(f32 x, f32 y, f32 z, const Glyph& glyph);
+    void LoadTexture(const Glyph& glyph, GXTexMapID slot);
+    void UpdateVertexColor();
 
 private:
     ColorMapping mColorMapping; // at 0x0
@@ -113,7 +141,7 @@ private:
     math::VEC2 mScale;          // at 0x24
     math::VEC3 mCursorPos;      // at 0x2C
     TextureFilter mFilter;      // at 0x38
-    u8 _padding[2];             // at 0x40
+    u8 padding[2];              // at 0x40
     u8 mAlpha;                  // at 0x42
     bool mIsWidthFixed;         // at 0x43
     f32 mFixedWidth;            // at 0x44

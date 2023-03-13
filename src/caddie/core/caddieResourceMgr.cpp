@@ -1,8 +1,8 @@
 #include "caddieResourceMgr.hpp"
 
-#include <RevoSDK/OS.h>
 #include <cstring>
 #include <egg/core.h>
+#include <revolution/OS.h>
 
 namespace caddie {
 

@@ -1,8 +1,8 @@
 #include "caddieEmuRichPresence.hpp"
 
-#include <RevoSDK/IPC.h>
 #include <cstdlib>
 #include <cstring>
+#include <revolution/IPC.h>
 
 namespace caddie {
 namespace {

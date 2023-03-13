@@ -4,6 +4,14 @@
 
 #include <types_nw4r.h>
 
+// Create typedef for templated LinkList structure
+#define NW4R_UT_LINKLIST_TYPEDEF(T, NAME)                                      \
+    typedef nw4r::ut::LinkList<T, offsetof(T, mNode)> NAME
+
+// Create typedef for templated LinkList structure
+#define NW4R_UT_LINKLIST_TYPEDEF_EX(T, T_INNER, NAME)                          \
+    typedef nw4r::ut::LinkList<T, offsetof(T_INNER, mNode)> NAME
+
 namespace nw4r {
 namespace ut {
 
@@ -222,7 +230,8 @@ public:
     }
 
     static const T* GetPointerFromNode(const LinkListNode* node) {
-        return reinterpret_cast<const T*>((char*)(node)-Ofs);
+        return reinterpret_cast<const T*>(reinterpret_cast<const char*>(node) -
+                                          Ofs);
     }
 };
 

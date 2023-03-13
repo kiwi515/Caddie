@@ -1,7 +1,7 @@
 #ifndef NW4R_UT_FONT_H
 #define NW4R_UT_FONT_H
 #include "ut_CharStrmReader.h"
-#include <GX/GXTexture.h>
+#include <revolution/GX.h>
 #include <types_nw4r.h>
 
 namespace nw4r {
