@@ -1,6 +1,6 @@
 #include "caddieRandom.hpp"
 
-#include <RevoSDK/OS.h>
+#include <revolution/OS.h>
 
 namespace caddie {
 

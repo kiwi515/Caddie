@@ -1,6 +1,6 @@
 #ifndef NW4R_UT_LOCKED_CACHE_H
 #define NW4R_UT_LOCKED_CACHE_H
-#include <OS.h>
+#include <revolution/OS.h>
 #include <types_nw4r.h>
 
 namespace nw4r {

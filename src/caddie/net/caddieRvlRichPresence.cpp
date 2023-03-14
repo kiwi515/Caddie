@@ -1,9 +1,9 @@
 #include "caddieRvlRichPresence.hpp"
 
-#include <RevoSDK/IPC.h>
-#include <RevoSDK/OS.h>
 #include <cstdlib>
 #include <cstring>
+#include <revolution/IPC.h>
+#include <revolution/OS.h>
 
 namespace caddie {
 

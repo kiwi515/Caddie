@@ -2,7 +2,7 @@
 #define CADDIE_NET_I_RICH_PRESENCE_H
 #include "types_caddie.hpp"
 
-#include <RevoSDK/OS.h>
+#include <revolution/OS.h>
 
 namespace caddie {
 

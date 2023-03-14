@@ -2,7 +2,7 @@
 #define EGG_CORE_ALLOCATOR_H
 #include "types_egg.h"
 
-#include <RevoSDK/MEM.h>
+#include <revolution/MEM.h>
 
 namespace EGG {
 

@@ -1,7 +1,8 @@
 #ifndef NW4R_UT_TEXT_WRITER_BASE_H
 #define NW4R_UT_TEXT_WRITER_BASE_H
 #include "ut_CharWriter.h"
-
+#include "ut_Font.h"
+#include "ut_TagProcessorBase.h"
 #include <types_nw4r.h>
 
 namespace nw4r {
@@ -12,7 +13,9 @@ public:
     TextWriterBase();
     ~TextWriterBase();
 
-    f32 VPrintf(const T* msg, va_list args);
+    int GetTabWidth() const { return mTabWidth; }
+
+    f32 GetLineHeight() const;
 
 private:
     f32 mWidthLimit;                    // at 0x4C
@@ -22,7 +25,7 @@ private:
     u32 mDrawFlag;                      // at 0x5C
     TagProcessorBase<T>* mTagProcessor; // at 0x60
 
-    // static TagProcessorBase<T> mDefaultTagProcessor;
+    static TagProcessorBase<T> mDefaultTagProcessor;
     static T* mFormatBuffer;
     static u32 mFormatBufferSize;
 };

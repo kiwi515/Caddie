@@ -2,7 +2,7 @@
 #define CADDIE_DEBUGGER_H
 #include "types_caddie.hpp"
 
-#include <RevoSDK/OS.h>
+#include <revolution/OS.h>
 
 namespace caddie {
 

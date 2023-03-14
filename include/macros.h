@@ -19,6 +19,7 @@
 #define ALIGN(x) __attribute__((aligned(x)))
 #define DECL_SECTION(x) __declspec(section x)
 #define DECL_WEAK __declspec(weak)
+#define DONT_INLINE __attribute__((never_inline))
 
 #ifdef CADDIE_REGION_NTSC_U
 #define CADDIE_LOCALIZE(NTSC_U, PAL, NTSC_J, KOR) NTSC_U

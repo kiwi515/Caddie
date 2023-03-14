@@ -1,7 +1,7 @@
 #ifndef NW4R_UT_ROM_FONT_H
 #define NW4R_UT_ROM_FONT_H
 #include "ut_Font.h"
-#include <OS.h>
+#include <revolution/OS.h>
 #include <types_nw4r.h>
 
 namespace nw4r {
