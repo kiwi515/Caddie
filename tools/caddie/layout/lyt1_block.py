@@ -1,12 +1,12 @@
 from ..binary import BinaryBlock
 from ..stream import OutputStream
-from ..types import Size
+from ..types import Vector2f
 
 
-class LAYTBlock(BinaryBlock):
+class LYT1Block(BinaryBlock):
     """Layout block"""
 
-    SIGNATURE = "LAYT"
+    SIGNATURE = "lyt1"
     DEFAULT_WIDTH = 640.0
     DEFAULT_HEIGHT = 480.0
 
@@ -15,7 +15,7 @@ class LAYTBlock(BinaryBlock):
 
         # Extract from JSON
         self.centered = res.get("centered", False)
-        self.size = Size.from_list(
+        self.size = Vector2f.from_list(
             res.get("size", [self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT]))
 
     def byte_size(self) -> int:
@@ -25,7 +25,7 @@ class LAYTBlock(BinaryBlock):
 
         bsize += 1  # bool centered
         bsize += 3  # u8 padding[3]
-        bsize += 8  # Size size
+        bsize += 8  # Vector2f size
 
         return bsize
 
@@ -38,7 +38,7 @@ class LAYTBlock(BinaryBlock):
         # Padding
         self.write_padding(3)
         # Layout size
-        strm.write_float(self.size.x)
+        self.size.write(strm)
 
         # Align block to 32B
         self.write_align(strm)

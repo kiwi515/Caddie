@@ -9,4 +9,4 @@ class CMSGBlock(BinaryHeaderBlock):
     VERSION = 0x0100  # 1.0
 
     def __init__(self, blocks: list[BinaryBlock] = []):
-        super().__init__(self.SIGNATURE, self.VERSION, list)
+        super().__init__(self.SIGNATURE, self.VERSION, blocks)
