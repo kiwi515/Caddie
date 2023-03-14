@@ -2,6 +2,7 @@
     """
 
 from dataclasses import dataclass
+from struct import pack
 
 
 class StreamEndian:
@@ -127,38 +128,46 @@ class OutputStream():
         """
         assert _endian >= StreamEndian.LITTLE and _endian < StreamEndian.MAX
         self.endian = _endian
-        self.reader = open(path, "wb+")
+        self.writer = open(path, "wb+")
 
     def close(self):
-        self.reader.close()
+        self.writer.close()
 
     def write(self, data: bytes):
         """Write bytes to the stream."""
-        self.reader.write(data)
+        self.writer.write(data)
+
+    def write_padding(self, size: int):
+        """Write padding to the stream."""
+        self.writer.write(bytes([0x00] * size))
 
     def write_s8(self, data: int):
         """Write a signed 8-bit integer to the stream."""
-        self.reader.write(self._to_bytes(data, 1, True))
+        self.writer.write(self._to_bytes(data, 1, True))
 
     def write_u8(self, data: int):
         """Write a unsigned 8-bit integer to the stream."""
-        self.reader.write(self._to_bytes(data, 1, False))
+        self.writer.write(self._to_bytes(data, 1, False))
 
     def write_s16(self, data: int):
         """Write a signed 16-bit integer to the stream."""
-        self.reader.write(self._to_bytes(data, 2, True))
+        self.writer.write(self._to_bytes(data, 2, True))
 
     def write_u16(self, data: int):
         """Write a unsigned 16-bit integer to the stream."""
-        self.reader.write(self._to_bytes(data, 2, False))
+        self.writer.write(self._to_bytes(data, 2, False))
 
     def write_s32(self, data: int):
         """Write a signed 32-bit integer to the stream."""
-        self.reader.write(self._to_bytes(data, 4, True))
+        self.writer.write(self._to_bytes(data, 4, True))
 
     def write_u32(self, data: int):
         """Write a unsigned 32-bit integer to the stream."""
-        self.reader.write(self._to_bytes(data, 4, False))
+        self.writer.write(self._to_bytes(data, 4, False))
+
+    def write_float(self, data: float):
+        """Write a float to the stream."""
+        self.writer.write(self._flt_to_bytes(data))
 
     def write_string(self, data: str):
         """Write a string to the stream."""
@@ -181,3 +190,7 @@ class OutputStream():
         """Convert integer value into bytes"""
         endian_str = ("little", "big")[self.endian]
         return int.to_bytes(data, length=size, byteorder=endian_str, signed=_signed)
+
+    def _flt_to_bytes(self, data: float) -> bytes:
+        arr = pack("f", data)
+        return bytes(arr)

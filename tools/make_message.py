@@ -3,9 +3,10 @@ from sys import argv
 from json import loads
 from datetime import datetime
 from os import makedirs
-
-from caddieutil.stream import OutputStream, StreamEndian
-from caddieutil.message import CMSGBlock, DESCBlock, DATABlock
+from caddie.stream import OutputStream, StreamEndian
+from caddie.message.cmsg_block import CMSGBlock
+from caddie.message.data_block import DATABlock
+from caddie.message.desc_block import DESCBlock
 
 
 def write_binary(messages: list[str], args):
@@ -16,14 +17,19 @@ def write_binary(messages: list[str], args):
         print(f"[FATAL] Could not open BCMSG file for writing: {args.outfile}")
         return
 
+    # Header
+    cmsg = CMSGBlock()
+
     # Create blocks
     data = DATABlock(messages)
-    desc = data.gen_desc()
-    cmsg = CMSGBlock([desc, data])
+    desc = DESCBlock.from_data_block(data)
+
+    # Append blocks
+    cmsg.add_block(data)
+    cmsg.add_block(desc)
 
     # Write to file
     cmsg.write(strm)
-
     strm.close()
 
 
