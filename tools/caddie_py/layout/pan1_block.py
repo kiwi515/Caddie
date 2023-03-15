@@ -1,9 +1,9 @@
-from ..binary import BinaryBlock
-from ..stream import OutputStream
+from ..binary import BlockBase
+from ..stream.ostream import OutputStream
 from ..types import Vector2f, Vector3f
 
 
-class PAN1Block(BinaryBlock):
+class PAN1Block(BlockBase):
     """Pane block"""
 
     SIGNATURE = "pan1"
@@ -50,6 +50,7 @@ class PAN1Block(BinaryBlock):
         bsize += 1  # u8 flag
         bsize += 1  # u8 base_position
         bsize += 1  # u8 alpha
+        bsize += 1  # u8 padding
         bsize += self.MAX_NAME_LEN  # char name[20]
         bsize += self.MAX_USERDATA_LEN  # char user_data[8]
         bsize += 12  # Vector3f trans
@@ -60,7 +61,7 @@ class PAN1Block(BinaryBlock):
         return bsize
 
     def write(self, strm: OutputStream):
-        """Serialize block contents to stream"""
+        """Write block buffer to stream"""
         super.write(self, strm)
 
         # Flags

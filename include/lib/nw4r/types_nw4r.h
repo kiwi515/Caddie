@@ -16,7 +16,7 @@ class RuntimeTypeInfo;
 
 } // namespace detail
 
-struct BinaryBlockHeader;
+struct BlockBaseHeader;
 struct BinaryFileHeader;
 class CharStrmReader;
 struct CharWidths;

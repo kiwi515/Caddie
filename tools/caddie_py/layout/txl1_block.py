@@ -1,8 +1,8 @@
-from ..binary import BinaryBlock
-from ..stream import OutputStream
+from ..binary import BlockBase
+from ..stream.ostream import OutputStream
 
 
-class TXL1Block(BinaryBlock):
+class TXL1Block(BlockBase):
     """Texture list block"""
 
     SIGNATURE = "txl1"
@@ -25,7 +25,7 @@ class TXL1Block(BinaryBlock):
         return bsize
 
     def write(self, strm: OutputStream):
-        """Serialize block contents to stream"""
+        """Write block buffer to stream"""
         super.write(self, strm)
 
         # Filename count

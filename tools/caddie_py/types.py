@@ -1,4 +1,4 @@
-from .stream import OutputStream
+from .binary.ostream import OutputStream
 
 
 class Vector2f:

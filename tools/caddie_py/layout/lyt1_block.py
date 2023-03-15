@@ -1,9 +1,9 @@
-from ..binary import BinaryBlock
-from ..stream import OutputStream
+from ..binary import BlockBase
+from ..stream.ostream import OutputStream
 from ..types import Vector2f
 
 
-class LYT1Block(BinaryBlock):
+class LYT1Block(BlockBase):
     """Layout block"""
 
     SIGNATURE = "lyt1"
@@ -30,7 +30,7 @@ class LYT1Block(BinaryBlock):
         return bsize
 
     def write(self, strm: OutputStream):
-        """Serialize block contents to stream"""
+        """Write block buffer to stream"""
         super.write(self, strm)
 
         # Centered

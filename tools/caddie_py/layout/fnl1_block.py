@@ -1,5 +1,4 @@
-from ..binary import BinaryBlock
-from ..stream import OutputStream
+from ..binary import BlockBase
 from txl1_block import TXL1Block
 
 

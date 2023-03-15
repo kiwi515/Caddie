@@ -1,4 +1,4 @@
-from ..stream import OutputStream
+from ..stream.ostream import OutputStream
 from ..types import Color, Vector2f
 from pan1_block import PAN1Block
 
@@ -10,6 +10,8 @@ class TXT1Block(PAN1Block):
 
     def __init__(self, res):
         super().__init__(self.SIGNATURE)
+
+        self.string = ""
 
         self.material_index = res.get("material_index", 0)
         self.font_index = res.get("font_index", 0)
@@ -33,41 +35,47 @@ class TXT1Block(PAN1Block):
         bsize += 2  # u16 text_str_size
         bsize += 2  # u16 material_index
         bsize += 2  # u16 font_index
-        bsize += 1  # u8
+        bsize += 1  # u8 text_position
+        bsize += 1  # u8 text_alignment
+        bsize += 4  # GXColor top_color
+        bsize += 4  # GXColor bottom_color
+        bsize += 4 * 2  # Size font_size
+        bsize += 4  # f32 char_space
+        bsize += 4  # f32 line_space
 
         return bsize
 
     def write(self, strm: OutputStream):
-        """Serialize block contents to stream"""
+        """Write block buffer to stream"""
         super.write(self, strm)
 
-        # Flags
-        flag = 0
-        flag |= (self.visible & 1)
-        flag |= ((self.influenced_alpha & 1) << 1)
-        flag |= ((self.widescreen & 1) << 2)
-        strm.write_u8(flag)
+        # Text buffer size
+        strm.write_u16(len(self.string) + 1)
+        # Text string size
+        strm.write_u16(len(self.string) + 1)
 
-        # Base position
-        strm.write_u8(self.base_position)
-        # Alpha
-        strm.write_u8(self.alpha)
-        # Padding
-        strm.write_padding(1)
+        # Material index
+        strm.write_u16(self.material_index)
+        # Font index
+        strm.write_u16(self.font_index)
 
-        # Name
-        strm.write_string_sz(self.name, self.MAX_NAME_LEN)
-        # Userdata
-        strm.write_string_sz(self.user_data, self.MAX_USERDATA_LEN)
+        # Text position
+        strm.write_u8(self.text_position)
+        # Text alignment
+        strm.write_u8(self.text_alignment)
 
-        # Translation
-        self.trans.write(strm)
-        # Rotation
-        self.rotate.write(strm)
-        # Scale
-        self.scale.write(strm)
-        # Size
-        self.size.write(strm)
+        # Top color
+        self.top_color.write(strm)
+        # Bottom color
+        self.bottom_color.write(strm)
+
+        # Font size
+        self.font_size.write(strm)
+
+        # Char space
+        strm.write_float(self.char_space)
+        # Line space
+        strm.write_float(self.line_space)
 
         # Align block to 32B
         self.write_align(strm)

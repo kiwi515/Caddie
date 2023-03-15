@@ -5,7 +5,7 @@
 namespace nw4r {
 namespace ut {
 
-struct BinaryBlockHeader {
+struct BlockBaseHeader {
     u32 kind;   // at 0x0
     u32 length; // at 0x4
 };

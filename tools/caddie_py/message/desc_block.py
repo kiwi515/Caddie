@@ -1,9 +1,9 @@
-from ..binary import BinaryBlock
-from ..stream import OutputStream
+from ..binary import BlockBase
+from ..stream.ostream import OutputStream
 from data_block import DATABlock
 
 
-class DESCBlock(BinaryBlock):
+class DESCBlock(BlockBase):
     """Message descriptor block"""
 
     SIGNATURE = "DESC"
@@ -34,7 +34,7 @@ class DESCBlock(BinaryBlock):
         return bsize
 
     def write(self, strm: OutputStream):
-        """Serialize block contents to stream"""
+        """Write block buffer to stream"""
         super.write(self, strm)
 
         # Message count

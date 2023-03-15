@@ -1,9 +1,9 @@
-from ..binary import BinaryBlock
-from ..stream import OutputStream
+from ..binary import BlockBase
+from ..stream.ostream import OutputStream
 from ..types import ColorS10, Color
 
 
-class MAT1Block(BinaryBlock):
+class MAT1Block(BlockBase):
     """Material block"""
 
     SIGNATURE = "mat1"
@@ -63,7 +63,7 @@ class MAT1Block(BinaryBlock):
         return bsize
 
     def write(self, strm: OutputStream):
-        """Serialize block contents to stream"""
+        """Write block buffer to stream"""
         super.write(self, strm)
 
         # Material name
