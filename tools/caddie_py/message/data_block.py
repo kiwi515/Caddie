@@ -1,13 +1,17 @@
-from ..binary import BlockBase
-from ..binary.member import Member
+from caddie_py.binary.block.block_base import BlockBase
+from caddie_py.binary.member import Member
 
 
 class DATABlock(BlockBase):
     """Message data (pool) block"""
 
     SIGNATURE = "DATA"
-    MEMBERS =
 
-    def __init__(self, messages: list[str]):
+    def __init__(self, messages: list[str] = []):
         super().__init__(self.SIGNATURE)
-        self.messages = messages
+
+        self.add_member("wcstr[]", "messages", messages)
+
+    def add_message(self, message: str):
+        """Add message string to block"""
+        self["messages"].value.append(message)

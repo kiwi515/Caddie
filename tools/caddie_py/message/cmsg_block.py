@@ -1,11 +1,10 @@
-from ..binary.block.block_base import BlockBase
-from ..binary.block.header_block import HeaderBlockBase
+from caddie_py.binary.block.block_base import BlockBase
+from caddie_py.binary.block.header_block_base import HeaderBlockBase
 
 
 class CMSGBlock(HeaderBlockBase):
     """Message header block"""
 
-    # Update as format is revised
     SIGNATURE = "CMSG"
     VERSION = 0x0100  # 1.0
 

@@ -1,25 +1,20 @@
-from stream_base import StreamBase
+from caddie_py.stream.stream_base import StreamBase
 
 
-class BufferStream(StreamBase):
-    """Buffer stream"""
+class BlockBuilder(StreamBase):
+    """Block buffer builder"""
 
     def __init__(self, endian: int):
-        super.__init__(endian)
-        self.data = None
+        super().__init__(endian)
+        self.__data = bytearray()
 
     def read(self, size: int) -> bytearray:
         """Read bytes from stream"""
-        raise NotImplementedError("BufferStream does not yet support reading")
+        raise NotImplementedError("BlockBuilder does not support reading")
 
     def write(self, data: bytearray):
         """Write bytes to stream"""
-
-        # No file open
-        if self.data == None:
-            return
-
-        self.data += data
+        self.__data += data
 
     def eof(self) -> bool:
         """Check whether the stream has hit the end-of-file"""
@@ -27,16 +22,16 @@ class BufferStream(StreamBase):
 
     def seek(self, origin: int, offset: int):
         """Seek the stream position"""
-        raise NotImplementedError("BufferStream does not yet support seeking")
+        raise NotImplementedError("BlockBuilder does not support seeking")
 
     def open(self, data: bytearray = bytearray()):
         """Open stream (no buffer specified = create one)"""
-        self.data = data
+        self.__data = data
 
     def buffer_data(self) -> bytearray:
         """Access buffer data"""
-        return self.data
+        return self.__data
 
     def buffer_size(self) -> int:
         """Access buffer size"""
-        return len(self.data)
+        return len(self.__data)

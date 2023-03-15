@@ -19,7 +19,7 @@ class StreamBase(ABC):
 
     def __init__(self, endian: int):
         assert endian >= 0 and endian < Endian.Max
-        self.endian = endian
+        self._endian = endian
 
     def read(self, size: int) -> bytes:
         """Read bytes from stream"""
@@ -165,7 +165,7 @@ class StreamBase(ABC):
 
         return string
 
-    def write_wstring(self, maxlen: int = -1, terminate: bool = True):
+    def write_wstring(self, string: str, maxlen: int = -1, terminate: bool = True):
         """Write a widechar string (UTF-16) to the stream."""
         # Truncate if string is too long
         if maxlen >= 0:
@@ -173,7 +173,7 @@ class StreamBase(ABC):
 
         # Write data
         try:
-            self.write(string.encode("utf-16"))
+            self.write(string.encode("utf-16-be"))
         except UnicodeEncodeError:
             return
 
@@ -186,24 +186,24 @@ class StreamBase(ABC):
 
     def __int2bytes(self, data: int, size: int, signed: bool) -> bytes:
         """Convert integer value into bytes"""
-        endian = ("little", "big")[self.endian]
+        endian = ("little", "big")[self._endian]
         return int.to_bytes(data, length=size, byteorder=endian, signed=signed)
 
     def __bytes2int(self, data: bytes, signed: bool) -> int:
         """Convert bytes into integer value"""
-        endian = ("little", "big")[self.endian]
+        endian = ("little", "big")[self._endian]
         return int.from_bytes(data, byteorder=endian, signed=signed)
 
     def __dec2bytes(self, data: float, size: int) -> bytes:
         """Convert decimal value into bytes"""
-        endian = ("<", ">")[self.endian]
+        endian = ("<", ">")[self._endian]
         t = "d" if size == 8 else "f"
         arr = pack(f"{endian}{t}", data)
         return bytes(arr)
 
     def __bytes2dec(self, data: bytes) -> float:
         """Convert bytes into decimal value"""
-        endian = ("<", ">")[self.endian]
+        endian = ("<", ">")[self._endian]
         t = "d" if len(data) == 8 else "f"
         arr = unpack(f"{endian}{t}", data)
         return bytes(arr)

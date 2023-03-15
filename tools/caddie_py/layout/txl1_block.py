@@ -9,7 +9,7 @@ class TXL1Block(BlockBase):
 
     def __init__(self, filenames: list[str] = []):
         super().__init__(self.SIGNATURE)
-        self.filenames = dict()
+        self._filenames = dict()
         self.pool_size = 0
 
         for filename in filenames:
@@ -29,7 +29,7 @@ class TXL1Block(BlockBase):
         super.write(self, strm)
 
         # Filename count
-        strm.write_u16(len(self.filenames))
+        strm.write_u16(len(self._filenames))
         # Padding
         strm.write_padding(2)
 

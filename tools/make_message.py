@@ -3,38 +3,44 @@ from sys import argv
 from json import loads
 from datetime import datetime
 from os import makedirs
-from caddie.stream import OutputStream, StreamEndian
-from caddie.message.cmsg_block import CMSGBlock
-from caddie.message.data_block import DATABlock
-from caddie.message.desc_block import DESCBlock
+
+from caddie_py.stream.file_stream import FileStream, OpenMode, DataMode
+from caddie_py.stream.stream_base import Endian
+from caddie_py.message.desc_block import DESCBlock
+from caddie_py.message.data_block import DATABlock
+from caddie_py.message.cmsg_block import CMSGBlock
 
 
 def write_binary(messages: list[str], args):
     """Write specified messages to BCMSG binary"""
     try:
-        strm = OutputStream(args.outfile, StreamEndian.BIG)
+        strm = FileStream(Endian.Big)
+        strm.open(args.outfile, OpenMode.Write, DataMode.Binary)
     except OSError:
         print(f"[FATAL] Could not open BCMSG file for writing: {args.outfile}")
         return
 
     # Header
-    cmsg = CMSGBlock()
+    header_blk = CMSGBlock()
 
     # Create blocks
-    data = DATABlock(messages)
-    desc = DESCBlock.from_data_block(data)
+    data_blk = DATABlock(messages)
+    desc_blk = DESCBlock.from_data_block(data_blk)
 
     # Append blocks
-    cmsg.add_block(data)
-    cmsg.add_block(desc)
+    header_blk.append_child(desc_blk)
+    header_blk.append_child(data_blk)
 
     # Write to file
-    cmsg.write(strm)
+    header_blk.write(strm)
+
     strm.close()
 
 
-def write_header(message_keys: list[str], args, header_path):
+def write_header(message_keys: list[str], args):
     """Write C++ header file for use with the BCMSG binary"""
+
+    header_path = args.header
 
     # Autogenerate header path if not specified
     if header_path == None:
@@ -120,7 +126,7 @@ def convert_json(args):
     # BCMSG binary
     write_binary(msg_messages.values(), args)
     # Generate C++ header
-    write_header(msg_messages.keys(), args, args.header)
+    write_header(msg_messages.keys(), args)
 
 
 def main():

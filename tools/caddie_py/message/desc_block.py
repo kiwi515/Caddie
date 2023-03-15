@@ -1,6 +1,5 @@
-from ..binary import BlockBase
-from ..stream.ostream import OutputStream
-from data_block import DATABlock
+from caddie_py.binary.block.block_base import BlockBase
+from caddie_py.message.data_block import DATABlock
 
 
 class DESCBlock(BlockBase):
@@ -8,40 +7,26 @@ class DESCBlock(BlockBase):
 
     SIGNATURE = "DESC"
 
-    def __init__(self, offsets: list[int]):
+    def __init__(self, offsets: list[int] = []):
         super().__init__(self.SIGNATURE)
-        self.offsets = offsets
 
-    @classmethod
+        self.add_member("u32", "numMsg", len(offsets))
+        self.add_member("u32[]", "msgOffsets", offsets)
+
+    def add_offset(self, offset: int):
+        """Add message offset to block"""
+        self["numMsg"].value += 1
+        self["msgOffsets"].value.append(offset)
+
+    @staticmethod
     def from_data_block(block: DATABlock):
         """Generate DESC block from message data"""
         offsets = []
         offset_now = 0
-        for msg in block.messages:
+
+        for msg in block["messages"].value:
             offsets.append(offset_now)
-            msg_len = len(msg) + 1
-            offset_now += msg_len * 2  # wchar_t
+            # +1 for null terminator, x2 for wchar_t
+            offset_now += (len(msg) + 1) * 2
+
         return DESCBlock(offsets)
-
-    def byte_size(self) -> int:
-        """Get size of block in bytes"""
-        bsize = 0
-        bsize += super.byte_size(self)
-
-        bsize += 4  # u32 numMsg
-        bsize += len(self.offsets) * 4  # u32 offsets[]
-
-        return bsize
-
-    def write(self, strm: OutputStream):
-        """Write block buffer to stream"""
-        super.write(self, strm)
-
-        # Message count
-        strm.write_u32(len(self.offsets))
-        # Message pool offsets
-        for ofs in self.offsets:
-            strm.write_u32(ofs)
-
-        # Align block to 32B
-        self.write_align(strm)
