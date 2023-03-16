@@ -1,4 +1,5 @@
-from ..binary import BlockBase, HeaderBlockBase
+from caddie_py.binary.block.block_base import BlockBase
+from caddie_py.binary.block.header_block_base import HeaderBlockBase
 
 
 class CLYTBlock(HeaderBlockBase):

@@ -24,7 +24,7 @@ class DESCBlock(BlockBase):
         offsets = []
         offset_now = 0
 
-        for msg in block["messages"].value:
+        for msg in block["pool"].value:
             offsets.append(offset_now)
             # +1 for null terminator, x2 for wchar_t
             offset_now += (len(msg) + 1) * 2
