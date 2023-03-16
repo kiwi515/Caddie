@@ -9,6 +9,7 @@ class Member:
     PRIM_2_WRITE_FUNC = {
         "u8": StreamBase.write_u8,
         "unsigned char": StreamBase.write_u8,
+        "bool": StreamBase.write_u8,
 
         "s8": StreamBase.write_s8,
         "char": StreamBase.write_s8,
@@ -38,18 +39,55 @@ class Member:
         "double": StreamBase.write_f64,
     }
 
-    ARRAY_REGEX = r"(?P<Type>[0-9a-zA-Z_]+)(\[(?P<Size>[0-9]*)\])?"
+    PRIM_2_BYTE_SIZE = {
+        "u8": 1,
+        "unsigned char": 1,
+        "bool": 1,
 
-    def __init__(self, _type: str, name: str, value=None):
-        # Parse type
-        match_obj = search(self.ARRAY_REGEX, _type)
-        assert match_obj != None, f"Invalid type declaration: {_type}"
+        "s8": 1,
+        "char": 1,
+        "signed char": 1,
 
+        "u16": 2,
+        "unsigned short": 2,
+        "wchar_t": 2,
+
+        "s16": 2,
+        "short": 2,
+        "signed short": 2,
+
+        "u32": 4,
+        "unsigned long": 4,
+
+        "s32": 4,
+        "long": 4,
+        "signed long": 4,
+        "int": 4,
+        "signed int": 4,
+
+        "f32": 4,
+        "float": 4,
+
+        "f64": 8,
+        "double": 8,
+    }
+
+    STRING_TYPES = ("cstr", "str", "wcstr", "wstr")
+
+    ARRAY_REGEX = r"\[\s*(?P<Size>[0-9]*)\s*\]"
+
+    def __init__(self, _type: str, name: str, arr: str = None, value=None):
         # Type name
-        self.type = match_obj.group("Type")
+        self.type = _type
+        # Member name
+        self.name = name
 
-        # Type length (array length)
-        if match_obj.group("Size") != None:
+        # Array declaration
+        if arr != None:
+            match_obj = search(self.ARRAY_REGEX, arr)
+            assert match_obj != None and match_obj.group(
+                "Size") != None, f"Invalid array declaration: {arr}"
+
             self.length = match_obj.group("Size")
 
             # Variadic-length array
@@ -62,10 +100,11 @@ class Member:
             # Single element
             self.length = 1
 
-        # Member name
-        self.name = name
         # Member value
-        self.set_value(value)
+        if value == None:
+            value = self.__get_default_value()
+        if value != None:
+            self.set_value(value)
 
     def __repr__(self):
         """Convert object to string (for debugging)"""
@@ -103,6 +142,32 @@ class Member:
                 data), "Cannot set array value to non-array member"
             self.value = data
 
+    def arr_length(self):
+        """Member array length"""
+        if self.is_vl_array():
+            return len(self.value)
+        if self.is_array():
+            return self.length
+        return 1
+
+    def byte_size(self):
+        """Size of member in bytes"""
+        # Primitive type
+        if self.type in self.PRIM_2_BYTE_SIZE:
+            return self.PRIM_2_BYTE_SIZE[self.type]
+        # String type
+        elif self.type in self.STRING_TYPES:
+            x = self.value
+            STR_LEN = {
+                "str": len(x),
+                "cstr": len(x) + 1,
+                "wstr": len(x) * 2,
+                "wcstr": (len(x) + 1) * 2,
+            }
+            return STR_LEN[self.type]
+        else:
+            assert False, "Unsupported non-primitive, non-string type"
+
     def write(self, strm: StreamBase):
         """Write member to stream"""
         # Primitive type
@@ -135,7 +200,7 @@ class Member:
         """Write non-primitve member to stream"""
 
         # String type
-        if self.type in ("cstr", "str", "wcstr", "wstr"):
+        if self.type in self.STRING_TYPES:
             self.__write_string(strm)
         # Whatever type this is, it isn't supported yet
         else:
@@ -171,3 +236,30 @@ class Member:
         else:
             for i in range(self.length):
                 f(strm, self.value[i], *argv)
+
+    def __get_default_value(self):
+        """Get default value for member"""
+        # Variable-length array
+        if self.is_vl_array():
+            # Cannot safely initialize, user doesn't know length
+            return []
+
+        default = None
+
+        # Primitive/simple type
+        if self.type in self.PRIM_2_WRITE_FUNC:
+            default = 0
+        # String type
+        elif self.type in self.STRING_TYPES:
+            default = ""
+        # Unsupported type, or is a Structure
+        else:
+            print(f"Member type has no known default value: {self.type}")
+            return None
+
+        # Scale for arrays
+        if self.is_array():
+            return [default * self.length]
+
+        # Single element
+        return default

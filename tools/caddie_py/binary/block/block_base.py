@@ -1,6 +1,6 @@
 from caddie_py.stream.block_builder import BlockBuilder
 from caddie_py.stream.stream_base import Endian, StreamBase
-from caddie_py.binary.member import Member
+from caddie_py.binary.types.member import Member
 
 
 class BlockBase:
@@ -20,15 +20,26 @@ class BlockBase:
     def __getitem__(self, key: str) -> Member:
         """Access block member"""
         assert key in self.__members, f"Member does not exist: {key}"
-
         return self.__members[key]
 
-    def add_member(self, _type: str, name: str, value=None):
+    def add_member(self, member: Member):
         """Add member to block"""
-        assert name not in self.__members, f"Duplicate member declaration: {name}"
+        assert member.name not in self.__members, f"Duplicate member declaration: {member.name}"
+        self.__members[member.name] = member
 
-        m = Member(_type, name, value)
-        self.__members[name] = m
+    def offset_of(self, key: str):
+        """Offset of member in block"""
+        # Add up offsets until we hit the desired member
+        offset = 0
+        for item in self.__members.items():
+            # Target member found
+            if item[0] == key:
+                return offset
+            # Keep going
+            offset += item[1].byte_size()
+
+        # Member is not in block
+        return -1
 
     def byte_size(self) -> int:
         """Size of block in bytes"""

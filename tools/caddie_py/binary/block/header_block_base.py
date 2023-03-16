@@ -1,5 +1,6 @@
 from caddie_py.binary.block.block_base import BlockBase
 from caddie_py.stream.stream_base import StreamBase
+from caddie_py.binary.types.member import Member
 
 
 class HeaderBlockBase(BlockBase):
@@ -10,8 +11,8 @@ class HeaderBlockBase(BlockBase):
         self.version = version
         self.children = blocks
 
-        self.add_member("u16", "version", self.VERSION)
-        self.add_member("u16", "numBlocks", len(self.children))
+        self.add_member(Member("u16", "version", value=self.VERSION))
+        self.add_member(Member("u16", "numBlocks", value=len(self.children)))
 
     def append_child(self, block: BlockBase):
         """Append child block"""
