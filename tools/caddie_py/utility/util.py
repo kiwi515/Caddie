@@ -9,3 +9,8 @@ class Util:
             return True
         except TypeError:
             return False
+
+    @staticmethod
+    def is_list(object) -> bool:
+        """Determine whether the object a list"""
+        return isinstance(object, list)

@@ -1,6 +1,36 @@
-from ..binary import BlockBase
-from ..stream.ostream import OutputStream
-from ..types import ColorS10, Color
+from caddie_py.binary.block.block_base import BlockBase
+from caddie_py.binary.types.structure import Structure
+from caddie_py.binary.types.primitive import Primitive
+from caddie_py.binary.types.gx import *
+
+
+class AlphaCompare(Structure):
+    """Material alpha comparison structure"""
+    MEMBERS = [
+        GXCompare("u8", "comp"),
+        GXAlphaOp("u8", "op"),
+        Primitive("u8", "ref0"),
+        Primitive("u8", "ref1")
+    ]
+
+
+class ChanCtrl(Structure):
+    """Material channel control structure"""
+    MEMBERS = [
+        GXColorSrc("u8", "color_src"),
+        GXColorSrc("u8", "alpha_src"),
+        Primitive("u16", "padding0")
+    ]
+
+
+class IndirectStage(Structure):
+    """Material indirect stage structure"""
+    MEMBERS = [
+        GXTexCoordID("u8", "tex_coord_gen"),
+        GXTexMapID("u8", "tex_map"),
+        GXIndTexScale("u8", "scale_s"),
+        GXIndTexScale("u8", "scale_t")
+    ]
 
 
 class MAT1Block(BlockBase):

@@ -130,6 +130,13 @@ def convert_json(args):
 
 
 def main():
+
+    argv = [
+        "",
+        "--infile=assets/caddie/scene/Shared/RichPresence.cmsg",
+        "--outfile=romfs/NTSC_U/files/US/Message/RichPresence.bcmsg",
+    ]
+
     # Parse command-line arguments
     parser = ArgumentParser()
     parser.add_argument("--infile", type=str, required=True,

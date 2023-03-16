@@ -31,6 +31,9 @@ class BlockBase:
         """Offset of member in block"""
         # Add up offsets until we hit the desired member
         offset = 0
+        offset += 4  # u32 kind
+        offset += 4  # u32 size
+
         for item in self.__members.items():
             # Target member found
             if item[0] == key:

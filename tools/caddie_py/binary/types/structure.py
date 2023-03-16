@@ -6,57 +6,63 @@ from caddie_py.utility.util import Util
 class Structure(Member):
     """Structure containing members"""
 
-    def __init__(self, _type: str, name: str, arr: str = None, members: list[Member] = []):
-        super().__init__(_type, name, arr)
-        self._members = dict()
+    def __init__(self, name: str, arr: str = None, values: dict = None):
+        super().__init__(self.__class__.__name__, name, arr)
 
-        # Array
+        # Convert member list into dictionary
+        members = self.MEMBERS.copy()
+        members = {m.name: m for m in members}
+
+        # User initialization
+        if values != None:
+            for item in values.items():
+                k = item[0]
+                v = item[1]
+                if k in members:
+                    members[k].set_value(v)
+
         if self.is_array():
-            # Explicit array length
-            if not self.is_vl_array():
-                self.__init_members_array(members)
+            # Cannot initialize variable length array
+            if self.is_vl_array():
+                self.set_value(list())
             else:
-                self._members = []
+                # In an array, all indices will be initialized the same way
+                self.set_value([members] * self.array_size())
         # Single element
         else:
-            self.__init_members_single(members)
+            self.set_value(members)
 
     def __getitem__(self, key):
         """Access member of structure"""
-        # Array access, return member dict
-        if self.is_array():
-            key = int(key)
-            return self._members[key]
-        # No array, direct member access
-        else:
-            assert key in self._members, f"Member does not exist: {key}"
-            return self._members[key]
+        return self.value[key]
 
     def __repr__(self):
         """Convert object to string (for debugging)"""
-        text = f"struct {self.type} {{"
-        text += "".join(self._members)
-        text += "};"
-        return text
-
-    def arr_length(self):
-        """Structure array length"""
-        if self.is_array():
-            return len(self._members)
-        return 1
+        return f"{self.type} {self.name} = {{{','.join(self.value)}}}"
 
     def byte_size(self):
         """Size of structure in bytes"""
         # Size of one instance
-        size = sum(m.byte_size() for m in self._get_members())
+        size = sum(m.byte_size() for m in self.MEMBERS)
         # Scale for array
-        return size * self.arr_length()
+        return size * self.array_size()
+
+    def write(self, strm: StreamBase):
+        """Write structure to stream"""
+        for dic in self.value:
+            for m in dic.values():
+                m.write(strm)
+
+    def append(self, member: Member):
+        """Append to structure's array"""
+        assert self.is_array(), "Not an array!"
+        self.value.append(member.value)
 
     def offset_of(self, key: str):
         """Offset of member in structure"""
         # First set of members
-        member_dict = self._members if not self.is_array(
-        ) else self._members[0]
+        member_dict = self.value if not self.is_array(
+        ) else self.value[0]
 
         # Add up offsets until we hit the desired member
         offset = 0
@@ -69,30 +75,3 @@ class Structure(Member):
 
         # Member is not in structure
         return -1
-
-    def write(self, strm: StreamBase):
-        """Write structure to stream"""
-        for dic in self._members:
-            for m in dic.values():
-                m.write(strm)
-
-    def __init_members_array(self, members: list[Member]):
-        """Construct an array of members"""
-        assert self.is_array(), "Not an array"
-
-        self._members = [dict()] * self.length
-
-        for i in range(self.length):
-            for j, m in enumerate(members):
-                assert m.name not in self._members, f"Duplicate member declaration: {m.name}"
-                self._members[i][m.name] = m
-
-    def __init_members_single(self, members: list[Member]):
-        """Construct one set of members"""
-        assert not self.is_array(), "Not a single element"
-
-        self._members = dict()
-
-        for i, m in enumerate(members):
-            assert m.name not in self._members, f"Duplicate member declaration: {m.name}"
-            self._members[m.name] = m
