@@ -1,6 +1,6 @@
 from caddie_py.binary.types.member import Member
 from caddie_py.stream.stream_base import StreamBase
-from caddie_py.utility.util import Util
+from copy import deepcopy
 
 
 class Structure(Member):
@@ -10,14 +10,12 @@ class Structure(Member):
         super().__init__(self.__class__.__name__, name, arr)
 
         # Convert member list into dictionary
-        members = self.MEMBERS.copy()
-        members = {m.name: m for m in members}
+        members = {m.name: m for m in deepcopy(self.MEMBERS)}
 
         # User initialization
         if values != None:
             for item in values.items():
-                k = item[0]
-                v = item[1]
+                k, v = item[0], item[1]
                 if k in members:
                     members[k].set_value(v)
 

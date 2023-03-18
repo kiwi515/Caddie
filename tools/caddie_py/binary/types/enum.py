@@ -6,9 +6,22 @@ class Enum(Primitive):
 
     def __init__(self, underlying_type: str, name: str, arr: str = None, value=None):
         super().__init__(underlying_type, name, arr, value)
-        self.__enum = self.VALUES.copy()
+        self.__enum = self.VALUES
+
+    def __getitem__(self, key: str):
+        """Access enum values like a dictionary"""
+        assert key in self.__enum, f"Invalid enum value: {key} not in {self.__class__.__name__}"
+        return self.__enum[key]
 
     def set_value(self, data):
         """Set member value"""
-        assert data in self.__enum, f"Invalid enum value: {data} not in {self.__class__.__name__}"
-        Primitive.set_value(self.__enum[data])
+        # Enum value
+        if type(data) == str:
+            assert data in self.__enum, f"Invalid enum value: {data} not in {self.__class__.__name__}"
+            Primitive.set_value(self.__enum[data])
+
+        # Raw value (sure, I guess..)
+        else:
+            assert type(
+                data) == int, "Specify either an enum value or a raw integer value."
+            Primitive.set_value(data)

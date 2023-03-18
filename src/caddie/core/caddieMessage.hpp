@@ -8,7 +8,7 @@ namespace caddie {
 class Message : IBinary {
 public:
     virtual u32 GetBinaryKind() const { return 'CMSG'; }
-    virtual u16 GetVersion() const { return CADDIE_BIN_VERSION(1, 0); }
+    virtual u16 GetVersion() const { return CADDIE_BIN_VERSION(0x01, 0x00); }
 
 private:
     // Message descriptor block

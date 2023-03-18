@@ -12,8 +12,6 @@ namespace caddie {
  * @brief Resource manager
  */
 class ResourceMgr {
-    friend class Resource;
-
 public:
     static ResourceMgr& GetInstance() {
         static ResourceMgr instance;

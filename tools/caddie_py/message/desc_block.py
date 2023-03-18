@@ -1,6 +1,7 @@
 from caddie_py.binary.block.block_base import BlockBase
-from caddie_py.binary.types.member import Member
+from caddie_py.binary.types.primitive import Primitive
 from caddie_py.message.data_block import DATABlock
+from caddie_py.utility.util import Util
 
 
 class DESCBlock(BlockBase):
@@ -11,8 +12,9 @@ class DESCBlock(BlockBase):
     def __init__(self, offsets: list[int] = []):
         super().__init__(self.SIGNATURE)
 
-        self.add_member(Member("u32", "numMsg", value=len(offsets)))
-        self.add_member(Member("u32", "msgOffsets", arr="[]", value=offsets))
+        self.add_member(Primitive("u32", "numMsg", value=len(offsets)))
+        self.add_member(
+            Primitive("u32", "msgOffsets", arr="[]", value=offsets))
 
     def add_offset(self, offset: int):
         """Add message offset to block"""
@@ -25,9 +27,8 @@ class DESCBlock(BlockBase):
         offsets = []
         offset_now = 0
 
-        for msg in block["pool"].value:
+        for msg in block["pool"]:
             offsets.append(offset_now)
-            # +1 for null terminator, x2 for wchar_t
-            offset_now += (len(msg) + 1) * 2
+            offset_now += Util.wstr_len(msg, terminator=True)
 
         return DESCBlock(offsets)

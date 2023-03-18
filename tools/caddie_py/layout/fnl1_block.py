@@ -1,12 +1,13 @@
 from caddie_py.binary.block.block_base import BlockBase
 from caddie_py.binary.types.structure import Structure
-from caddie_py.binary.types.member import Member
+from caddie_py.binary.types.string import String
 from caddie_py.binary.types.primitive import Primitive
 from caddie_py.stream.stream_base import StreamBase
 
 
 class FontDesc(Structure):
     """Font descriptor structure"""
+
     MEMBERS = [
         Primitive("u32", "offset"),
         Primitive("u32", "padding0")
@@ -25,7 +26,7 @@ class FNL1Block(BlockBase):
         self.add_member(Primitive("u16", "numEntries", value=len(fonts)))
         self.add_member(Primitive("u16", "padding0"))
         self.add_member(FontDesc("fontDescs", arr="[]"))
-        self.add_member(Primitive("cstr", "fontNames", arr="[]"))
+        self.add_member(String("fontNames", arr="[]"))
 
         # Add fonts to pool
         for f in fonts:
@@ -33,9 +34,6 @@ class FNL1Block(BlockBase):
 
     def add_font(self, font: str):
         """Add font to name list"""
-        assert self["fontDescs"].is_vl_array(
-        ), "Something is very wrong here!!!"
-
         # Add font name to pool
         self["fontNames"].value.append(font)
 

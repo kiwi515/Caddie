@@ -54,7 +54,9 @@ class Member:
 
     def __iter__(self):
         """Iterator support"""
-        return self.value.__iter__()
+        if self.is_array():
+            return self.value.__iter__()
+        return [self.value].__iter__()
 
     def set_value(self, data):
         """Set member value"""

@@ -4,6 +4,7 @@ from caddie_py.stream.stream_base import StreamBase
 
 class Primitive(Member):
     """Primitive-type member"""
+
     PRIM_2_WRITE_FUNC = {
         "u8": StreamBase.write_u8,
         "unsigned char": StreamBase.write_u8,
@@ -70,8 +71,6 @@ class Primitive(Member):
         "double": 8,
     }
 
-    STRING_TYPES = ("cstr", "str", "wcstr", "wstr")
-
     def __init__(self, _type: str, name: str, arr: str = None, value=None):
         super().__init__(_type, name, arr, value)
 
@@ -81,75 +80,16 @@ class Primitive(Member):
 
     def byte_size(self):
         """Size of primitive member in bytes"""
-        # Actually *primitive*
-        if self.type in self.PRIM_2_BYTE_SIZE:
-            return self.PRIM_2_BYTE_SIZE[self.type]
-
-        # String type
-        elif self.type in self.STRING_TYPES:
-            x = self.value
-            return {
-                "str": len(x),
-                "cstr": len(x) + 1,
-                "wstr": len(x) * 2,
-                "wcstr": (len(x) + 1) * 2,
-            }[self.type]
-
-        else:
-            assert False, f"Unsupported non-primitive type: {self.type}"
+        assert self.type in self.PRIM_2_BYTE_SIZE, "Not a primitive type!"
+        return self.PRIM_2_BYTE_SIZE[self.type]
 
     def write(self, strm: StreamBase):
         """Write primitive member to stream"""
-        # Primitive type
-        if self.type in self.PRIM_2_WRITE_FUNC:
-            self.__write_prim(strm)
-        # String type
-        elif self.type in self.STRING_TYPES:
-            self.__write_string(strm)
-        # IDK man
-        else:
-            assert False, f"Unsupported primitive type: {self.type}"
-
-    def __write_prim(self, strm: StreamBase):
-        """Write primitive member to stream"""
+        assert self.type in self.PRIM_2_BYTE_SIZE, "Not a primitive type!"
         f = self.PRIM_2_WRITE_FUNC[self.type]
 
-        # Member is an array
-        if self.is_array():
-            self.__write_array(strm, f)
-        # Not an array
-        else:
-            f(strm, self.value)
-
-    def __write_string(self, strm: StreamBase):
-        """Write string member to stream"""
-
-        # Write function
-        f = StreamBase.write_wstring if self.type.startswith(
-            "w") else StreamBase.write_string
-
-        # Null-termination
-        terminate = "cstr" in self.type
-
-        maxlen = -1
-
-        if self.is_array():
-            self.__write_array(strm, f, maxlen, terminate)
-        else:
-            f(strm, self.value, maxlen, terminate)
-
-    def __write_array(self, strm: StreamBase, f, *argv):
-        """Write primitive member as array, using the specified write function"""
-        assert self.is_array(), "Member is not an array"
-
-        # Variable length array
-        if self.is_vl_array():
-            for elem in self.value:
-                f(strm, elem, *argv)
-        # Array of explicit length
-        else:
-            for i in range(self.__length):
-                f(strm, self.value[i], *argv)
+        for elem in self:
+            f(strm, elem)
 
     def __get_default_value(self):
         """Get default value for primitive member"""
