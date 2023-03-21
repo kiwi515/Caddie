@@ -1,6 +1,10 @@
-from ..stream.ostream import OutputStream
-from ..types import Color, Vector2f
-from pan1_block import PAN1Block
+from caddie_py.binary.types.primitive import Primitive
+from caddie_py.binary.types.common import Size
+from caddie_py.binary.types.string import WString
+from caddie_py.binary.types.gx import GXColor
+from caddie_py.layout.pan1_block import PAN1Block
+from caddie_py.layout.mat1_block import MAT1Block
+from caddie_py.layout.fnl1_block import FNL1Block
 
 
 class TXT1Block(PAN1Block):
@@ -8,20 +12,30 @@ class TXT1Block(PAN1Block):
 
     SIGNATURE = "txt1"
 
-    def __init__(self, res):
-        super().__init__(self.SIGNATURE)
+    def __init__(self, res, mats: MAT1Block, fonts: FNL1Block):
+        super().__init__(res)
+        self.kind = self.SIGNATURE
 
-        self.string = ""
+        assert "name" in res, "Text box is missing name"
 
-        self.material_index = res.get("material_index", 0)
-        self.font_index = res.get("font_index", 0)
-        self.text_position = res.get("text_position", 0)
-        self.text_alignment = res.get("text_alignment", 0)
+        self.add_member(Primitive("u16", "text_buf_size"))
+        self.add_member(Primitive("u16", "text_str_size"))
+        # TODO: Read name from JSON, convert to index using MAT1
+        self.add_member(Primitive("u16", "material_index"))
+        # TODO: Read name from JSON, convert to index using FNL1
+        self.add_member(Primitive("u16", "font_index"))
+        # TODO: This is an enum
+        self.add_member(Primitive("u8", "text_position"))
+        # TODO: This is an enum
+        self.add_member(Primitive("u8", "text_alignment"))
+        self.add_member(Primitive("u8[2]", "padding0"))
+        self.add_member(Primitive("u16", "text_str_offset"))
 
-        self.top_color = Color.from_list(res.get("top_color"), [0, 0, 0, 0])
-        self.bottom_color = Color.from_list(
-            res.get("bottom_color"), [0, 0, 0, 0])
+        self.add_member(GXColor("top_color", values=res.get("top_color")))
+        self.add_member(GXColor("bot_color", values=res.get("bot_color")))
 
-        self.font_size = Vector2f.from_list(res.get("font_size"), [0.0, 0.0])
-        self.char_space = res.get("char_space", 0.0)
-        self.line_space = res.get("line_space", 0.0)
+        self.add_member(Size("font_size"), res.get("font_size"))
+        self.add_member(Primitive("f32", "char_space"), res.get("char_space"))
+        self.add_member(Primitive("f32", "line_space"), res.get("line_space"))
+
+        self.add_member(WString("text", value=res.get("text"), c_style=True))

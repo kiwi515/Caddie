@@ -24,7 +24,7 @@ class ChanCtrl(Structure):
     MEMBERS = [
         GXColorSrc("u8", "color_src"),
         GXColorSrc("u8", "alpha_src"),
-        Primitive("u16", "padding0")
+        Primitive("u8[2]", "padding0")
     ]
 
 
@@ -79,8 +79,9 @@ class MAT1Block(BlockBase):
     def __init__(self, res):
         super().__init__(self.SIGNATURE)
 
-        # Name
         assert "name" in res, "Material is missing name."
+
+        # Name
         self.add_member(String("name", value=res.get("name"),
                         c_style=False, maxlen=self.MAX_NAME_LEN))
 

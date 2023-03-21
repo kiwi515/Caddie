@@ -10,7 +10,7 @@ class FontDesc(Structure):
 
     MEMBERS = [
         Primitive("u32", "offset"),
-        Primitive("u32", "padding0")
+        Primitive("u8[4]", "padding0")
     ]
 
 
@@ -24,7 +24,7 @@ class FNL1Block(BlockBase):
         self.__pool_size = 0
 
         self.add_member(Primitive("u16", "numEntries", value=len(fonts)))
-        self.add_member(Primitive("u16", "padding0"))
+        self.add_member(Primitive("u8[2]", "padding0"))
         self.add_member(FontDesc("fontDescs", arr="[]"))
         self.add_member(String("fontNames", arr="[]"))
 
