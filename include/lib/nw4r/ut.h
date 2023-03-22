@@ -16,6 +16,7 @@
 #include <ut/ut_ResFont.h>
 #include <ut/ut_ResFontBase.h>
 #include <ut/ut_RomFont.h>
+#include <ut/ut_TextWriterBase.h>
 #include <ut/ut_algorithm.h>
 #include <ut/ut_binaryFileFormat.h>
 #include <ut/ut_list.h>

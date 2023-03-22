@@ -3,7 +3,9 @@
 #include "types_nw4r.h"
 #include "types_rp.h"
 
-class RPSysSceneCreator {
+#include <egg/core.h>
+
+class RPSysSceneCreator : public EGG::SceneCreator {
 public:
     //! @brief RP Scene ID
     //! @wfuname
@@ -95,9 +97,21 @@ public:
         return *sInstance;
     }
 
+    virtual EGG::Scene* create(s32);
+    virtual void destroy(s32);
+
     void changeSceneAfterFade(int id, nw4r::ut::Color fadeColor);
 
-private:
+protected:
+    RPSysSceneCreator();
+    virtual ~RPSysSceneCreator();
+
+    RPSysScene* createWS2Scene(s32);
+
+protected:
+    EGG::Heap* mParentHeap; // at 0x4
+    s32 mSceneID;           // at 0x8
+
     static RPSysSceneCreator* sInstance;
 };
 

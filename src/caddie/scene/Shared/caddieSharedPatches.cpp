@@ -1,7 +1,7 @@
 #include "types_caddie.hpp"
 
 namespace caddie {
-namespace {
+namespace Shared {
 
 /**
  * @brief Remove AB check
@@ -15,5 +15,5 @@ kmBranch(0x8026a298, PatchABCheck);
 bool PatchWarningLyt() { return true; }
 kmBranch(0x8022eaf8, PatchWarningLyt);
 
-} // namespace
+} // namespace Shared
 } // namespace caddie

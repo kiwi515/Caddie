@@ -116,23 +116,53 @@ drawCurrentScene__Q23EGG12SceneManagerFv=0x801c3d08
 draw__Q23EGG12SceneManagerFv=0x801c3494
 calc__Q23EGG12SceneManagerFv=0x801c3448
 
+# RP/RPKernel/RPSysConfigData
+sConfigData__15RPSysConfigData=0x807ceb60
+
 # RP/RPSystem/RPSysScene
+__ct__10RPSysSceneFv=0x8022fb88
+__dt__10RPSysSceneFv=0x8022fe44
+calc__10RPSysSceneFv=0x8022f788
+draw__10RPSysSceneFv=0x8022f73c
+enter__10RPSysSceneFv=0x8022f9d8
+exit__10RPSysSceneFv=0x8022f694
+reinit__10RPSysSceneFv=0x8022f960
+incoming_childDestroy__10RPSysSceneFv=0x8022f900
+outgoing_childCreate__10RPSysSceneFv=0x8022f6fc
+getDebugSceneHeap__10RPSysSceneFv=0x801cf75c
+getKind__10RPSysSceneFv=0x8022fe20
+pauseCallBack__10RPSysSceneFb=0x801cf764
+getIslandType__10RPSysSceneFv=0x801cf768
+Enter__10RPSysSceneFv=0x8022fe2c
+Configure__10RPSysSceneFv=0x8022fb84
+LoadResource__10RPSysSceneFv=0x8022fe30
+Reset__10RPSysSceneFv=0x8022f95c
+Calculate__10RPSysSceneFv=0x8022f8fc
+Exit__10RPSysSceneFv=0x8022f6f8
+CalculateGyro__10RPSysSceneFv=0x801cf770
+taskAsyncFunc__10RPSysSceneFv=0x801cf774
 isTaskAsyncFinish__10RPSysSceneFv=0x80231588
+setCreatorSceneID__10RPSysSceneFi=0x8022f324
 
 # RP/RPKernel/RPSysSystem
-sSystemHeap__11RPSysSystem=0x807ceb78
+sInstance__11RPSysSystem=0x806f4c68
 
 # RP/RPSystem/RPSysSceneMgr
 sInstance__13RPSysSceneMgr=0x806f4c98
 updateState__13RPSysSceneMgrFv=0x8023008c
 __dt__13RPSysSceneMgrFv=0x8022fef8
 calcCurrentFader__13RPSysSceneMgrFv=0x802301b4
+isNormalState__13RPSysSceneMgrCFv=0x80230868
 
 # RP/RPSystem/RPSysSysMsgWinMgr
 update__17RPSysSysMsgWinMgrFv=0x802352d4
 sInstance__17RPSysSysMsgWinMgr=0x806f4ce0
 
 # RP/RPSystem/RPSysSceneCreator
+__dt__17RPSysSceneCreatorFv=0x8022e3dc
+create__17RPSysSceneCreatorFl=0x8022ec90
+destroy__17RPSysSceneCreatorFl=0x8022ec30
+createWS2Scene__17RPSysSceneCreatorFl=0x8022e438
 changeSceneAfterFade__17RPSysSceneCreatorFiQ34nw4r2ut5Color=0x8022edfc
 sInstance__17RPSysSceneCreator=0x806f4c88
 
@@ -171,3 +201,9 @@ sFlags__9RPGlfBall=0x806fd91c
 
 # Sports2/Glf/RPGlfPlayerManager
 sInstance__18RPGlfPlayerManager=0x806f5468
+
+# Sports2/DrawMgr
+sDrawPass__Q23Sp27DrawMgr=0x806f0bf8
+
+# UNKNOWN FUNCS
+FUN_802b7094=0x802b7094

@@ -15,5 +15,8 @@ struct Scene;
 struct SceneCreator;
 struct SceneManager;
 struct Fader;
+struct Video;
+struct Display;
+struct XfbManager;
 
 } // namespace EGG

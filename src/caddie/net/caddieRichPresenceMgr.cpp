@@ -6,6 +6,7 @@
 #include "caddieMessage.hpp"
 #include "caddieResourceMgr.hpp"
 #include "caddieRvlRichPresence.hpp"
+#include "caddieSceneCreatorEx.hpp"
 
 #include <RP/RPSystem.h>
 #include <Sports2/Sp2StaticMem.h>
@@ -17,12 +18,15 @@ namespace {
  * @brief RPC information for a given scene + sequence
  */
 struct SceneSeqRpcInfo {
+    int scene;
+    int seq;
     int msg;
     const char* image;
 };
 
-extern const SceneSeqRpcInfo scRpcInfo[RPSysSceneCreator::SCENE_MAX]
-                                      [RPSysSceneCreator::SEQ_MAX];
+extern const SceneSeqRpcInfo scRpcInfo[];
+
+const SceneSeqRpcInfo* GetRpcInfo(int scene, int seq);
 
 } // namespace
 
@@ -67,24 +71,36 @@ void RichPresenceMgr::Configure() {
         return;
     }
 
-    // Get new scene and sequence
-    const int scene = RPSysSceneMgr::getInstance().getCurrentSceneID();
-    const u32 seq = Sp2::StaticMem::getInstance().getSceneSeq();
-    CADDIE_ASSERT_EX(scene < RPSysSceneCreator::SCENE_MAX &&
-                         seq < RPSysSceneCreator::SEQ_MAX,
-                     "Invalid scene(%d) or sequence(%d)", scene, seq);
+    // Scene IDs
+    RPSysSceneMgr& sceneMgr = RPSysSceneMgr::getInstance();
+    const int scene = sceneMgr.getCurrentSceneID();
+    const int lastScene = sceneMgr.getPreviousSceneID();
 
     // Do not change presence if the scene is only reloading
-    if (mLastSceneID == scene) {
+    if (lastScene == scene) {
         return;
     }
 
+    // Sequnce ID
+    Sp2::StaticMem& staticMem = Sp2::StaticMem::getInstance();
+    const int seq = staticMem.getSceneSeq();
+
+    CADDIE_ASSERT_EX(scene < SceneCreatorEx::SCENE_MAX &&
+                         seq < SceneCreatorEx::SEQ_MAX,
+                     "Invalid scene(%d) or sequence(%d)", scene, seq);
+
     // Get new state/image for RPC
-    const SceneSeqRpcInfo& info = scRpcInfo[scene][seq];
-    CADDIE_ASSERT_EX(info.msg >= 0 && info.image != NULL,
-                     "Scene(%d) or sequence(%d) with no RPC info", scene, seq);
-    const wchar_t* state = mMessage->GetMessage(info.msg);
-    const char* largeImageKey = info.image;
+    const SceneSeqRpcInfo* info = GetRpcInfo(scene, seq);
+
+    // Not finding RPC info is not a fatal error, so we just ignore it
+    if (info == NULL) {
+        CADDIE_LOG_EX("Failed to get RPC info! Scene:%d, Sequence:%d", scene,
+                      seq);
+        return;
+    }
+
+    const wchar_t* state = mMessage->GetMessage(info->msg);
+    const char* largeImageKey = info->image;
 
     // Reflect info on Discord
     mRichPresence->SetStartTimeNow();
@@ -93,291 +109,91 @@ void RichPresenceMgr::Configure() {
     mRichPresence->UpdatePresence();
 }
 
-/**
- * @brief Scene exit callback. Scene ID is tracked to prevent RPC timer from
- * restarting when the scene is reloaded (NOT changed)
- */
-void RichPresenceMgr::Exit() {
-    mLastSceneID = RPSysSceneMgr::getInstance().getCurrentSceneID();
-}
-
 namespace {
 
-const SceneSeqRpcInfo scRpcInfo[RPSysSceneCreator::SCENE_MAX]
-                               [RPSysSceneCreator::SEQ_MAX] = {
-                                   // clang-format off
-    // SCENE_STRAP
-    {
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-    },
+const SceneSeqRpcInfo scRpcInfo[] = {
+    // clang-format off
 
-    // SCENE_SAVE_DATA_LOAD
-    {
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-    },
+    // System scenes
+    {SceneCreatorEx::SCENE_STRAP,          -1, MSG_RPC_STATE_MENU, "menu"},
+    {SceneCreatorEx::SCENE_SAVE_DATA_LOAD, -1, MSG_RPC_STATE_MENU, "menu"},
+    {SceneCreatorEx::SCENE_TITLE,          -1, MSG_RPC_STATE_MENU, "menu"},
+    {SceneCreatorEx::SCENE_MII_SELECT,     -1, MSG_RPC_STATE_MENU, "menu"},
 
-    // SCENE_TITLE
-    {
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-    },
+    // Swordplay
+    {SceneCreatorEx::SCENE_SWF, SceneCreatorEx::SEQ_SWF_SGL, MSG_RPC_STATE_SWF_SGL, "swf_sgl"},
+    {SceneCreatorEx::SCENE_SWF, SceneCreatorEx::SEQ_SWF_VS,  MSG_RPC_STATE_SWF_VS,  "swf_vs"},
+    {SceneCreatorEx::SCENE_SWF, SceneCreatorEx::SEQ_SWF_PRC, MSG_RPC_STATE_SWF_PRC, "swf_prc"},
 
-    // SCENE_MII_SELECT
-    {
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-        {MSG_RPC_STATE_MENU, "menu"},
-    },
+    // Power Cruising
+    {SceneCreatorEx::SCENE_JSK, SceneCreatorEx::SEQ_JSK_RNG, MSG_RPC_STATE_JSK_RNG, "jsk_rng"},
+    {SceneCreatorEx::SCENE_JSK, SceneCreatorEx::SEQ_JSK_VS,  MSG_RPC_STATE_JSK_VS,  "jsk_vs"},
 
-    // SCENE_SWF
-    {
-        {-1, NULL},
-        {MSG_RPC_STATE_SWF_SGL, "swf_sgl"},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {MSG_RPC_STATE_SWF_VS, "swf_vs"},
-        {MSG_RPC_STATE_SWF_PRC, "swf_prc"},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-    },
+    // Archery
+    {SceneCreatorEx::SCENE_ARC, SceneCreatorEx::SEQ_ARC, MSG_RPC_STATE_ARC, "arc"},
 
-    // SCENE_JSK
-    {
-        {-1, NULL},
-        {-1, NULL},
-        {MSG_RPC_STATE_JSK_RNG, "jsk_rng"},
-        {-1, NULL},
-        {-1, NULL},
-        {MSG_RPC_STATE_JSK_VS, "jsk_vs"},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-    },
+    // Frisbee Dog
+    {SceneCreatorEx::SCENE_FLD, SceneCreatorEx::SEQ_FLD, MSG_RPC_STATE_FLD, "fld"},
 
-    // SCENE_ARC
-    {
-        {-1, NULL},
-        {-1, NULL},
-        {MSG_RPC_STATE_ARC, "arc"},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-    },
+    // Basketball
+    {SceneCreatorEx::SCENE_BSK, SceneCreatorEx::SEQ_BSK_3PT, MSG_RPC_STATE_BSK_3PT, "bsk_3pt"},
+    {SceneCreatorEx::SCENE_BSK, SceneCreatorEx::SEQ_BSK_VS,  MSG_RPC_STATE_BSK_VS,  "bsk_vs"},
 
-    // SCENE_FLD
-    {
-        {-1, NULL},
-        {-1, NULL},
-        {MSG_RPC_STATE_FLD, "fld"},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-    },
+    // Bowling
+    {SceneCreatorEx::SCENE_BWL, SceneCreatorEx::SEQ_BWL_STD, MSG_RPC_STATE_BWL_STD, "bwl_std"},
+    {SceneCreatorEx::SCENE_BWL, SceneCreatorEx::SEQ_BWL_100, MSG_RPC_STATE_BWL_100, "bwl_100"},
+    {SceneCreatorEx::SCENE_BWL, SceneCreatorEx::SEQ_BWL_WAL, MSG_RPC_STATE_BWL_WAL, "bwl_wal"},
 
-    // SCENE_BSK
-    {
-        {-1, NULL},
-        {-1, NULL},
-        {MSG_RPC_STATE_BSK_3PT, "bsk_3pt"},
-        {-1, NULL},
-        {-1, NULL},
-        {MSG_RPC_STATE_BSK_VS, "bsk_vs"},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-    },
+    // Canoeing
+    {SceneCreatorEx::SCENE_CAN, SceneCreatorEx::SEQ_CAN_VS, MSG_RPC_STATE_CAN_VS, "can_vs"},
+    {SceneCreatorEx::SCENE_CAN, SceneCreatorEx::SEQ_CAN,    MSG_RPC_STATE_CAN,    "can"},
 
-    // SCENE_BWL
-    {
-        {-1, NULL},
-        {-1, NULL},
-        {MSG_RPC_STATE_BWL_STD, "bwl_std"},
-        {MSG_RPC_STATE_BWL_100, "bwl_100"},
-        {MSG_RPC_STATE_BWL_WAL, "bwl_wal"},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-    },
+    // Table Tennis
+    {SceneCreatorEx::SCENE_PNG, SceneCreatorEx::SEQ_PNG_RET, MSG_RPC_STATE_PNG_RET, "png_ret"},
+    {SceneCreatorEx::SCENE_PNG, SceneCreatorEx::SEQ_PNG,     MSG_RPC_STATE_PNG,     "png"},
 
-    // SCENE_CAN
-    {
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {MSG_RPC_STATE_CAN, "can_vs"},
-        {MSG_RPC_STATE_CAN_VS, "can"},
-        {-1, NULL},
-        {-1, NULL},
-    },
+    // Wakeboarding
+    {SceneCreatorEx::SCENE_WKB, SceneCreatorEx::SEQ_WKB, MSG_RPC_STATE_WKB, "wkb"},
 
-    // SCENE_PNG
-    {
-        {-1, NULL},
-        {-1, NULL},
-        {MSG_RPC_STATE_PNG_RET, "png_ret"},
-        {-1, NULL},
-        {-1, NULL},
-        {MSG_RPC_STATE_PNG, "png"},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-    },
+    // Island Flyover/Dogfight
+    {SceneCreatorEx::SCENE_PLN, SceneCreatorEx::SEQ_PLN,    MSG_RPC_STATE_PLN,    "pln"},
+    {SceneCreatorEx::SCENE_PLN, SceneCreatorEx::SEQ_PLN_VS, MSG_RPC_STATE_PLN_VS, "pln_vs"},
 
-    // SCENE_WKB
-    {
-        {-1, NULL},
-        {-1, NULL},
-        {MSG_RPC_STATE_WKB, "wkb"},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-    },
+    // Golf
+    {SceneCreatorEx::SCENE_GLF, SceneCreatorEx::SEQ_GLF, MSG_RPC_STATE_GLF, "glf"},
 
-    // SCENE_PLN
-    {
-        {MSG_RPC_STATE_PLN, "pln"},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {MSG_RPC_STATE_PLN_VS, "pln_vs"},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-    },
+    // Frisbee Golf
+    {SceneCreatorEx::SCENE_DGL, SceneCreatorEx::SEQ_DGL, MSG_RPC_STATE_DGL, "dgl"},
 
-    // SCENE_GLF
-    {
-        {-1, NULL},
-        {-1, NULL},
-        {MSG_RPC_STATE_GLF, "glf"},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-    },
+    // Cycling
+    {SceneCreatorEx::SCENE_BIC, SceneCreatorEx::SEQ_BIC_VS, MSG_RPC_STATE_BIC_VS, "bic_vs"},
+    {SceneCreatorEx::SCENE_BIC, SceneCreatorEx::SEQ_BIC,    MSG_RPC_STATE_BIC,    "bic"},
 
-    // SCENE_DGL
-    {
-        {-1, NULL},
-        {-1, NULL},
-        {MSG_RPC_STATE_DGL, "dgl"},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-    },
+    // Skydiving
+    {SceneCreatorEx::SCENE_OMK, SceneCreatorEx::SEQ_OMK, MSG_RPC_STATE_OMK, "omk"},
 
-    // SCENE_BIC
-    {
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {MSG_RPC_STATE_BIC_VS, "bic_vs"},
-        {-1, NULL},
-        {-1, NULL},
-        {MSG_RPC_STATE_BIC, "bic"},
-        {-1, NULL},
-        {-1, NULL},
-    },
-
-    // SCENE_OMK
-    {
-        {-1, NULL},
-        {MSG_RPC_STATE_OMK, "omk"},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-        {-1, NULL},
-    },
-                                   // clang-format on
+    // clang-format on
 };
 
+/**
+ * @brief Get RPC info for a given scene + sequence
+ */
+const SceneSeqRpcInfo* GetRpcInfo(int scene, int seq) {
+    for (int i = 0; i < ARRAY_LENGTH(scRpcInfo); i++) {
+        const SceneSeqRpcInfo* info = &scRpcInfo[i];
+
+        // Scene matches
+        if (info->scene == scene) {
+            // Sequence matches (or RPC info applies to all sequences)
+            if (info->seq == seq || info->seq == -1) {
+                return info;
+            }
+        }
+    }
+
+    return NULL;
 }
+
+} // namespace
 
 } // namespace caddie

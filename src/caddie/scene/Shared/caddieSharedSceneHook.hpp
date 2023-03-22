@@ -6,21 +6,23 @@ namespace caddie {
 
 class BuildInfo;
 
+namespace Shared {
+
 /**
  * @brief Scene hook applied to all scenes (common/"shared")
  */
-class SharedSceneHook {
+class SceneHook {
 public:
     static void OnConfigure(RPSysScene* scene);
     static void OnCalculate(RPSysScene* scene);
     static void OnUserDraw(RPSysScene* scene);
-    static void OnExit(RPSysScene* scene);
 
 private:
     //! @brief Build info text
     static BuildInfo* sBuildInfo;
 };
 
+} // namespace Shared
 } // namespace caddie
 
 #endif

@@ -1,5 +1,5 @@
-#ifndef CADDIE_DEBUGGER_H
-#define CADDIE_DEBUGGER_H
+#ifndef CADDIE_CORE_DEBUGGER_H
+#define CADDIE_CORE_DEBUGGER_H
 #include "types_caddie.hpp"
 
 #include <revolution/OS.h>

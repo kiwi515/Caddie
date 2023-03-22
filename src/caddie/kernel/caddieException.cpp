@@ -126,12 +126,14 @@ void Exception::PrintCaddieInfo() {
 
     // Dump heap information
     db::Exception_Printf_("\n---Heap Info---\n");
-    db::Exception_Printf_("Free static memory: %.1f KB\n",
-                          MemoryMgr::GetInstance().GetStaticFreeSize() /
+    db::Exception_Printf_("Free system memory: %.1f KB\n",
+                          MemoryMgr::GetInstance().GetSystemFreeSize() /
                               1024.0f);
-    db::Exception_Printf_("Free scene mem: %.1f KB\n",
-                          MemoryMgr::GetInstance().GetSceneFreeSize() /
-                              1024.0f);
+
+    const f32 sceneFreeKB =
+        MemoryMgr::GetInstance().GetSceneFreeSize() / 1024.0f;
+    db::Exception_Printf_("Free scene memory: %.1f KB (%.1f MB)\n", sceneFreeKB,
+                          sceneFreeKB / 1024.0f);
 
     // Bug report instructions
     db::Exception_Printf_("\n---Bug Report---\n");

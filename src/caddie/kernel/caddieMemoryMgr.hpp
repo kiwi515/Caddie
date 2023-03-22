@@ -3,6 +3,7 @@
 #include "caddieHashMap.hpp"
 #include "types_caddie.hpp"
 
+#include <RP/RPSystem.h>
 #include <egg/core.h>
 
 namespace caddie {
@@ -17,43 +18,48 @@ public:
         return instance;
     }
 
-    void CreateSceneHeap();
-    void DestroySceneHeap();
-
     void* Alloc(size_t size, int align);
     void* Alloc(size_t size, int align, EGG::Heap* heap);
 
     void Free(void* block);
     void Free(void* block, EGG::Heap* heap);
 
-    u32 GetFreeSize() { return GetStaticFreeSize() + GetSceneFreeSize(); }
+    u32 GetFreeSize() { return GetSystemFreeSize() + GetSceneFreeSize(); }
 
-    u32 GetStaticFreeSize() {
-        CADDIE_ASSERT(mStaticHeap != NULL);
-        return mStaticHeap->getAllocatableSize(4);
+    u32 GetSystemFreeSize() {
+        CADDIE_ASSERT(mSystemHeap != NULL);
+        return GetSystemHeap()->getAllocatableSize(4);
     }
 
     u32 GetSceneFreeSize() {
-        return mSceneHeap != NULL ? mSceneHeap->getAllocatableSize(4) : 0;
+        return GetSceneHeap() != NULL ? GetSceneHeap()->getAllocatableSize(4)
+                                      : 0;
     }
 
-    EGG::ExpHeap* GetStaticHeap() const { return mStaticHeap; }
-    EGG::ExpHeap* GetSceneHeap() const { return mStaticHeap; }
+    EGG::ExpHeap* GetSystemHeap() const { return mSystemHeap; }
+
+    EGG::ExpHeap* GetSceneHeap() const {
+        // Current scene
+        RPSysScene* currScene = static_cast<RPSysScene*>(
+            RPSysSceneMgr::getInstance().getCurrentScene());
+
+        // Current scene's MEM1 heap
+        return currScene != NULL
+                   ? static_cast<EGG::ExpHeap*>(currScene->getHeapMem1())
+                   : NULL;
+    }
 
 private:
     MemoryMgr();
     virtual ~MemoryMgr();
 
-    void CreateStaticHeap();
+    void Initialize();
 
 private:
     // Heap with static lifetime
-    EGG::ExpHeap* mStaticHeap;
-    // Heap with scene lifetime
-    EGG::ExpHeap* mSceneHeap;
+    EGG::ExpHeap* mSystemHeap;
 
-    static const u32 scStaticHeapSize = 64 * 1024; // 64KB
-    static const u32 scSceneHeapSize = 16 * 1024;  // 4KB
+    static const u32 scSystemHeapSize = 256 * 1024; // 256KB
 };
 
 } // namespace caddie

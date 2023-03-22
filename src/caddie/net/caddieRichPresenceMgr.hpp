@@ -18,7 +18,6 @@ public:
     }
 
     void Configure();
-    void Exit();
 
 private:
     RichPresenceMgr();

@@ -37,14 +37,14 @@ BuildInfo::BuildInfo() {
 
 void BuildInfo::Calculate() {
     const f32 staticFreeKb =
-        MemoryMgr::GetInstance().GetStaticFreeSize() / 1024.0f;
-    const f32 sceneFreeKb =
-        MemoryMgr::GetInstance().GetSceneFreeSize() / 1024.0f;
+        MemoryMgr::GetInstance().GetSystemFreeSize() / 1024.0f;
+    const f32 sceneFreeMb =
+        MemoryMgr::GetInstance().GetSceneFreeSize() / 1024.0f / 1024.0f;
 
     SetTextFmt(
-        "Caddie (%s, %s): %s (Static free: %.1f KB, Scene free: %.1f KB)",
+        "Caddie (%s, %s): %s (System free: %.1f KB, Scene free: %.1f MB)",
         GetBuildTarget(), GetBuildRegion(), GetBuildDate(), staticFreeKb,
-        sceneFreeKb);
+        sceneFreeMb);
 }
 
 const Vec2<f32> BuildInfo::scTextPosition(400.0f, 20.0f);

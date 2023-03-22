@@ -1,47 +1,26 @@
 #include "caddieMemoryMgr.hpp"
 
+#include <RP/RPKernel.h>
+
 namespace caddie {
 
-MemoryMgr::MemoryMgr() : mStaticHeap(NULL), mSceneHeap(NULL) {
-    CreateStaticHeap();
-}
+MemoryMgr::MemoryMgr() : mSystemHeap(NULL) { Initialize(); }
 
 MemoryMgr::~MemoryMgr() {
-    delete mSceneHeap;
-    mSceneHeap = NULL;
-
-    delete mStaticHeap;
-    mStaticHeap = NULL;
+    delete mSystemHeap;
+    mSystemHeap = NULL;
 }
 
 /**
  * @brief Create static heap
  */
-void MemoryMgr::CreateStaticHeap() {
-    CADDIE_ASSERT(mStaticHeap == NULL);
+void MemoryMgr::Initialize() {
+    CADDIE_ASSERT(mSystemHeap == NULL);
 
-    mStaticHeap = EGG::ExpHeap::create(scStaticHeapSize, NULL, 0);
-    CADDIE_ASSERT_EX(mStaticHeap != NULL, "Static heap creation failed!!!");
-}
+    mSystemHeap = EGG::ExpHeap::create(scSystemHeapSize,
+                                       RPSysConfigData::getRootHeapMem2(), 0);
 
-/**
- * @brief Create scene heap
- */
-void MemoryMgr::CreateSceneHeap() {
-    CADDIE_ASSERT(mStaticHeap != NULL && mSceneHeap == NULL);
-
-    mSceneHeap = EGG::ExpHeap::create(scSceneHeapSize, mStaticHeap, 0);
-    CADDIE_ASSERT_EX(mSceneHeap != NULL, "Scene heap creation failed!!!");
-}
-
-/**
- * @brief Destroy scene heap
- */
-void MemoryMgr::DestroySceneHeap() {
-    CADDIE_ASSERT(mSceneHeap != NULL);
-
-    delete mSceneHeap;
-    mSceneHeap = NULL;
+    CADDIE_ASSERT_EX(mSystemHeap != NULL, "System heap creation failed!!!");
 }
 
 /**
@@ -52,8 +31,8 @@ void MemoryMgr::DestroySceneHeap() {
  * @return void* Memory block
  */
 void* MemoryMgr::Alloc(size_t size, int align) {
-    CADDIE_ASSERT(mStaticHeap != NULL);
-    return mStaticHeap->alloc(size, align);
+    CADDIE_ASSERT(mSystemHeap != NULL);
+    return mSystemHeap->alloc(size, align);
 }
 
 /**
@@ -75,8 +54,8 @@ void* MemoryMgr::Alloc(size_t size, int align, EGG::Heap* heap) {
  * @param block Memory block
  */
 void MemoryMgr::Free(void* block) {
-    CADDIE_ASSERT(mStaticHeap != NULL);
-    mStaticHeap->free(block);
+    CADDIE_ASSERT(mSystemHeap != NULL);
+    mSystemHeap->free(block);
 }
 
 /**

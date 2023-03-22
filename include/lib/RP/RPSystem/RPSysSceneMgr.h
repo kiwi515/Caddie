@@ -13,6 +13,8 @@ public:
         return *sInstance;
     }
 
+    bool isNormalState() const;
+
 private:
     virtual ~RPSysSceneMgr();
 

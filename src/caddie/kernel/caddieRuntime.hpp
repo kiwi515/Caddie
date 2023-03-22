@@ -32,46 +32,40 @@ extern void* _e_data;
 #endif
 
 // .init section layout
-static inline const void* GetInitStart() { return &_f_init; }
-static inline const void* GetInitEnd() { return &_e_init; }
-static inline u32 GetInitSize() {
-    return PtrDistance(GetInitStart(), GetInitEnd());
-}
+inline const void* GetInitStart() { return &_f_init; }
+inline const void* GetInitEnd() { return &_e_init; }
+inline u32 GetInitSize() { return PtrDistance(GetInitStart(), GetInitEnd()); }
 
 // .text section layout
-static inline const void* GetTextStart() { return &_f_text; }
-static inline const void* GetTextEnd() { return &_e_text; }
-static inline u32 GetTextSize() {
-    return PtrDistance(GetTextStart(), GetTextEnd());
-}
+inline const void* GetTextStart() { return &_f_text; }
+inline const void* GetTextEnd() { return &_e_text; }
+inline u32 GetTextSize() { return PtrDistance(GetTextStart(), GetTextEnd()); }
 
 // .ctors section layout
-static inline const void* GetCtorsStart() { return &_f_ctors; }
-static inline const void* GetCtorsEnd() { return &_e_ctors; }
-static inline u32 GetCtorsSize() {
+inline const void* GetCtorsStart() { return &_f_ctors; }
+inline const void* GetCtorsEnd() { return &_e_ctors; }
+inline u32 GetCtorsSize() {
     return PtrDistance(GetCtorsStart(), GetCtorsEnd());
 }
 
 // .dtors section layout
-static inline const void* GetDtorsStart() { return &_f_dtors; }
-static inline const void* GetDtorsEnd() { return &_e_dtors; }
-static inline u32 GetDtorsSize() {
+inline const void* GetDtorsStart() { return &_f_dtors; }
+inline const void* GetDtorsEnd() { return &_e_dtors; }
+inline u32 GetDtorsSize() {
     return PtrDistance(GetDtorsStart(), GetDtorsEnd());
 }
 
 // .rodata section layout
-static inline const void* GetRodataStart() { return &_f_rodata; }
-static inline const void* GetRodataEnd() { return &_e_rodata; }
-static inline u32 GetRodataSize() {
+inline const void* GetRodataStart() { return &_f_rodata; }
+inline const void* GetRodataEnd() { return &_e_rodata; }
+inline u32 GetRodataSize() {
     return PtrDistance(GetRodataStart(), GetRodataEnd());
 }
 
 // .data section layout
-static inline const void* GetDataStart() { return &_f_data; }
-static inline const void* GetDataEnd() { return &_e_data; }
-static inline u32 GetDataSize() {
-    return PtrDistance(GetDataStart(), GetDataEnd());
-}
+inline const void* GetDataStart() { return &_f_data; }
+inline const void* GetDataEnd() { return &_e_data; }
+inline u32 GetDataSize() { return PtrDistance(GetDataStart(), GetDataEnd()); }
 
 //! @brief Begin ASM block
 #define CADDIE_ASM_BEGIN asm volatile {

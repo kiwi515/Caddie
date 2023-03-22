@@ -21,17 +21,17 @@ public:
     // Load file from DVD
     void*
     LoadFromDVD(const char* path,
-                EGG::Heap* heap = MemoryMgr::GetInstance().GetStaticHeap());
+                EGG::Heap* heap = MemoryMgr::GetInstance().GetSystemHeap());
 
     // Load and decompress file from DVD
     void* LoadCompressedFromDVD(
         const char* path,
-        EGG::Heap* heap = MemoryMgr::GetInstance().GetStaticHeap());
+        EGG::Heap* heap = MemoryMgr::GetInstance().GetSystemHeap());
 
     // Load binary message (BCMSG) from DVD
     Message*
     LoadMessage(const char* path,
-                EGG::Heap* heap = MemoryMgr::GetInstance().GetStaticHeap()) {
+                EGG::Heap* heap = MemoryMgr::GetInstance().GetSystemHeap()) {
         void* bin = LoadFromDVD(path, heap);
         CADDIE_ASSERT(bin != NULL);
         return new Message(bin);

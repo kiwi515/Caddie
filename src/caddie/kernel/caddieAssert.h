@@ -38,6 +38,8 @@
 #define CADDIE_ASSERT_EX(exp, ...)
 #endif
 
+#define CADDIE_STATIC_ASSERT(exp) typedef int x[(exp) ? 1 : -1]
+
 #ifdef __cplusplus
 extern "C" {
 #endif

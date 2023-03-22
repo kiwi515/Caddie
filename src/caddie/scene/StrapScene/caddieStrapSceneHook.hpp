@@ -3,15 +3,17 @@
 #include "types_caddie.hpp"
 
 namespace caddie {
+namespace Strap {
 
 /**
  * @brief Strap screen scene hook
  */
-class StrapSceneHook {
+class SceneHook {
 public:
     static void OnCalculate(RPSysScene* scene);
 };
 
+} // namespace Strap
 } // namespace caddie
 
 #endif

@@ -6,13 +6,14 @@
 
 class RPSysWideTextWriter : public nw4r::ut::TextWriterBase<wchar_t> {
 public:
-    RPSysWideTextWriter();
+    RPSysWideTextWriter(BOOL);
     ~RPSysWideTextWriter();
 
     void Printf(f32 x, f32 y, const char* msg, ...);
 
 private:
-    BOOL mIsRendering;
+    BOOL mIsRendering; // at 0x64
+    bool BOOL_0x68;
 };
 
 #endif

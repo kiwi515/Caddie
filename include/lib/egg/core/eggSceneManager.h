@@ -61,6 +61,8 @@ public:
     Scene* findParentScene(s32);
 
     inline s32 getCurrentSceneID() const { return mCurrentSceneID; }
+    inline s32 getPreviousSceneID() const { return mPreviousSceneID; }
+
     inline Scene* getCurrentScene() const { return mCurrentScene; }
 
     static inline Heap* getHeapForCreateScene_Mem1() {
