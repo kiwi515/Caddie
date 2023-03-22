@@ -18,3 +18,13 @@ class VEC2(Structure):
         Primitive("f32", "x"),
         Primitive("f32", "y")
     ]
+
+
+class VEC3(Structure):
+    """3D vector"""
+
+    MEMBERS = [
+        Primitive("f32", "x"),
+        Primitive("f32", "y"),
+        Primitive("f32", "z")
+    ]

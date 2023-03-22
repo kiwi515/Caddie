@@ -129,9 +129,11 @@ class StreamBase(ABC):
 
     def write_string(self, string: str, maxlen: int = -1, terminate: bool = True):
         """Write a string (ANSI) to the stream."""
-        # Truncate if string is too long
         if maxlen >= 0:
-            string = string[:maxlen]
+            # Reserve last space for null terminator
+            term_size = 1 if terminate else 0
+            # Truncate if string is too long
+            string = string[:maxlen - term_size]
 
         # Write data
         try:
@@ -169,7 +171,10 @@ class StreamBase(ABC):
         """Write a widechar string (UTF-16) to the stream."""
         # Truncate if string is too long
         if maxlen >= 0:
-            string = string[:maxlen]
+            # Reserve last space for null terminator
+            term_size = 1 if terminate else 0
+            # Truncate if string is too long
+            string = string[:maxlen - term_size]
 
         # Write data
         try:

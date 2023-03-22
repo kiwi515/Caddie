@@ -10,4 +10,4 @@ class TXL1Block(PoolBlock):
         super().__init__(self.SIGNATURE, "cstr", filenames)
 
         self.add_member("u16", "numEntries", len(self["pool"]))
-        self.add_member("u16", "padding0")
+        self.add_member("u8[2]", "padding0")
