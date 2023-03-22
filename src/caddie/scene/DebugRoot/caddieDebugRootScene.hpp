@@ -12,6 +12,7 @@ public:
     Scene() {}
     virtual ~Scene() {}
 
+    virtual void Calculate();
     virtual void UserDraw();
 };
 
