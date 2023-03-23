@@ -7,6 +7,7 @@
 
 #include <egg/util.h>
 #include <nw4r/db.h>
+#include <revolution/DSP.h>
 
 using namespace nw4r;
 
@@ -23,6 +24,27 @@ struct Assertion {
 };
 
 Assertion sAssertion;
+
+/**
+ * @brief PPCHalt implementation that first attempts to reset the DSP
+ */
+static asm void Halt(void) {
+    // clang-format off
+    nofralloc
+    sync
+
+    // Reset DSP
+    lis r3, 0xCC00500A@h
+    lhz r4, 0xCC00500A@l(r3)
+    ori r4, r4, 1
+    sth r4, 0xCC00500A@l(r3)
+
+loop:
+    nop
+    b loop
+    // clang-format on
+}
+kmBranch(0x8006c020, Halt);
 
 } // namespace
 
@@ -48,6 +70,9 @@ void Exception::PrintContext(u8 type, const OSContext* ctx, u32 dsisr,
                              u32 dar) {
 #pragma unused(dsisr)
 #pragma unused(dar)
+
+    // Reset DSP (to mute audio)
+    DSP_HW_REGS[DSP_CSR] |= 1;
 
     // Assertion failure simulates an exception, but with an invalid type
     if (type >= OS_ERR_MAX) {
