@@ -2,6 +2,7 @@
 #define SP2_STATIC_MEM_H
 #include "types_caddie.hpp"
 
+#include <RP/RPSystem/RPSysScene.h>
 namespace Sp2 {
 
 class StaticMem {
@@ -16,9 +17,14 @@ public:
 
     u32 getSceneSeq() const { return mSequence; }
 
+    RPSysScene::IslandType getIslandType() const { return mIslandType; }
+    void setIslandType(RPSysScene::IslandType type) { mIslandType = type; }
+
 private:
     char _00[0x18];
-    u32 mSequence;
+    u32 mSequence; // at 0x18
+    char _1C[0x380 - 0x1C];
+    RPSysScene::IslandType mIslandType; // at 0x380
 
     static StaticMem* sInstance;
 };
