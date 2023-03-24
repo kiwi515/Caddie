@@ -46,6 +46,15 @@ class VEC2;
 class VEC3;
 
 } // namespace math
+
+namespace db {
+namespace detail {
+
+struct ConsoleHead;
+
+} // namespace detail
+} // namespace db
+
 } // namespace nw4r
 
 #endif

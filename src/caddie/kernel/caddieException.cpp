@@ -8,6 +8,9 @@
 #include <egg/util.h>
 #include <nw4r/db.h>
 #include <revolution/DSP.h>
+#include <revolution/KPAD.h>
+#include <revolution/OS.h>
+#include <revolution/VI.h>
 
 using namespace nw4r;
 
@@ -28,7 +31,7 @@ Assertion sAssertion;
 /**
  * @brief PPCHalt implementation that first attempts to reset the DSP
  */
-static asm void Halt(void) {
+asm void Halt(void) {
     // clang-format off
     nofralloc
     sync
@@ -46,6 +49,24 @@ loop:
 }
 kmBranch(0x8006c020, Halt);
 
+/**
+ * @brief Generic stub function
+ */
+void MyStub() { return; }
+
+/**
+ * @brief __OSLaunchNextFirmware breaks the reset feature because some ES/ticket
+ * call fails. Somehow we can get away with stubbing out this function entirely.
+ * @note I guess it isn't absolutely necessary to reload the firmware?
+ */
+kmBranch(0x80047d50, MyStub);
+
+/**
+ * @brief __OSStopPlayRecord fails because it cannot perform NAND operations in
+ * the exception state. This patches out the call to it inside OSExecl.
+ */
+kmCall(0x80048e58, MyStub);
+
 } // namespace
 
 /**
@@ -56,6 +77,106 @@ void Exception::Initialize() {
     EGG::Exception::create(128, sConsoleMaxLines, 4, NULL, 1);
 }
 kmCall(0x8022e2d4, Exception::Initialize);
+
+/**
+ * @brief NW4R exception user callback
+ * @note Overrides EGG::ExceptionCallBack_
+ *
+ * @param console Debug console
+ * @param arg User callback argument
+ * @returns False if thread should be killed
+ */
+bool Exception::ExceptionCallBack(db::detail::ConsoleHead* console, void* arg) {
+    if (console == NULL) {
+        CADDIE_LOG("No debug console :(");
+        // Kill exception thread
+        return false;
+    }
+
+    // We are the NW4R user callback, so we must now call the EGG user callback.
+    // In our case, this is RPSysMapFile::CallBackFunc.
+    // Among other things, this makes the console text print correctly.
+    if (EGG::Exception::UserCallBackFunc != NULL) {
+        // No controller input provided
+        EGG::Exception::UserCallBackFunc(NULL);
+
+        // Don't kill this thread, but give the user time to update the
+        // callback. RP sets it to NULL after we call it the first time.
+        return true;
+    }
+
+    // Bounds of the console display
+    const int totalLines = db::Console_GetTotalLines(console);
+    const int topLine = console->ringTopLineCnt;
+
+    // Prevent other threads from running
+    OSDisableInterrupts();
+    OSDisableScheduler();
+    OSEnableInterrupts();
+
+    // Print from the very top
+    console->viewTopLine = topLine;
+    console->isVisible = true;
+    db::Console_DrawDirect(console);
+
+    // Allow player to control the display
+    while (true) {
+        KPADStatus status;
+        KPADRead(KPAD_CHAN_0, &status, 1);
+
+        // Reset game by pressing A+B+1+2
+        const u32 resetMask = KPAD_BTN_A | KPAD_BTN_B | KPAD_BTN_1 | KPAD_BTN_2;
+        const bool doReset = (status.hold & resetMask) == resetMask;
+
+        // Reset is performed by booting a copy of the main DOL
+        if (doReset) {
+            // Prevent green flash
+            VISetBlack(TRUE);
+            VIFlush();
+            // Load executable
+            OSExecl("modules/for_restart.dol", "", NULL);
+        }
+
+        // Only draw display when necessary
+        const bool doDraw = status.hold & (KPAD_BTN_DLEFT | KPAD_BTN_DRIGHT |
+                                           KPAD_BTN_DDOWN | KPAD_BTN_DUP);
+
+        // Vertical scroll up
+        if (status.hold & KPAD_BTN_DUP) {
+            console->viewTopLine =
+                Max<int>(console->viewTopLine - scConsoleSpeedY, topLine);
+        }
+        // Vertical scroll down
+        else if (status.hold & KPAD_BTN_DDOWN) {
+            console->viewTopLine =
+                Min<int>(console->viewTopLine + scConsoleSpeedY, totalLines);
+        }
+
+        // Horizontal scroll left
+        if (status.hold & KPAD_BTN_DLEFT) {
+            console->viewPosX =
+                Min<int>(console->viewPosX + scConsoleSpeedX, scConsoleMaxX);
+        }
+        // Horizontal scroll right
+        else if (status.hold & KPAD_BTN_DRIGHT) {
+            console->viewPosX =
+                Max<int>(console->viewPosX - scConsoleSpeedX, scConsoleMinX);
+        }
+
+        if (doDraw) {
+            db::Console_DrawDirect(console);
+        }
+
+        // Wait 100ms before polling again
+        s64 start = OSGetTime();
+        while (OSGetTime() - start < OS_MSEC_TO_TICKS(100)) {
+            ;
+        }
+    }
+
+    return true;
+}
+kmBranch(0x801ce8f8, Exception::ExceptionCallBack);
 
 /**
  * @brief Print exception context information
@@ -99,6 +220,9 @@ void Exception::PrintContext(u8 type, const OSContext* ctx, u32 dsisr,
 
     // Stack trace
     PrintStackTrace(ctx, scExceptionTraceDepth);
+
+    // Epilogue
+    PrintThankYouMsg();
 }
 kmBranch(0x80166af0, Exception::PrintContext);
 
@@ -137,6 +261,9 @@ void Exception::PrintAssert(const OSContext* ctx) {
     // NOTE: Because we are not showing GPR/FPRs, there is more screen space to
     // perform a deeper stack trace
     PrintStackTrace(ctx, scAssertTraceDepth);
+
+    // Epilogue
+    PrintThankYouMsg();
 }
 
 /**
@@ -213,6 +340,7 @@ void Exception::PrintStackTrace(const OSContext* ctx, int depth) {
     for (int i = 0;
          i < depth && reinterpret_cast<std::uintptr_t>(frame) != 0xFFFFFFFF;
          i++, frame = frame->next) {
+
         // Print stack frame info
         db::Exception_Printf_("%08X:  %08X    ", frame, frame->next);
         PrintMapSymbol(frame->lr);
@@ -280,6 +408,18 @@ void Exception::PrintMapSymbol(const void* addr) {
      * address (relative to the start of the module).
      */
     db::Exception_Printf_("%08X (RELOC)\n", textOffset);
+}
+
+/**
+ * @brief Thank the user (yes, you!) for being such an excellent debugger.
+ * @note Honestly, players reporting these crashes have saved me countless
+ * hours.
+ */
+void Exception::PrintThankYouMsg() {
+    db::Exception_Printf_("*************************************\n");
+    db::Exception_Printf_("\n");
+    db::Exception_Printf_("Thank you! You are a great debugger!\n");
+    db::Exception_Printf_("Press A+B+1+2 to restart the game.");
 }
 
 const u32 Exception::sConsoleMaxLines = 100;

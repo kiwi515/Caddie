@@ -16,10 +16,6 @@ namespace caddie {
  */
 void main() {
 #ifndef NDEBUG
-    // Always show exception handler
-    static const u16 scEmptyCombo[] = {0};
-    EGG::Exception::setUserCallback(scEmptyCombo);
-
     // Open symbol map
     MapFile::GetInstance().LoadFromDVD("modules/main_NTSC_U.map",
                                        MapFile::LINK_DYNAMIC);

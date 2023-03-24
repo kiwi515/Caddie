@@ -28,6 +28,8 @@ public:
 
 public:
     static void Initialize();
+    static bool ExceptionCallBack(nw4r::db::detail::ConsoleHead* console,
+                                  void* arg);
     static void PrintContext(u8 type, const OSContext* ctx, u32 dsisr, u32 dar);
     static void FailAssert(const char* file, int line, const char* msg);
 
@@ -38,12 +40,23 @@ private:
     static void PrintFPR(const OSContext* ctx);
     static void PrintStackTrace(const OSContext* ctx, int depth);
     static void PrintMapSymbol(const void* addr);
+    static void PrintThankYouMsg();
 
 private:
     // Max number of lines the exception console can hold
     static const u32 sConsoleMaxLines;
     // Table of exception names for the handler
     static const char* sExceptionNames[];
+
+    // Console left X bound
+    static const int scConsoleMinX = -150;
+    // Console right X bound
+    static const int scConsoleMaxX = 10;
+
+    // Console horizontal control speed
+    static const int scConsoleSpeedX = 5;
+    // Console vertical control speed
+    static const int scConsoleSpeedY = 1;
 };
 
 } // namespace caddie

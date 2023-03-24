@@ -8,6 +8,10 @@ struct OSContext;
 namespace nw4r {
 namespace db {
 
+typedef bool (*ExceptionUserCallback)(detail::ConsoleHead* console, void* arg);
+
+void Exception_SetUserCallback(ExceptionUserCallback callback, void* arg);
+
 void ErrorHandler_(u8 error, OSContext* ctx, u32 dsisr, u32 dar);
 
 void Exception_Printf_(const char*, ...);

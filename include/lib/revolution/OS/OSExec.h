@@ -16,6 +16,8 @@ typedef struct OSExecParams {
 
 extern BOOL __OSInReboot;
 
+void OSExecl(const char* file, const char* arg, ...);
+
 void __OSGetExecParams(OSExecParams* out);
 void __OSLaunchMenu(void);
 

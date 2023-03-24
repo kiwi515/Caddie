@@ -5,6 +5,7 @@
 
 #include <Sports2/Sp2DrawMgr.h>
 #include <Sports2/Sp2Util.h>
+#include <revolution/OS.h>
 
 namespace caddie {
 namespace DebugRoot {
