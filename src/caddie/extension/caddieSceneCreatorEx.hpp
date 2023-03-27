@@ -16,7 +16,6 @@ public:
     }
 
     RPSysScene* CreateEx(ESceneID id);
-    ESceneID GetTitleScene() const;
 
 private:
     RPSysScene* CreateCaddieScene(ESceneID id);

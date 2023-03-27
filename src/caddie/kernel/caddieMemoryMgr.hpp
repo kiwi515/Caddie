@@ -1,6 +1,5 @@
 #ifndef CADDIE_KERNEL_MEMORY_MGR_H
 #define CADDIE_KERNEL_MEMORY_MGR_H
-#include "caddieHashMap.hpp"
 #include "types_caddie.hpp"
 
 #include <RP/RPSystem.h>

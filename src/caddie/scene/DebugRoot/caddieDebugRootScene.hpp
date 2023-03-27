@@ -9,11 +9,18 @@ namespace DebugRoot {
 
 class Scene : public RPSysScene {
 public:
-    Scene() {}
+    Scene();
     virtual ~Scene() {}
 
     virtual void Calculate();
     virtual void UserDraw();
+
+private:
+    int mSelectedScene;
+    int mFadeTimer;
+    int mNextScene;
+
+    static const int scFadeTimerDefault = 30;
 };
 
 } // namespace DebugRoot

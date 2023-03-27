@@ -51,6 +51,21 @@ public:
         return mBtnReleased[player];
     }
 
+    bool IsHeld(EPlayer player, u32 mask) const {
+        const u32 btn = Held(player);
+        return (btn & mask) == mask;
+    }
+
+    bool IsTrig(EPlayer player, u32 mask) const {
+        const u32 btn = Trig(player);
+        return (btn & mask) == mask;
+    }
+
+    bool IsReleased(EPlayer player, u32 mask) const {
+        const u32 btn = Released(player);
+        return (btn & mask) == mask;
+    }
+
 private:
     InputMgr() {}
     virtual ~InputMgr() {}

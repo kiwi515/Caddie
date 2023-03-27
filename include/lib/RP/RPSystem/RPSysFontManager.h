@@ -13,10 +13,11 @@
 class RPSysFontManager {
 public:
     enum EResFont {
-        FONT_WS2_NRODB_32_IA4,
-        FONT_WS2_NRODEB_60_IA4,
+        ResFont_Auto,
+        ResFont_WS2_nRodB_32_IA4,
+        ResFont_WS2_nRodEb_60_IA4,
 
-        FONT_MAX
+        ResFont_Max
     };
 
 public:
@@ -42,9 +43,9 @@ private:
     //! @brief Deserialized rom font
     nw4r::ut::RomFont* mRomFont; // at 0x4
     //! @brief Deserialized res fonts
-    nw4r::ut::ResFont* mResFonts[FONT_MAX]; // at 0x8
+    nw4r::ut::ResFont* mResFonts[ResFont_Max]; // at 0x8
     //! @brief Serialized res fonts
-    void* mResFontData[FONT_MAX]; // at 0x24
+    void* mResFontData[ResFont_Max]; // at 0x24
 
     static RPSysFontManager* sInstance;
 };

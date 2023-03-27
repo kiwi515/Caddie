@@ -2,7 +2,6 @@
 
 #include "BCMSG_RichPresence.hpp"
 #include "caddieEmuRichPresence.hpp"
-#include "caddieHashMap.hpp"
 #include "caddieMessage.hpp"
 #include "caddieResourceMgr.hpp"
 #include "caddieRvlRichPresence.hpp"

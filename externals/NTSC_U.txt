@@ -55,6 +55,14 @@ _restfpr_28=0x80007810
 _savefpr_29=0x800077c8
 _restfpr_29=0x80007814
 
+_savegpr_21=0x80007840
+_restgpr_21=0x8000788C
+_savegpr_22=0x80007844
+_restgpr_22=0x80007890
+_savegpr_23=0x80007848
+_restgpr_23=0x80007894
+_savegpr_24=0x8000784C
+_restgpr_24=0x80007898
 _savegpr_25=0x80007850
 _restgpr_25=0x8000789c
 _savegpr_26=0x80007854
@@ -68,6 +76,7 @@ _restgpr_29=0x800078ac
 
 __div2u=0x800078bc
 __div2i=0x800079a8
+__cvt_fp2unsigned=0x80007730
 
 __register_global_object=0x800072a4
 __destroy_arr=0x800075bc
@@ -192,6 +201,16 @@ sInstance__17RPSysProjectLocal=0x806f4ca0
 
 # RP/RPSystem/RPSysFontManager
 sInstance__16RPSysFontManager=0x806f4cc8
+
+# RP/RPAudio/RPSndAudioMgr
+startSound__13RPSndAudioMgrFUl=0x802b7228
+
+# RP/RPKernel/RPSysWideTextWriter
+__ct__19RPSysWideTextWriterFi=0x802408d0
+__dt__19RPSysWideTextWriterFv=0x80240880
+SetFont__19RPSysWideTextWriterFQ216RPSysFontManager8EResFont=0x80240810
+PrintZeroCenter__19RPSysWideTextWriterFffPCw=0x80240498
+End__19RPSysWideTextWriterFv=0x802406f0
 
 # Sports2/LayoutDrawMgr
 UserDraw__Q23Sp213LayoutDrawMgrFv=0x802770ec

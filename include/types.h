@@ -29,6 +29,7 @@ typedef double f64;
 typedef int UNKWORD;
 typedef void UNKTYPE;
 
-typedef enum { FALSE, TRUE } BOOL;
+typedef int BOOL;
+enum { FALSE, TRUE };
 
 #endif

@@ -28,6 +28,9 @@ public:
     operator const nw4r::ut::Color() const {
         return nw4r::ut::Color(r, g, b, a);
     }
+
+    static const Color BLACK;
+    static const Color WHITE;
 };
 
 } // namespace caddie
