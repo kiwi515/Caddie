@@ -28,7 +28,7 @@ class Member:
             # Explicit length
             else:
                 # Limit array length to 1
-                self.__length = max(1, self.__length)
+                self.__length = max(1, int(self.__length))
 
         # Single element
         else:
@@ -62,7 +62,10 @@ class Member:
         """Set member value"""
         # Everything is nullable
         if data == None:
-            self.value = data
+            if self.is_vl_array():
+                self.value = list()
+            else:
+                self.value = data
             return
 
         # Is an array

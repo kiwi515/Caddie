@@ -18,6 +18,8 @@ class Structure(Member):
                 k, v = item[0], item[1]
                 if k in members:
                     members[k].set_value(v)
+                else:
+                    print(f"[WARN] Cannot access undeclared member: {self.__class__.__name__}::{k}. Value will be ignored")
 
         if self.is_array():
             # Cannot initialize variable length array
@@ -47,8 +49,8 @@ class Structure(Member):
 
     def write(self, strm: StreamBase):
         """Write structure to stream"""
-        for dic in self.value:
-            for m in dic.values():
+        for inst in self:
+            for m in inst.values():
                 m.write(strm)
 
     def append(self, member: Member):

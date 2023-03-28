@@ -76,7 +76,7 @@ class Primitive(Member):
 
         # Attempt to use default primitive value if nothing was specified
         if self.value == None:
-            self.value = self.__get_default_value()
+            self.value = self._get_default_value()
 
     def byte_size(self):
         """Size of primitive member in bytes"""
@@ -91,7 +91,7 @@ class Primitive(Member):
         for elem in self:
             f(strm, elem)
 
-    def __get_default_value(self):
+    def _get_default_value(self):
         """Get default value for primitive member"""
         # Variable-length array
         if self.is_vl_array():
@@ -100,12 +100,8 @@ class Primitive(Member):
 
         default = None
 
-        # Primitive/simple type
         if self.type in self.PRIM_2_WRITE_FUNC:
             default = 0
-        # String type
-        elif self.type in self.STRING_TYPES:
-            default = ""
         # Unsupported type, or is a Structure
         else:
             print(
@@ -114,7 +110,7 @@ class Primitive(Member):
 
         # Scale for arrays
         if self.is_array():
-            return [default * self.__length]
+            return [default] * self.array_size()
 
         # Single element
         return default

@@ -27,9 +27,11 @@ class String(Member):
     def write(self, strm: StreamBase):
         """Write string member to stream"""
         for string in self:
-            if Util.str_len(string, terminator=self.c_style) > self.maxlen:
-                print(
-                    f"[WARN] String {string} will be truncated to {self.maxlen} characters.")
+
+            if self.maxlen > 0:
+                if Util.str_len(string, terminator=self.c_style) > self.maxlen:
+                    print(
+                        f"[WARN] String {string} will be truncated to {self.maxlen} characters.")
 
             strm.write_string(string, self.maxlen, self.c_style)
 
@@ -49,9 +51,11 @@ class WString(String):
     def write(self, strm: StreamBase):
         """Write string member to stream"""
         for string in self:
-            # NOT A BUG! Max length counts characters, not bytes
-            if Util.str_len(string, terminator=self.c_style) > self.maxlen:
-                print(
-                    f"[WARN] String {string} will be truncated to {self.maxlen} characters.")
+
+            if self.maxlen > 0:
+                # NOT A BUG! Max length counts characters, not bytes
+                if Util.str_len(string, terminator=self.c_style) > self.maxlen:
+                    print(
+                        f"[WARN] String {string} will be truncated to {self.maxlen} characters.")
 
             strm.write_wstring(string, self.maxlen, self.c_style)
