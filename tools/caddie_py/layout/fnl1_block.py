@@ -3,6 +3,7 @@ from caddie_py.binary.types.structure import Structure
 from caddie_py.binary.types.string import String
 from caddie_py.binary.types.primitive import Primitive
 from caddie_py.stream.stream_base import StreamBase
+from caddie_py.utility.util import Util
 
 
 class FontDesc(Structure):
@@ -45,7 +46,7 @@ class FNL1Block(BlockBase):
         self["numEntries"].value += 1
 
         # Update pool size
-        self.__pool_size += len(font) + 1
+        self.__pool_size += Util.str_len(font, terminator=True)
 
     def write(self, strm: StreamBase):
         """Write block builder to stream"""
