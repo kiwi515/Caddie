@@ -81,7 +81,8 @@ class Primitive(Member):
     def byte_size(self):
         """Size of primitive member in bytes"""
         assert self.type in self.PRIM_2_BYTE_SIZE, "Not a primitive type!"
-        return self.PRIM_2_BYTE_SIZE[self.type]
+        size_one = self.PRIM_2_BYTE_SIZE[self.type]
+        return size_one * self.array_size()
 
     def write(self, strm: StreamBase):
         """Write primitive member to stream"""
