@@ -39,8 +39,8 @@ class TXL1Block(BlockBase):
         self["texNames"].value.append(texture)
 
         # Add new texture descriptor
-        self["texDescs"].append(
-            TextureDesc("", values={"offset": self.__pool_size}))
+        desc = TextureDesc("", values={"offset": self.__pool_size})
+        self["texDescs"].append(desc)
 
         # Increase texture count
         self["numEntries"].value += 1

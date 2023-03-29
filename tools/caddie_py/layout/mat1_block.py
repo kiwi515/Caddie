@@ -1,4 +1,5 @@
 from caddie_py.binary.block.block_base import BlockBase
+from caddie_py.layout.pan1_block import PaneRes
 from caddie_py.binary.types.structure import Structure
 from caddie_py.binary.types.primitive import Primitive
 from caddie_py.binary.types.bitfield import BitField, BitMember
@@ -67,53 +68,62 @@ class BitGXNums(BitField):
     ]
 
 
-class MAT1Block(BlockBase):
-    """Material block"""
-
-    SIGNATURE = "mat1"
+class MaterialRes(Structure):
+    """Material structure"""
 
     MAX_NAME_LEN = 20
     TEV_REG_MAX = 3
     KCOLOR_MAX = 4
 
-    def __init__(self, res):
+    # TODO: Add optional members somehow (toggled by BitGXNums)
+    MEMBERS = PaneRes.MEMBERS + [
+        String("mat_name", c_style=False, maxlen=MAX_NAME_LEN),
+        GXColorS10("tev_colors", arr=f"[{TEV_REG_MAX}]"),
+        GXColor("tev_k_colors", arr=f"[{KCOLOR_MAX}]"),
+        BitGXNums("u32", "bit_gx_nums")
+    ]
+
+
+class MaterialDesc(Structure):
+    """Material descriptor structure"""
+
+    MEMBERS = [
+        Primitive("u32", "offset"),
+        Primitive("u8", "padding0", arr="[4]")
+    ]
+
+
+class MAT1Block(BlockBase):
+    """Material block"""
+
+    SIGNATURE = "mat1"
+
+    def __init__(self, list_res):
         super().__init__(self.SIGNATURE)
+        self.__pool_size = 0
 
-        assert "name" in res, "Material is missing name."
+        self.add_member(Primitive("u16", "numEntries", value=len(list_res)))
+        self.add_member(Primitive("u8", "padding0", arr="[2]"))
+        self.add_member(MaterialDesc("matDescs", arr="[]"))
+        self.add_member(MaterialRes("materials", arr="[]"))
 
-        # Name
-        self.add_member(String("name", value=res.get("name"),
-                        c_style=False, maxlen=self.MAX_NAME_LEN))
+        for res in list_res:
+            self.add_material(res)
 
-        # TEV colors
-        self.add_member(GXColorS10(
-            "tev_colors", arr=f"[{self.TEV_REG_MAX}]", values=res.get("tev_colors")))
+    # TODO
+    def add_material(self, res):
+        """Add material to list"""
+        # Add material
+        mat = MaterialRes("", values=res)
+        self["materials"].append(mat)
 
-        # TEVK colors
-        self.add_member(GXColor(
-            "tev_k_colors", arr=f"[{self.KCOLOR_MAX}]", values=res.get("tev_k_colors")))
+        # Add new material descriptor
+        desc = MaterialDesc("", values={"offset": self.__pool_size})
+        self["matDescs"].append(desc)
 
-        # GX bitfield
-        self.add_member(BitField("u32", "bit_gx_nums",
-                        values=res.get("bit_gx_nums")))
+        # Increase material count
+        self["numEntries"].value += 1
 
-        # Alpha compare (optional)
-        if self["bit_gx_nums"]["has_alpha_comp"].value:
-            self.add_member(AlphaCompare("alpha_compare",
-                            values=res.get("alpha_compare")))
-
-        # Channel control (optional)
-        if self["bit_gx_nums"]["has_chan_ctrl"].value:
-            self.add_member(ChanCtrl("chan_ctrl", values=res.get("chan_ctrl")))
-
-        # Indirect SRT(s) (optional)
-        num_ind_srt = self["bit_gx_nums"]["num_ind_srt"].value
-        if num_ind_srt > 0:
-            self.add_member(
-                TexSRT("ind_srts", arr=f"[{num_ind_srt}]", values=res.get("ind_srt")))
-
-        # Indirect stage(s) (optional)
-        num_ind_stage = self["bit_gx_nums"]["num_ind_stage"].value
-        if num_ind_stage > 0:
-            self.add_member(IndirectStage(
-                "ind_stages", arr=f"[{num_ind_stage}]", values=res.get("ind_srt")))
+        # Update pool size
+        self.__pool_size += mat.byte_size()
+        pass

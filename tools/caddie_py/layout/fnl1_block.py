@@ -39,8 +39,8 @@ class FNL1Block(BlockBase):
         self["fontNames"].value.append(font)
 
         # Add new font descriptor
-        self["fontDescs"].append(
-            FontDesc("", values={"offset": self.__pool_size}))
+        desc = FontDesc("", values={"offset": self.__pool_size})
+        self["fontDescs"].append(desc)
 
         # Increase font count
         self["numEntries"].value += 1
