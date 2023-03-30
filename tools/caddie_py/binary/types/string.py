@@ -16,14 +16,16 @@ class String(Member):
 
     def byte_size(self):
         """Size of string member in bytes"""
-        total = 0
-        for s in self:
-            total += len(s)
-            # Null terminator
-            if self.c_style:
-                total += 1
+        # Recurse if array
+        if self.is_array():
+            return sum(s.byte_size() for s in self)
 
-        return total
+        # Single string (PADDED)
+        if self.pad:
+            return self.maxlen
+
+        # Single string (UNPADDED)
+        return Util.str_len(self.value, self.c_style)
 
     def write(self, strm: StreamBase):
         """Write string member to stream"""

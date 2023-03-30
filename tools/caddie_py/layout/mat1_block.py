@@ -1,5 +1,4 @@
 from caddie_py.binary.block.block_base import BlockBase
-from caddie_py.layout.pan1_block import PaneRes
 from caddie_py.binary.types.structure import Structure
 from caddie_py.binary.types.primitive import Primitive
 from caddie_py.binary.types.bitfield import BitField, BitMember
@@ -25,7 +24,7 @@ class ChanCtrl(Structure):
     MEMBERS = [
         GXColorSrc("u8", "color_src"),
         GXColorSrc("u8", "alpha_src"),
-        Primitive("u8[2]", "padding0")
+        Primitive("u8", "padding0", arr="[2]")
     ]
 
 
@@ -76,8 +75,8 @@ class MaterialRes(Structure):
     KCOLOR_MAX = 4
 
     # TODO: Add optional members somehow (toggled by BitGXNums)
-    MEMBERS = PaneRes.MEMBERS + [
-        String("mat_name", c_style=False, maxlen=MAX_NAME_LEN),
+    MEMBERS = [
+        String("name", c_style=False, maxlen=MAX_NAME_LEN, pad=True),
         GXColorS10("tev_colors", arr=f"[{TEV_REG_MAX}]"),
         GXColor("tev_k_colors", arr=f"[{KCOLOR_MAX}]"),
         BitGXNums("u32", "bit_gx_nums")
@@ -98,16 +97,16 @@ class MAT1Block(BlockBase):
 
     SIGNATURE = "mat1"
 
-    def __init__(self, list_res):
+    def __init__(self, materials=[]):
         super().__init__(self.SIGNATURE)
         self.__pool_size = 0
 
-        self.add_member(Primitive("u16", "numEntries", value=len(list_res)))
+        self.add_member(Primitive("u16", "numEntries"))
         self.add_member(Primitive("u8", "padding0", arr="[2]"))
         self.add_member(MaterialDesc("matDescs", arr="[]"))
         self.add_member(MaterialRes("materials", arr="[]"))
 
-        for res in list_res:
+        for res in materials:
             self.add_material(res)
 
     def add_material(self, res):

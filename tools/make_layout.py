@@ -4,6 +4,7 @@ from caddie_py.layout.fnl1_block import FNL1Block
 from caddie_py.layout.pan1_block import PAN1Block
 from caddie_py.layout.pas1_block import PAS1Block
 from caddie_py.layout.pae1_block import PAE1Block
+from caddie_py.layout.mat1_block import MAT1Block
 from caddie_py.stream.file_stream import *
 from caddie_py.stream.stream_base import Endian
 
@@ -47,6 +48,141 @@ def test_fnl1():
     strm.close()
 
 
+def test_mat1():
+    strm = FileStream(Endian.Big)
+    strm.open("test_mat1.bin", OpenMode.Write, DataMode.Binary)
+
+    blk = MAT1Block([
+        {
+            "name": "M_materialA_00",
+            "tev_colors": [
+                {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0,
+                    "a": 255,
+                },
+                {
+                    "r": 128,
+                    "g": 128,
+                    "b": 128,
+                    "a": 255,
+                },
+                {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 255,
+                }
+            ],
+            "tev_k_colors": [
+                {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0,
+                    "a": 255,
+                },
+                {
+                    "r": 128,
+                    "g": 128,
+                    "b": 128,
+                    "a": 255,
+                },
+                {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 255,
+                },
+                {
+                    "r": 1,
+                    "g": 2,
+                    "b": 3,
+                    "a": 255,
+                }
+            ],
+            "bit_gx_nums": {
+                "num_tex_map": 0,
+                "num_tex_srt": 1,
+                "num_tex_coord_gen": 0,
+                "num_ind_srt": 1,
+                "num_ind_stage": 0,
+                "has_tev_swap": 1,
+                "num_tev_stage": 0,
+                "has_chan_ctrl": 1,
+                "has_mat_color": 0,
+                "has_alpha_comp": 1,
+                "has_blend_mode": 0
+            }
+        },
+        {
+            "name": "M_materialB_00",
+            "tev_colors": [
+                {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0,
+                    "a": 255,
+                },
+                {
+                    "r": 128,
+                    "g": 128,
+                    "b": 128,
+                    "a": 255,
+                },
+                {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 255,
+                }
+            ],
+            "tev_k_colors": [
+                {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0,
+                    "a": 255,
+                },
+                {
+                    "r": 128,
+                    "g": 128,
+                    "b": 128,
+                    "a": 255,
+                },
+                {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 255,
+                },
+                {
+                    "r": 1,
+                    "g": 2,
+                    "b": 3,
+                    "a": 255,
+                }
+            ],
+            "bit_gx_nums": {
+                "num_tex_map": 0,
+                "num_tex_srt": 1,
+                "num_tex_coord_gen": 0,
+                "num_ind_srt": 1,
+                "num_ind_stage": 0,
+                "has_tev_swap": 1,
+                "num_tev_stage": 0,
+                "has_chan_ctrl": 1,
+                "has_mat_color": 0,
+                "has_alpha_comp": 1,
+                "has_blend_mode": 0
+            }
+        }
+    ])
+    blk.write(strm)
+
+    strm.close()
+
+
 def test_pan1():
     strm = FileStream(Endian.Big)
     strm.open("test_pan1.bin", OpenMode.Write, DataMode.Binary)
@@ -55,7 +191,7 @@ def test_pan1():
         "flags": 0x11,
         "base_position": 0x22,
         "alpha": 0x33,
-        "name": "P_myPane_00",
+        "name": "N_myPane_00",
         "user_data": "01234567",
         "translate": {
             "x": 0.0,
@@ -90,7 +226,7 @@ def test_pas1():
             "flags": 0x11,
             "base_position": 0x22,
             "alpha": 0x33,
-            "name": "P_myChild_00",
+            "name": "N_myChild_00",
             "user_data": "",
             "translate": {
                 "x": 0.0,
@@ -115,7 +251,7 @@ def test_pas1():
             "flags": 0x44,
             "base_position": 0x55,
             "alpha": 0x66,
-            "name": "P_myChild_01",
+            "name": "N_myChild_01",
             "user_data": "",
             "translate": {
                 "x": 0.0,
@@ -154,8 +290,13 @@ def test_pae1():
 
 def main():
     test_lyt1()
+
+    # Resources
     test_txl1()
     test_fnl1()
+    test_mat1()
+
+    # Panes
     test_pan1()
     test_pas1()
     test_pae1()

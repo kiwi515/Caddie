@@ -1,12 +1,13 @@
 from caddie_py.binary.types.member import Member
 from caddie_py.stream.stream_base import StreamBase
 from copy import deepcopy
+from caddie_py.utility.util import Util
 
 
 class Structure(Member):
     """Structure containing members"""
 
-    def __init__(self, name: str, arr: str = None, values: dict = None):
+    def __init__(self, name: str, arr: str = None, values=None):
         super().__init__(self.__class__.__name__, name, arr)
 
         # Convert member list into dictionary
@@ -76,10 +77,27 @@ class Structure(Member):
         if members == None:
             return
 
-        for item in members.items():
-            k, v = item[0], item[1]
-            if k in self.value:
-                self.value[k].set_value(v)
-            else:
-                print(
-                    f"[WARN] Cannot access undeclared member: {self.__class__.__name__}::{k}. Value will be ignored")
+        # Convert to length 1 list
+        if not Util.is_list(members):
+            members = [members]
+
+        # Structure members as list
+        my_members = [self.value] if not self.is_array() else self.value
+
+        # Length should be the same
+        assert len(members) == len(
+            my_members), f"Invalid array initialization: Expected {len(my_members)} entries, got {len(members)}"
+
+        # User initialization
+        for i, m in enumerate(members):
+            # Array element (i'th instance of structure)
+            inst = my_members[i]
+
+            # Apply values
+            for item in m.items():
+                k, v = item[0], item[1]
+                if k in inst:
+                    inst[k].set_value(v)
+                else:
+                    print(
+                        f"[WARN] Cannot access undeclared member: {self.__class__.__name__}::{k}. Value will be ignored")

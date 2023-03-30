@@ -15,13 +15,16 @@ class Enum(Primitive):
 
     def set_value(self, data):
         """Set member value"""
+        if data == None:
+            data = self._get_default_value()
+
         # Enum value
         if type(data) == str:
             assert data in self.__enum, f"Invalid enum value: {data} not in {self.__class__.__name__}"
-            Primitive.set_value(self.__enum[data])
+            Primitive.set_value(self, self.__enum[data])
 
         # Raw value (sure, I guess..)
         else:
             assert type(
                 data) == int, "Specify either an enum value or a raw integer value."
-            Primitive.set_value(data)
+            Primitive.set_value(self, data)

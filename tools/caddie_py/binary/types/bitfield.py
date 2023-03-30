@@ -7,7 +7,7 @@ from copy import deepcopy
 class BitMember:
     """Member of bitfield"""
 
-    def __init__(self, name: str, size: int, value=None, enum_cls=None):
+    def __init__(self, name: str, size: int, value=0, enum_cls=None):
         self.name = name
         self.size = size
         self.value = value
@@ -40,16 +40,13 @@ class BitField(Member):
         self.__type = underlying_type
 
         # Convert member list into dictionary
-        members = {m.name: m for m in deepcopy(self.MEMBERS)}
+        self.value = {m.name: m for m in deepcopy(self.MEMBERS)}
 
         # User initialization
-        if values != None:
-            for item in values.items():
-                k, v = item[0], item[1]
-                if k in members:
-                    members[k].set_value(v)
-
-        self.set_value(members)
+        for item in values.items():
+            k, v = item[0], item[1]
+            if k in self.members:
+                self.members[k].set_value(v)
 
         assert self.__type in Primitive.PRIM_2_WRITE_FUNC, f"Invalid bitfield type: {self.__type}"
 
@@ -76,13 +73,29 @@ class BitField(Member):
 
         f(strm, self.__raw_value())
 
+    def set_value(self, data):
+        """Set bitfield values"""
+        # Everything is nullable
+        if data == None:
+            return
+
+        # User initialization
+        for item in data.items():
+            k, v = item[0], item[1]
+
+            if k in self.value:
+                self.value[k].set_value(v)
+            else:
+                print(
+                    f"[WARN] Cannot access undeclared member: {self.__class__.__name__}::{k}. Value will be ignored")
+
     def __validate(self):
         """Validate members of bitfield"""
         max_bytes = self.byte_size()
         my_bits = sum(member.size for member in self)
 
         # Get byte count
-        my_bytes = my_bits / 8
+        my_bytes = my_bits // 8
 
         # Roll over into next byte
         if my_bits % 8 != 0:
@@ -97,7 +110,7 @@ class BitField(Member):
 
         # Compose value
         for member in self:
-            assert pos < self.byte_size(), "Bitfield overflow!!"
+            assert pos < self.byte_size() * 8, "Bitfield overflow!!"
 
             mask = (~(1 << member.size))
             value = member.value & mask
