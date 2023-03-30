@@ -17,6 +17,14 @@ class BlockBase:
         self.builder = BlockBuilder(Endian.Big)
         self.__members = dict()
 
+    def before_build_callback(self):
+        """Override to implement custom serialization before the block contents are built"""
+        pass
+
+    def after_build_callback(self):
+        """Override to implement custom serialization after the block contents are built"""
+        pass
+
     def __getitem__(self, key: str) -> Member:
         """Access block member"""
         assert key in self.__members, f"Member does not exist: {key}"
@@ -60,9 +68,14 @@ class BlockBase:
 
     def write(self, strm: StreamBase):
         """Write block builder to stream"""
+
+        self.before_build_callback()
+
         # Serialize to block builder
         for m in self.__members.values():
             m.write(self.builder)
+
+        self.after_build_callback()
 
         # Block kind
         strm.write_string(self.kind, maxlen=self.KIND_MAX_LEN, terminate=False)

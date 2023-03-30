@@ -12,25 +12,20 @@ class Structure(Member):
         # Convert member list into dictionary
         members = {m.name: m for m in deepcopy(self.MEMBERS)}
 
-        # User initialization
-        if values != None:
-            for item in values.items():
-                k, v = item[0], item[1]
-                if k in members:
-                    members[k].set_value(v)
-                else:
-                    print(f"[WARN] Cannot access undeclared member: {self.__class__.__name__}::{k}. Value will be ignored")
-
         if self.is_array():
             # Cannot initialize variable length array
             if self.is_vl_array():
-                self.set_value(list())
+                self.value = list()
             else:
                 # In an array, all indices will be initialized the same way
-                self.set_value([members] * self.array_size())
+                self.value = [members] * self.array_size()
         # Single element
         else:
-            self.set_value(members)
+            self.value = members
+
+        # User initialization
+        if values != None:
+            self.set_value(values)
 
     def __getitem__(self, key):
         """Access member of structure"""
@@ -75,3 +70,16 @@ class Structure(Member):
 
         # Member is not in structure
         return -1
+
+    def set_value(self, members):
+        """Set structure values (members)"""
+        if members == None:
+            return
+
+        for item in members.items():
+            k, v = item[0], item[1]
+            if k in self.value:
+                self.value[k].set_value(v)
+            else:
+                print(
+                    f"[WARN] Cannot access undeclared member: {self.__class__.__name__}::{k}. Value will be ignored")

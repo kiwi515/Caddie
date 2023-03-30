@@ -39,7 +39,7 @@ class FNL1Block(BlockBase):
         self["fontNames"].value.append(font)
 
         # Add new font descriptor
-        desc = FontDesc("", values={"offset": self.__pool_size})
+        desc = FontDesc("dummy", values={"offset": self.__pool_size})
         self["fontDescs"].append(desc)
 
         # Increase font count
@@ -48,12 +48,9 @@ class FNL1Block(BlockBase):
         # Update pool size
         self.__pool_size += Util.str_len(font, terminator=True)
 
-    def write(self, strm: StreamBase):
-        """Write block builder to stream"""
+    def before_build_callback(self):
+        """Custom block behavior before block contents are serialized"""
         # Finalize string pool offsets
         for desc in self["fontDescs"]:
             # Convert pool-relative offset to section-relative offset
             desc["offset"].value += self.offset_of("fontNames")
-
-        # Write block builder contents
-        BlockBase.write(self, strm)

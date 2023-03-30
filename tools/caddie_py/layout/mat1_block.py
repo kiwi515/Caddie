@@ -110,15 +110,14 @@ class MAT1Block(BlockBase):
         for res in list_res:
             self.add_material(res)
 
-    # TODO
     def add_material(self, res):
         """Add material to list"""
         # Add material
-        mat = MaterialRes("", values=res)
+        mat = MaterialRes("dummy", values=res)
         self["materials"].append(mat)
 
         # Add new material descriptor
-        desc = MaterialDesc("", values={"offset": self.__pool_size})
+        desc = MaterialDesc("dummy", values={"offset": self.__pool_size})
         self["matDescs"].append(desc)
 
         # Increase material count
@@ -127,3 +126,10 @@ class MAT1Block(BlockBase):
         # Update pool size
         self.__pool_size += mat.byte_size()
         pass
+
+    def before_build_callback(self):
+        """Custom block behavior before block contents are serialized"""
+        # Finalize material offsets
+        for desc in self["matDescs"]:
+            # Convert pool-relative offset to section-relative offset
+            desc["offset"].value += self.offset_of("materials")

@@ -39,7 +39,7 @@ class TXL1Block(BlockBase):
         self["texNames"].value.append(texture)
 
         # Add new texture descriptor
-        desc = TextureDesc("", values={"offset": self.__pool_size})
+        desc = TextureDesc("dummy", values={"offset": self.__pool_size})
         self["texDescs"].append(desc)
 
         # Increase texture count
@@ -48,12 +48,9 @@ class TXL1Block(BlockBase):
         # Update pool size
         self.__pool_size += Util.str_len(texture, terminator=True)
 
-    def write(self, strm: StreamBase):
-        """Write block builder to stream"""
+    def before_build_callback(self):
+        """Custom block behavior before block contents are serialized"""
         # Finalize string pool offsets
         for desc in self["texDescs"]:
             # Convert pool-relative offset to section-relative offset
             desc["offset"].value += self.offset_of("texNames")
-
-        # Write block builder contents
-        BlockBase.write(self, strm)
