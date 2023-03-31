@@ -10,6 +10,28 @@ namespace SoundTest {
 
 class Scene : public RPSysScene {
 public:
+    enum EGroup {
+        Group_Cmn,
+        Group_Jsk,
+        Group_Bsk,
+        Group_Png,
+        Group_Swf,
+        Group_SwfAudSmall,
+        Group_SwfKumite,
+        Group_SwfIai,
+        Group_Can,
+        Group_Arc,
+        Group_Fld,
+        Group_Bwl,
+        Group_Bic,
+        Group_Pln,
+        Group_Glf,
+        Group_Wkb,
+        Group_Dgl,
+        Group_Omk
+    };
+
+public:
     Scene();
     virtual ~Scene() {}
 
@@ -49,11 +71,15 @@ private:
     void DrawScroll();
     void DrawControls();
 
+    void LoadGroupForSound(u32 sound);
+    void LoadGroup(EGroup group);
+
 private:
     int mSelectedSnd;
     int mDisplayTopSnd;
     int mBtnRepeatTimer;
     u32 mHeldLastFrame;
+    u32 mSoundGroup;
 
     static const int scRepeatTimerDefault = 5;
 

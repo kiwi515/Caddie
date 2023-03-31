@@ -23,7 +23,8 @@ Scene::Scene()
     : mSelectedSnd(0),
       mDisplayTopSnd(0),
       mBtnRepeatTimer(scRepeatTimerDefault),
-      mHeldLastFrame(0) {}
+      mHeldLastFrame(0),
+      mSoundGroup(Group_Cmn) {}
 
 void Scene::Calculate() {
     const u32 trig = InputMgr::GetInstance().Trig(InputMgr::PLAYER_1);
@@ -80,6 +81,8 @@ void Scene::Calculate() {
     // Play sound
     if (trig & InputMgr::BTN_A) {
         CADDIE_ASSERT(mSelectedSnd < GetNumSound());
+        RPSndAudioMgr::stopAllSound();
+        LoadGroupForSound(mSelectedSnd);
         RPSndAudioMgr::startSound(mSelectedSnd);
     }
     // Exit
@@ -151,6 +154,109 @@ void Scene::DrawControls() {
                       Color::BLACK.ToARGB(), false, 50.0f, 170.0f, 1.0f);
     Sp2::PrintOutline("Press B to exit to DebugRoot", Color::WHITE.ToARGB(),
                       Color::BLACK.ToARGB(), false, 50.0f, 190.0f, 1.0f);
+}
+
+/**
+ * @brief Load appopriate sound group based on sound ID
+ */
+void Scene::LoadGroupForSound(u32 sound) {
+    // Streamed audio doesn't use groups
+    if (sound <= STM_SILENT) {
+        return;
+    }
+
+    // Swordplay - Showdown theme (sequenced)
+    else if (sound == BGM_SWF_KUMITE) {
+        LoadGroup(Group_SwfKumite);
+    }
+
+    // Cycling - Road Race theme (sequenced)
+    else if (sound == BGM_BIC_MAIN) {
+        LoadGroup(Group_Bic);
+    }
+
+    // Jetski/Wakeboarding (they share a group)
+    else if (sound >= SE_JSK_COUNT_DOWN_1 && sound <= SE_JSK_MINI_FANFARE) {
+        LoadGroup(Group_Jsk);
+    }
+
+    // Frisbee Dog
+    else if (sound >= SE_FLD_DOG_BARK_PREPARE &&
+             sound <= SE_FLD_BALLOON_CLEAR) {
+        LoadGroup(Group_Fld);
+    }
+
+    // Archery
+    else if (sound >= SE_ARC_ARROW_FLY && sound <= SE_ARC_GOLDEN_ARROW_HIT) {
+        LoadGroup(Group_Arc);
+    }
+
+    // Swordplay (Main group)
+    // TODO: Split this up
+    else if (sound >= SE_SWF_ATTACK_SUCCESS_P0 &&
+             sound <= SE_SWF_IAI_CUTOBJ_CRYSTAL_TONE_10) {
+        LoadGroup(Group_Swf);
+    }
+
+    // Basketball
+    else if (sound >= SE_BSK_AUDIENCE_GAME_START &&
+             sound <= SE_BSK_SCORE_MATCH_3PT) {
+        LoadGroup(Group_Bsk);
+    }
+
+    // Table Tennis
+    else if (sound >= SE_PNG_THROW_UP && sound <= SE_PNG_CAN_BOUND_LAWN_S) {
+        LoadGroup(Group_Png);
+    }
+
+    // Canoeing
+    else if (sound >= SE_CAN_COUNTDOWN_1 && sound <= SE_CAN_BELT_CUT) {
+        LoadGroup(Group_Can);
+    }
+
+    // Bowling
+    else if (sound >= SE_BWL_PLAY_NG && sound <= SE_BWL_KABEYOKE_WALL_MOVE) {
+        LoadGroup(Group_Bwl);
+    }
+
+    // Cycling
+    else if (sound >= SE_BIC_STOP_END && sound <= SE_BIC_NAR_EXCELLENT) {
+        LoadGroup(Group_Bic);
+    }
+
+    // Plane
+    else if (sound >= SE_PLN_LANDMARK_RING_GET &&
+             sound <= SE_PLN_MINI_FANFARE) {
+        LoadGroup(Group_Pln);
+    }
+
+    // Golf
+    else if (sound >= SE_GLF_PUSH_B_OK && sound <= SE_GLF_WIND_ARROW) {
+        LoadGroup(Group_Glf);
+    }
+
+    // Frisbee Golf
+    else if (sound >= SE_DGL_GOAL_IN && sound <= SE_DGL_FENCE_CLOSE_END) {
+        LoadGroup(Group_Dgl);
+    }
+
+    // Skydiving
+    else if (sound >= SE_OMK_CATCH_COUNT && sound <= SE_OMK_TEACHER_STOP) {
+        LoadGroup(Group_Omk);
+    }
+}
+
+/**
+ * @brief Load sound group using the audio manager
+ */
+void Scene::LoadGroup(EGroup id) {
+    // Don't reload sound group
+    if (id == mSoundGroup) {
+        return;
+    }
+
+    const bool success = RPSndAudioMgr::GetInstance().loadGroup(id, 0, 0);
+    CADDIE_ASSERT_EX(success, "Failed to load sound group %d", id);
 }
 
 const Color Scene::scSoundColor(255, 255, 255, 255);

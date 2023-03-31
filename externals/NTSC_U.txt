@@ -204,6 +204,8 @@ sInstance__16RPSysFontManager=0x806f4cc8
 
 # RP/RPAudio/RPSndAudioMgr
 startSound__13RPSndAudioMgrFUl=0x802b7228
+sInstance__13RPSndAudioMgr=0x806f5088
+stopAllSound__13RPSndAudioMgrFv=0x802b70c0
 
 # RP/RPKernel/RPSysWideTextWriter
 __ct__19RPSysWideTextWriterFi=0x802408d0

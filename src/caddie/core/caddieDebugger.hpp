@@ -23,7 +23,7 @@ private:
     do {                                                                       \
         CADDIE_LOG_EX("[Debugger] break in %s! (%s:%d)", __FUNCTION__,         \
                       __FILE__, __LINE__);                                     \
-        Debugger::Break();                                                     \
+        caddie::Debugger::Break();                                             \
     } while (0)
 
 #define DEBUGGER_BREAK_IF(expr)                                                \
@@ -31,7 +31,7 @@ private:
         if (expr) {                                                            \
             CADDIE_LOG_EX("[Debugger] break in %s! (%s:%d)", __FUNCTION__,     \
                           __FILE__, __LINE__);                                 \
-            Debugger::Break();                                                 \
+            caddie::Debugger::Break();                                         \
         }                                                                      \
     } while (0)
 
