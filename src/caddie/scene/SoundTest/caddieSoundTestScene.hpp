@@ -80,6 +80,7 @@ private:
     int mBtnRepeatTimer;
     u32 mHeldLastFrame;
     u32 mSoundGroup;
+    bool mIsSeqTrack;
 
     static const int scRepeatTimerDefault = 5;
 

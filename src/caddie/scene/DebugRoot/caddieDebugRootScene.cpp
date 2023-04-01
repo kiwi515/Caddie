@@ -112,7 +112,7 @@ void Scene::Calculate() {
         const Option& opt = scOptions[mSelectedScene];
 
         if (opt.enabled) {
-            RPSndAudioMgr::startSound(SE_CMN_TITLE_GAME_SEL);
+            RPSndAudioMgr::startSound(SE_CMN_MII_DECIDE);
             mNextScene = opt.id;
         } else {
             RPSndAudioMgr::startSound(SE_CMN_NG_01);

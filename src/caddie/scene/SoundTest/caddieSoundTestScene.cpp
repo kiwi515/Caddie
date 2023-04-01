@@ -24,7 +24,8 @@ Scene::Scene()
       mDisplayTopSnd(0),
       mBtnRepeatTimer(scRepeatTimerDefault),
       mHeldLastFrame(0),
-      mSoundGroup(Group_Cmn) {}
+      mSoundGroup(Group_Cmn),
+      mIsSeqTrack(false) {}
 
 void Scene::Calculate() {
     const u32 trig = InputMgr::GetInstance().Trig(InputMgr::PLAYER_1);
@@ -81,9 +82,13 @@ void Scene::Calculate() {
     // Play sound
     if (trig & InputMgr::BTN_A) {
         CADDIE_ASSERT(mSelectedSnd < GetNumSound());
+
         RPSndAudioMgr::stopAllSound();
         LoadGroupForSound(mSelectedSnd);
         RPSndAudioMgr::startSound(mSelectedSnd);
+
+        mIsSeqTrack =
+            (mSelectedSnd == BGM_SWF_KUMITE || mSelectedSnd == BGM_BIC_MAIN);
     }
     // Exit
     else if (trig & InputMgr::BTN_B) {
@@ -154,6 +159,18 @@ void Scene::DrawControls() {
                       Color::BLACK.ToARGB(), false, 50.0f, 170.0f, 1.0f);
     Sp2::PrintOutline("Press B to exit to DebugRoot", Color::WHITE.ToARGB(),
                       Color::BLACK.ToARGB(), false, 50.0f, 190.0f, 1.0f);
+
+    // Extra controls for sequenced audio
+    if (mIsSeqTrack) {
+        const Color seqOptColor(0, 150, 0, 255);
+
+        Sp2::PrintOutline("Sequenced Audio:", seqOptColor.ToARGB(),
+                          Color::BLACK.ToARGB(), false, 50.0f, 220.0f, 1.0f);
+        Sp2::PrintOutline("Press [+]/[-] to", seqOptColor.ToARGB(),
+                          Color::BLACK.ToARGB(), false, 50.0f, 240.0f, 1.0f);
+        Sp2::PrintOutline("switch between tracks", seqOptColor.ToARGB(),
+                          Color::BLACK.ToARGB(), false, 50.0f, 260.0f, 1.0f);
+    }
 }
 
 /**
@@ -256,7 +273,7 @@ void Scene::LoadGroup(EGroup id) {
     }
 
     const bool success = RPSndAudioMgr::GetInstance().loadGroup(id, 0, 0);
-    CADDIE_ASSERT_EX(success, "Failed to load sound group %d", id);
+    CADDIE_WARN_EX(!success, "Failed to load sound group %d", id);
 }
 
 const Color Scene::scSoundColor(255, 255, 255, 255);
