@@ -1,6 +1,6 @@
 #include "caddieGlfUtil.h"
 
-#include <Sports2/Scene/Glf/Sp2GlfMain.h>
+#include <Sports2/Scene/Glf/Sp2GlfConfig.h>
 
 namespace caddie {
 
@@ -8,7 +8,7 @@ namespace caddie {
  * @brief Whether the current hole is the first hole of the gamemode
  */
 bool GlfUtil::IsCurrentFirstHole() {
-    Sp2::Glf::GlfMain& main = Sp2::Glf::GlfMain::getInstance();
+    Sp2::Glf::GlfConfig& main = Sp2::Glf::GlfConfig::getInstance();
     return IsFirstHoleInternal(main.getGamemode(), main.getCurrentHole());
 }
 
@@ -57,7 +57,7 @@ bool GlfUtil::IsFirstHole(Sp2::Glf::GameMode gm, u32 hole) {
  * @brief Whether the current round is over (hole is past end of difficulty)
  */
 bool GlfUtil::IsCurrentRoundOver() {
-    Sp2::Glf::GlfMain& main = Sp2::Glf::GlfMain::getInstance();
+    Sp2::Glf::GlfConfig& main = Sp2::Glf::GlfConfig::getInstance();
     return IsRoundOverInternal(main.getGamemode(), main.getCurrentHole());
 }
 
@@ -66,7 +66,7 @@ bool GlfUtil::IsCurrentRoundOver() {
  * difficulty)
  */
 bool GlfUtil::IsNextRoundOver() {
-    Sp2::Glf::GlfMain& main = Sp2::Glf::GlfMain::getInstance();
+    Sp2::Glf::GlfConfig& main = Sp2::Glf::GlfConfig::getInstance();
     return IsRoundOverInternal(main.getGamemode(), main.getCurrentHole() + 1);
 }
 
@@ -124,7 +124,7 @@ u32 GlfUtil::GetGamemodeNthHoleInternal(u32 n) {
  * @details Hole is one-indexed
  */
 u32 GlfUtil::GetGamemodeNthHole(u32 n) {
-    switch (Sp2::Glf::GlfMain::getInstance().getGamemode()) {
+    switch (Sp2::Glf::GlfConfig::getInstance().getGamemode()) {
     case Sp2::Glf::GM_EIGHTEEN_HOLE:
     case Sp2::Glf::GM_RESORT_NINE:
     case Sp2::Glf::GM_RESORT_A:

@@ -13,6 +13,7 @@ extern const char* MSG_PIN_TYPE;
 extern const char* MSG_WIND_DIR;
 extern const char* MSG_WIND_SPD;
 extern const char* MSG_WIND_SPD_RANGE;
+extern const char* MSG_REPLAY_INFO;
 extern const char* MSG_APPLY;
 extern const char* MSG_QUIT;
 
