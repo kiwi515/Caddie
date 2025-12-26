@@ -2,6 +2,8 @@
 
 #include "caddieAlgorithm.h"
 
+#include <RevoSDK/SC.h>
+
 using namespace nw4r;
 
 namespace caddie {
@@ -55,7 +57,11 @@ void MenuPage::CalcWidth() {
         max = Max(nameLen, max);
     }
 
-    mWidth = max * sCharWidth;
+    if (SCGetAspectRatio() == SC_ASPECT_STD) {
+        mWidth = max * sCharWidth * 1.25f;
+    } else {
+        mWidth = max * sCharWidth;
+    }
 }
 
 /**

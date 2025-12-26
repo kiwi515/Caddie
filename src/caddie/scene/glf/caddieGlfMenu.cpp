@@ -19,6 +19,7 @@ GlfMenu::GlfMenu()
       mWindSpd(MSG_WIND_SPD, ENUM_WIND_SPD, 0, WIND_SPD_RANDOM),
       mWindSpdRange(MSG_WIND_SPD_RANGE, ENUM_WIND_SPD_RANGE, 0,
                     CADDIE_ENUM_MAX(ENUM_WIND_SPD_RANGE)),
+      mReplayInfo(MSG_REPLAY_INFO, false),
       mApplyRestart(MSG_APPLY, Action_ApplyRestart, this),
       mQuitGame(MSG_QUIT, Action_QuitGame, this) {
     // Build root page
@@ -28,6 +29,7 @@ GlfMenu::GlfMenu()
     GetRootPage().AppendOption(&mWindDir);
     GetRootPage().AppendOption(&mWindSpd);
     GetRootPage().AppendOption(&mWindSpdRange);
+    GetRootPage().AppendOption(&mReplayInfo);
     GetRootPage().AppendOption(&mApplyRestart);
     GetRootPage().AppendOption(&mQuitGame);
 }
@@ -38,6 +40,8 @@ GlfMenu::~GlfMenu() {}
  * @brief Option change callback
  */
 void GlfMenu::OnChange() {
+    mReplayInfo.SaveChanges();
+
     // Hole 18 has one pin
     mPinType.SetEnabled(mHole.GetUnsavedValue() != 18);
 
@@ -92,7 +96,7 @@ void GlfMenu::Action_QuitGame(void* menu) {
     // Ask scene not to apply settings
     thisx->SetAwaitingApply(false);
     // Delete menu when returning
-    thisx->SetCanDelete(true);
+    // thisx->SetCanDelete(true);
 
     // Return to title scene
     RPSysSceneCreator::getInstance().changeSceneAfterFade(

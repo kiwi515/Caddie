@@ -12,7 +12,7 @@ public:
     RPGlfMapObjBase();
     virtual ~RPGlfMapObjBase();
 
-private:
+protected:
     //! @brief Map object model
     RPGrpModelG3D* mModel; // at 0x4
     //! @brief Binary map object

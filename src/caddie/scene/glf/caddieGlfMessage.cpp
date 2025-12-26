@@ -25,6 +25,9 @@ const char* MSG_WIND_SPD =
 //! @brief Text for Wind Speed Range option
 const char* MSG_WIND_SPD_RANGE = "Wind Speed Range";
 
+//! @brief Text for Replay Info option
+const char* MSG_REPLAY_INFO = "Show Replay Info";
+
 //! @brief Text for Apply and Restart option
 const char* MSG_APPLY = "Apply and Restart";
 

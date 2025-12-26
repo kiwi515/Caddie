@@ -60,11 +60,11 @@ getStaticVar__Q23Sp29StaticMemFib=0x8026a26c
 setStaticVar__Q23Sp29StaticMemFiib=0x8026a228
 sInstance__Q23Sp29StaticMem=0x806f5538
 
-# Sports2/Glf/Sp2GlfMain
-choosePin__Q33Sp23Glf7GlfMainFi=0x80406a00
-sInstance__Q33Sp23Glf7GlfMain=0x806f5b38
-__ct__Q33Sp23Glf7GlfMainFv=0x80406f70
-__dt__Q33Sp23Glf7GlfMainFv=0x80406f30
+# Sports2/Glf/Sp2GlfConfig
+choosePin__Q33Sp23Glf9GlfConfigFi=0x80406a00
+sInstance__Q33Sp23Glf9GlfConfig=0x806f5b38
+__ct__Q33Sp23Glf9GlfConfigFv=0x80406f70
+__dt__Q33Sp23Glf9GlfConfigFv=0x80406f30
 
 # Sports2/Sp2Util
 Rand__3Sp2Fv=0x8025ccd0
