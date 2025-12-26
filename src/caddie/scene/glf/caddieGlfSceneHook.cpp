@@ -66,10 +66,10 @@ void GlfSceneHook::OnConfigure(RPSysScene* scene) {
         sTimer = new Timer();
         CADDIE_ASSERT(sTimer != NULL);
     }
-
     // start timer
     sTimer->Reset();
     sTimer->Start();
+
     if (sGlfPostMenu == NULL) {
         sGlfPostMenu = new GlfPostMenu();
         CADDIE_ASSERT(sGlfPostMenu != NULL);
@@ -126,6 +126,10 @@ void GlfSceneHook::OnNextShot() {
 kmCall(0x803f8754, GlfSceneHook::OnNextShot);
 
 void GlfSceneHook::OnUserDraw(RPSysScene* scene) {
+    if (sTimer != NULL) {
+        sTimer->Draw();
+    }
+
     if (!MenuMgr::GetInstance().IsVisible()) {
         return;
     }
@@ -155,8 +159,6 @@ void GlfSceneHook::OnUserDraw(RPSysScene* scene) {
         Sp2::PrintOutline(buffer, 0xFF00FFFF, 0xFF000000, false, 100.0f,
                           180.0f);
     }
-
-    ;
 }
 
 void GlfSceneHook::DrawPutterGuide(const nw4r::math::VEC3* pPoints, u16 num,
