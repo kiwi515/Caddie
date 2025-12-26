@@ -93,7 +93,7 @@ void GlfSceneHook::OnPausedSeqMgrCalc() {
 kmCall(0x804175e8, GlfSceneHook::OnPausedSeqMgrCalc);
 
 void GlfSceneHook::OnNextShot() {
-    if (sDidStopShot) {
+    if (sDidStopShot || !GetMenu().GetRetryShotMenu()) {
         Sp2::Glf::SequenceMgr::getInstance().GetSequenceMain()->NextShot();
         GlfPostMenu::ChangePhase();
 
