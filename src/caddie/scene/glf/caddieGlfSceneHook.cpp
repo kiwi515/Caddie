@@ -26,6 +26,16 @@ void GlfSceneHook::OnConfigure(RPSysScene* scene) {
         CADDIE_ASSERT(sGlfMenu != NULL);
     }
 
+    // setup timer
+    if (sTimer == NULL) {
+        sTimer = new Timer();
+        CADDIE_ASSERT(sTimer != NULL);
+    }
+
+    // start timer
+    sTimer->Reset();
+    sTimer->Start();
+
     // Open menu root
     MenuMgr::GetInstance().OpenMenu(sGlfMenu);
 }
@@ -35,14 +45,22 @@ void GlfSceneHook::OnConfigure(RPSysScene* scene) {
  *
  * @param scene Current scene
  */
-void GlfSceneHook::OnCalculate(RPSysScene* scene) {}
+void GlfSceneHook::OnCalculate(RPSysScene* scene) {
+    if (sTimer != NULL) {
+        sTimer->Calc();
+    }
+}
 
 /**
  * @brief Golf scene user draw callback
  *
  * @param scene Current scene
  */
-void GlfSceneHook::OnUserDraw(RPSysScene* scene) {}
+void GlfSceneHook::OnUserDraw(RPSysScene* scene) {
+    if (sTimer != NULL) {
+        sTimer->Draw();
+    }
+}
 
 /**
  * @brief Golf scene exit callback
@@ -58,6 +76,10 @@ void GlfSceneHook::OnExit(RPSysScene* scene) {
     // Apply static mem settings
     else {
         Apply_StaticMem();
+    }
+    if (sTimer != NULL) {
+        delete sTimer;
+        sTimer = NULL;
     }
 }
 
@@ -306,5 +328,6 @@ GlfMenu& GlfSceneHook::GetMenu() {
 }
 
 GlfMenu* GlfSceneHook::sGlfMenu = NULL;
+Timer* GlfSceneHook::sTimer = NULL;
 
 } // namespace caddie

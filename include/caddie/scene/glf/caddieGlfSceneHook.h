@@ -1,5 +1,8 @@
 #ifndef CADDIE_SCENE_GLF_SCENE_HOOK_H
 #define CADDIE_SCENE_GLF_SCENE_HOOK_H
+
+#include "caddieTimer.h"
+
 #include "types_caddie.h"
 
 namespace caddie {
@@ -32,6 +35,8 @@ public:
 private:
     //! @brief Golf menu
     static GlfMenu* sGlfMenu;
+    //! @brief timer
+    static Timer* sTimer;
 };
 
 } // namespace caddie
