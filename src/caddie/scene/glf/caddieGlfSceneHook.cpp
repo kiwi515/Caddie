@@ -117,21 +117,24 @@ void GlfSceneHook::OnPausedSeqMgrCalc() {
 kmCall(0x804175e8, GlfSceneHook::OnPausedSeqMgrCalc);
 
 void GlfSceneHook::OnNextShot() {
-    if (sDidStopShot) {
+
+    sTimer->Freeze(90);
+
+    // if (sDidStopShot) {
         Sp2::Glf::SequenceMgr::getInstance().GetSequenceMain()->NextShot();
         GlfPostMenu::ChangePhase();
 
         sDidStopShot = false;
         return;
-    }
+    // }
 
-    if (MenuMgr::GetInstance().IsVisible()) {
-        MenuMgr::GetInstance().CloseMenu();
-        MenuMgr::GetInstance().SetVisible(false);
-    }
+    // if (MenuMgr::GetInstance().IsVisible()) {
+    //     MenuMgr::GetInstance().CloseMenu();
+    //     MenuMgr::GetInstance().SetVisible(false);
+    // }
 
-    MenuMgr::GetInstance().OpenMenu(sGlfPostMenu);
-    MenuMgr::GetInstance().SetVisible(true);
+    // MenuMgr::GetInstance().OpenMenu(sGlfPostMenu);
+    // MenuMgr::GetInstance().SetVisible(true);
 }
 kmCall(0x803f8754, GlfSceneHook::OnNextShot);
 

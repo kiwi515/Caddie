@@ -6,6 +6,7 @@
 #include "types_caddie.h"
 
 #include <nw4r/math.h>
+#include <nw4r/ut.h>
 
 namespace caddie {
 
@@ -34,6 +35,10 @@ namespace caddie {
 
     // default timer position on screen
     static const nw4r::math::VEC2 sTimerPos;
+    // default timer text colors
+    static const nw4r::ut::Color sTimerRunningColor;
+    static const nw4r::ut::Color sTimerFrozenColor;
+    static const nw4r::ut::Color sTimerStoppedColor;
     };
 
 }
