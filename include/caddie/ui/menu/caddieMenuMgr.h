@@ -20,6 +20,8 @@ public:
     virtual void Calc();
     virtual void Draw() const;
 
+    MenuBase* GetMenu() const { return mMenu; }
+
     void OpenMenu(MenuBase* menu) {
         CADDIE_ASSERT(menu != NULL);
         mMenu = menu;

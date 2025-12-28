@@ -2,6 +2,8 @@
 
 #include "types_caddie.h"
 
+#include <RevoSDK/SC.h>
+
 using namespace nw4r;
 
 namespace caddie {
@@ -33,7 +35,13 @@ BuildInfo::BuildInfo() {
     SetStroke(TextBox::STROKE_OUTLINE);
     SetCentered(true);
     SetTextColor(sBuildTextColor);
-    SetPosition(sBuildTextPos);
+
+    if (SCGetAspectRatio() == SC_ASPECT_STD) {
+        nw4r::math::VEC2 posStd(305.0f, 20.0f);
+        SetPosition(posStd);
+    } else {
+        SetPosition(sBuildTextPos);
+    }
 
     const f32 heapFreeKb = MemManager::GetFreeSize() / KB_AS_B;
     SetTextFmt("Caddie (%s, %s): %s (%.1f KB free)", GetBuildTarget(),

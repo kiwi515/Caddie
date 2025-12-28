@@ -6,13 +6,20 @@
 #define NW4R_MATH_PI 3.14159265359f
 #define NW4R_MATH_LN_2 0.69314718056f
 
-// Convert degrees to and from lookup-table index
+// [0, 65535] -> [0.0, 256.0f]
+#define NW4R_MATH_IDX_TO_FIDX(x) ((x) * (1.0f / 256.0f))
+
+// Convert degrees <-> lookup-table index
 #define NW4R_MATH_DEG_TO_FIDX(x) ((x) * (256.0f / 360.0f))
 #define NW4R_MATH_FIDX_TO_DEG(x) ((x) * (360.0f / 256.0f))
 
-// Convert radians to and from lookup-table index
+// Convert radians <-> lookup-table index
 #define NW4R_MATH_RAD_TO_FIDX(x) ((x) * (128.0f / NW4R_MATH_PI))
 #define NW4R_MATH_FIDX_TO_RAD(x) ((x) * (NW4R_MATH_PI / 128.0f))
+
+// Convert degrees <-> radians
+#define NW4R_MATH_DEG_TO_RAD(x) ((x) * (NW4R_MATH_PI / 180.0f))
+#define NW4R_MATH_RAD_TO_DEG(x) ((x) * (180.0f / NW4R_MATH_PI))
 
 namespace nw4r {
 namespace math {
