@@ -1,5 +1,8 @@
 #ifndef CADDIE_SCENE_GLF_SCENE_HOOK_H
 #define CADDIE_SCENE_GLF_SCENE_HOOK_H
+
+#include "caddieTimer.h"
+
 #include "types_caddie.h"
 
 #include <nw4r/math.h>
@@ -47,6 +50,8 @@ private:
     static GlfPostMenu* sGlfPostMenu;
 
     static bool sDidStopShot;
+
+    static Timer* sTimer;
 };
 
 } // namespace caddie

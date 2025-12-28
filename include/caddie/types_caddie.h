@@ -39,6 +39,8 @@ struct BuildInfo;
 struct Pane;
 struct TextBox;
 
+struct Timer;
+
 // scene/glf
 struct GlfMenu;
 struct GlfSceneHook;
