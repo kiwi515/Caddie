@@ -54,7 +54,11 @@ void SceneHookMgr::DoCalculate() {
         hookMgr.mGlobalSceneHook.onCalculate(GetCurrentScene());
     }
 }
+#ifdef CADDIE_REGION_NTSC_U
 kmBranch(0x8022f8f8, SceneHookMgr::DoCalculate);
+#elif CADDIE_REGION_PAL
+kmBranch(0x80232c64, SceneHookMgr::DoCalculate);
+#endif
 
 /**
  * @brief Dispatch scene hook UserDraw callback
@@ -71,7 +75,11 @@ void SceneHookMgr::DoUserDraw() {
         hookMgr.mGlobalSceneHook.onUserDraw(GetCurrentScene());
     }
 }
+#if CADDIE_REGION_NTSC_U
 kmBranch(0x802542a8, SceneHookMgr::DoUserDraw);
+#elif CADDIE_REGION_PAL
+kmBranch(0x802545c8, SceneHookMgr::DoUserDraw);
+#endif
 
 /**
  * @brief Dispatch scene hook Exit callback
@@ -88,7 +96,11 @@ void SceneHookMgr::DoExit() {
         hookMgr.mGlobalSceneHook.onExit(GetCurrentScene());
     }
 }
+#ifdef CADDIE_REGION_NTSC_U
 kmBranch(0x8022f6f4, SceneHookMgr::DoExit);
+#elif CADDIE_REGION_PAL
+kmBranch(0x8022f96c, SceneHookMgr::DoExit);
+#endif
 
 /**
  * @brief Update pause manager
@@ -101,6 +113,10 @@ void SceneHookMgr::DoUpdatePause() {
         RPSysPauseMgr::getInstance().update();
     }
 }
+#ifdef CADDIE_REGION_NTSC_U
 kmCall(0x80232984, SceneHookMgr::DoUpdatePause);
+#elif CADDIE_REGION_PAL
+kmCall(0x80232b88, SceneHookMgr::DoUpdatePause);
+#endif
 
 } // namespace caddie

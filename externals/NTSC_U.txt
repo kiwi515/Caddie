@@ -74,10 +74,6 @@ loadToMainRAM__Q23EGG9DvdRipperFPCcPUcPQ23EGG4HeapQ33EGG9DvdRipper15EAllocDirect
 # RP/RPSystem/RPSysSceneMgr
 sInstance__13RPSysSceneMgr=0x806f4c98
 
-# RP/RPSystem/RPSysSysMsgWinMgr
-update__17RPSysSysMsgWinMgrFv=0x802352d4
-sInstance__17RPSysSysMsgWinMgr=0x806f4ce0
-
 # RP/RPSystem/RPSysSceneCreator
 changeSceneAfterFade__17RPSysSceneCreatorFiQ34nw4r2ut5Color=0x8022edfc
 sInstance__17RPSysSceneCreator=0x806f4c88
@@ -85,6 +81,7 @@ sInstance__17RPSysSceneCreator=0x806f4c88
 # RP/RPSystem/RPSysPauseMgr
 sInstance__13RPSysPauseMgr=0x806f4cd0
 update__13RPSysPauseMgrFv=0x802352d4
+
 
 # RP/RPSystem/RPSysProjectLocal
 sInstance__17RPSysProjectLocal=0x806f4ca0

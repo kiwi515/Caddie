@@ -51,6 +51,12 @@ void main() {
 
     SceneHookMgr::GetInstance().AllowPause(RPSysSceneCreator::SCENE_DGL, false);
 }
+#ifdef CADDIE_REGION_NTSC_U
 kmBranch(0x80230b60, main);
+#elif CADDIE_REGION_PAL
+kmBranch(0x80230e2c, main);
+#else
+#error "No region defined!"
+#endif
 
 } // namespace caddie

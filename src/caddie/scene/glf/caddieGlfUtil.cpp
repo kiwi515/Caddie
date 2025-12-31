@@ -8,9 +8,9 @@ namespace caddie {
  * @brief Whether the current hole is the first hole of the gamemode
  */
 bool GlfUtil::IsCurrentFirstHole() {
-    // Sp2::Glf::GlfConfig& main = Sp2::Glf::GlfConfig::getInstance();
-    // return IsFirstHoleInternal(main.getGamemode(), main.getCurrentHole());
-    return false;
+    Sp2::Glf::GlfConfig& main = Sp2::Glf::GlfConfig::getInstance();
+    return IsFirstHoleInternal(main.getGamemode(), main.getCurrentHole());
+    // return false;
 }
 
 /**
@@ -58,9 +58,9 @@ bool GlfUtil::IsFirstHole(Sp2::Glf::GameMode gm, u32 hole) {
  * @brief Whether the current round is over (hole is past end of difficulty)
  */
 bool GlfUtil::IsCurrentRoundOver() {
-    // Sp2::Glf::GlfConfig& main = Sp2::Glf::GlfConfig::getInstance();
-    // return IsRoundOverInternal(main.getGamemode(), main.getCurrentHole());
-    return false;
+    Sp2::Glf::GlfConfig& main = Sp2::Glf::GlfConfig::getInstance();
+    return IsRoundOverInternal(main.getGamemode(), main.getCurrentHole());
+    // return false;
 }
 
 /**
@@ -68,9 +68,9 @@ bool GlfUtil::IsCurrentRoundOver() {
  * difficulty)
  */
 bool GlfUtil::IsNextRoundOver() {
-    // Sp2::Glf::GlfConfig& main = Sp2::Glf::GlfConfig::getInstance();
-    // return IsRoundOverInternal(main.getGamemode(), main.getCurrentHole() + 1);
-    return false;
+    Sp2::Glf::GlfConfig& main = Sp2::Glf::GlfConfig::getInstance();
+    return IsRoundOverInternal(main.getGamemode(), main.getCurrentHole() + 1);
+    // return false;
 }
 
 /**
@@ -127,25 +127,25 @@ u32 GlfUtil::GetGamemodeNthHoleInternal(u32 n) {
  * @details Hole is one-indexed
  */
 u32 GlfUtil::GetGamemodeNthHole(u32 n) {
-    // switch (Sp2::Glf::GlfConfig::getInstance().getGamemode()) {
-    // case Sp2::Glf::GM_EIGHTEEN_HOLE:
-    // case Sp2::Glf::GM_RESORT_NINE:
-    // case Sp2::Glf::GM_RESORT_A:
-    //     return 1 + n;
-    // case Sp2::Glf::GM_RESORT_B:
-    //     return 4 + n;
-    // case Sp2::Glf::GM_RESORT_C:
-    //     return 7 + n;
-    // case Sp2::Glf::GM_CLASSIC_NINE:
-    // case Sp2::Glf::GM_CLASSIC_A:
-    //     return 10 + n;
-    // case Sp2::Glf::GM_CLASSIC_B:
-    //     return 13 + n;
-    // case Sp2::Glf::GM_CLASSIC_C:
-    //     return 16 + n;
-    // case Sp2::Glf::GM_SPECIAL:
-    //     return 19 + n;
-    // }
+    switch (Sp2::Glf::GlfConfig::getInstance().getGamemode()) {
+    case Sp2::Glf::GM_EIGHTEEN_HOLE:
+    case Sp2::Glf::GM_RESORT_NINE:
+    case Sp2::Glf::GM_RESORT_A:
+        return 1 + n;
+    case Sp2::Glf::GM_RESORT_B:
+        return 4 + n;
+    case Sp2::Glf::GM_RESORT_C:
+        return 7 + n;
+    case Sp2::Glf::GM_CLASSIC_NINE:
+    case Sp2::Glf::GM_CLASSIC_A:
+        return 10 + n;
+    case Sp2::Glf::GM_CLASSIC_B:
+        return 13 + n;
+    case Sp2::Glf::GM_CLASSIC_C:
+        return 16 + n;
+    case Sp2::Glf::GM_SPECIAL:
+        return 19 + n;
+    }
     return 1+n;
 }
 

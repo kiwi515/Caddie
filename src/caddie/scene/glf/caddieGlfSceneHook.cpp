@@ -92,7 +92,7 @@ void GlfSceneHook::OnCalculate(RPSysScene* scene) {
         MenuMgr::GetInstance().OpenMenu(sGlfMenu);
     }
 
-    // if game is paused, stop timer, else start it
+    // // if game is paused, stop timer, else start it
     // bool paused = Sp2::Glf::GlfMain::getInstance().getPause();
     // if (paused) {
     //     sTimer->Stop();

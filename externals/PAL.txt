@@ -11,10 +11,14 @@ OSReport=0x80061470
 # STL/cstdio
 vprintf=0x8000ceec
 vsprintf=0x8000cff0
+vsnprintf=0x8000cf68
 sprintf=0x8000d168
+snprintf=0x8000d074
 
 # STL/string
 strcmp=0x8000e8b0
+strlen=0x800071c0
+strncpy=0x8000e7f4
 
 # TRK/runtime
 _savefpr_25=0x800077b8
@@ -25,6 +29,20 @@ _savefpr_28=0x800077c4
 _restfpr_28=0x80007810
 _savefpr_29=0x800077c8
 _restfpr_29=0x80007814
+
+_savegpr_24=0x8000784c
+_restgpr_24=0x80007898
+_savegpr_25=0x80007850
+_restgpr_25=0x8000789c
+_savegpr_26=0x80007854
+_restgpr_26=0x800078a0
+_savegpr_27=0x80007858
+_restgpr_27=0x800078a4
+_savegpr_28=0x8000785c
+_restgpr_28=0x800078a8
+_savegpr_29=0x80007860
+_restgpr_29=0x800078ac
+
 __register_global_object=0x800072a4
 __destroy_arr=0x800075bc
 
@@ -33,32 +51,51 @@ List_Init__Q24nw4r2utFPQ34nw4r2ut4ListUs=0x8010b9e0
 List_GetNth__Q24nw4r2utFPCQ34nw4r2ut4ListUs=0x8010bc40
 List_Append__Q24nw4r2utFPQ34nw4r2ut4ListPv=0x8010ba00
 List_GetNext__Q24nw4r2utFPCQ34nw4r2ut4ListPCv=0x8010bc00
+List_GetPrev__Q24nw4r2utFPCQ34nw4r2ut4ListPCv=0x8010bc20
+
+# nw4r/db/db_exception
+Exception_Printf___Q24nw4r2dbFPCce=0x80166a10
+ShowFloat___Q24nw4r2dbFPC9OSContext=0x80167230
 
 # EGG/core/eggExpHeap
 create__Q23EGG7ExpHeapFUlPQ23EGG4HeapUs=0x801c0e58
 
 # EGG/core/eggException
-setUserCallback__Q23EGG9ExceptionFPUs=0x801cee38
+setUserCallback__Q23EGG9ExceptionFPCUs=0x801cee38
+create__Q23EGG9ExceptionFUsUsUsPQ23EGG4HeapUs=0x801ceda8
 
 # EGG/core/eggController
 getNthController__Q23EGG17CoreControllerMgrFi=0x801c4ab8
 sInstance__Q23EGG17CoreControllerMgr=0x806f50a8
 
+# EGG/core/eggDvdRipper
+loadToMainRAM__Q23EGG9DvdRipperFPCcPUcPQ23EGG4HeapQ33EGG9DvdRipper15EAllocDirectionUlPUlPUl=0x801c7ce0
+
 # RP/RPSystem/RPSysSceneMgr
 sInstance__13RPSysSceneMgr=0x806f5338
 
 # RP/RPSystem/RPSysSysMsgWinMgr
-CheckInput__17RPSysSysMsgWinMgrFv=0x802355f4
-sInstance__17RPSysSysMsgWinMgr=0x806f5380
+update__17RPSysSysMsgWinMgrFv=0x802355f4
+sInstance__17RPSysSysMsgWinMgr=0x806f5370
 
 # RP/RPSystem/RPSysSceneCreator
-changeSceneAfterFade__17RPSysSceneCreatorFiPQ34nw4r2ut5Color=0x8022f074
+changeSceneAfterFade__17RPSysSceneCreatorFiQ34nw4r2ut5Color=0x8022f074
 sInstance__17RPSysSceneCreator=0x806f5328
+
+# RP/RPSystem/RPSysPauseMgr
+sInstance__13RPSysPauseMgr=0x806f5370
+update__13RPSysPauseMgrFv=0x802355f4
+
+# RP/RPSystem/RPSysProjectLocal
+sInstance__17RPSysProjectLocal=0x806f5340
 
 # Sports2/Sp2StaticMem
 getStaticVar__Q23Sp29StaticMemFib=0x8026a26c
 setStaticVar__Q23Sp29StaticMemFiib=0x8026a228
 sInstance__Q23Sp29StaticMem=0x806f5538
+
+# Sports2/Glf/Sp2GlfMain
+sInstance__Q33Sp23Glf7GlfMain=0x806f5bb0
 
 # Sports2/Glf/Sp2GlfConfig
 choosePin__Q33Sp23Glf9GlfConfigFi=0x80406a00
@@ -77,5 +114,39 @@ func_802352d4__Q26caddie11Obj806f4cd0Fv=0x802355f4
 # Sports2/Glf/Sp2GlfBall
 Stop__Q33Sp23Glf7GlfBallFb=0x80413e24
 
+# Sports2/Glf/RPGlfBall
+Calc__9RPGlfBallFUl=0x80413e88
+sFlags__9RPGlfBall=0x806fdfbc
+
 # Sports2/Glf/Sp2GlfBallMgr
 sGlfBalls__Q33Sp23Glf10GlfBallMgr=0x806f5b88
+
+# Sports2/Glf/RPGlfPlayerManager
+sInstance__18RPGlfPlayerManager=0x806f5b58
+
+PSMTXIdentity=0x8003e730
+PSMTXScaleApply=0x8003ef40
+PSMTXTransApply=0x8003eec0
+BeginDrawSphere__Q23EGG6DrawGXFv=0x801a66c4
+DrawDLWorld__Q23EGG6DrawGXFQ33EGG6DrawGX2DLRCQ34nw4r4math5MTX348_GXColor=0x801a89d4
+sDrawPass__13RPGrpRenderer=0x806f129c
+sCurrentViewID__13RPGrpRenderer=0x806f12a0
+s_cameraMtx__Q23EGG6DrawGX=0x807cd080
+SCGetAspectRatio=0x80053f40
+GetPinPos__17RPGlfFieldManagerCFv=0x80402ef8
+GetDistFromPin__9RPGlfBallCFv=0x80411d28
+IsHoleOut__9RPGlfBallCFv=0x80411e7c
+IsGreenOrCupAttr__9RPGlfBallCFv=0x80411dd8
+FrSqrt__Q24nw4r4mathFf=0x8013ba50
+sInstance__17RPGlfFieldManager=0x806f5b40
+sInstance__16RPGlfClubManager=0x806f5b60
+IsHideUI__17RPGlfFieldManagerCFv=0x80403098
+spSimBall__15RPGlfSimManager=0x806f5b88
+SetBlendMode__Q23EGG6DrawGXFQ33EGG6DrawGX5Blend=0x801a8810
+DrawLineStrip__Q23EGG6DrawGXFPCQ34nw4r4math4VEC3Us8_GXColorUc=0x801a6e00
+CalcDeltaXZ__12RPGlfUtilityFRQ34nw4r4math4VEC2RCQ34nw4r4math4VEC3RCQ34nw4r4math4VEC3=0x803ede4c
+CalcDeltaAngle2D__12RPGlfUtilityFRCQ34nw4r4math4VEC2RCQ34nw4r4math4VEC2=0x803edb0c
+Calculate__Q33Sp23Glf11SequenceMgrFv=0x803f9c54
+sInstance__Q33Sp23Glf11SequenceMgr=0x806f5b00
+NextShot__Q33Sp23Glf12SequenceMainFv=0x803f73b0
+Enter__Q33Sp23Glf5PhaseFv=0x803f9cbc
