@@ -86,20 +86,20 @@ void GlfSceneHook::OnConfigure(RPSysScene* scene) {
  */
 void GlfSceneHook::OnCalculate(RPSysScene* scene) {
     bool isMenuOpen = MenuMgr::GetInstance().IsVisible();
-    Sp2::Glf::GlfMain::getInstance().setPause(isMenuOpen);
+    // Sp2::Glf::GlfMain::getInstance().setPause(isMenuOpen);
 
     if (MenuMgr::GetInstance().GetMenu() == NULL) {
         MenuMgr::GetInstance().OpenMenu(sGlfMenu);
     }
 
     // if game is paused, stop timer, else start it
-    bool paused = Sp2::Glf::GlfMain::getInstance().getPause();
-    if (paused) {
-        sTimer->Stop();
-    }
-    else {
-        sTimer->Start();
-    }
+    // bool paused = Sp2::Glf::GlfMain::getInstance().getPause();
+    // if (paused) {
+    //     sTimer->Stop();
+    // }
+    // else {
+    //     sTimer->Start();
+    // }
 
     // change the timer
     if (sTimer != NULL) {
@@ -153,25 +153,25 @@ void GlfSceneHook::OnUserDraw(RPSysScene* scene) {
 
     char buffer[1024];
 
-    // Current pin display
-    {
-        u32 hole = Sp2::Glf::GlfConfig::getInstance().getCurrentHole();
-        u32 pin = Sp2::Glf::GlfConfig::getInstance().getPin();
+    // // Current pin display
+    // {
+    //     u32 hole = Sp2::Glf::GlfConfig::getInstance().getCurrentHole();
+    //     u32 pin = Sp2::Glf::GlfConfig::getInstance().getPin();
 
-        if (hole == 0) {
-            snprintf(buffer, sizeof(buffer), "Current Pin: %s",
-                     ENUM_PIN_TYPE_HOLE1[pin]);
-        } else if (hole > 17) {
-            snprintf(buffer, sizeof(buffer), "Current Pin: %s",
-                     ENUM_PIN_TYPE_SPECIAL[pin]);
-        } else {
-            snprintf(buffer, sizeof(buffer), "Current Pin: %s",
-                     ENUM_PIN_TYPE[pin]);
-        }
+    //     if (hole == 0) {
+    //         snprintf(buffer, sizeof(buffer), "Current Pin: %s",
+    //                  ENUM_PIN_TYPE_HOLE1[pin]);
+    //     } else if (hole > 17) {
+    //         snprintf(buffer, sizeof(buffer), "Current Pin: %s",
+    //                  ENUM_PIN_TYPE_SPECIAL[pin]);
+    //     } else {
+    //         snprintf(buffer, sizeof(buffer), "Current Pin: %s",
+    //                  ENUM_PIN_TYPE[pin]);
+    //     }
 
-        Sp2::PrintOutline(buffer, 0xFF00FFFF, 0xFF000000, false, 100.0f,
-                          180.0f);
-    }
+    //     Sp2::PrintOutline(buffer, 0xFF00FFFF, 0xFF000000, false, 100.0f,
+    //                       180.0f);
+    // }
 }
 
 void GlfSceneHook::DrawPutterGuide(const nw4r::math::VEC3* pPoints, u16 num,
@@ -504,7 +504,7 @@ void GlfSceneHook::Apply_Wind() {
     }
 
     Sp2::StaticMem::getInstance().setStaticVar(
-        Sp2::Glf::VAR_WIND + GetMenu().GetHoleInternal(),
+        9 + GetMenu().GetHoleInternal(),
         Sp2::Glf::PackWind(dir, spd), false);
 }
 
