@@ -43,6 +43,13 @@ void main() {
                     GlfSceneHook::OnUserDraw, GlfSceneHook::OnExit});
     // Disable pausing in the Golf scene
     SceneHookMgr::GetInstance().AllowPause(RPSysSceneCreator::SCENE_GLF, false);
+
+    SceneHookMgr::GetInstance().SetHook(
+    RPSysSceneCreator::SCENE_DGL,
+    (SceneHook){GlfSceneHook::OnConfigure, GlfSceneHook::OnCalculate,
+                GlfSceneHook::OnUserDraw, GlfSceneHook::OnExit});
+
+    SceneHookMgr::GetInstance().AllowPause(RPSysSceneCreator::SCENE_DGL, false);
 }
 kmBranch(0x80230b60, main);
 
