@@ -60,6 +60,16 @@ void GlfSceneHook::OnConfigure(RPSysScene* scene) {
         sGlfMenu = new GlfMenu();
         CADDIE_ASSERT(sGlfMenu != NULL);
     }
+
+    // setup timer
+    if (sTimer == NULL) {
+        sTimer = new Timer();
+        CADDIE_ASSERT(sTimer != NULL);
+    }
+    // start timer
+    sTimer->Reset();
+    sTimer->Start();
+
     if (sGlfPostMenu == NULL) {
         sGlfPostMenu = new GlfPostMenu();
         CADDIE_ASSERT(sGlfPostMenu != NULL);
@@ -81,6 +91,20 @@ void GlfSceneHook::OnCalculate(RPSysScene* scene) {
     if (MenuMgr::GetInstance().GetMenu() == NULL) {
         MenuMgr::GetInstance().OpenMenu(sGlfMenu);
     }
+
+    // if game is paused, stop timer, else start it
+    bool paused = Sp2::Glf::GlfMain::getInstance().getPause();
+    if (paused) {
+        sTimer->Stop();
+    }
+    else {
+        sTimer->Start();
+    }
+
+    // change the timer
+    if (sTimer != NULL) {
+        sTimer->Calc();
+    }
 }
 
 void GlfSceneHook::OnPausedSeqMgrCalc() {
@@ -93,6 +117,8 @@ void GlfSceneHook::OnPausedSeqMgrCalc() {
 kmCall(0x804175e8, GlfSceneHook::OnPausedSeqMgrCalc);
 
 void GlfSceneHook::OnNextShot() {
+    sTimer->Freeze(90);
+
     if (sDidStopShot || !GetMenu().GetRetryShotMenu()) {
         Sp2::Glf::SequenceMgr::getInstance().GetSequenceMain()->NextShot();
         GlfPostMenu::ChangePhase();
@@ -112,6 +138,10 @@ void GlfSceneHook::OnNextShot() {
 kmCall(0x803f8754, GlfSceneHook::OnNextShot);
 
 void GlfSceneHook::OnUserDraw(RPSysScene* scene) {
+    if (sTimer != NULL) {
+        sTimer->Draw();
+    }
+
     if (!MenuMgr::GetInstance().IsVisible()) {
         return;
     }
@@ -141,8 +171,6 @@ void GlfSceneHook::OnUserDraw(RPSysScene* scene) {
         Sp2::PrintOutline(buffer, 0xFF00FFFF, 0xFF000000, false, 100.0f,
                           180.0f);
     }
-
-    ;
 }
 
 void GlfSceneHook::DrawPutterGuide(const nw4r::math::VEC3* pPoints, u16 num,
@@ -326,6 +354,10 @@ void GlfSceneHook::OnExit(RPSysScene* scene) {
     // Apply static mem settings
     else {
         Apply_StaticMem();
+    }
+    if (sTimer != NULL) {
+        delete sTimer;
+        sTimer = NULL;
     }
 }
 
@@ -583,6 +615,7 @@ GlfPostMenu& GlfSceneHook::GetPostMenu() {
 }
 
 GlfMenu* GlfSceneHook::sGlfMenu = NULL;
+Timer* GlfSceneHook::sTimer = NULL;
 GlfPostMenu* GlfSceneHook::sGlfPostMenu = NULL;
 
 } // namespace caddie
