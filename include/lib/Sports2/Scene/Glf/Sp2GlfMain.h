@@ -14,7 +14,7 @@ public:
         return *sInstance;
     }
 
-    bool getPause() { return mIsPause; }
+    bool getPause() const { return mIsPause; }
     void setPause(bool pause) { mIsPause = pause; }
 
 private:
