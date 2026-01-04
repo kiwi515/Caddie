@@ -194,7 +194,7 @@ void GlfSceneHook::Apply_Wind() {
         }
 
         // Generate random speed
-        spd = Sp2::Rand(min, max);
+        spd = Sp2::Rand(min, max + 1);
     }
 
     // Random direction
