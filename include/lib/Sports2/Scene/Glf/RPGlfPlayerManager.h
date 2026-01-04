@@ -26,10 +26,14 @@ public:
         return mPlayers[i];
     }
 
-    RPGlfPlayer& GetCurrentPlayer() { return mPlayers[mCurrentPlayerID]; }
+    RPGlfPlayer& GetCurrentPlayer() {
+        CADDIE_ASSERT(mCurrentPlayer);
+        return *mCurrentPlayer;
+    }
 
     const RPGlfPlayer& GetCurrentPlayer() const {
-        return mPlayers[mCurrentPlayerID];
+        CADDIE_ASSERT(mCurrentPlayer);
+        return *mCurrentPlayer;
     }
 
     u32 GetCurrentPlayerID() const { return mCurrentPlayerID; }
@@ -40,7 +44,8 @@ private:
 
 public:
     RPGlfPlayer mPlayers[Sp2::Glf::PLAYER_MAX]; // at 0x4
-    char UNK_0x664[0x690 - 0x664];
+    RPGlfPlayer* mCurrentPlayer;                // at 0x664
+    char UNK_0x668[0x690 - 0x668];
     u32 mCurrentPlayerID; // at 0x690
 
     static RPGlfPlayerManager* sInstance;

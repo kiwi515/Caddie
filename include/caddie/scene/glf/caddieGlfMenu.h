@@ -34,6 +34,9 @@ public:
         return static_cast<EWindSpdRange>(mWindSpdRange.GetSavedValue());
     }
 
+    bool GetReplayInfo() const { return mReplayInfo.GetSavedValue(); }
+    bool GetRetryShotMenu() const { return mRetryShotMenu.GetSavedValue(); }
+
 private:
     MenuIntOption mHole;
     MenuBoolOption mRepeatHole;
@@ -41,6 +44,8 @@ private:
     MenuEnumOption mWindDir;
     MenuEnumOption mWindSpd;
     MenuEnumOption mWindSpdRange;
+    MenuBoolOption mReplayInfo;
+    MenuBoolOption mRetryShotMenu;
     MenuActionOption mApplyRestart;
     MenuActionOption mQuitGame;
 

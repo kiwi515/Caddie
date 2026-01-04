@@ -2,6 +2,8 @@
 
 #include "caddieInputMgr.h"
 
+#include <RevoSDK/SC.h>
+#include <cstring>
 #include <nw4r/math.h>
 
 using namespace nw4r;
@@ -23,11 +25,13 @@ void MenuMgr::Calc() {
 
         // Toggle visibility
         if (trig & InputMgr::BTN_PLUS) {
-            SetVisible(!mIsVisible);
+            if (strcmp(mOpenPage->GetName(), "PostMenu") != 0) {
+                SetVisible(!mIsVisible);
 
-            // Delete changes on menu close
-            if (!IsVisible() && mOpenPage != NULL) {
-                mOpenPage->DeleteChanges();
+                // Delete changes on menu close
+                if (!IsVisible() && mOpenPage != NULL) {
+                    mOpenPage->DeleteChanges();
+                }
             }
         }
 
@@ -84,7 +88,12 @@ void MenuMgr::Calc() {
     // Update cursor screen position
     const math::VEC2 optionPos =
         mOpenPage->GetOption(mCursor).GetOptionPosition();
-    const math::VEC2 cursorPos(optionPos.x - sCursorOffset, optionPos.y);
+
+    math::VEC2 cursorPos(optionPos.x - sCursorOffset, optionPos.y);
+    if (SCGetAspectRatio() == SC_ASPECT_STD) {
+        cursorPos.x -= 3.0f;
+    }
+
     mCursorText.SetPosition(cursorPos);
 }
 
