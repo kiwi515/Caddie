@@ -48,6 +48,11 @@ void MenuMgr::Calc() {
             ClosePage();
         }
 
+        // Don't move the cursor if the menu was just closed
+        if (mOpenPage == NULL) {
+            return;
+        }
+
         // Initial up input before DAS
         if ((trig & InputMgr::BTN_UP && mControlDAS[i] == sControlMaxDAS) ||
             // Auto repeat up
