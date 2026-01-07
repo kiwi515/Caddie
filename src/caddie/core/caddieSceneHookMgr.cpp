@@ -26,7 +26,6 @@ RPSysScene* GetCurrentScene() {
  * @brief Dispatch scene hook Configure callback
  */
 void SceneHookMgr::DoConfigure() {
-    OSReport("SceneHookMgr::DoConfigure called\n");
     const s32 scene = GetCurrentSceneID();
     const SceneHookMgr& hookMgr = SceneHookMgr::GetInstance();
 
@@ -44,8 +43,6 @@ kmBranch(0x801c389c, SceneHookMgr::DoConfigure);
  * @brief Dispatch scene hook Calculate callback
  */
 void SceneHookMgr::DoCalculate() {
-    OSReport("SceneHookMgr::DoCalculate called\n");
-
     const s32 scene = GetCurrentSceneID();
     const SceneHookMgr& hookMgr = SceneHookMgr::GetInstance();
 
@@ -67,8 +64,6 @@ kmBranch(0x80232c64, SceneHookMgr::DoCalculate);
  * @brief Dispatch scene hook UserDraw callback
  */
 void SceneHookMgr::DoUserDraw() {
-    OSReport("SceneHookMgr::DoUserDraw called\n");
-
     const s32 scene = GetCurrentSceneID();
     const SceneHookMgr& hookMgr = SceneHookMgr::GetInstance();
 
@@ -90,8 +85,6 @@ kmBranch(0x802545c8, SceneHookMgr::DoUserDraw);
  * @brief Dispatch scene hook Exit callback
  */
 void SceneHookMgr::DoExit() {
-    OSReport("SceneHookMgr::DoExit called\n");
-
     const s32 scene = GetCurrentSceneID();
     const SceneHookMgr& hookMgr = SceneHookMgr::GetInstance();
 
@@ -113,8 +106,6 @@ kmBranch(0x8022f96c, SceneHookMgr::DoExit);
  * @brief Update pause manager
  */
 void SceneHookMgr::DoUpdatePause() {
-    OSReport("SceneHookMgr::DoUpdatePause called\n");
-
     const s32 scene = GetCurrentSceneID();
     const SceneHookMgr& hookMgr = SceneHookMgr::GetInstance();
 
@@ -125,7 +116,7 @@ void SceneHookMgr::DoUpdatePause() {
 #ifdef CADDIE_REGION_NTSC_U
 kmCall(0x80232984, SceneHookMgr::DoUpdatePause);
 #elif CADDIE_REGION_PAL
-kmCall(0x80232b88, SceneHookMgr::DoUpdatePause);
+kmCall(0x80232c50, SceneHookMgr::DoUpdatePause);
 #endif
 
 } // namespace caddie
