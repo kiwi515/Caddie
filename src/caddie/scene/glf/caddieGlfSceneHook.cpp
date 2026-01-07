@@ -6,6 +6,9 @@
 #include "caddieInputMgr.h"
 #include "caddieMenuMgr.h"
 
+#include "types_rp.h"
+#include <RP/RPSystem/RPSysSceneMgr.h>
+#include <RP/RPSystem/RPSysSceneCreator.h>
 #include <RPGraphics/RPGrpRenderer.h>
 #include <RevoSDK/MTX.h>
 #include <Sports2/Scene/Glf/RPGlfBall.h>
@@ -86,19 +89,29 @@ void GlfSceneHook::OnConfigure(RPSysScene* scene) {
  */
 void GlfSceneHook::OnCalculate(RPSysScene* scene) {
     bool isMenuOpen = MenuMgr::GetInstance().IsVisible();
-    Sp2::Glf::GlfMain::getInstance().setPause(isMenuOpen);
+
+    // pause game if menu is open
+    // only in glf scene for now
+    if (RPSysSceneMgr::getInstance().getCurrentSceneID() == 
+        RPSysSceneCreator::SCENE_GLF) {
+        Sp2::Glf::GlfMain::getInstance().setPause(isMenuOpen);
+    }
 
     if (MenuMgr::GetInstance().GetMenu() == NULL) {
         MenuMgr::GetInstance().OpenMenu(sGlfMenu);
     }
 
     // if game is paused, stop timer, else start it
-    bool paused = Sp2::Glf::GlfMain::getInstance().getPause();
-    if (paused) {
-        sTimer->Stop();
-    }
-    else {
-        sTimer->Start();
+    // only in glf scene for now
+    if (RPSysSceneMgr::getInstance().getCurrentSceneID() ==
+        RPSysSceneCreator::SCENE_GLF) {
+        bool paused = Sp2::Glf::GlfMain::getInstance().getPause();
+        if (paused) {
+            sTimer->Stop();
+        }
+        else {
+            sTimer->Start();
+        }
     }
 
     // change the timer
@@ -153,6 +166,9 @@ void GlfSceneHook::OnUserDraw(RPSysScene* scene) {
     char buffer[1024];
 
     // Current pin display
+    // only show in glf scene
+    if (RPSysSceneMgr::getInstance().getCurrentSceneID() ==
+        RPSysSceneCreator::SCENE_GLF)
     {
         u32 hole = Sp2::Glf::GlfConfig::getInstance().getCurrentHole();
         u32 pin = Sp2::Glf::GlfConfig::getInstance().getPin();
@@ -502,8 +518,22 @@ void GlfSceneHook::Apply_Wind() {
         dir = Sp2::Rand(Sp2::Glf::MAX_WIND_DIV);
     }
 
+    // golf and FG have different static mem indices for wind
+    // determine which index to use, then set wind for the current hole
+    int windStaticMemIdx;
+    switch (RPSysSceneMgr::getInstance().getCurrentSceneID()) {
+        case RPSysSceneCreator::SCENE_GLF:
+            windStaticMemIdx = Sp2::Glf::VAR_WIND;
+            break;
+        case RPSysSceneCreator::SCENE_DGL:
+            windStaticMemIdx = 9;
+            break;
+        default:
+            CADDIE_ASSERT(false);
+            return;
+    }
     Sp2::StaticMem::getInstance().setStaticVar(
-        9 + GetMenu().GetHoleInternal(),
+        windStaticMemIdx + GetMenu().GetHoleInternal(),
         Sp2::Glf::PackWind(dir, spd), false);
 }
 
