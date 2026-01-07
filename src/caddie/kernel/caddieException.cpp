@@ -18,7 +18,11 @@ namespace caddie {
 void Exception::InitConsole() {
     EGG::Exception::create(128, sConsoleMaxLines, 4, NULL, 1);
 }
+#if CADDIE_REGION_NTSC_U
 kmCall(0x8022e2d4, Exception::InitConsole);
+#elif CADDIE_REGION_PAL
+kmCall(0x8022e54c, Exception::InitConsole);
+#endif
 
 /**
  * @brief Resolves address to a map symbol, and prints it to the exception

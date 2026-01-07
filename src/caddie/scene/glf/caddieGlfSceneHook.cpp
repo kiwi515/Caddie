@@ -45,8 +45,13 @@
 // Convert yards to world units.
 #define YD(X) ((f32)(X) * 10.0f / 1.094f)
 
+#if CADDIE_REGION_NTSC_U
 kmWrite32(0x803f8778, 0x60000000);
 kmWrite32(0x803f878c, 0x60000000);
+#elif CADDIE_REGION_PAL
+kmWrite32(0x803f8a98, 0x60000000);
+kmWrite32(0x803f8aac, 0x60000000);
+#endif
 
 namespace caddie {
 
@@ -127,11 +132,17 @@ void GlfSceneHook::OnPausedSeqMgrCalc() {
 
     Sp2::Glf::SequenceMgr::getInstance().Calculate();
 }
+
+#if CADDIE_REGION_NTSC_U
 kmCall(0x804175e8, GlfSceneHook::OnPausedSeqMgrCalc);
+#elif CADDIE_REGION_PAL
+kmCall(0x80417908, GlfSceneHook::OnPausedSeqMgrCalc);
+#endif
 
 void GlfSceneHook::OnNextShot() {
     sTimer->Freeze(90);
 
+    OSReport("GetMenu at line %d\n", __LINE__);
     if (sDidStopShot || !GetMenu().GetRetryShotMenu()) {
         Sp2::Glf::SequenceMgr::getInstance().GetSequenceMain()->NextShot();
         GlfPostMenu::ChangePhase();
@@ -148,7 +159,12 @@ void GlfSceneHook::OnNextShot() {
     MenuMgr::GetInstance().OpenMenu(sGlfPostMenu);
     MenuMgr::GetInstance().SetVisible(true);
 }
+
+#if CADDIE_REGION_NTSC_U
 kmCall(0x803f8754, GlfSceneHook::OnNextShot);
+#elif CADDIE_REGION_PAL
+kmCall(0x803f8a74, GlfSceneHook::OnNextShot);
+#endif
 
 void GlfSceneHook::OnUserDraw(RPSysScene* scene) {
     if (sTimer != NULL) {
@@ -252,6 +268,7 @@ void GlfSceneHook::DrawPutterGuide(const nw4r::math::VEC3* pPoints, u16 num,
             color.b = 0;
         }
 
+        OSReport("GetMenu at line %d\n", __LINE__);
         if (!GetMenu().GetReplayInfo()) {
             color.r = 32;
             color.g = 64;
@@ -261,7 +278,12 @@ void GlfSceneHook::DrawPutterGuide(const nw4r::math::VEC3* pPoints, u16 num,
         EGG::DrawGX::DrawLineStrip(pPoints, num, color, width);
     }
 }
+
+#if CADDIE_REGION_NTSC_U
 kmCall(0x803fab74, GlfSceneHook::DrawPutterGuide);
+#elif CADDIE_REGION_PAL
+kmCall(0x803fae94, GlfSceneHook::DrawPutterGuide);
+#endif
 
 void GlfSceneHook::DrawReplaySphere() {
     if (RPGrpRenderer::GetDrawPass() != RPGrpRenderer::EDrawPass_DrawXLU) {
@@ -276,6 +298,7 @@ void GlfSceneHook::DrawReplaySphere() {
         return;
     }
 
+    OSReport("GetMenu at line %d\n", __LINE__);
     if (!GetMenu().GetReplayInfo()) {
         return;
     }
@@ -354,7 +377,12 @@ void GlfSceneHook::DrawReplaySphere() {
     }
     EGG::DrawGX::s_cameraMtx = old;
 }
+
+#if CADDIE_REGION_NTSC_U
 kmBranch(0x80404b10, GlfSceneHook::DrawReplaySphere);
+#elif CADDIE_REGION_PAL
+kmBranch(0x80404e30, GlfSceneHook::DrawReplaySphere);
+#endif
 
 /**
  * @brief Golf scene exit callback
@@ -363,6 +391,7 @@ kmBranch(0x80404b10, GlfSceneHook::DrawReplaySphere);
  */
 void GlfSceneHook::OnExit(RPSysScene* scene) {
     // Do not delete menu if settings are waiting to be applied
+    OSReport("GetMenu at line %d\n", __LINE__);
     if (GetMenu().CanDelete()) {
         delete sGlfMenu;
         sGlfMenu = NULL;
@@ -382,6 +411,7 @@ void GlfSceneHook::OnExit(RPSysScene* scene) {
  */
 void GlfSceneHook::Apply_Hole() {
     // Update hole
+    OSReport("GetMenu at line %d\n", __LINE__);
     Sp2::StaticMem::getInstance().setStaticVar(
         Sp2::Glf::VAR_NEXTHOLE, GetMenu().GetHoleInternal(), false);
 }
@@ -392,6 +422,7 @@ void GlfSceneHook::Apply_Hole() {
 void GlfSceneHook::Apply_RepeatHole() {
     Sp2::StaticMem& mem = Sp2::StaticMem::getInstance();
 
+    OSReport("GetMenu at line %d\n", __LINE__);
     if (GetMenu().GetRepeatHole()) {
         const int nextHole = mem.getStaticVar(Sp2::Glf::VAR_NEXTHOLE, false);
         mem.setStaticVar(Sp2::Glf::VAR_NEXTHOLE, nextHole - 1, false);
@@ -405,10 +436,12 @@ void GlfSceneHook::Apply_Pin() {
     Sp2::Glf::GlfConfig& main = Sp2::Glf::GlfConfig::getInstance();
 
     // Next pin type
+    OSReport("GetMenu at line %d\n", __LINE__);
     int pin = GetMenu().GetPinType();
 
     // Next hole to be played determines how to interpret pin value
     int nextHole = 0;
+    OSReport("GetMenu at line %d\n", __LINE__);
     if (GetMenu().GetRepeatHole()) {
         // Value is internal hole num (zero indexed)
         nextHole = main.getCurrentHole() + 1;
@@ -476,6 +509,7 @@ void GlfSceneHook::Apply_Pin() {
  * @brief Apply wind settings from menu
  */
 void GlfSceneHook::Apply_Wind() {
+    OSReport("GetMenu at line %d\n", __LINE__);
     int spd = GetMenu().GetWindSpd();
     int dir = GetMenu().GetWindDir();
 
@@ -485,6 +519,7 @@ void GlfSceneHook::Apply_Wind() {
         int min = 0;
         int max = Sp2::Glf::WIND_MAX;
 
+        OSReport("GetMenu at line %d\n", __LINE__);
         switch (GetMenu().GetWindSpdRange()) {
         // 0-10 m/s (0-20 mph)
         case RANGE_0_10:
@@ -518,6 +553,7 @@ void GlfSceneHook::Apply_Wind() {
         dir = Sp2::Rand(Sp2::Glf::MAX_WIND_DIV);
     }
 
+    OSReport("GetMenu at line %d\n", __LINE__);
     // golf and FG have different static mem indices for wind
     // determine which index to use, then set wind for the current hole
     int windStaticMemIdx;
@@ -544,6 +580,7 @@ void GlfSceneHook::Apply_StaticMem() {
     Apply_Wind();
 
     // Hole option should not automatically be applied
+    OSReport("GetMenu at line %d\n", __LINE__);
     if (GetMenu().IsAwaitingApply()) {
         Apply_Hole();
         GetMenu().SetAwaitingApply(false);
@@ -557,7 +594,12 @@ void GlfSceneHook::Apply_GlfConfig() {
     Apply_RepeatHole();
     Apply_Pin();
 }
+
+#if CADDIE_REGION_NTSC_U
 kmBranch(0x8040680c, GlfSceneHook::Apply_GlfConfig);
+#elif CADDIE_REGION_PAL
+kmBranch(0x80406b2c, GlfSceneHook::Apply_GlfConfig);
+#endif
 
 /**
  * @brief Allow shot to be canceled by holding B + MINUS + 2
@@ -592,22 +634,37 @@ void GlfSceneHook::OnGlfBallCalc(RPGlfBall* ball, u32 frame, u32) {
 
     ball->Calc(frame);
 }
+
+#if CADDIE_REGION_NTSC_U
 kmCall(0x80414754, GlfSceneHook::OnGlfBallCalc);
+#elif CADDIE_REGION_PAL
+kmCall(0x80414a74, GlfSceneHook::OnGlfBallCalc);
+#endif
 
 /**
  * @brief Disable Golf tutorial
  */
 bool GlfSceneHook::ShouldShowTutorial() { return false; }
+
+#if CADDIE_REGION_NTSC_U
 kmBranch(0x803fa370, GlfSceneHook::ShouldShowTutorial);
+#elif CADDIE_REGION_PAL
+kmBranch(0x803fa574, GlfSceneHook::ShouldShowTutorial);
+#endif
 
 /**
  * @brief Check whether the next hole can be played
  * @note Repeat Hole option prevents game from ending
  */
 bool GlfSceneHook::CanPlayNextHole() {
+    OSReport("GetMenu at line %d\n", __LINE__);
     return GetMenu().GetRepeatHole() ? true : !GlfUtil::IsNextRoundOver();
 }
+#if CADDIE_REGION_NTSC_U
 kmBranch(0x80406554, GlfSceneHook::CanPlayNextHole);
+#elif CADDIE_REGION_PAL
+kmBranch(0x80406874, GlfSceneHook::CanPlayNextHole);
+#endif
 
 /**
  * @brief Number of holes played in the match
@@ -629,7 +686,11 @@ u32 GlfSceneHook::GetNumHolesPlayed() {
     // Vanilla behavior
     return gmCurrent - gmFirst;
 }
+#if CADDIE_REGION_NTSC_U
 kmBranch(0x80405f1c, GlfSceneHook::GetNumHolesPlayed);
+#elif CADDIE_REGION_PAL
+kmBranch(0x8040623c, GlfSceneHook::GetNumHolesPlayed);
+#endif
 
 /**
  * @brief Access golf menu
